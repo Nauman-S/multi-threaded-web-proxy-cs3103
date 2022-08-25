@@ -13,27 +13,87 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\SP">
+      <UniqueIdentifier>{d9bc2525-322a-4134-9cf2-e02423e535be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PKB">
+      <UniqueIdentifier>{8071b734-f4a2-4585-a922-78a3d71e1b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QPS">
+      <UniqueIdentifier>{b0fe78f7-b841-4b52-b61c-07632dc7f423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{60a235db-8164-4483-b4fa-066de960503f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PKB">
+      <UniqueIdentifier>{0ecd8b78-0bc3-4fb5-b9cd-b5d960376207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SP">
+      <UniqueIdentifier>{5cfff89c-1b95-4da5-a56c-f7a3ad8107df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QPS">
+      <UniqueIdentifier>{7430d6a8-098c-4724-b131-72c8afd779d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{5bc02300-e035-4e26-9c9e-fa841de7b243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QPS\ref">
+      <UniqueIdentifier>{cd073600-c234-4e4d-9936-75778482e5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QPS\ref">
+      <UniqueIdentifier>{be66dccc-df5c-4d93-a806-b7ef35390ccc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\DesignExtractor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\PKB.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PKB</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\TNode.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\source\design_extractor.cpp">
+      <Filter>Source Files\SP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\pattern.cpp">
+      <Filter>Source Files\QPS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\relation.cpp">
+      <Filter>Source Files\QPS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\source_parser.cpp">
+      <Filter>Source Files\QPS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\string_tokenizer.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="proc_ref.cpp">
+      <Filter>Source Files\QPS\ref</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\PKB.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\PKB</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\TNode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\source\design_extractor.h">
+      <Filter>Header Files\SP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\pattern.h">
+      <Filter>Header Files\QPS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\query.h">
+      <Filter>Header Files\QPS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\relation.h">
+      <Filter>Header Files\QPS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\source_parser.h">
+      <Filter>Header Files\SP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\string_tokenizer.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\ref.h">
+      <Filter>Header Files\QPS\ref</Filter>
+    </ClInclude>
+    <ClInclude Include="proc_ref.h">
+      <Filter>Header Files\QPS\ref</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

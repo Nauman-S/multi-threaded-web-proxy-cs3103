@@ -11,14 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\DesignExtractor.cpp" />
-    <ClCompile Include="..\source\Parser.cpp" />
+    <ClCompile Include="..\source\design_extractor.cpp" />
+    <ClCompile Include="..\source\pattern.cpp" />
     <ClCompile Include="..\source\PKB.cpp" />
-    <ClCompile Include="..\source\TNode.cpp" />
+    <ClCompile Include="..\source\relation.cpp" />
+    <ClCompile Include="..\source\source_parser.cpp" />
+    <ClCompile Include="..\source\string_tokenizer.cpp" />
+    <ClCompile Include="proc_ref.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\design_extractor.h" />
+    <ClInclude Include="..\source\pattern.h" />
     <ClInclude Include="..\source\PKB.h" />
-    <ClInclude Include="..\source\TNode.h" />
+    <ClInclude Include="..\source\query.h" />
+    <ClInclude Include="..\source\ref.h" />
+    <ClInclude Include="..\source\relation.h" />
+    <ClInclude Include="..\source\source_parser.h" />
+    <ClInclude Include="..\source\string_tokenizer.h" />
+    <ClInclude Include="proc_ref.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC21A1EA-D2C6-4D14-A2B4-E025B64BDE81}</ProjectGuid>

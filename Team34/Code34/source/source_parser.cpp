@@ -5,9 +5,7 @@
 
 using namespace std;
 
+int Parse () {
 
-#include "PKB.h"
-
-int DesignExtractor () {
 	return 0;
 }
