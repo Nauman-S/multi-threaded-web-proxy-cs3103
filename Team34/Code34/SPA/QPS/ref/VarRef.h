@@ -1,6 +1,6 @@
 #pragma once
 #include "Ref.h"
-class ProcRef :
+class VarRef :
     public Ref
 {
     using Ref::Ref;
