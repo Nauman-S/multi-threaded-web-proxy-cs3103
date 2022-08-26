@@ -10,6 +10,29 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PKB\PKB.h" />
+    <ClInclude Include="QPS\pattern\Pattern.h" />
+    <ClInclude Include="QPS\Query.h" />
+    <ClInclude Include="QPS\ref\ProcRef.h" />
+    <ClInclude Include="QPS\ref\Ref.h" />
+    <ClInclude Include="QPS\ref\StmtRef.h" />
+    <ClInclude Include="QPS\relation\Relation.h" />
+    <ClInclude Include="SP\DesignExtractor.h" />
+    <ClInclude Include="SP\SourceParser.h" />
+    <ClInclude Include="Utils\StringTokenizer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PKB\PKB.cpp" />
+    <ClCompile Include="QPS\pattern\Pattern.cpp" />
+    <ClCompile Include="QPS\Query.cpp" />
+    <ClCompile Include="QPS\ref\ProcRef.cpp" />
+    <ClCompile Include="QPS\ref\StmtRef.cpp" />
+    <ClCompile Include="QPS\relation\Relation.cpp" />
+    <ClCompile Include="SP\DesignExtractor.cpp" />
+    <ClCompile Include="SP\SourceParser.cpp" />
+    <ClCompile Include="Utils\StringTokenizer.cpp" />
+  </ItemGroup>
   <!--<ItemGroup>
     <ClCompile Include="..\source\design_extractor.cpp" />
     <ClCompile Include="..\source\pattern.cpp" />
