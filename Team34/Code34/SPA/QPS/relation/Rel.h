@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-class Relation
+class Rel
 {
 public:
 	virtual std::string LhsValue()=0;
