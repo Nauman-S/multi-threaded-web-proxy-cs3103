@@ -10,16 +10,23 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <ClCompile Include="..\source\design_extractor.cpp" />
     <ClCompile Include="..\source\pattern.cpp" />
     <ClCompile Include="..\source\PKB.cpp" />
     <ClCompile Include="..\source\relation.cpp" />
     <ClCompile Include="..\source\source_parser.cpp" />
     <ClCompile Include="..\source\string_tokenizer.cpp" />
+    <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="proc_ref.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="QPS\pattern.cpp" />
+    <ClCompile Include="QPS\proc_ref.cpp" />
+    <ClCompile Include="QPS\relation.cpp" />
+    <ClCompile Include="SP\design_extractor.cpp" />
+    <ClCompile Include="SP\source_parser.cpp" />
+    <ClCompile Include="Utils\string_tokenizer.cpp" />
+  </ItemGroup>-->
+  <!--<ItemGroup>
     <ClInclude Include="..\source\design_extractor.h" />
     <ClInclude Include="..\source\pattern.h" />
     <ClInclude Include="..\source\PKB.h" />
@@ -28,8 +35,17 @@
     <ClInclude Include="..\source\relation.h" />
     <ClInclude Include="..\source\source_parser.h" />
     <ClInclude Include="..\source\string_tokenizer.h" />
+    <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="proc_ref.h" />
-  </ItemGroup>
+    <ClInclude Include="QPS\pattern.h" />
+    <ClInclude Include="QPS\proc_ref.h" />
+    <ClInclude Include="QPS\query.h" />
+    <ClInclude Include="QPS\ref.h" />
+    <ClInclude Include="QPS\relation.h" />
+    <ClInclude Include="SP\design_extractor.h" />
+    <ClInclude Include="SP\source_parser.h" />
+    <ClInclude Include="Utils\string_tokenizer.h" />
+  </ItemGroup>-->
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC21A1EA-D2C6-4D14-A2B4-E025B64BDE81}</ProjectGuid>
     <RootNamespace>SPA</RootNamespace>
