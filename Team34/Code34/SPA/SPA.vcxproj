@@ -17,6 +17,8 @@
     <ClInclude Include="QPS\reference\CallRef.h" />
     <ClInclude Include="QPS\reference\IfRef.h" />
     <ClInclude Include="PKB\PKB.h" />
+	<ClInclude Include="PKB\PVRelationStore.h" />
+	<ClInclude Include="PKB\SVRelationStore.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
     <ClInclude Include="QPS\Query.h" />
     <ClInclude Include="QPS\reference\ConstRef.h" />
@@ -47,6 +49,8 @@
     <ClCompile Include="QPS\reference\CallRef.cpp" />
     <ClCompile Include="QPS\reference\IfRef.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
+	<ClCompile Include="PKB\PVRelationStore.cpp" />
+	<ClCompile Include="PKB\SVRelationStore.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\reference\ConstRef.cpp" />
