@@ -3,10 +3,10 @@
 #include <optional>
 
 #include "InvalidTokenException.h"
+#include "Token.h"
 
 #ifndef TOKENIZER
 #define TOKENIZER
-enum class TTYPE { PRE_PARSING, ALPHANUMERIC, INTEGER, WHITESPACE, UNDERSCORE, COMMA, OPERATOR, OPENING_BRACKET, CLOSING_BRACKET, END_OF_PARSING };
 
 class Tokenizer
 {
@@ -15,30 +15,27 @@ private:
 	std::optional<int> ival = {};
 	std::optional<std::string> sval = {};
 
-	char* query_pointer;
+	char* query_pointer = NULL;
 	int current_index;
 	int last_index;
 
-	TTYPE current_token_type = TTYPE::PRE_PARSING;
+	Token current_token = Token("", TokenType::kParseStart);
 
 	void consumeAlphanumericToken();
 	void consumeIntegerToken();
-	void consumeWhiteSpaceToken();
-	void consumeUnderScoreToken();
-	void consumeCommaToken();
-	void consumeOperatorToken();
-	void consumeOpeningBracketToken();
-	void consumeClosingBracketToken();
 	void consumeEndOfParsingToken();
+	void consumeSpecialCharacter();
+	void skipIgnoredChars();
+	bool isIgnoredChar(char);
 public:
-	Tokenizer(const std::string& string);
 	~Tokenizer();
 
+	void feedLine(const std::string& string);
 	void nextToken();
 
 	bool Tokenizer::hasNextToken();
 
-	TTYPE getTokenType();
+	Token getToken();
 
 	std::optional<std::string> getTokenSval();
 

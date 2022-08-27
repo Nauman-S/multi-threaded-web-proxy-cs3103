@@ -5,9 +5,15 @@
 #include <optional>
 
 #include "InvalidTokenException.h"
+#include "Token.h"
 
-//Constructor: converts stack reference to string to pointer to char array in heap
-Tokenizer::Tokenizer(const std::string& string) {
+Tokenizer::~Tokenizer() {
+	delete[] this->query_pointer;
+}
+
+//converts stack reference to string to pointer to char array in heap
+void Tokenizer::feedLine(const std::string& string) {
+	delete[] this->query_pointer;
 	int total_characters_in_query = string.length();
 	this->query_pointer = new char[total_characters_in_query];
 	this->current_index = -1;
@@ -19,12 +25,8 @@ Tokenizer::Tokenizer(const std::string& string) {
 	}
 }
 
-Tokenizer::~Tokenizer() {
-	delete[] this->query_pointer;
-}
-
-TTYPE Tokenizer::getTokenType() {
-	return this->current_token_type;
+Token Tokenizer::getToken() {
+	return this->current_token;
 }
 
 bool Tokenizer::hasNextToken() {
@@ -41,6 +43,7 @@ std::optional<int> Tokenizer::getTokenIval() {
 
 
 void Tokenizer::nextToken() throw (InvalidTokenException) {
+	skipIgnoredChars();
 	if (this->current_index >= this->last_index) {
 		consumeEndOfParsingToken();
 		return;
@@ -48,27 +51,15 @@ void Tokenizer::nextToken() throw (InvalidTokenException) {
 	this->current_index++;
 
 	char current_char = this->query_pointer[current_index];
-	if (isspace(current_char)) {
-		consumeWhiteSpaceToken();
-	}
-	else if (isdigit(current_char)) {
+	if (isdigit(current_char)) {
 		consumeIntegerToken();
 	}
 	else if (isalpha(current_char)) {
 		consumeAlphanumericToken();
 
 	}
-	else if (current_char == ',') {
-		consumeCommaToken();
-	}
-	else if (current_char == '<' || current_char == '>' || current_char == '=' || current_char == '!' || current_char == '+' || current_char == '-' || current_char == '/' || current_char == '*') {
-		consumeOperatorToken();
-	}
-	else if (current_char == '(') {
-		consumeClosingBracketToken();
-	}
-	else if (current_char == ')') {
-		consumeOpeningBracketToken();
+	else if (Token::IsValidToken(current_char)) {
+		consumeSpecialCharacter();
 	}
 	else {
 		throw InvalidTokenException(current_char);
@@ -82,94 +73,54 @@ void Tokenizer::consumeAlphanumericToken() {
 		this->current_index++;
 	}
 	tokenized_string.push_back(this->query_pointer[current_index]);
-	this->current_token_type = TTYPE::ALPHANUMERIC;
+	this->current_token = Token(tokenized_string, TokenType::kName);
 	this->sval = tokenized_string;
 	this->ival = {};
 }
 
 void Tokenizer::consumeIntegerToken() {
+	std::string int_string = "";
 	int val = this->query_pointer[current_index], power = 10;
+	int_string.push_back(this->query_pointer[current_index]);
 	while (this->current_index < this->last_index && isdigit(this->query_pointer[current_index + 1])) {
 		this->current_index++;
 		val += power * (int)this->query_pointer[current_index];
 		power *= 10;
+		int_string.push_back(this->query_pointer[current_index]);
 	}
-	this->current_token_type = TTYPE::INTEGER;
+	this->current_token = Token(int_string, TokenType::kInteger);
 	this->sval = {};
 	this->ival = val;
 
 }
 
-void Tokenizer::consumeWhiteSpaceToken() {
+void Tokenizer::skipIgnoredChars() {
 
-	while (this->current_index < this->last_index && isspace(this->query_pointer[current_index + 1])) {
+	while (this->current_index < this->last_index && isIgnoredChar(this->query_pointer[current_index + 1])) {
 		this->current_index++;
 	}
-	this->current_token_type = TTYPE::WHITESPACE;
+
+}
+
+void Tokenizer::consumeSpecialCharacter() {
+
+	char current_char = this->query_pointer[current_index];
+	TokenType type = Token::GetTokenTypeByChar(current_char);
+
+	this->current_token = Token(std::string(1, current_char), type);
 	this->sval = {};
 	this->ival = {};
 
-}
-
-void Tokenizer::consumeUnderScoreToken() {
-
-	this->current_token_type = TTYPE::UNDERSCORE;
-	this->sval = {};
-	this->ival = {};
-
-}
-
-void Tokenizer::consumeCommaToken() {
-	this->current_token_type = TTYPE::COMMA;
-	this->sval = {};
-	this->ival = {};
-}
-
-void Tokenizer::consumeOperatorToken() {
-
-	std::string operator_token = "";
-	operator_token.push_back(current_index);
-
-	switch (this->query_pointer[this->current_index])
-	{
-	case '<': {}
-	case '>': {}
-	case '!': {}
-	case '=':
-	{
-		if (this->current_index < this->last_index && this->query_pointer[this->current_index + 1] == '=') {
-			this->current_index++;
-			operator_token.push_back(this->current_index);
-		}
-		break;
-	}
-	default:
-		break;
-	}
-	this->current_token_type = TTYPE::OPERATOR;
-	this->sval = operator_token;
-	this->ival = {};
-
-}
-
-void Tokenizer::consumeOpeningBracketToken() {
-	this->current_token_type = TTYPE::OPENING_BRACKET;
-	this->sval = "(";
-	this->ival = {};
-
-
-}
-
-void Tokenizer::consumeClosingBracketToken() {
-	this->current_token_type = TTYPE::OPENING_BRACKET;
-	this->sval = ")";
-	this->ival = {};
 }
 
 void Tokenizer::consumeEndOfParsingToken() {
-	this->current_token_type = TTYPE::END_OF_PARSING;
+	this->current_token = Token("", TokenType::kParseEnd);
 	this->ival = {};
 	this->sval = {};
 }
 
+bool Tokenizer::isIgnoredChar(char c) {
+	// Only ignore spaces and line breaks
+	return isspace(c) || c == '\n';
+}
 
