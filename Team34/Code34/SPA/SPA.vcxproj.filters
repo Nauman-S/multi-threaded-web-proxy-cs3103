@@ -132,6 +132,9 @@
     <ClInclude Include="QPS\pattern\MatchType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\reference\RefType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">

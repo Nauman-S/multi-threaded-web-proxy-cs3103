@@ -1,7 +1,8 @@
 #pragma once
-#include "Rel.h"
+#include "ProcVarRel.h"
+
 class UsesPRel :
-    public Rel
+    public ProcVarRel
 {
 };
 

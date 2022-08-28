@@ -1,7 +1,7 @@
 #pragma once
 #include "StmtStmtRel.h"
 
-class FollowsRel :
+class ParentTRel :
     public StmtStmtRel
 {
 };

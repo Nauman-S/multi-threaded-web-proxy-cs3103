@@ -1,7 +1,8 @@
 #pragma once
-#include "Rel.h"
+#include "StmtStmtRel.h"
+
 class ParentRel :
-    public Rel
+    public StmtStmtRel
 {
 };
 

@@ -25,6 +25,7 @@
     <ClInclude Include="QPS\reference\ProcRef.h" />
     <ClInclude Include="QPS\reference\ReadRef.h" />
     <ClInclude Include="QPS\reference\Ref.h" />
+    <ClInclude Include="QPS\reference\RefType.h" />
     <ClInclude Include="QPS\reference\StmtRef.h" />
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
