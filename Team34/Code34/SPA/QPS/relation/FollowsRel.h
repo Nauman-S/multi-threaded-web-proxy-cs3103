@@ -4,5 +4,7 @@
 class FollowsRel :
     public StmtStmtRel
 {
+public:
+    using StmtStmtRel::StmtStmtRel
 };
 

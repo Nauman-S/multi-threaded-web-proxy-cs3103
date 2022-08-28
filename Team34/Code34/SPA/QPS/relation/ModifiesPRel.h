@@ -3,5 +3,7 @@
 class ModifiesPRel :
     public ProcVarRel
 {
+public:
+    using ProcVarRel::ProcVarRel;
 };
 

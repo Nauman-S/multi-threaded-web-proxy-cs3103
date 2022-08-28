@@ -4,5 +4,7 @@
 class UsesPRel :
     public ProcVarRel
 {
+public:
+    using ProcVarRel::ProcVarRel;
 };
 

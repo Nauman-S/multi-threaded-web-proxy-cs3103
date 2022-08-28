@@ -11,6 +11,8 @@ protected:
     VarRef rhs_ref_;
 
 public:
+    StmtVarRel(StmtRef lhs, VarRef rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+
     std::string LhsValue() override;
 
     std::string RhsValue() override;

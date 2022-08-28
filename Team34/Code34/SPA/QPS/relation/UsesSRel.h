@@ -4,6 +4,7 @@
 class UsesSRel :
     public StmtVarRel
 {
-
+public:
+    StmtVarRel::StmtVarRel;
 };
 

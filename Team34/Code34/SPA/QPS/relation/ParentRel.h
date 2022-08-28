@@ -4,5 +4,7 @@
 class ParentRel :
     public StmtStmtRel
 {
+public:
+    using StmtStmtRel::StmtStmtRel;
 };
 

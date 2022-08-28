@@ -4,5 +4,7 @@
 class ModifiesSRel :
     public StmtVarRel
 {
+public:
+    using StmtVarRel::StmtVarRel;
 };
 
