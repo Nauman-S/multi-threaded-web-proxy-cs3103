@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\relation\ParentTRel.h" />
+    <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\pattern\ExprSpec.h" />
     <ClInclude Include="QPS\pattern\MatchType.h" />
     <ClInclude Include="QPS\reference\AssignRef.h" />
@@ -40,9 +42,13 @@
     <ClInclude Include="QPS\relation\UsesSRel.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\SourceParser.h" />
+    <ClInclude Include="QPS\relation\StmtStmtRel.h" />
+    <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="Utils\StringTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\relation\ParentTRel.cpp" />
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
     <ClCompile Include="QPS\pattern\ExprSpec.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
@@ -68,6 +74,8 @@
     <ClCompile Include="QPS\relation\UsesSRel.cpp" />
     <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
+    <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
+    <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
     <ClCompile Include="Utils\StringTokenizer.cpp" />
   </ItemGroup>
   <!--<ItemGroup>

@@ -135,6 +135,18 @@
     <ClInclude Include="QPS\reference\RefType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\relation\StmtStmtRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\StmtVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ProcVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -213,6 +225,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\pattern\ExprSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\StmtStmtRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\StmtVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ParentTRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
