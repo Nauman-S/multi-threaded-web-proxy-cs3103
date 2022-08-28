@@ -11,8 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\DataRetriever.h" />
+    <ClInclude Include="QPS\Clause.h" />
     <ClInclude Include="QPS\pattern\ExprSpec.h" />
     <ClInclude Include="QPS\pattern\MatchType.h" />
+    <ClInclude Include="QPS\QueryEvaluator.h" />
     <ClInclude Include="QPS\reference\AssignRef.h" />
     <ClInclude Include="QPS\reference\CallRef.h" />
     <ClInclude Include="QPS\reference\IfRef.h" />
@@ -42,7 +45,10 @@
     <ClInclude Include="Utils\StringTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\DataRetriever.cpp" />
+    <ClCompile Include="QPS\Clause.cpp" />
     <ClCompile Include="QPS\pattern\ExprSpec.cpp" />
+    <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
     <ClCompile Include="QPS\reference\IfRef.cpp" />

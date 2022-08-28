@@ -132,6 +132,15 @@
     <ClInclude Include="QPS\pattern\MatchType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\Clause.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\DataRetriever.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\QueryEvaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -210,6 +219,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\pattern\ExprSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\Clause.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\DataRetriever.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\QueryEvaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
