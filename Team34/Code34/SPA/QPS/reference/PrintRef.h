@@ -1,6 +1,6 @@
 #pragma once
 #include "StmtRef.h"
-#include "RefType.h"
+#include "../../Utils/type/RefType.h"
 
 class PrintRef :
     public StmtRef

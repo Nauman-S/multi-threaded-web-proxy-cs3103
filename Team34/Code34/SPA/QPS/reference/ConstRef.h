@@ -1,6 +1,6 @@
 #pragma once
 #include "IntValueableRef.h"
-#include "RefType.h"
+#include "../../Utils/type/RefType.h"
 
 class ConstRef 
 	: public IntValueableRef
