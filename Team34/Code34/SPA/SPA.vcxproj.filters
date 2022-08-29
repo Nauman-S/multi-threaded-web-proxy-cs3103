@@ -126,10 +126,28 @@
     <ClInclude Include="QPS\relation\ModifiesPRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\pattern\ExprSpec.h">
+    <ClInclude Include="Utils\expression\ExprSpec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\pattern\MatchType.h">
+    <ClInclude Include="QPS\Clause.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\DataRetriever.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\QueryEvaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\Expr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\WildcardExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\ExactExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\PartialExprSpec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QPS\reference\RefType.h">
@@ -224,7 +242,28 @@
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\pattern\ExprSpec.cpp">
+    <ClCompile Include="Utils\expression\ExprSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\Clause.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\DataRetriever.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\QueryEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\expression\Expr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\expression\WildcardExprSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\expression\ExactExprSpec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\expression\PartialExprSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\relation\StmtStmtRel.cpp">

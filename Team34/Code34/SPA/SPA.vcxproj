@@ -11,10 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QPS\relation\ParentTRel.h" />
-    <ClInclude Include="QPS\relation\ProcVarRel.h" />
-    <ClInclude Include="QPS\pattern\ExprSpec.h" />
-    <ClInclude Include="QPS\pattern\MatchType.h" />
+    <ClInclude Include="Utils\expression\ExactExprSpec.h" />
+    <ClInclude Include="Utils\expression\PartialExprSpec.h" />
+    <ClInclude Include="Utils\expression\Expr.h" />
+    <ClInclude Include="QPS\DataRetriever.h" />
+    <ClInclude Include="QPS\Clause.h" />
+    <ClInclude Include="Utils\expression\ExprSpec.h" />
+    <ClInclude Include="QPS\QueryEvaluator.h" />
     <ClInclude Include="QPS\reference\AssignRef.h" />
     <ClInclude Include="QPS\reference\CallRef.h" />
     <ClInclude Include="QPS\reference\IfRef.h" />
@@ -45,11 +48,16 @@
     <ClInclude Include="QPS\relation\StmtStmtRel.h" />
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="Utils\StringTokenizer.h" />
+    <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QPS\relation\ParentTRel.cpp" />
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
-    <ClCompile Include="QPS\pattern\ExprSpec.cpp" />
+    <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
+    <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
+    <ClCompile Include="Utils\expression\Expr.cpp" />
+    <ClCompile Include="QPS\DataRetriever.cpp" />
+    <ClCompile Include="QPS\Clause.cpp" />
+    <ClCompile Include="Utils\expression\ExprSpec.cpp" />
+    <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
     <ClCompile Include="QPS\reference\IfRef.cpp" />
@@ -77,6 +85,7 @@
     <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
     <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
     <ClCompile Include="Utils\StringTokenizer.cpp" />
+    <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
   </ItemGroup>
   <!--<ItemGroup>
     <ClCompile Include="..\source\design_extractor.cpp" />
