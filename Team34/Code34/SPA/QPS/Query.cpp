@@ -1,6 +1,6 @@
 #include "Query.h"
 
-std::vector<Rel> Query::GetRelations()
+std::vector<Rel>& Query::GetRelations()
 {
 	return relations_;
 }

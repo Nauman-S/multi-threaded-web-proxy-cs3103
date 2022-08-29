@@ -27,6 +27,6 @@ public:
 	Query(std::vector<Ref> select_tuple, std::vector<Rel> relations, std::vector<Pattern> patterns)
 		: select_tuple_{ select_tuple }, relations_{ relations }, patterns_{ patterns } {};
 
-	std::vector<Rel> GetRelations();
+	std::vector<Rel>& GetRelations();
 };
 
