@@ -1,7 +1,7 @@
 #pragma once
 #include "StmtStmtRel.h"
 
-class ParentRel :
+class ParentTRel :
     public StmtStmtRel
 {
 public:

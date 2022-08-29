@@ -30,6 +30,7 @@
     <ClInclude Include="QPS\reference\ProcRef.h" />
     <ClInclude Include="QPS\reference\ReadRef.h" />
     <ClInclude Include="QPS\reference\Ref.h" />
+    <ClInclude Include="QPS\reference\RefType.h" />
     <ClInclude Include="QPS\reference\StmtRef.h" />
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
@@ -44,6 +45,8 @@
     <ClInclude Include="QPS\relation\UsesSRel.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\SourceParser.h" />
+    <ClInclude Include="QPS\relation\StmtStmtRel.h" />
+    <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="Utils\StringTokenizer.h" />
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
   </ItemGroup>
@@ -79,6 +82,8 @@
     <ClCompile Include="QPS\relation\UsesSRel.cpp" />
     <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
+    <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
+    <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
     <ClCompile Include="Utils\StringTokenizer.cpp" />
     <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
   </ItemGroup>

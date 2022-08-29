@@ -1,7 +1,10 @@
 #pragma once
-#include "Rel.h"
+#include "StmtVarRel.h"
+
 class UsesSRel :
-    public Rel
+    public StmtVarRel
 {
+public:
+    StmtVarRel::StmtVarRel;
 };
 

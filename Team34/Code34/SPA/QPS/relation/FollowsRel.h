@@ -1,7 +1,10 @@
 #pragma once
-#include "Rel.h"
+#include "StmtStmtRel.h"
+
 class FollowsRel :
-    public Rel
+    public StmtStmtRel
 {
+public:
+    using StmtStmtRel::StmtStmtRel
 };
 

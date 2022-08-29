@@ -1,7 +1,10 @@
 #pragma once
-#include "Rel.h"
+#include "StmtVarRel.h"
+
 class ModifiesSRel :
-    public Rel
+    public StmtVarRel
 {
+public:
+    using StmtVarRel::StmtVarRel;
 };
 
