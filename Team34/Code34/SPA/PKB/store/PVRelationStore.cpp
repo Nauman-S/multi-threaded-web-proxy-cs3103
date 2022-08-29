@@ -14,7 +14,7 @@ bool PVRelationStore::CheckPVRelation(std::string proc_name, std::string var)
 	return false;
 }
 
-std::vector<std::pair<std::string, std::string>> GetAllPVRelations()
+std::vector<std::pair<std::string, std::string>> PVRelationStore::GetAllPVRelations()
 {
 	std::vector<std::pair<std::string, std::string>> all_pv_relations;
 	for (const auto& p : proc_name_to_var_map_)
@@ -33,7 +33,7 @@ void PVRelationStore::SetPVRelation(std::string proc_name, std::string var)
 	var_to_proc_name_map_[var].insert(proc_name);
 }
 
-std::unordered_set<std::string> PVRelationStore::GetVariableByProcedureName(std::string proc_name)
+std::unordered_set<std::string> PVRelationStore::GetVarByProc(std::string proc_name)
 {
 	auto iter = proc_name_to_var_map_.find(proc_name);
 	if (iter == proc_name_to_var_map_.end())
@@ -46,7 +46,7 @@ std::unordered_set<std::string> PVRelationStore::GetVariableByProcedureName(std:
 	}
 }
 
-std::unordered_set<std::string> PVRelationStore::GetProcedureNameByVariable(std::string var)
+std::unordered_set<std::string> PVRelationStore::GetProcByVar(std::string var)
 {
 	auto iter = var_to_proc_name_map_.find(var);
 	if (iter == var_to_proc_name_map_.end())

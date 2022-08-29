@@ -6,12 +6,12 @@
 class SVRelationStore
 {
 public:
-	bool CheckSVRelation(int stmt_no, std::string var);
+	bool CheckSVRelation(int stmt_num, std::string var);
 	std::vector<std::pair<int, std::string>> GetAllSVRelations();
-	void SetSVRelation(int stmt_no, std::string var);
-	std::unordered_set<std::string> GetVariableByStatementNo(int stmt_no);
-	std::unordered_set<int> GetStatementNoByVariable(std::string var);
+	void SetSVRelation(int stmt_num, std::string var);
+	std::unordered_set<std::string> GetVarByStmtNum(int stmt_num);
+	std::unordered_set<int> GetStmtNumByVar(std::string var);
 private:
-	std::unordered_map<int, std::unordered_set<std::string>> stmt_no_to_var_map_;
-	std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_no_map_;
+	std::unordered_map<int, std::unordered_set<std::string>> stmt_num_to_var_map_;
+	std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_num_map_;
 };
