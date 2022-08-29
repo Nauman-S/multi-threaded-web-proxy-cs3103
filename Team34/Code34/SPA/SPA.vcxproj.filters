@@ -160,9 +160,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QPS\relation\ProcVarRel.h">
+    <ClInclude Include="Utils\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QPS\relation\ParentTRel.h">
+    <ClInclude Include="Utils\Tokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\InvalidTokenException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -273,9 +278,14 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\relation\ProcVarRel.cpp">
+    <ClCompile Include="Utils\Token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Tokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\relation\ParentTRel.cpp">
+    <ClCompile Include="Utils\InvalidTokenException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

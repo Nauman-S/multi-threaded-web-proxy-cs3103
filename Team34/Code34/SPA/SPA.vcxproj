@@ -47,8 +47,11 @@
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="QPS\relation\StmtStmtRel.h" />
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
+    <ClInclude Include="Utils\InvalidTokenException.h" />
     <ClInclude Include="Utils\StringTokenizer.h" />
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
+    <ClInclude Include="Utils\Token.h" />
+    <ClInclude Include="Utils\Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
@@ -84,8 +87,11 @@
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
     <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
+    <ClCompile Include="Utils\InvalidTokenException.cpp" />
     <ClCompile Include="Utils\StringTokenizer.cpp" />
     <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
+    <ClCompile Include="Utils\Token.cpp" />
+    <ClCompile Include="Utils\Tokenizer.cpp" />
   </ItemGroup>
   <!--<ItemGroup>
     <ClCompile Include="..\source\design_extractor.cpp" />
