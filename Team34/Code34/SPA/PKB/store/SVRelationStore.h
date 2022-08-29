@@ -1,12 +1,13 @@
 #pragma once
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 class SVRelationStore
 {
 public:
 	bool CheckSVRelation(int stmt_no, std::string var);
-	// std::vector<std::pair<int, std::string>> GetAllSVRelations();
+	std::vector<std::pair<int, std::string>> GetAllSVRelations();
 	void SetSVRelation(int stmt_no, std::string var);
 	std::unordered_set<std::string> GetVariableByStatementNo(int stmt_no);
 	std::unordered_set<int> GetStatementNoByVariable(std::string var);

@@ -14,12 +14,18 @@ bool PVRelationStore::CheckPVRelation(std::string proc_name, std::string var)
 	return false;
 }
 
-/* TO IMPLEMENT:
 std::vector<std::pair<std::string, std::string>> GetAllPVRelations()
 {
-
+	std::vector<std::pair<std::string, std::string>> all_pv_relations;
+	for (const auto& p : proc_name_to_var_map_)
+	{
+		for (auto iter = p.second.begin(); iter != p.second.end(); iter++)
+		{
+			all_pv_relations.push_back(std::make_pair(p.first, *iter));
+		}
+	}
+	return all_pv_relations;
 }
-*/
 
 void PVRelationStore::SetPVRelation(std::string proc_name, std::string var)
 {

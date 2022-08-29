@@ -1,12 +1,13 @@
 #pragma once
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 class PVRelationStore
 {
 public:
 	bool CheckPVRelation(std::string proc_name, std::string var);
-	// std::vector<std::pair<std::string, std::string>> GetAllPVRelations();
+	std::vector<std::pair<std::string, std::string>> GetAllPVRelations();
 	void SetPVRelation(std::string proc_name, std::string var);
 	std::unordered_set<std::string> GetVariableByProcedureName(std::string proc_name);
 	std::unordered_set<std::string> GetProcedureNameByVariable(std::string var);
