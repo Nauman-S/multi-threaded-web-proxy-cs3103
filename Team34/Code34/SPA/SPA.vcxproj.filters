@@ -75,6 +75,12 @@
     <ClInclude Include="PKB\PKB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="PKB\store\SVRelationStore.h">
+      <Filter>Header Files</Filter>
+	</ClInclude>
+	<ClInclude Include="PKB\store\PVRelationStore.h">
+      <Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="QPS\reference\ValType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -199,6 +205,12 @@
     <ClCompile Include="PKB\PKB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="PKB\store\SVRelationStore.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+	<ClCompile Include="PKB\store\PVRelationStore.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="QPS\reference\VarRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
