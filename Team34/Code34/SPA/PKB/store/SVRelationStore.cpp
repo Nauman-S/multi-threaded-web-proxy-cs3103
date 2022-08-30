@@ -14,14 +14,14 @@ bool SVRelationStore::CheckSVRelation(int stmt_no, std::string var)
 	return false;
 }
 
-std::vector<std::pair<int, std::string>> GetAllSVRelations()
+std::vector<std::pair<int, std::string>>* GetAllSVRelations()
 {
-	std::vector<std::pair<int, std::string>> all_sv_relations;
+	std::vector<std::pair<int, std::string>>* all_sv_relations = new std::vector<std::pair<int, std::string>>();
 	for (const auto& p : stmt_num_to_var_map_)
 	{
 		for (auto iter = p.second.begin(); iter != p.second.end(); iter++)
 		{
-			all_sv_relations.push_back(std::make_pair(p.first, *iter));
+			all_sv_relations->push_back(std::make_pair(p.first, *iter));
 		}
 	}
 	return all_sv_relations;

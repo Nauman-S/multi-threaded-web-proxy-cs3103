@@ -22,14 +22,14 @@ void ModifiesManager::SetModifies(std::string proc_name, std::string var)
 	modifies_pv_store_.SetPVRelation(proc_name, var);
 }
 
-std::vector<std::pair<int, std::string>> ModifiesManager::GetAllSVModifies()
+const std::vector<std::pair<int, std::string>>& ModifiesManager::GetAllSVModifies()
 {
-	return modifies_sv_store_.GetAllSVRelations();
+	return *modifies_sv_store_.GetAllSVRelations();
 }
 
-std::vector<std::pair<std::string, std::string>> ModifiesManager::GetAllPVModifies()
+const std::vector<std::pair<std::string, std::string>>& ModifiesManager::GetAllPVModifies()
 {
-	return modifies_pv_store_.GetAllPVRelations();
+	return *modifies_pv_store_.GetAllPVRelations();
 }
 
 std::unordered_set<std::string> ModifiesManager::GetVarByStmtNum(int stmt_num)

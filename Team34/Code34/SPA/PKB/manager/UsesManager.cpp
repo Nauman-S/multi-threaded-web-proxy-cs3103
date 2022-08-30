@@ -22,14 +22,14 @@ void UsesManager::SetUses(std::string proc_name, std::string var)
 	uses_pv_store_.SetPVRelation(proc_name, var);
 }
 
-std::vector<std::pair<int, std::string>> UsesManager::GetAllSVUses()
+const std::vector<std::pair<int, std::string>>& UsesManager::GetAllSVUses()
 {
-	return uses_sv_store_.GetAllSVRelations();
+	return *uses_sv_store_.GetAllSVRelations();
 }
 
-std::vector<std::pair<std::string, std::string>> UsesManager::GetAllPVUses()
+const std::vector<std::pair<std::string, std::string>>& UsesManager::GetAllPVUses()
 {
-	return uses_pv_store_.GetAllPVRelations();
+	return *uses_pv_store_.GetAllPVRelations();
 }
 
 std::unordered_set<std::string> UsesManager::GetVarByStmtNum(int stmt_num)
