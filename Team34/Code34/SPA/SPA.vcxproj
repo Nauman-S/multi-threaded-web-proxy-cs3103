@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SP\SourceLexer.h" />
+    <ClInclude Include="SP\SourceToken.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />
@@ -58,6 +60,8 @@
     <ClInclude Include="Utils\Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SP\SourceLexer.cpp" />
+    <ClCompile Include="SP\SourceToken.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />
