@@ -5,6 +5,6 @@ class FollowsRel :
     public StmtStmtRel
 {
 public:
-    using StmtStmtRel::StmtStmtRel
+    using StmtStmtRel::StmtStmtRel;
 };
 
