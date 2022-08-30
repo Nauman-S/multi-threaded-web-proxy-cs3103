@@ -32,22 +32,22 @@ std::vector<std::pair<std::string, std::string>> UsesManager::GetAllPVUses()
 	return uses_pv_store_.GetAllPVRelations();
 }
 
-std::vector<std::string> UsesManager::GetVarByStmtNum(int stmt_num)
+std::unordered_set<std::string> UsesManager::GetVarByStmtNum(int stmt_num)
 {
 	return uses_sv_store_.GetVarByStmtNum(stmt_num);
 }
 
-std::vector<std::string> UsesManager::GetVarByProcName(std::string proc_name)
+std::unordered_set<std::string> UsesManager::GetVarByProcName(std::string proc_name)
 {
 	return uses_pv_store_.GetVarByProc(proc_name);
 }
 
-std::vector<int> UsesManager::GetStmtNumByVar(std::string var)
+std::unordered_set<int> UsesManager::GetStmtNumByVar(std::string var)
 {
 	return uses_sv_store_.GetStmtNumByVar(var);
 }
 
-std::vector<std::string> UsesManager::GetProcNameByVar(std::string var)
+std::unordered_set<std::string> UsesManager::GetProcNameByVar(std::string var)
 {
 	return uses_pv_store_.GetProcByVar(var);
 }

@@ -1,8 +1,9 @@
 #pragma once
-#include<vector>
+#include <vector>
+#include <unordered_set>
 
-#include <.\store\PVRelationStore.h>
-#include <.\store\SVRelationStore.h>
+#include "../store/PVRelationStore.h"
+#include "../store/SVRelationStore.h"
 
 class UsesManager
 {
@@ -13,11 +14,11 @@ public:
 	void SetUses(std::string proc_name, std::string var);
 	std::vector<std::pair<int, std::string>> GetAllSVUses();
 	std::vector<std::pair<std::string, std::string>> GetAllPVUses();
-	std::vector<std::string> GetVarByStmtNum(int stmt_num);
-	std::vector<std::string> GetVarByProcName(std::string proc_name);
-	std::vector<int> GetStmtNumByVar(std::string var);
-	std::vector<std::string> GetProcNameByVar(std::string var);
+	std::unordered_set<std::string> GetVarByStmtNum(int stmt_num);
+	std::unordered_set<std::string> GetVarByProcName(std::string proc_name);
+	std::unordered_set<int> GetStmtNumByVar(std::string var);
+	std::unordered_set<std::string> GetProcNameByVar(std::string var);
 private:
-	PVRelationStore uses_sv_store_;
+	PVRelationStore uses_pv_store_;
 	SVRelationStore uses_sv_store_;
 };

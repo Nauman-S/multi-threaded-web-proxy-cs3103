@@ -71,7 +71,7 @@
     <ClCompile Include="PKB\PKB.cpp" />
 	<ClCompile Include="PKB\store\PVRelationStore.cpp" />
 	<ClCompile Include="PKB\store\SVRelationStore.cpp" />
-	<ClCompile Include="PKB\maanger\UsesManager.cpp" />
+	<ClCompile Include="PKB\manager\UsesManager.cpp" />
 	<ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
