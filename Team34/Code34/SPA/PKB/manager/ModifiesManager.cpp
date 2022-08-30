@@ -1,0 +1,53 @@
+#include "ModifiesManager.h"
+
+PVRelationStore modifies_pv_store_;
+SVRelationStore modifies_sv_store_;
+
+bool ModifiesManager::CheckModifies(int stmt_num, std::string var)
+{
+	return modifies_sv_store_.CheckSVRelation(stmt_num, var);
+}
+
+bool ModifiesManager::CheckModifies(std::string proc_name, std::string var)
+{
+	return modifies_pv_store_.CheckPVRelation(proc_name, var);
+}
+
+void ModifiesManager::SetModifies(int stmt_num, std::string var)
+{
+	modifies_sv_store_.SetSVRelation(stmt_num, var);
+}
+void ModifiesManager::SetModifies(std::string proc_name, std::string var)
+{
+	modifies_pv_store_.SetPVRelation(proc_name, var);
+}
+
+std::vector<std::pair<int, std::string>> ModifiesManager::GetAllSVModifies()
+{
+	return modifies_sv_store_.GetAllSVRelations();
+}
+
+std::vector<std::pair<std::string, std::string>> ModifiesManager::GetAllPVModifies()
+{
+	return modifies_pv_store_.GetAllPVRelations();
+}
+
+std::vector<std::string> ModifiesManager::GetVarByStmtNum(int stmt_num)
+{
+	return modifies_sv_store_.GetVarByStmtNum(stmt_num);
+}
+
+std::vector<std::string> ModifiesManager::GetVarByProcName(std::string proc_name)
+{
+	return modifies_pv_store_.GetVarByProc(proc_name);
+}
+
+std::vector<int> ModifiesManager::GetStmtNumByVar(std::string var)
+{
+	return modifies_sv_store_.GetStmtNumByVar(var);
+}
+
+std::vector<std::string> ModifiesManager::GetProcNameByVar(std::string var)
+{
+	return modifies_pv_store_.GetProcByVar(var);
+}
