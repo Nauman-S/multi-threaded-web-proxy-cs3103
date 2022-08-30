@@ -7,7 +7,7 @@ class PVRelationStore
 {
 public:
 	bool CheckPVRelation(std::string proc_name, std::string var);
-	std::vector<std::pair<std::string, std::string>> GetAllPVRelations();
+	std::vector<std::pair<std::string, std::string>>* GetAllPVRelations();
 	void SetPVRelation(std::string proc_name, std::string var);
 	std::unordered_set<std::string> GetVarByProc(std::string proc_name);
 	std::unordered_set<std::string> GetProcByVar(std::string var);

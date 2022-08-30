@@ -7,7 +7,7 @@ class SVRelationStore
 {
 public:
 	bool CheckSVRelation(int stmt_num, std::string var);
-	std::vector<std::pair<int, std::string>> GetAllSVRelations();
+	std::vector<std::pair<int, std::string>>* GetAllSVRelations();
 	void SetSVRelation(int stmt_num, std::string var);
 	std::unordered_set<std::string> GetVarByStmtNum(int stmt_num);
 	std::unordered_set<int> GetStmtNumByVar(std::string var);
