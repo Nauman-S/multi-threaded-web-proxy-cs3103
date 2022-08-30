@@ -1,7 +1,9 @@
 #pragma once
+
 #include "Rel.h"
 #include "../reference/StmtRef.h"
 #include "../reference/VarRef.h"
+#include "../reference/ValType.h"
 
 class StmtVarRel :
     public Rel
@@ -16,6 +18,8 @@ public:
     std::string LhsValue() override;
 
     std::string RhsValue() override;
+
+    std::pair<ValType, ValType> ValTypes() override;
 
     virtual std::optional<int> LhsValueAsInt();
 };

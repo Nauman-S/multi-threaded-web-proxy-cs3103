@@ -2,6 +2,7 @@
 #include "Rel.h"
 #include "../reference/ProcRef.h"
 #include "../reference/VarRef.h"
+#include "../reference/ValType.h"
 
 #include <string>
 
@@ -18,5 +19,7 @@ public:
     std::string LhsValue() override;
 
     std::string RhsValue() override;
+
+    std::pair<ValType, ValType> ValTypes() override;
 };
 
