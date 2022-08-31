@@ -7,5 +7,5 @@ void CallStatementASTNode::setProcedure(ProcedureIndex *p) {
 }
 
 ProcedureIndex CallStatementASTNode::getProcedure() {
-	return proc;
+	return *proc;
 }

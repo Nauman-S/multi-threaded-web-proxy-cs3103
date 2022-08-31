@@ -9,7 +9,7 @@ class ProcedureASTNode : public ASTNode {
 public:
 	std::string getName();
 
-	std::list<StatementASTNode>* getChildren();
+	std::list<StatementASTNode> getChildren();
 
 	void setName(std::string);
 
