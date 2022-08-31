@@ -2,14 +2,10 @@
 
 class ASTNode {
 public:
-	void setParent(ASTNode p) {
-		parent = p;
-	}
+	void setParent(ASTNode*);
 
-	ASTNode getParent() {
-		return parent;
-	}
+	ASTNode* getParent();
 
 protected:
-	ASTNode* parent = NULL;
+	ASTNode* parent;
 };

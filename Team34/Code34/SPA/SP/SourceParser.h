@@ -5,12 +5,5 @@
 # include "ProgramNode.h"
 
 class SourceParser {
-public:
-	ASTNode parseTokens(list<Token> tokens) {
 
-	}
-
-protected:
-	rootNode = ProgramNode;
 };
-

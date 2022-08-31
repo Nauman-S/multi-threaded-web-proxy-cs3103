@@ -2,13 +2,9 @@
 
 class LineIndex {
 public:
-	void setLineNum(int n) {
-		lineNum = n;
-	}
+	void setLineNum(int);
 
-	int getLineNum() {
-		return lineNum;
-	}
+	int getLineNum();
 
 protected:
 	int lineNum;

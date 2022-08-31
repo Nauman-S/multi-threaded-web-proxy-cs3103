@@ -5,14 +5,10 @@
 
 class ReadStatementASTNode : public StatementASTNode {
 public:
-	void setVariable(VariableIndex v) {
-		var = v;
-	}
+	void setVariable(VariableIndex*);
 
-	VariableIndex getVariable() {
-		return var;
-	}
+	VariableIndex getVariable();
 
 protected:
-	VariableIndex var;
+	VariableIndex* var;
 };

@@ -4,13 +4,10 @@
 
 class ConditionExpression : public StatementASTNode {
 public:
-	void setValue(std::string v) {
-		value = v;
-	}
+	void setValue(std::string);
 
-	std::string getValue() {
-		return value;
-	}
+	std::string getValue();
+
 protected:
     // need edit later
 	std::string value;
