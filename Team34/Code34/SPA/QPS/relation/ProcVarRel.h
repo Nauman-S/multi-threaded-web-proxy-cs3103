@@ -2,8 +2,6 @@
 #include "Rel.h"
 #include "../reference/ProcRef.h"
 #include "../reference/VarRef.h"
-#include "../reference/ValType.h"
-#include "RelType.h"
 
 #include <string>
 
@@ -20,9 +18,5 @@ public:
     std::string LhsValue() override;
 
     std::string RhsValue() override;
-
-    std::pair<ValType, ValType> ValTypes() override;
-
-    RelType GetRelType() override { return RelType::kProcVarRel; }
 };
 
