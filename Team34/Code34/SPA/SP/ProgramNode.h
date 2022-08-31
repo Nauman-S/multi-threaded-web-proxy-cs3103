@@ -6,13 +6,10 @@
 
 class ProgramNode : ASTNode {
 public:
-	std::list<ProcedureASTNode> getChildren() {
-		return children;
-	}
+	std::list<ProcedureASTNode> getChildren();
 
-	void setChildren(std::list<ProcedureASTNode> chd) {
-		children = chd;
-	}
+	void setChildren(std::list<ProcedureASTNode>*);
+
 protected:
-	std::list<ProcedureASTNode> children;
+	std::list<ProcedureASTNode>* children;
 };

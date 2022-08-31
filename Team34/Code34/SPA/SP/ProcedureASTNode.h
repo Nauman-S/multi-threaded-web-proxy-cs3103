@@ -7,23 +7,15 @@
 
 class ProcedureASTNode : public ASTNode {
 public:
-	std::string getName() {
-		return name;
-	}
+	std::string getName();
 
-	std::list<StatementNode> getChildren() {
-		return children;
-	}
+	std::list<StatementASTNode>* getChildren();
 
-	void setName(nm) {
-		name = nm;
-	}
+	void setName(std::string);
 
-	void setChildren(std::list<StatementNode> chd) {
-		children = chd
-	}
+	void setChildren(std::list<StatementASTNode>*);
 
 protected:
 	std::string name;
-	std::list<StatementNode> children;
+	std::list<StatementASTNode>* children;
 };

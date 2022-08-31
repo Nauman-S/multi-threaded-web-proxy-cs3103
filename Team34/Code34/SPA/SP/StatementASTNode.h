@@ -4,14 +4,10 @@
 
 class StatementASTNode : public ASTNode {
 public:
-	LineIndex getLineIndex() {
-		return lineIndex;
-	}
+	LineIndex getLineIndex();
 
-	void setLineIndex(LineIndex idx) {
-		lineIndex = idx;
-	}
+	void setLineIndex(LineIndex*);
 
 protected:
-	int lineIndex;
+	LineIndex* lineIndex;
 };

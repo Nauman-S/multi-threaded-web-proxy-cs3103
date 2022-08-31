@@ -3,27 +3,28 @@
 # include "StatementASTNode.h"
 # include "ProcedureIndex.h"
 # include "ConditionExpression.h"
+# include <list>
 
 class WhileStatementASTNode : public StatementASTNode {
 public:
-	void setChildren(StatementASTNode[] chd) {
-		children = chd;
+	void setChildren(list<StatementASTNode>* c) {
+		children = c;
 	}
 
-	StatementASTNode[] getChildren() {
-		return children;
+	list<StatementASTNode> getChildren() {
+		return *children;
 	}
 
-	void setConditionExpression(ConditionExpression cond) {
+	void setConditionExpression(ConditionExpression *cond) {
 		condition = cond;
 	}
 
 	ConditionExpression getCondition() {
-		return condition;
+		return *condition;
 	}
 
 protected:
-	ConditionExpression condition;
-	StatementASTNode[] children;
+	ConditionExpression* condition;
+	StatementASTNode<list>* children;
 
 };
