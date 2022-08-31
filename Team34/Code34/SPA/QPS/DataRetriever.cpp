@@ -135,13 +135,13 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel rel)
     else if (lhs_type == ValType::kLineNum) {
         // rhs_type is kSynonym or kWildcard
         unordered_set<string> set = GetVarByStmt(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kVarName) {
         // lhs_type is kSynonym or kWildcard
         unordered_set<string> set = GetStmtByVar(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else {
@@ -165,12 +165,12 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     }
     else if (lhs_type == ValType::kProcName) {
         unordered_set<string> set = GetVarByProc(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kVarName) {
         unordered_set<string> set = GetProcByVar(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else {

@@ -42,7 +42,7 @@
     <ClInclude Include="QPS\reference\ProcRef.h" />
     <ClInclude Include="QPS\reference\ReadRef.h" />
     <ClInclude Include="QPS\reference\Ref.h" />
-    <ClInclude Include="Utils\type\RefType.h" />
+    <ClInclude Include="QPS\reference\RefType.h" />
     <ClInclude Include="QPS\reference\StmtRef.h" />
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
@@ -72,6 +72,7 @@
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\relation\ParentTRel.cpp" />
     <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
+    <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />
