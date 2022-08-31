@@ -19,6 +19,6 @@ public:
 	std::unordered_set<int> GetStmtNumByVar(std::string var);
 	std::unordered_set<std::string> GetProcNameByVar(std::string var);
 private:
-	PVRelationStore modifies_pv_store_;
-	SVRelationStore modifies_sv_store_;
+	static PVRelationStore modifies_pv_store_;
+	static SVRelationStore modifies_sv_store_;
 };
