@@ -5,9 +5,9 @@
 class Pattern
 {
 protected:
-	AssignRef assign_;
-	VarRef lhs_;
-	ExprSpec rhs_;
+	AssignRef& assign_;
+	VarRef& lhs_;
+	ExprSpec& rhs_;
 
 };
 

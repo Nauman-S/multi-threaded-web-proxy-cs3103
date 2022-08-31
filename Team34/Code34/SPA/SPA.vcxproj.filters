@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
@@ -104,6 +104,210 @@
     <ClInclude Include="QPS\query_result\SetRes.h" />
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
+    <ClInclude Include="QPS\reference\Ref.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\StmtRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\ProcRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\Query.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\pattern\Pattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\Rel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\StringTokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\DesignExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\SourceParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\PKB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\store\SVRelationStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\store\PVRelationStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\UsesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\ModifiesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\ValType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\VarRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\ConstRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\ReadRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\IntValueableRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\PrintRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\IfRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\WhileRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\CallRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\AssignRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\FollowsRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\FollowsTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\UsesSRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ModifiesSRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\UsesPRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ModifiesPRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\ExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\Clause.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\DataRetriever.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\QueryEvaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\Expr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\WildcardExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\ExactExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\expression\PartialExprSpec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\reference\RefType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\StmtStmtRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\StmtVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Tokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\InvalidTokenException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ProcVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\QueryResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\RefType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\TupleType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\SetRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\TableRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\CallStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ConditionExpression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\LineIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProcedureASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProcedureIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProgramNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ReadStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\SourceLexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\SourceToken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\StatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\VariableIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\WhileStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -245,6 +449,51 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\query_result\QueryResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\ResWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\SetRes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\CallStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ConditionExpression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\LineIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProcedureASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProcedureIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProgramNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ReadStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\SourceLexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\SourceToken.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\StatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\VariableIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\WhileStatementASTNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
