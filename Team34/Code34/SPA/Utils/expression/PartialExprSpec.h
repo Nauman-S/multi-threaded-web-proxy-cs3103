@@ -6,6 +6,7 @@ class PartialExprSpec :
     public ExprSpec
 {
 public:
-    bool IsMatch(Expr expr) override;
+    // ToDo
+    // bool IsMatch(Expr expr) override;
 };
 
