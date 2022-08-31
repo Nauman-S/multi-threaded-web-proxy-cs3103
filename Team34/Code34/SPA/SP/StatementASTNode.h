@@ -1,14 +1,15 @@
 #pragma once
 # include "ASTNode.h"
+# include "LineIndex.h"
 
-class StatementNode : public ASTNode {
+class StatementASTNode : public ASTNode {
 public:
-	int getLineIndex() {
+	LineIndex getLineIndex() {
 		return lineIndex;
 	}
 
-	void setLineIndex(num) {
-		lineIndex = num;
+	void setLineIndex(LineIndex idx) {
+		lineIndex = idx;
 	}
 
 protected:
