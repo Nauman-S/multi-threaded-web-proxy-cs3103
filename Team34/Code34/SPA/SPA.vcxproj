@@ -11,8 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\query_result\ResType.h" />
+    <ClInclude Include="QPS\query_result\ResWrapper.h" />
+    <ClInclude Include="QPS\query_result\SetRes.h" />
+    <ClInclude Include="QPS\query_result\TableRes.h" />
+    <ClInclude Include="SP\ASTNode.h" />
+    <ClInclude Include="SP\CallStatementASTNode.h" />
+    <ClInclude Include="SP\ConditionExpression.h" />
+    <ClInclude Include="SP\LineIndex.h" />
+    <ClInclude Include="SP\ProcedureASTNode.h" />
+    <ClInclude Include="SP\ProcedureIndex.h" />
+    <ClInclude Include="SP\ProgramNode.h" />
+    <ClInclude Include="SP\ReadStatementASTNode.h" />
     <ClInclude Include="SP\SourceLexer.h" />
     <ClInclude Include="SP\SourceToken.h" />
+    <ClInclude Include="SP\StatementASTNode.h" />
+    <ClInclude Include="SP\VariableIndex.h" />
+    <ClInclude Include="SP\WhileStatementASTNode.h" />
+    <ClInclude Include="Utils\type\TupleType.h" />
+    <ClInclude Include="QPS\relation\ParentTRel.h" />
+    <ClInclude Include="QPS\relation\ProcVarRel.h" />
+    <ClInclude Include="QPS\query_result\QueryResult.h" />
+    <ClInclude Include="QPS\query_result\ResTable.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />
@@ -58,10 +78,27 @@
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
     <ClInclude Include="Utils\Token.h" />
     <ClInclude Include="Utils\Tokenizer.h" />
+    <ClInclude Include="Utils\type\RefType.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
+    <ClCompile Include="QPS\query_result\SetRes.cpp" />
+    <ClCompile Include="QPS\relation\ParentTRel.cpp" />
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
+    <ClCompile Include="QPS\query_result\QueryResult.cpp" />
+    <ClCompile Include="SP\ASTNode.cpp" />
+    <ClCompile Include="SP\CallStatementASTNode.cpp" />
+    <ClCompile Include="SP\ConditionExpression.cpp" />
+    <ClCompile Include="SP\LineIndex.cpp" />
+    <ClCompile Include="SP\ProcedureASTNode.cpp" />
+    <ClCompile Include="SP\ProcedureIndex.cpp" />
+    <ClCompile Include="SP\ProgramNode.cpp" />
+    <ClCompile Include="SP\ReadStatementASTNode.cpp" />
     <ClCompile Include="SP\SourceLexer.cpp" />
     <ClCompile Include="SP\SourceToken.cpp" />
+    <ClCompile Include="SP\StatementASTNode.cpp" />
+    <ClCompile Include="SP\VariableIndex.cpp" />
+    <ClCompile Include="SP\WhileStatementASTNode.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />

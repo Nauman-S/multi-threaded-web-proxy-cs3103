@@ -18,11 +18,14 @@ protected:
 public:
 	Query() {};
 
-	explicit Query(std::vector<Ref> select_tuple) :select_tuple_{ select_tuple } {};
+	explicit Query(std::vector<Ref> select_tuple) 
+		:select_tuple_{ select_tuple } {};
 
-	Query(std::vector<Ref> select_tuple, std::vector<Rel> relations) : select_tuple_{ select_tuple }, relations_{ relations } {};
+	Query(std::vector<Ref> select_tuple, std::vector<Rel> relations) 
+		: select_tuple_{ select_tuple }, relations_{ relations } {};
 
-	Query(std::vector<Ref> select_tuple, std::vector<Pattern> patterns) : select_tuple_{ select_tuple }, patterns_{patterns} {};
+	Query(std::vector<Ref> select_tuple, std::vector<Pattern> patterns) 
+		: select_tuple_{ select_tuple }, patterns_{patterns} {};
 
 	Query(std::vector<Ref> select_tuple, std::vector<Rel> relations, std::vector<Pattern> patterns)
 		: select_tuple_{ select_tuple }, relations_{ relations }, patterns_{ patterns } {};
