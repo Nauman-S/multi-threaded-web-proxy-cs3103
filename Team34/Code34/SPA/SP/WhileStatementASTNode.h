@@ -7,24 +7,16 @@
 
 class WhileStatementASTNode : public StatementASTNode {
 public:
-	void setChildren(list<StatementASTNode>* c) {
-		children = c;
-	}
+	void setChildren(std::list<StatementASTNode>*);
 
-	list<StatementASTNode> getChildren() {
-		return *children;
-	}
+	std::list<StatementASTNode> getChildren();
 
-	void setConditionExpression(ConditionExpression *cond) {
-		condition = cond;
-	}
+	void setConditionExpression(ConditionExpression*);
 
-	ConditionExpression getCondition() {
-		return *condition;
-	}
+	ConditionExpression getCondition();
 
 protected:
 	ConditionExpression* condition;
-	StatementASTNode<list>* children;
+	std::list<StatementASTNode>* children;
 
 };

@@ -2,18 +2,18 @@
 
 using namespace std;
 
-void setChildren(list<StatementASTNode>* c) {
+void WhileStatementASTNode::setChildren(std::list<StatementASTNode>* c) {
 	children = c;
 }
 
-list<StatementASTNode> getChildren() {
+std::list<StatementASTNode> WhileStatementASTNode::getChildren() {
 	return *children;
 }
 
-void setConditionExpression(ConditionExpression* cond) {
+void WhileStatementASTNode::setConditionExpression(ConditionExpression* cond) {
 	condition = cond;
 }
 
-ConditionExpression getCondition() {
+ConditionExpression WhileStatementASTNode::getCondition() {
 	return *condition;
 }
