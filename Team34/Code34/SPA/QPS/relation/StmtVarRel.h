@@ -4,6 +4,7 @@
 #include "../reference/StmtRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
+#include "RelType.h"
 
 class StmtVarRel :
     public Rel
@@ -20,6 +21,8 @@ public:
     std::string RhsValue() override;
 
     std::pair<ValType, ValType> ValTypes() override;
+
+    RelType GetRelType() override { return RelType::kStmtVarRel; }
 
     virtual std::optional<int> LhsValueAsInt();
 };
