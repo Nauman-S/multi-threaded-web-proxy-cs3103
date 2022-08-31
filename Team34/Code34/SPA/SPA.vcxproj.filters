@@ -1,48 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
-    <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
-    <ClCompile Include="Utils\expression\Expr.cpp" />
-    <ClCompile Include="QPS\DataRetriever.cpp" />
-    <ClCompile Include="QPS\Clause.cpp" />
-    <ClCompile Include="Utils\expression\ExprSpec.cpp" />
-    <ClCompile Include="QPS\QueryEvaluator.cpp" />
-    <ClCompile Include="QPS\reference\AssignRef.cpp" />
-    <ClCompile Include="QPS\reference\CallRef.cpp" />
-    <ClCompile Include="QPS\reference\IfRef.cpp" />
-    <ClCompile Include="PKB\PKB.cpp" />
-    <ClCompile Include="PKB\store\PVRelationStore.cpp" />
-    <ClCompile Include="PKB\store\SVRelationStore.cpp" />
-    <ClCompile Include="QPS\pattern\Pattern.cpp" />
-    <ClCompile Include="QPS\Query.cpp" />
-    <ClCompile Include="QPS\reference\ConstRef.cpp" />
-    <ClCompile Include="QPS\reference\IntValueableRef.cpp" />
-    <ClCompile Include="QPS\reference\PrintRef.cpp" />
-    <ClCompile Include="QPS\reference\ProcRef.cpp" />
-    <ClCompile Include="QPS\reference\ReadRef.cpp" />
-    <ClCompile Include="QPS\reference\StmtRef.cpp" />
-    <ClCompile Include="QPS\reference\VarRef.cpp" />
-    <ClCompile Include="QPS\reference\WhileRef.cpp" />
-    <ClCompile Include="QPS\relation\FollowsRel.cpp" />
-    <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
-    <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
-    <ClCompile Include="QPS\relation\ModifiesSRel.cpp" />
-    <ClCompile Include="QPS\relation\ParentRel.cpp" />
-    <ClCompile Include="QPS\relation\Rel.cpp" />
-    <ClCompile Include="QPS\relation\UsesPRel.cpp" />
-    <ClCompile Include="QPS\relation\UsesSRel.cpp" />
-    <ClCompile Include="SP\DesignExtractor.cpp" />
-    <ClCompile Include="SP\SourceParser.cpp" />
-    <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
-    <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
-    <ClCompile Include="Utils\InvalidTokenException.cpp" />
-    <ClCompile Include="Utils\StringTokenizer.cpp" />
-    <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
-    <ClCompile Include="Utils\Token.cpp" />
-    <ClCompile Include="Utils\Tokenizer.cpp" />
-    <ClCompile Include="QPS\relation\ParentTRel.cpp" />
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\SP">
+      <UniqueIdentifier>{d9bc2525-322a-4134-9cf2-e02423e535be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PKB">
+      <UniqueIdentifier>{8071b734-f4a2-4585-a922-78a3d71e1b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QPS">
+      <UniqueIdentifier>{b0fe78f7-b841-4b52-b61c-07632dc7f423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{60a235db-8164-4483-b4fa-066de960503f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PKB">
+      <UniqueIdentifier>{0ecd8b78-0bc3-4fb5-b9cd-b5d960376207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SP">
+      <UniqueIdentifier>{5cfff89c-1b95-4da5-a56c-f7a3ad8107df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QPS">
+      <UniqueIdentifier>{7430d6a8-098c-4724-b131-72c8afd779d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{5bc02300-e035-4e26-9c9e-fa841de7b243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QPS\ref">
+      <UniqueIdentifier>{cd073600-c234-4e4d-9936-75778482e5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QPS\ref">
+      <UniqueIdentifier>{be66dccc-df5c-4d93-a806-b7ef35390ccc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\reference\Ref.h">
@@ -75,18 +75,18 @@
     <ClInclude Include="PKB\PKB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="PKB\store\SVRelationStore.h">
+    <ClInclude Include="PKB\store\SVRelationStore.h">
       <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\store\PVRelationStore.h">
+    </ClInclude>
+    <ClInclude Include="PKB\store\PVRelationStore.h">
       <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\manager\UsesManager.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\manager\ModifiesManager.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\UsesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\ModifiesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="QPS\reference\ValType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -171,19 +171,31 @@
     <ClInclude Include="QPS\relation\StmtVarRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\ProcVarRel.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
     <ClInclude Include="Utils\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\ParentTRel.h">
-		<Filter>Header Files</Filter>
-	</ClInclude>
     <ClInclude Include="Utils\Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\InvalidTokenException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ProcVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\QueryResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\RefType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\TupleType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -215,12 +227,12 @@
     <ClCompile Include="PKB\PKB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="PKB\store\SVRelationStore.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
-	<ClCompile Include="PKB\store\PVRelationStore.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="PKB\store\SVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\store\PVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="QPS\reference\VarRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -299,19 +311,28 @@
     <ClCompile Include="QPS\relation\StmtVarRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
     <ClCompile Include="Utils\Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\Tokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\ParentTRel.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
     <ClCompile Include="Utils\InvalidTokenException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\manager\UsesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\manager\ModifiesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ParentTRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\QueryResult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
