@@ -11,8 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\query_result\QueryResult.h" />
+    <ClInclude Include="QPS\query_result\ResType.h" />
+    <ClInclude Include="QPS\query_result\ResWrapper.h" />
+    <ClInclude Include="QPS\query_result\SetRes.h" />
+    <ClInclude Include="QPS\query_result\TableRes.h" />
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
+    <ClInclude Include="QPS\relation\RelType.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />
@@ -24,10 +30,10 @@
     <ClInclude Include="QPS\reference\CallRef.h" />
     <ClInclude Include="QPS\reference\IfRef.h" />
     <ClInclude Include="PKB\PKB.h" />
-	<ClInclude Include="PKB\store\PVRelationStore.h" />
-	<ClInclude Include="PKB\store\SVRelationStore.h" />
-	<ClInclude Include="PKB\manager\UsesManager.h" />
-	<ClInclude Include="PKB\manager\ModifiesManager.h" />
+    <ClInclude Include="PKB\store\PVRelationStore.h" />
+    <ClInclude Include="PKB\store\SVRelationStore.h" />
+    <ClInclude Include="PKB\manager\UsesManager.h" />
+    <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
     <ClInclude Include="QPS\Query.h" />
     <ClInclude Include="QPS\reference\ConstRef.h" />
@@ -58,8 +64,12 @@
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
     <ClInclude Include="Utils\Token.h" />
     <ClInclude Include="Utils\Tokenizer.h" />
+    <ClInclude Include="Utils\type\TupleType.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\query_result\QueryResult.cpp" />
+    <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
+    <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\relation\ParentTRel.cpp" />
     <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
@@ -73,10 +83,10 @@
     <ClCompile Include="QPS\reference\CallRef.cpp" />
     <ClCompile Include="QPS\reference\IfRef.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
-	<ClCompile Include="PKB\store\PVRelationStore.cpp" />
-	<ClCompile Include="PKB\store\SVRelationStore.cpp" />
-	<ClCompile Include="PKB\manager\UsesManager.cpp" />
-	<ClCompile Include="PKB\manager\ModifiesManager.cpp" />
+    <ClCompile Include="PKB\store\PVRelationStore.cpp" />
+    <ClCompile Include="PKB\store\SVRelationStore.cpp" />
+    <ClCompile Include="PKB\manager\UsesManager.cpp" />
+    <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\reference\ConstRef.cpp" />
