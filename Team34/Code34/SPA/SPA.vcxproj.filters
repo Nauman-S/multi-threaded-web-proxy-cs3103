@@ -75,18 +75,18 @@
     <ClInclude Include="PKB\PKB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="PKB\store\SVRelationStore.h">
+    <ClInclude Include="PKB\store\SVRelationStore.h">
       <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\store\PVRelationStore.h">
+    </ClInclude>
+    <ClInclude Include="PKB\store\PVRelationStore.h">
       <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\manager\UsesManager.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
-	<ClInclude Include="PKB\manager\ModifiesManager.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\UsesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\manager\ModifiesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="QPS\reference\ValType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -171,19 +171,82 @@
     <ClInclude Include="QPS\relation\StmtVarRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\ProcVarRel.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
     <ClInclude Include="Utils\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\ParentTRel.h">
-		<Filter>Header Files</Filter>
-	</ClInclude>
     <ClInclude Include="Utils\Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\InvalidTokenException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ProcVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\QueryResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\RefType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\type\TupleType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\ResWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\SetRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\query_result\TableRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\CallStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ConditionExpression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\LineIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProcedureASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProcedureIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProgramNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ReadStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\SourceLexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\SourceToken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\StatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\VariableIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\WhileStatementASTNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -215,12 +278,12 @@
     <ClCompile Include="PKB\PKB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="PKB\store\SVRelationStore.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
-	<ClCompile Include="PKB\store\PVRelationStore.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="PKB\store\SVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\store\PVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="QPS\reference\VarRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -299,19 +362,73 @@
     <ClCompile Include="QPS\relation\StmtVarRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
     <ClCompile Include="Utils\Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\Tokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\ParentTRel.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
     <ClCompile Include="Utils\InvalidTokenException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\manager\UsesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\manager\ModifiesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ParentTRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\QueryResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\ResWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\query_result\SetRes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\CallStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ConditionExpression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\LineIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProcedureASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProcedureIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProgramNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ReadStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\SourceLexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\SourceToken.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\StatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\VariableIndex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\WhileStatementASTNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
