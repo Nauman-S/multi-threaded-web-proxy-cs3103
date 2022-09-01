@@ -5,6 +5,12 @@
 class WritePKBManager
 {
 public:
+	static WritePKBManager& GetInstance()
+	{
+		static WritePKBManager* manager = new WritePKBManager();
+		return *manager;
+	}
+
 	// APIs related to Uses relation
 	void SetUses(int stmt_num, std::string var);
 	void SetUses(std::string proc_name, std::string var);

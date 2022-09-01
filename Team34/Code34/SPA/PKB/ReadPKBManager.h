@@ -8,6 +8,12 @@
 class ReadPKBManager
 {
 public:
+	static ReadPKBManager& GetInstance()
+	{
+		static ReadPKBManager* manager = new ReadPKBManager();
+		return *manager;
+	}
+
 	// APIs related to Uses relation
 	bool CheckUses(int stmt_num, std::string var);
 	bool CheckUses(std::string proc_name, std::string var);
