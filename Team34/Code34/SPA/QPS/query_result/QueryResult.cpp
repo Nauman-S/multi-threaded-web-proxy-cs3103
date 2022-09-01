@@ -14,6 +14,11 @@ bool QueryResult::MergeResult(ResWrapper& res_wrapper) {
 	else if (type == ResType::kTable) {
 		return MergeTableResult(res_wrapper);
 	}
+	else {
+		// TODO: change to assert
+		return false;
+	}
+	
 }
 
 
@@ -29,27 +34,17 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 		return false;
 	}
 
+	
 	if (set_results_.count(sym) == 0) {
-		set_results_.insert({ sym, std::make_shared<unordered_set<string>>(res_set) });
+		set_results_.insert({ sym, set_res });
 		return true;
 	} 
 
-	unordered_set<string> merged_result;
-	for (const string& s : res_set) {
-		if (set_results_.count(s)) {
-			merged_result.insert(s);
-		}
-	}
+	set_results_.at(sym)->Merge(set_res);
+	return true;
 
-	if (merged_result.size() == 0) {
-		return false;
-	}
-	else {
-		set_results_.insert({ sym, std::make_shared<unordered_set<string>>(merged_result) });
-		return true;
-	}
 }
 
 bool QueryResult::MergeTableResult(ResWrapper& res_wrapper) {
-
+	return true;
 }

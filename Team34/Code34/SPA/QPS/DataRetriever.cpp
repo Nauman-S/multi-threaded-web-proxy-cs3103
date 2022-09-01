@@ -148,7 +148,7 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel rel)
         // Both are kSynonym or kWildcard
         vector<pair<string, string>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
-        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, table);
+        shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
         res = std::make_unique<ResWrapper>(table_res);
     }
     return res;
@@ -177,7 +177,7 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
         // Both are kSynonym or kWildcard
         vector<pair<string, string>> table = GetAllPVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
-        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, table);
+        shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
         res = std::make_unique<ResWrapper>(table_res);
     }
     return res;

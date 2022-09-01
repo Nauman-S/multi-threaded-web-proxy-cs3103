@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <unordered_set>
+#include <memory>
 
 using std::string;
 using std::unordered_set;
@@ -17,5 +18,7 @@ public:
 	string GetSyn() { return syn_; }
 
 	unordered_set<string>& GetDomain() { return domain_; }
+
+	bool Merge(std::shared_ptr<SetRes> other);
 };
  
