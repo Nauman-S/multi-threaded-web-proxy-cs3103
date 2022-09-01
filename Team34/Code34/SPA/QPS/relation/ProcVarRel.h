@@ -11,6 +11,7 @@
 #include "../query_result/ResWrapper.h"
 #include "../DataRetriever.h"
 
+
 class ProcVarRel :
     public Rel
 {

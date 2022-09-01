@@ -1,8 +1,5 @@
 #include "SVRelationStore.h"
 
-std::unordered_map<int, std::unordered_set<std::string>> stmt_num_to_var_map_;
-std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_num_map_;
-
 bool SVRelationStore::CheckSVRelation(int stmt_no, std::string var)
 {
 	auto iter = stmt_num_to_var_map_.find(stmt_no);
@@ -14,7 +11,7 @@ bool SVRelationStore::CheckSVRelation(int stmt_no, std::string var)
 	return false;
 }
 
-std::vector<std::pair<int, std::string>>* GetAllSVRelations()
+std::vector<std::pair<int, std::string>>* SVRelationStore::GetAllSVRelations()
 {
 	std::vector<std::pair<int, std::string>>* all_sv_relations = new std::vector<std::pair<int, std::string>>();
 	for (const auto& p : stmt_num_to_var_map_)

@@ -6,7 +6,6 @@ class ExactExprSpec :
     public ExprSpec
 {
 public:
-    // ToDo
-    // bool IsMatch(Expr expr) override;
+    bool IsMatch(Expr expr) override;
 };
 
