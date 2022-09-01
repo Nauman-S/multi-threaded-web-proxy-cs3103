@@ -11,10 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />
     <ClInclude Include="QPS\query_result\TableRes.h" />
+    <ClInclude Include="QPS\relation\RelType.h" />
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
@@ -31,8 +33,8 @@
     <ClInclude Include="Utils\type\TupleType.h" />
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
-    <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResTable.h" />
+
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />
@@ -44,12 +46,10 @@
     <ClInclude Include="QPS\reference\CallRef.h" />
     <ClInclude Include="QPS\reference\IfRef.h" />
     <ClInclude Include="PKB\PKB.h" />
-	  <ClInclude Include="PKB\ReadPKBManager.h" />
-	  <ClInclude Include="PKB\WritePKBManager.h" />
-	  <ClInclude Include="PKB\store\PVRelationStore.h" />
-	  <ClInclude Include="PKB\store\SVRelationStore.h" />
-	  <ClInclude Include="PKB\manager\UsesManager.h" />
-	  <ClInclude Include="PKB\manager\ModifiesManager.h" />
+    <ClInclude Include="PKB\store\PVRelationStore.h" />
+    <ClInclude Include="PKB\store\SVRelationStore.h" />
+    <ClInclude Include="PKB\manager\UsesManager.h" />
+    <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
     <ClInclude Include="QPS\Query.h" />
     <ClInclude Include="QPS\reference\ConstRef.h" />
@@ -112,12 +112,10 @@
     <ClCompile Include="QPS\reference\CallRef.cpp" />
     <ClCompile Include="QPS\reference\IfRef.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
-  	<ClCompile Include="PKB\ReadPKBManager.cpp" />
-  	<ClCompile Include="PKB\WritePKBManager.cpp" />
-  	<ClCompile Include="PKB\store\PVRelationStore.cpp" />
-  	<ClCompile Include="PKB\store\SVRelationStore.cpp" />
-  	<ClCompile Include="PKB\manager\UsesManager.cpp" />
-  	<ClCompile Include="PKB\manager\ModifiesManager.cpp" />
+    <ClCompile Include="PKB\store\PVRelationStore.cpp" />
+    <ClCompile Include="PKB\store\SVRelationStore.cpp" />
+    <ClCompile Include="PKB\manager\UsesManager.cpp" />
+    <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\reference\ConstRef.cpp" />
