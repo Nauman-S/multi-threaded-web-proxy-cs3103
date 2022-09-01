@@ -1,14 +1,16 @@
 #pragma once
+#include <memory>
+
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
 
 class WritePKBManager
 {
 public:
-	static WritePKBManager& GetInstance()
+	static std::unique_ptr<WritePKBManager> GetInstance()
 	{
-		static WritePKBManager* manager = new WritePKBManager();
-		return *manager;
+		std::unique_ptr<WritePKBManager> manager(new WritePKBManager());
+		return manager;
 	}
 
 	// APIs related to Uses relation

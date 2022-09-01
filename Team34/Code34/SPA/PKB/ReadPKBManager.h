@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <unordered_set>
+#include <memory>
 
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
@@ -8,10 +9,10 @@
 class ReadPKBManager
 {
 public:
-	static ReadPKBManager& GetInstance()
+	static std::unique_ptr<ReadPKBManager> GetInstance()
 	{
-		static ReadPKBManager* manager = new ReadPKBManager();
-		return *manager;
+		std::unique_ptr<ReadPKBManager> manager(new ReadPKBManager());
+		return manager;
 	}
 
 	// APIs related to Uses relation
