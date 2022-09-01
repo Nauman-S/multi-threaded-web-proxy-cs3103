@@ -34,6 +34,7 @@
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\query_result\ResTable.h" />
+
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />

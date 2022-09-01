@@ -22,6 +22,10 @@ public:
 
     std::string RhsValue() override;
 
+    std::pair<ValType, ValType> ValTypes() override;
+
+    RelType GetRelType() override { return RelType::kStmtVarRel; }
+
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) {

@@ -1,5 +1,8 @@
 #include "PVRelationStore.h"
 
+std::unordered_map<std::string, std::unordered_set<std::string>> proc_name_to_var_map_;
+std::unordered_map<std::string, std::unordered_set<std::string>> var_to_proc_name_map_;
+
 bool PVRelationStore::CheckPVRelation(std::string proc_name, std::string var)
 {
 	auto iter = var_to_proc_name_map_.find(var);

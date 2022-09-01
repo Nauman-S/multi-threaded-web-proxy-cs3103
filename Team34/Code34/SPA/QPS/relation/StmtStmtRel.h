@@ -23,6 +23,10 @@ public:
 
     std::string RhsValue() override;
 
+    std::pair<ValType, ValType> ValTypes() override;
+
+    RelType GetRelType() override { return RelType::kStmtStmtRel; }
+
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::optional<int> RhsValueAsInt();
