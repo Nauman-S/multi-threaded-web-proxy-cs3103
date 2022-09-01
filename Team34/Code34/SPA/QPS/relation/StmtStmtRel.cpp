@@ -10,6 +10,11 @@ std::string StmtStmtRel::RhsValue()
     return rhs_ref_.Value();
 }
 
+std::pair<ValType, ValType> StmtStmtRel::ValTypes()
+{
+    return std::pair<ValType, ValType>(lhs_ref_.GetValType(), rhs_ref_.GetValType());
+}
+
 std::optional<int> StmtStmtRel::LhsValueAsInt()
 {
     return lhs_ref_.ValueAsInt();
