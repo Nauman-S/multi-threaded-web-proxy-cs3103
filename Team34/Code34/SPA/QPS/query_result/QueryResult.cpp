@@ -46,5 +46,6 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 }
 
 bool QueryResult::MergeTableResult(ResWrapper& res_wrapper) {
+	table_results.push_back(res_wrapper.GetTable());
 	return true;
 }
