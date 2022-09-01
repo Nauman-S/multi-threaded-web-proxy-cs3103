@@ -75,13 +75,13 @@
     <ClInclude Include="PKB\PKB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  	<ClInclude Include="PKB\ReadPKBManager.h">
+    <ClInclude Include="PKB\ReadPKBManager.h">
       <Filter>Header Files</Filter>
-  	</ClInclude>
-  	<ClInclude Include="PKB\WritePKBManager.h">
-  	  <Filter>Header Files</Filter>
-  	</ClInclude>
-  	<ClInclude Include="PKB\store\SVRelationStore.h">
+    </ClInclude>
+    <ClInclude Include="PKB\WritePKBManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\store\SVRelationStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PKB\store\PVRelationStore.h">
@@ -255,6 +255,9 @@
     <ClInclude Include="SP\WhileStatementASTNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\relation\RelType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -284,18 +287,18 @@
     <ClCompile Include="PKB\PKB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	  <ClCompile Include="PKB\ReadPKBManager.cpp">
-	    <Filter>Source Files</Filter>
-	  </ClCompile>
-	  <ClCompile Include="PKB\WritePKBManager.cpp">
-	    <Filter>Source Files</Filter>
-	  </ClCompile>
-	  <ClCompile Include="PKB\store\SVRelationStore.cpp">
-	    <Filter>Source Files</Filter>
-	  </ClCompile>
-	  <ClCompile Include="PKB\store\PVRelationStore.cpp">
-	    <Filter>Source Files</Filter>
-	  </ClCompile>
+    <ClCompile Include="PKB\ReadPKBManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\WritePKBManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\store\SVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\store\PVRelationStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="QPS\reference\VarRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
