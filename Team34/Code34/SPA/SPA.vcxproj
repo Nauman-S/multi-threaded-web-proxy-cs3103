@@ -32,7 +32,6 @@
     <ClInclude Include="Utils\type\TupleType.h" />
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
-    <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResTable.h" />
 
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
