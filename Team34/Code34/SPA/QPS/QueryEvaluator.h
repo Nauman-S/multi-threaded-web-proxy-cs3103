@@ -15,6 +15,7 @@ class QueryEvaluator
 protected:
 	Query query_;
 	//std::unordered_map<Ref, std::vector<std::string>> syn_domains_;
+
 	std::vector<Clause> clauses_;
 	DataRetriever data_retriever_;
 
