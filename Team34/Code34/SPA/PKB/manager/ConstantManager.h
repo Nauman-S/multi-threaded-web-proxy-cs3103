@@ -9,5 +9,5 @@ public:
     bool IsConstant(int constant);
     std::shared_ptr<unordered_set<int>> GetAllConstants();
 private:
-    unordered_set<int> constants_;
+    static unordered_set<int> constants_;
 };

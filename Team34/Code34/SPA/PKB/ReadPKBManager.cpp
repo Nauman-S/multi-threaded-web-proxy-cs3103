@@ -1,5 +1,22 @@
 #include "ReadPKBManager.h"
 
+// APIs related to Variable entity
+bool ReadPKBManager::IsVariable(std::string var)
+{
+    return variable_manager_.IsVariable(var);
+}
+
+std::shared_ptr<unordered_set<int>> ReadPKBManager::GetAllConstants()
+{
+    return
+}
+
+// APIs related to Constant entity
+bool ReadPKBManager::IsConstant(int constant)
+{
+    return constant_manager_.IsConstant(constant);
+}
+
 // APIs related to Uses relation
 bool ReadPKBManager::CheckUses(int stmt_num, std::string var)
 {

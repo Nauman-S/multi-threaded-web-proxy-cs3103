@@ -10,5 +10,5 @@ public:
     bool IsVariable(string var);
     std::shared_ptr<unordered_set<string>> GetAllVariables();
 private:
-    unordered_set<string> variables_;
+    static unordered_set<string> variables_;
 };

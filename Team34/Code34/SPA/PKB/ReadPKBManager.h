@@ -3,6 +3,8 @@
 #include <unordered_set>
 #include <memory>
 
+#include "manager/VariableManager.h"
+#include "manager/ConstantManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
 
@@ -14,6 +16,13 @@ public:
 		std::unique_ptr<ReadPKBManager> manager(new ReadPKBManager());
 		return manager;
 	}
+    // APIs related to Variable entity
+    bool IsVariable(std::string var);
+    std::shared_ptr<unordered_set<std::string>> GetAllVariables();
+
+    // APIs related to Constant entity
+    bool IsConstant(int constant);
+    std::shared_ptr<unordered_set<int>> GetAllConstants();
 
 	// APIs related to Uses relation
 	bool CheckUses(int stmt_num, std::string var);
@@ -35,6 +44,8 @@ public:
 	std::unordered_set<int> GetModifiesStmtNumByVar(std::string var);
 	std::unordered_set<std::string> GetModifiesProcNameByVar(std::string var);
 private:
+    VariableManager variable_manager_;
+    ConstantManager constant_manager_;
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
 };
