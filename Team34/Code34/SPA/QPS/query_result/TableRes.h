@@ -10,22 +10,22 @@ using std::string;
 using std::unordered_map;
 using std::vector;
 using std::tuple;
-using Pair = std::pair<string, string>;
+using StrPair = std::pair<string, string>;
 
 class TableRes
 {
 protected:
     unordered_map<string, int> syn_to_col_;  // maps synonym name to tuple col index
-    vector<Pair> rows_;
+    vector<StrPair> rows_;
 
 public:
-    TableRes(unordered_map<string, int> s2c, vector<Pair> rows) : syn_to_col_(s2c), rows_(rows) {};
+    TableRes(unordered_map<string, int> s2c, vector<StrPair> rows) : syn_to_col_(s2c), rows_(rows) {};
 
     bool Contains(string key);
 
     std::shared_ptr<vector<string>> Columns();
 
-    Pair GetRow(int index) { return rows_[index]; }
+    StrPair GetRow(int index) { return rows_[index]; }
 
     string GetValue(int index, string syn);
 };
