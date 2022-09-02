@@ -60,9 +60,6 @@
     <ClInclude Include="QPS\pattern\Pattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\Rel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\StringTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,27 +117,6 @@
     <ClInclude Include="QPS\reference\AssignRef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\FollowsRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\FollowsTRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\ParentRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\UsesSRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\ModifiesSRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\UsesPRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\ModifiesPRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\expression\ExprSpec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,12 +144,6 @@
     <ClInclude Include="QPS\reference\RefType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QPS\relation\StmtStmtRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\StmtVarRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -181,12 +151,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\InvalidTokenException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\ParentTRel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QPS\relation\ProcVarRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QPS\query_result\QueryResult.h">
@@ -264,6 +228,45 @@
     <ClInclude Include="SP\design_extractor\ConstantExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\relation\FollowsRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\FollowsTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ModifiesPRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ModifiesSRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ParentTRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\ProcVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\Rel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\RelType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\StmtStmtRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\StmtVarRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\UsesPRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QPS\relation\UsesSRel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -276,9 +279,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\pattern\Pattern.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\Rel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\StringTokenizer.cpp">
@@ -329,27 +329,6 @@
     <ClCompile Include="QPS\reference\AssignRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\FollowsRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\FollowsTRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\ParentRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\UsesSRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\ModifiesSRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\UsesPRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\ModifiesPRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\expression\ExprSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -374,12 +353,6 @@
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\relation\StmtStmtRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\StmtVarRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -393,12 +366,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PKB\manager\ModifiesManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\ParentTRel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\query_result\QueryResult.cpp">
@@ -453,6 +420,42 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\FollowsRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\FollowsTRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ModifiesPRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ModifiesSRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ParentRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ParentTRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\ProcVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\Rel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\StmtStmtRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\StmtVarRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\UsesPRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\relation\UsesSRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

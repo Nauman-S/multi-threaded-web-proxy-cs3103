@@ -1,4 +1,5 @@
 #include "StmtVarRel.h"
+#include "../DataRetriever.h"
 
 std::string StmtVarRel::LhsValue()
 {
@@ -19,4 +20,9 @@ std::pair<ValType, ValType> StmtVarRel::ValTypes()
 std::optional<int> StmtVarRel::LhsValueAsInt()
 {
     return lhs_ref_.ValueAsInt();
+}
+
+std::unique_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
+{
+    return retriever.retrieve(*this);
 }
