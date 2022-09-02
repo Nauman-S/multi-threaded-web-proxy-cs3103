@@ -63,9 +63,6 @@
     <ClInclude Include="Utils\StringTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SP\DesignExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SP\SourceParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -219,6 +216,18 @@
     <ClInclude Include="SP\WhileStatementASTNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SP\design_extractor\DesignExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\design_extractor\Extractable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\design_extractor\NodeExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\design_extractor\ConstantExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="QPS\relation\FollowsRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -273,9 +282,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\StringTokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SP\DesignExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SP\SourceParser.cpp">
@@ -408,6 +414,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SP\WhileStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\design_extractor\DesignExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\relation\FollowsRel.cpp">
