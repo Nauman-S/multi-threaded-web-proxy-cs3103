@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "reference/Ref.h"
 #include "reference/ValType.h"
 //#include "relation/StmtVarRel.h"
 //#include "relation/ProcVarRel.h"
@@ -66,5 +67,7 @@ public:
 
 	// TODO
 	// std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);
+
+	// std::shared_ptr<vector<SetRes>> retrieve(std::shared_ptr<vector<Ref>> refs_ptr);
 };
 
