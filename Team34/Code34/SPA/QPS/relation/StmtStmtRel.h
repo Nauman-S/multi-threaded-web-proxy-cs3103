@@ -6,8 +6,9 @@
 #include "RelType.h"
 #include "../reference/StmtRef.h"
 #include "../reference/ValType.h"
-#include "../query_result/ResWrapper.h"
-#include "../DataRetriever.h"
+//#include "../query_result/ResWrapper.h"
+//#include "../DataRetriever.h"
+// class DataRetriever;  // To avoid cyclic include of visitor pattern
 
 class StmtStmtRel :
     public Rel

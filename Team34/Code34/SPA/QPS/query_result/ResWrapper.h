@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+
 #include "SetRes.h"
 #include "TableRes.h"
 #include "ResType.h"

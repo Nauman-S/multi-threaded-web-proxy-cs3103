@@ -1,4 +1,9 @@
 #pragma once
+
+#include <vector>
+#include <unordered_map>
+#include <string>
+
 #include "reference/Ref.h"
 #include "relation/Rel.h"
 #include "pattern/Pattern.h"
@@ -6,9 +11,6 @@
 #include "DataRetriever.h"
 #include "Query.h"
 
-#include <vector>
-#include <unordered_map>
-#include <string>
 
 class QueryEvaluator
 {
