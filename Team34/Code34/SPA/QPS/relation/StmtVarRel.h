@@ -1,10 +1,15 @@
 #pragma once
 
+#include <memory>
+
 #include "Rel.h"
+#include "RelType.h"
 #include "../reference/StmtRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
-#include "RelType.h"
+#include "../query_result/ResWrapper.h"
+//#include "../DataRetriever.h"
+class DataRetriever;  // forward declaration to avoid cyclic include of Visitor pattern
 
 class StmtVarRel :
     public Rel
@@ -25,5 +30,7 @@ public:
     RelType GetRelType() override { return RelType::kStmtVarRel; }
 
     virtual std::optional<int> LhsValueAsInt();
+
+    virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& retriever);
 };
 

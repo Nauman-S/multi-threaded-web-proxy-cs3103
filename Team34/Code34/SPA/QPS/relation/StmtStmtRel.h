@@ -1,10 +1,14 @@
 #pragma once
-#include "Rel.h"
-#include "../reference/StmtRef.h"
-#include "../reference/ValType.h"
-#include "RelType.h"
 
 #include <string>
+
+#include "Rel.h"
+#include "RelType.h"
+#include "../reference/StmtRef.h"
+#include "../reference/ValType.h"
+//#include "../query_result/ResWrapper.h"
+//#include "../DataRetriever.h"
+// class DataRetriever;  // To avoid cyclic include of visitor pattern
 
 class StmtStmtRel :
     public Rel
@@ -27,6 +31,10 @@ public:
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::optional<int> RhsValueAsInt();
+
+    /*virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) {
+        return data_retriever.retrieve(*this);
+    }*/
 
 };
 
