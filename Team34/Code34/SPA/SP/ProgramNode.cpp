@@ -2,10 +2,10 @@
 
 using namespace std;
 
-std::list<ProcedureASTNode> ProgramNode::getChildren() {
-	return *children;
+std::vector<ProcedureASTNode> ProgramNode::getChildren() {
+	return children;
 }
 
-void ProgramNode::setChildren(std::list<ProcedureASTNode>* c) {
+void ProgramNode::setChildren(std::vector<ProcedureASTNode>& c) {
 	children = c;
 }

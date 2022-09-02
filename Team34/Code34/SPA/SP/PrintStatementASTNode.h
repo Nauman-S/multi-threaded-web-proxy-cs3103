@@ -3,7 +3,7 @@
 # include "StatementASTNode.h"
 # include "VariableIndex.h"
 
-class ReadStatementASTNode : public StatementASTNode {
+class PrintStatementASTNode : public StatementASTNode {
 public:
 	void setVariable(VariableIndex&);
 

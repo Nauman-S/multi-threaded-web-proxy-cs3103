@@ -45,6 +45,9 @@
     <ClInclude Include="SP\StatementASTNode.h" />
     <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="SP\WhileStatementASTNode.h" />
+	<ClInclude Include="SP\AssignStatementASTNode.h" />
+	<ClInclude Include="SP\IfStatementASTNode.h" />
+	<ClInclude Include="SP\PrintStatementASTNode.h" />
     <ClInclude Include="Utils\type\TupleType.h" />
     <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResTable.h" />
@@ -117,6 +120,9 @@
     <ClCompile Include="SP\StatementASTNode.cpp" />
     <ClCompile Include="SP\VariableIndex.cpp" />
     <ClCompile Include="SP\WhileStatementASTNode.cpp" />
+	<ClInclude Include="SP\AssignStatementASTNode.cpp" />
+	<ClInclude Include="SP\IfStatementASTNode.cpp" />
+	<ClInclude Include="SP\PrintStatementASTNode.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />

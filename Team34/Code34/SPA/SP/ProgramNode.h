@@ -2,14 +2,14 @@
 
 # include "ASTNode.h"
 # include "ProcedureASTNode.h"
-# include<list>
+# include<vector>
 
 class ProgramNode : ASTNode {
 public:
-	std::list<ProcedureASTNode> getChildren();
+	std::vector<ProcedureASTNode> getChildren();
 
-	void setChildren(std::list<ProcedureASTNode>*);
+	void setChildren(std::vector<ProcedureASTNode>&);
 
 protected:
-	std::list<ProcedureASTNode>* children;
+	std::vector<ProcedureASTNode> children;
 };

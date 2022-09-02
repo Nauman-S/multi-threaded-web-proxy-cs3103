@@ -5,10 +5,10 @@
 
 class CallStatementASTNode : public StatementASTNode {
 public:
-	void setProcedure(ProcedureIndex* p);
+	void setProcedure(ProcedureIndex& p);
 
 	ProcedureIndex getProcedure();
 
 protected:
-	ProcedureIndex* proc;
+	ProcedureIndex proc;
 };
