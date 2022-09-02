@@ -6,9 +6,12 @@
 #include <unordered_set>
 
 #include "reference/ValType.h"
-#include "relation/StmtVarRel.h"
-#include "relation/ProcVarRel.h"
-#include "relation/StmtStmtRel.h"
+//#include "relation/StmtVarRel.h"
+//#include "relation/ProcVarRel.h"
+//#include "relation/StmtStmtRel.h"
+class StmtVarRel;  // forward declaration to avoid cyclic include of Visitor pattern
+class ProcVarRel;
+class StmtStmtRel;
 #include "relation/UsesSRel.h"
 #include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
@@ -53,6 +56,8 @@ protected:
 	
 
 public:
+	DataRetriever() {};
+
 	DataRetriever(std::unique_ptr<ReadPKBManager> pkb) : pkb_ptr_{ std::move(pkb) } {};
 
 	std::unique_ptr<ResWrapper> retrieve(StmtVarRel rel);

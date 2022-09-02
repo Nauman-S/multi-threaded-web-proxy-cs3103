@@ -180,20 +180,20 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel rel)
     else if (lhs_type == ValType::kLineNum) {
         // rhs_type is kSynonym or kWildcard
         shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), *set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kVarName) {
         // lhs_type is kSynonym or kWildcard
         shared_ptr<unordered_set<string>> set = GetStmtByVar(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), *set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else {
         // Both are kSynonym or kWildcard
         shared_ptr<vector<pair<string, string>>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
-        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, table);
+        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, *table);
         res = std::make_unique<ResWrapper>(table_res);
     }
     return res;
@@ -210,19 +210,19 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     }
     else if (lhs_type == ValType::kProcName) {
         shared_ptr<unordered_set<string>> set = GetVarByProc(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), *set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kVarName) {
         shared_ptr<unordered_set<string>> set = GetProcByVar(rel);
-        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), *set);
         res = std::make_unique<ResWrapper>(set_res);
     }
     else {
         // Both are kSynonym or kWildcard
         shared_ptr<vector<pair<string, string>>> table = GetAllPVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
-        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, table);
+        shared_ptr<TableRes<TwoTuple>> table_res = std::make_shared<TableRes<TwoTuple>>(syn_to_col, *table);
         res = std::make_unique<ResWrapper>(table_res);
     }
     return res;
