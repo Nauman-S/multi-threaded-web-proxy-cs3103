@@ -8,6 +8,7 @@ class IntValueableRef :
 
 public:
     virtual bool IsIntValued();
+
     virtual std::optional<int> ValueAsInt();
 };
 
