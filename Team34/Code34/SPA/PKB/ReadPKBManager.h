@@ -18,11 +18,11 @@ public:
 	}
     // APIs related to Variable entity
     bool IsVariable(std::string var);
-    std::shared_ptr<unordered_set<std::string>> GetAllVariables();
+    std::unordered_set<std::string>& GetAllVariables();
 
     // APIs related to Constant entity
     bool IsConstant(int constant);
-    std::shared_ptr<unordered_set<int>> GetAllConstants();
+    std::unordered_set<int>& GetAllConstants();
 
 	// APIs related to Uses relation
 	bool CheckUses(int stmt_num, std::string var);

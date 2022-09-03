@@ -6,15 +6,20 @@ bool ReadPKBManager::IsVariable(std::string var)
     return variable_manager_.IsVariable(var);
 }
 
-std::shared_ptr<unordered_set<int>> ReadPKBManager::GetAllConstants()
+std::unordered_set<std::string>& ReadPKBManager::GetAllVariables()
 {
-    return
+	return variable_manager_.GetAllVariables();
 }
 
 // APIs related to Constant entity
 bool ReadPKBManager::IsConstant(int constant)
 {
     return constant_manager_.IsConstant(constant);
+}
+
+std::unordered_set<int>& ReadPKBManager::GetAllConstants()
+{
+	return constant_manager_.GetAllConstants();
 }
 
 // APIs related to Uses relation

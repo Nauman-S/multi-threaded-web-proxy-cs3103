@@ -1,14 +1,13 @@
 #pragma once
 
 #include <unordered_set>
-#include <string>
 
 class VariableManager
 {
 public:
-    void AddVariable(string var);
-    bool IsVariable(string var);
-    std::shared_ptr<unordered_set<string>> GetAllVariables();
+    void AddVariable(std::string var);
+    bool IsVariable(std::string var);
+    std::unordered_set<std::string>& GetAllVariables();
 private:
-    static unordered_set<string> variables_;
+    static std::unordered_set<std::string> variables_;
 };

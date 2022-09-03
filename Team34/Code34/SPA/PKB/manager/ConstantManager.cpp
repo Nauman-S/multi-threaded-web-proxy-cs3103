@@ -11,7 +11,7 @@ bool ConstantManager::IsConstant(int constant)
     return iter == constants_.end();
 }
 
-std::shared_ptr<unordered_set<int>> ConstantManager::GetAllConstants()
+std::unordered_set<int>& ConstantManager::GetAllConstants()
 {
     return std::make_shared<unordered_set<int>>(constants_);
 }
