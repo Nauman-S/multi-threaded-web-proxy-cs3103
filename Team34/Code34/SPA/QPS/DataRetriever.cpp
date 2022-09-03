@@ -231,7 +231,6 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     return res;
 }
 
-
 std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr) {
     shared_ptr<SetRes> res = make_shared<SetRes>();
 
@@ -280,4 +279,5 @@ std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr) {
 
     return make_shared<ResWrapper>(res);
 } 
+
 

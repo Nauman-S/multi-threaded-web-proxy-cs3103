@@ -10,6 +10,7 @@ class Ref
 protected:
 	ValType val_type_;
 	std::string val_;
+
 public:
 	Ref(ValType type, std::string val)
 		:val_type_{ type }, val_{ val } {};
