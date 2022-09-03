@@ -8,8 +8,9 @@
 #include "../reference/ProcRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
-//#include "../query_result/ResWrapper.h"
+#include "../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
+class DataRetriever;
 
 class ProcVarRel :
     public Rel
@@ -29,8 +30,6 @@ public:
 
     RelType GetRelType() override { return RelType::kProcVarRel; }
 
-    /*virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) {
-        return data_retriever.retrieve(*this);
-    }*/
+    virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
 };
 
