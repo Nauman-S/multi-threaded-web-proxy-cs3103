@@ -27,10 +27,10 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 
 
 	string sym = set_res->GetSyn();
-	unordered_set<string>& res_set = set_res->GetDomain();
+	shared_ptr<unordered_set<string>> res_domain = set_res->GetDomain();
 
 	// check whether the domain is empty
-	if (res_set.size() == 0) {
+	if (res_domain->size() == 0) {
 		return false;
 	}
 
@@ -46,6 +46,6 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 }
 
 bool QueryResult::MergeTableResult(ResWrapper& res_wrapper) {
-	table_results.push_back(res_wrapper.GetTable());
+	table_results_.push_back(res_wrapper.GetTable());
 	return true;
 }

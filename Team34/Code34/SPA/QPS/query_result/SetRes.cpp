@@ -3,7 +3,7 @@
 
 bool SetRes::Merge(std::shared_ptr<SetRes> other) {
 	unordered_set<string> merged_result = unordered_set<string>();
-	for (const string& s : other->GetDomain()) {
+	for (const string& s : *(other->GetDomain())) {
 		if (domain_.count(s)) {
 			merged_result.insert(s);
 		}

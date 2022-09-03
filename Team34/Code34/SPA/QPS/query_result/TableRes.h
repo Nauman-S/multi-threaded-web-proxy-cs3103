@@ -2,18 +2,20 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <tuple>
 #include <memory>
 
 using std::string;
 using std::unordered_map;
+using std::unordered_set;
 using std::vector;
 using std::tuple;
+using std::shared_ptr;
 using StrPair = std::pair<string, string>;
 
-class TableRes
-{
+class TableRes {
 protected:
     unordered_map<string, int> syn_to_col_;  // maps synonym name to tuple col index
     vector<StrPair> rows_;
@@ -23,11 +25,13 @@ public:
 
     bool Contains(string key);
 
-    std::shared_ptr<vector<string>> Columns();
+    shared_ptr<vector<string>> Columns();
+
+    shared_ptr<unordered_set<string>> GetColumn(string syn_name);
 
     StrPair GetRow(int index) { return rows_[index]; }
 
-    string GetValue(int index, string syn);
+    //string GetValue(int index, string syn);
 };
 
 inline bool TableRes::Contains(string key)
@@ -35,15 +39,8 @@ inline bool TableRes::Contains(string key)
     return syn_to_col_.find(key) != syn_to_col_.end();
 }
 
-inline std::shared_ptr<vector<string>> TableRes::Columns()
-{
-    auto vec = std::shared_ptr<vector<string>>();
-    for (auto& [col, idx] : syn_to_col_) {
-        vec->push_back(col);
-    }
 
-    return vec;
-}
+
 
 //inline string TableRes::GetValue(int index, string syn)
 //{

@@ -4,6 +4,8 @@
 #include "reference/Ref.h"
 
 using std::shared_ptr;
+using std::unordered_map;
+using std::vector;
 
 class ResultExtractor {
 private:
@@ -20,5 +22,9 @@ public:
 	string GetFormattedResult();
 
 	string GetMultiSynResult();
+
+	shared_ptr<unordered_set<string>> CombineResult(shared_ptr<unordered_set<string>> result_set1, shared_ptr<unordered_set<string>> result_set2);
+
+	string FormatResult(shared_ptr<unordered_set<string>> result_set, RefType ref_type);
 };
 

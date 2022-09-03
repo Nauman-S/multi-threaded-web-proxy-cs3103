@@ -3,12 +3,12 @@
 
 std::string StmtStmtRel::LhsValue()
 {
-    return lhs_ref_.Value();
+    return lhs_ref_.GetName();
 }
 
 std::string StmtStmtRel::RhsValue()
 {
-    return rhs_ref_.Value();
+    return rhs_ref_.GetName();
 }
 
 std::pair<ValType, ValType> StmtStmtRel::ValTypes()

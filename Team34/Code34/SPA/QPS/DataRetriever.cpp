@@ -222,7 +222,7 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     else {
         // Both are kSynonym or kWildcard
         shared_ptr<vector<pair<string, string>>> table = GetAllPVRel(rel);
-        unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
+        unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
 
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, *table);
 
@@ -232,8 +232,8 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
 }
 
 std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr) {
-    shared_ptr<SetRes> res = make_shared<SetRes>();
-
+    //shared_ptr<SetRes> res = make_shared<SetRes>();
+    shared_ptr<SetRes> res;
     auto ref_type = ref_ptr->GetRefType();
 
    /* shared_ptr<unordered_set<string>> set;*/

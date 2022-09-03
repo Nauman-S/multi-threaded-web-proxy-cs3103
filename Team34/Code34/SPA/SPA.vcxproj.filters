@@ -464,5 +464,8 @@
     <ClCompile Include="QPS\ResultExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QPS\query_result\TableRes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
