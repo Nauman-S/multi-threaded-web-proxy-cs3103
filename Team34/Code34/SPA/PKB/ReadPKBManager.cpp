@@ -6,7 +6,7 @@ bool ReadPKBManager::IsVariable(std::string var)
     return variable_manager_.IsVariable(var);
 }
 
-std::unordered_set<std::string>& ReadPKBManager::GetAllVariables()
+const std::unordered_set<std::string>& ReadPKBManager::GetAllVariables()
 {
 	return variable_manager_.GetAllVariables();
 }
@@ -17,7 +17,7 @@ bool ReadPKBManager::IsConstant(int constant)
     return constant_manager_.IsConstant(constant);
 }
 
-std::unordered_set<int>& ReadPKBManager::GetAllConstants()
+const std::unordered_set<int>& ReadPKBManager::GetAllConstants()
 {
 	return constant_manager_.GetAllConstants();
 }

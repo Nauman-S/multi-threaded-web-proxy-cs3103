@@ -11,7 +11,7 @@ bool VariableManager::IsVariable(std::string var)
     return iter == variables_.end();
 }
 
-std::unordered_set<std::string>& VariableManager::GetAllVariables()
+const std::unordered_set<std::string>& VariableManager::GetAllVariables()
 {
     return std::make_shared<unordered_set<string>>(variables_);
 }
