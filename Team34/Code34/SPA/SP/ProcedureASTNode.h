@@ -2,20 +2,20 @@
 
 # include "ASTNode.h"
 # include "StatementASTNode.h"
-# include <list>
+# include <vector>
 # include <string>
-
+# include"ProcedureIndex.h"
 class ProcedureASTNode : public ASTNode {
 public:
-	std::string getName();
+	ProcedureIndex getProc();
 
-	std::list<StatementASTNode> getChildren();
+	std::vector<StatementASTNode> getChildren();
 
-	void setName(std::string);
+	void setProc(ProcedureIndex&);
 
-	void setChildren(std::list<StatementASTNode>*);
+	void setChildren(std::vector<StatementASTNode>&);
 
 protected:
-	std::string name;
-	std::list<StatementASTNode>* children;
+	ProcedureIndex proc;
+	std::vector<StatementASTNode> children;
 };

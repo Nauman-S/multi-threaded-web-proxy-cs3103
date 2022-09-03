@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void ConditionExpression::setValue(std::string v) {
-	value = v;
+void ConditionExpression::setVariables(std::vector<VariableIndex>& v) {
+	vars = v;
 }
 
-std::string ConditionExpression::getValue() {
-	return value;
+std::vector<VariableIndex> ConditionExpression::getVariables() {
+	return vars;
 }

@@ -6,6 +6,11 @@ public:
 
 	int getLineNum();
 
+	bool operator < (const LineIndex& c) const
+	{
+		return lineNum < c.lineNum;
+	}
+
 protected:
 	int lineNum;
 };

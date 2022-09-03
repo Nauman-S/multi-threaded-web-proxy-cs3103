@@ -1,5 +1,29 @@
 #include "WritePKBManager.h"
 
+// APIs related to Variable entity
+void WritePKBManager::AddVariable(Variable var)
+{
+    variable_manager_.AddEntity(var);
+}
+
+// APIs related to Constant entity
+void WritePKBManager::AddConstant(Constant constant)
+{
+    constant_manager_.AddEntity(constant);
+}
+
+// APIs related to Procedure entity
+void WritePKBManager::AddProcedure(Procedure proc)
+{
+	procedure_manager_.AddEntity(proc);
+}
+
+// APIs related to Statement
+void WritePKBManager::AddStatement(StmtNum stmt_num, RefType type)
+{
+	statement_manager_.AddStatement(stmt_num, type);
+}
+
 // APIs related to Uses relation
 void WritePKBManager::SetUses(int stmt_num, std::string var)
 {

@@ -2,18 +2,18 @@
 
 using namespace std;
 
-std::string ProcedureASTNode::getName() {
-	return name;
+ProcedureIndex ProcedureASTNode::getProc() {
+	return proc;
 }
 
-std::list<StatementASTNode> ProcedureASTNode::getChildren() {
-	return *children;
+std::vector<StatementASTNode> ProcedureASTNode::getChildren() {
+	return children;
 }
 
-void ProcedureASTNode::setName(std::string n) {
-	name = name;
+void ProcedureASTNode::setProc(ProcedureIndex& p) {
+	proc = p;
 }
 
-void ProcedureASTNode::setChildren(std::list<StatementASTNode>* chd) {
+void ProcedureASTNode::setChildren(std::vector<StatementASTNode>& chd) {
 	children = chd;
 }

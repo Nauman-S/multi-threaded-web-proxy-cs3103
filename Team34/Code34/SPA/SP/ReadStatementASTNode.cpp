@@ -1,17 +1,11 @@
 #include "ReadStatementASTNode.h"
-#include "design_extractor/NodeExtractor.h"
-
+#include <iostream>
 using namespace std;
 
-void ReadStatementASTNode::setVariable(VariableIndex* v) {
+void ReadStatementASTNode::setVariable(VariableIndex& v) {
 	var = v;
 }
 
-VariableIndex ReadStatementASTNode::getVariable() {
-	return *var;
+VariableIndex ReadStatementASTNode::getReadVariable() {
+	return var;
 }
-
-void ReadStatementASTNode::Extract(NodeExtractor& extractor) {
-	extractor.ExtractReadNode();
-}
-

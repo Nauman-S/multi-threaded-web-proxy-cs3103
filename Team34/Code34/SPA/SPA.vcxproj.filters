@@ -268,6 +268,31 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QPS\ResultExtractor.h">
+    <ClInclude Include="SP\AssignStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\IfStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\PrintStatementASTNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\AssignStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\IfStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\PrintStatementASTNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ConstantManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\ProcedureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SP\VariableManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -465,6 +490,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\query_result\TableRes.cpp">
+    <ClCompile Include="SP\ConstantManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\ProcedureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\VariableManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
