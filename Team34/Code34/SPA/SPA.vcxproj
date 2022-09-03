@@ -28,6 +28,7 @@
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\relation\UsesPRel.h" />
     <ClInclude Include="QPS\relation\UsesSRel.h" />
+    <ClInclude Include="QPS\ResultExtractor.h" />
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
+    <ClCompile Include="QPS\query_result\TableRes.cpp" />
     <ClCompile Include="QPS\relation\FollowsRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
@@ -108,6 +110,7 @@
     <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
     <ClCompile Include="QPS\relation\UsesPRel.cpp" />
     <ClCompile Include="QPS\relation\UsesSRel.cpp" />
+    <ClCompile Include="QPS\ResultExtractor.cpp" />
     <ClCompile Include="SP\ASTNode.cpp" />
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ConditionExpression.cpp" />

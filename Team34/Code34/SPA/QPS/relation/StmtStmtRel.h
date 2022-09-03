@@ -8,7 +8,7 @@
 #include "../reference/ValType.h"
 #include "../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
-class DataRetriever;
+class DataRetriever;  // To avoid cyclic include of visitor pattern
 
 class StmtStmtRel :
     public Rel
@@ -32,7 +32,10 @@ public:
 
     virtual std::optional<int> RhsValueAsInt();
 
-    //virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
+    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+    /*virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) {
+        return data_retriever.retrieve(*this);
+    }*/
 
 };
 

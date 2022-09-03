@@ -30,6 +30,6 @@ public:
 
     RelType GetRelType() override { return RelType::kProcVarRel; }
 
-    virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
+    virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
 };
 

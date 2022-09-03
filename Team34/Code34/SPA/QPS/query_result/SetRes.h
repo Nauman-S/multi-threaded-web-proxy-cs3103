@@ -5,6 +5,7 @@
 
 using std::string;
 using std::unordered_set;
+using std::shared_ptr;
 
 class SetRes
 {
@@ -17,7 +18,7 @@ public:
 
 	string GetSyn() { return syn_; }
 
-	unordered_set<string>& GetDomain() { return domain_; }
+	shared_ptr<unordered_set<string>> GetDomain() { return shared_ptr<unordered_set<string>>(&domain_); }
 
 	bool Merge(std::shared_ptr<SetRes> other);
 };

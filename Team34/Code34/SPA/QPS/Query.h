@@ -33,6 +33,16 @@ public:
 	Query(std::shared_ptr<std::vector<Ref>> select_tuple, std::shared_ptr<std::vector<Rel>> relations, std::shared_ptr < std::vector<Pattern>> patterns)
 		: select_tuple_{ select_tuple }, relations_{ relations }, patterns_{ patterns } {};
 
-	std::shared_ptr<std::vector<Rel>> GetRelations();
+	std::shared_ptr<std::vector<Ref>> GetSelectTuple() {
+		return select_tuple_;
+	}
+
+	std::shared_ptr<std::vector<Rel>> GetRelations() {
+		return relations_;
+	}
+
+	std::shared_ptr<std::vector<Pattern>> GetPatterns() {
+		return patterns_;
+	}
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include "../Clause.h"
 #include "../reference/ValType.h"
@@ -20,6 +21,6 @@ public:
 
 	virtual RelType GetRelType() = 0;
 
-	virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever)=0;
+	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
 };
 

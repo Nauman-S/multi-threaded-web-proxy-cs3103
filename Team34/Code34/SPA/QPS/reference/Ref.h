@@ -15,7 +15,7 @@ public:
 	Ref(ValType type, std::string val)
 		:val_type_{ type }, val_{ val } {};
 
-	virtual const std::string& Value() const { return val_; }
+	virtual const std::string& GetName() const { return val_; }
 
 	virtual const ValType GetValType() { return val_type_; }
 

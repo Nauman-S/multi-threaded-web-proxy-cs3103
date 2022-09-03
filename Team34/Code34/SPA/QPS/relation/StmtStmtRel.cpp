@@ -3,12 +3,12 @@
 
 std::string StmtStmtRel::LhsValue()
 {
-    return lhs_ref_.Value();
+    return lhs_ref_.GetName();
 }
 
 std::string StmtStmtRel::RhsValue()
 {
-    return rhs_ref_.Value();
+    return rhs_ref_.GetName();
 }
 
 std::pair<ValType, ValType> StmtStmtRel::ValTypes()
@@ -26,7 +26,7 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
     return rhs_ref_.ValueAsInt();
 }
 
-//std::unique_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& data_retriever)
-//{
-//    return data_retriever.retrieve(*this);
-//}
+std::shared_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& retriever)
+{
+    return std::shared_ptr<ResWrapper>();
+}

@@ -3,12 +3,12 @@
 
 std::string StmtVarRel::LhsValue()
 {
-    return lhs_ref_.Value();
+    return lhs_ref_.GetName();
 }
 
 std::string StmtVarRel::RhsValue()
 {
-    return rhs_ref_.Value();
+    return rhs_ref_.GetName();
 }
 
 
@@ -22,7 +22,7 @@ std::optional<int> StmtVarRel::LhsValueAsInt()
     return lhs_ref_.ValueAsInt();
 }
 
-std::unique_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
+std::shared_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
 {
     return retriever.retrieve(*this);
 }

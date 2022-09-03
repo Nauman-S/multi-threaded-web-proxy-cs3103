@@ -222,7 +222,7 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     else {
         // Both are kSynonym or kWildcard
         shared_ptr<vector<pair<string, string>>> table = GetAllPVRel(rel);
-        unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
+        unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
 
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, *table);
 
@@ -231,51 +231,53 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     return res;
 }
 
-/*
-std::shared_ptr<vector<SetRes>> retrieve(std::shared_ptr<vector<Ref>> refs_ptr) 
-{
-    auto res = make_shared<vector<SetRes>>();
-    for (auto iter = refs_ptr->begin(); iter != refs_ptr->end(); ++iter) {
-        auto ref_type = iter->GetRefType();
+std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr) {
+    //shared_ptr<SetRes> res = make_shared<SetRes>();
+    shared_ptr<SetRes> res;
+    auto ref_type = ref_ptr->GetRefType();
 
-        shared_ptr<unordered_set<string>> set;
-        if (ref_type == RefType::kProcRef) {
+   /* shared_ptr<unordered_set<string>> set;*/
+    /*if (ref_type == RefType::kProcRef) {
 
-        }
-        else if (ref_type == RefType::kVarRef) {
+    }
+    else if (ref_type == RefType::kVarRef) {
 
-        }
-        else if (ref_type == RefType::kConstRef) {
+    }
+    else if (ref_type == RefType::kConstRef) {
             
-        }
-        else if (ref_type == RefType::kStmtRef) {
+    }
+    else if (ref_type == RefType::kStmtRef) {
 
-        }
-        else if (ref_type == RefType::kIfRef) {
+    }
+    else if (ref_type == RefType::kIfRef) {
 
-        }
-        else if (ref_type == RefType::kWhileRef) {
+    }
+    else if (ref_type == RefType::kWhileRef) {
 
-        }
-        else if (ref_type == RefType::kAssignRef) {
+    }
+    else if (ref_type == RefType::kAssignRef) {
 
-        }
-        else if (ref_type == RefType::kReadRef) {
+    }
+    else if (ref_type == RefType::kReadRef) {
 
-        }
-        else if (ref_type == RefType::kPrintRef) {
+    }
+    else if (ref_type == RefType::kPrintRef) {
 
-        }
-        else if (ref_type == RefType::kIfRef) {
+    }
+    else if (ref_type == RefType::kIfRef) {
 
-        }
-        else if (ref_type == RefType::kCallRef) {
+    }
+    else if (ref_type == RefType::kCallRef) {
 
-        }
-
-        string syn_name = iter->Value();
-        res->push_back(SetRes(syn_name, *set));
     }
 
-    return res;
-} */
+    string syn_name = iter->Value();
+    res->push_back(SetRes(syn_name, *set));
+    }*/
+
+    //shared_ptr<ResWrapper>(new ResWrapper(res));
+
+    return make_shared<ResWrapper>(res);
+} 
+
+
