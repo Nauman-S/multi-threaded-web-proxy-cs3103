@@ -1,5 +1,59 @@
 #include "ReadPKBManager.h"
 
+// APIs related to Variable entity
+bool ReadPKBManager::IsVariable(Variable var)
+{
+    return variable_manager_.IsEntity(var);
+}
+
+const std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllVariables()
+{
+	return variable_manager_.GetAllEntities();
+}
+
+// APIs related to Constant entity
+bool ReadPKBManager::IsConstant(Constant constant)
+{
+    return constant_manager_.IsEntity(constant);
+}
+
+const std::shared_ptr<std::unordered_set<int>> ReadPKBManager::GetAllConstants()
+{
+	return constant_manager_.GetAllEntities();
+}
+
+// APIs related to Procedure entity
+bool ReadPKBManager::IsProcedure(Procedure proc)
+{
+	return procedure_manager_.IsEntity(proc);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProcedures()
+{
+	return procedure_manager_.GetAllEntities();
+}
+
+// APIs related to Statements
+bool ReadPKBManager::IsStatement(StmtNum stmt_num)
+{
+	return statement_manager_.IsStatement(stmt_num);
+}
+
+RefType ReadPKBManager::GetStatementType(StmtNum stmt_num)
+{
+	return statement_manager_.GetStatementType(stmt_num);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetStatementsByType(RefType type)
+{
+	return statement_manager_.GetStatementsByType(type);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllStatements()
+{
+	return statement_manager_.GetAllStatements();
+}
+
 // APIs related to Uses relation
 bool ReadPKBManager::CheckUses(int stmt_num, std::string var)
 {
