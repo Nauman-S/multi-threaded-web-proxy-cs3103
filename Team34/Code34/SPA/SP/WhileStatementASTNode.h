@@ -1,22 +1,21 @@
 #pragma once
 
 # include "StatementASTNode.h"
-# include "ProcedureIndex.h"
 # include "ConditionExpression.h"
-# include <list>
+# include <vector>
 
 class WhileStatementASTNode : public StatementASTNode {
 public:
-	void setChildren(std::list<StatementASTNode>*);
+	void setChildren(std::vector<StatementASTNode>&);
 
-	std::list<StatementASTNode> getChildren();
+	std::vector<StatementASTNode> getChildren();
 
-	void setConditionExpression(ConditionExpression*);
+	void setConditionExpression(ConditionExpression&);
 
 	ConditionExpression getCondition();
 
 protected:
-	ConditionExpression* condition;
-	std::list<StatementASTNode>* children;
+	ConditionExpression condition;
+	std::vector<StatementASTNode> children;
 
 };
