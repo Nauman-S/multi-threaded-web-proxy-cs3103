@@ -7,7 +7,7 @@ class ReadStatementASTNode : public StatementASTNode {
 public:
 	void setVariable(VariableIndex&);
 
-	VariableIndex getVariable();
+	virtual VariableIndex getReadVariable();
 
 protected:
 	VariableIndex var;

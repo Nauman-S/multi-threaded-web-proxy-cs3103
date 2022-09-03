@@ -16,6 +16,10 @@
 # include "StatementASTNode.h"
 # include "VariableIndex.h"
 # include "ProcedureIndex.h"
+# include "VariableManager.h"
+# include "ProcedureManager.h"
+# include "ConstantManager.h"
+# include <map>
 # include <string>
 # include <vector>
 
@@ -41,5 +45,6 @@ public:
 
 	ConditionExpression parseConditionExpression(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-
+	std::map<StatementASTNode, LineIndex> si_mapping;
+	std::map<LineIndex, StatementASTNode> is_mapping;
 };

@@ -4,10 +4,10 @@
 # include "VariableIndex.h"
 class VariableManager {
 public:
-	void addVariable(VariableIndex*);
+	void addVariable(VariableIndex&);
 
 	std::vector<VariableIndex> getVariables();
 
 protected:
-	std::vector<VariableIndex>* variables;
+	std::vector<VariableIndex> variables;
 };
