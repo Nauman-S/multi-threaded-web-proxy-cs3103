@@ -6,6 +6,8 @@
 #include "../Clause.h"
 #include "../reference/ValType.h"
 #include "RelType.h"
+#include "../query_result/ResWrapper.h"
+class DataRetriever;
 
 class Rel:
 	public Clause

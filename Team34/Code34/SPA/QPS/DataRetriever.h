@@ -10,7 +10,8 @@
 //#include "relation/StmtVarRel.h"
 //#include "relation/ProcVarRel.h"
 //#include "relation/StmtStmtRel.h"
-class StmtVarRel;  // forward declaration to avoid cyclic include of Visitor pattern
+// Use forward declaration to avoid cyclic include of Visitor pattern
+class StmtVarRel;
 class ProcVarRel;
 class StmtStmtRel;
 #include "relation/UsesSRel.h"
@@ -22,6 +23,7 @@ class StmtStmtRel;
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
+
 
 using std::string;
 using std::unordered_set;

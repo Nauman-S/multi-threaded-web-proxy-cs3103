@@ -8,10 +8,9 @@
 #include "../reference/ProcRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
-
 #include "../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
-class DataRetriever;  // forward declaration to avoid cyclic include of Visitor pattern
+class DataRetriever;
 
 class ProcVarRel :
     public Rel
@@ -31,10 +30,6 @@ public:
 
     RelType GetRelType() override { return RelType::kProcVarRel; }
 
-    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
-
-    /*virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) {
-        return data_retriever.retrieve(*this);
-    }*/
+    virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
 };
 

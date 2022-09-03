@@ -1,4 +1,5 @@
 #include "ProcVarRel.h"
+#include "../DataRetriever.h"
 
 
 std::string ProcVarRel::LhsValue()
@@ -16,6 +17,7 @@ std::pair<ValType, ValType> ProcVarRel::ValTypes()
     return std::pair<ValType, ValType>(lhs_ref_.GetValType(), rhs_ref_.GetValType());
 }
 
-std::shared_ptr<ResWrapper> ProcVarRel::GetMatch(DataRetriever& retriever) {
-    return std::shared_ptr<ResWrapper>();
+std::unique_ptr<ResWrapper> ProcVarRel::GetMatch(DataRetriever& data_retriever)
+{
+    return data_retriever.retrieve(*this);
 }
