@@ -18,6 +18,12 @@ void WritePKBManager::AddProcedure(Procedure proc)
 	procedure_manager_.AddEntity(proc);
 }
 
+// APIs related to Statement
+void WritePKBManager::AddStatement(StmtNum stmt_num, RefType type)
+{
+	statement_manager_.AddStatement(stmt_num, type);
+}
+
 // APIs related to Uses relation
 void WritePKBManager::SetUses(int stmt_num, std::string var)
 {

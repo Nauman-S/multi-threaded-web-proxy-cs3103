@@ -13,7 +13,7 @@ class StatementManager
 public:
 	void AddStatement(StmtNum stmt_num, RefType type);
 	bool IsStatement(StmtNum stmt_num);
-	bool IsStatementType(StmtNum stmt_num, RefType type);
+	RefType GetStatementType(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 

@@ -6,6 +6,7 @@
 #include "manager/VariableManager.h"
 #include "manager/ConstantManager.h"
 #include "manager/ProcedureManager.h"
+#include "manager/StatementManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
 #include "../Utils/type/TypeDef.h"
@@ -30,6 +31,12 @@ public:
 	bool IsProcedure(std::string proc);
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
+	// APIs related to Statements
+	bool IsStatement(StmtNum stmt_num);
+	RefType GetStatementType(StmtNum stmt_num);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+
 	// APIs related to Uses relation
 	bool CheckUses(int stmt_num, std::string var);
 	bool CheckUses(std::string proc_name, std::string var);
@@ -53,6 +60,7 @@ private:
     VariableManager variable_manager_;
     ConstantManager constant_manager_;
 	ProcedureManager procedure_manager_;
+	StatementManager statement_manager_;
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
 };

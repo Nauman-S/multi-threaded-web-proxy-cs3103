@@ -14,15 +14,15 @@ bool StatementManager::IsStatement(StmtNum stmt_num)
 	return stmt_to_type_map_.find(stmt_num) != stmt_to_type_map_.end();
 }
 
-bool StatementManager::IsStatementType(StmtNum stmt_num, RefType type)
+RefType StatementManager::GetStatementType(StmtNum stmt_num)
 {
 	auto iter = stmt_to_type_map_.find(stmt_num);
 	if (iter != stmt_to_type_map_.end())
 	{
 		// found statement number key
-		return stmt_to_type_map_[stmt_num] == type;
+		return stmt_to_type_map_[stmt_num];
 	}
-	return false;
+	return NULL;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetStatementsByType(RefType type)
