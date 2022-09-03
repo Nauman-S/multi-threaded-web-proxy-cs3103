@@ -2,7 +2,7 @@
 #include "ValType.h"
 
 bool IntValueableRef::IsIntValued() {
-	return val_type_ == ValType::kLineNum;
+	return (val_type_ == ValType::kLineNum) || (val_type_ == ValType::kConst);
 }
 
 std::optional<int> IntValueableRef::ValueAsInt() {
