@@ -1,4 +1,5 @@
 #include "StmtStmtRel.h"
+#include "../DataRetriever.h"
 
 std::string StmtStmtRel::LhsValue()
 {
@@ -24,3 +25,8 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
 {
     return rhs_ref_.ValueAsInt();
 }
+
+//std::unique_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& data_retriever)
+//{
+//    return data_retriever.retrieve(*this);
+//}
