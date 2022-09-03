@@ -1,26 +1,25 @@
 #pragma once
 
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 #include <cassert>
 
 #include "../../Utils/type/RefType.h"
+#include "../../Utils/type/TypeDef.h"
 
 class StatementManager
 {
 public:
-	void AddStatement(int stmt_num, RefType type);
-	bool IsStatement(int stmt_num);
-	bool IsStatementType(int stmt_num, RefType type);
-	const std::unordered_set<int>& GetStatementsByType(RefType type);
-	RefType GetTypeByStatement(int stmt_num);
+	void AddStatement(StmtNum stmt_num, RefType type);
+	bool IsStatement(StmtNum stmt_num);
+	bool IsStatementType(StmtNum stmt_num, RefType type);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 
-	std::string GetProcedureFromCallStatement(int stmt_num);
-	const std::unordered_set<int>& GetCallStatementFromProcedure(std::string proc);
 private:
-	static std::unordered_map<RefType, std::unordered_set<int>> type_to_stmt_map;
-	static std::unordered_map<int,RefType> stmt_to_type_map_;
-	static std::unordered_map<int, std::string> call_to_proc_map_;
-	static std::unordered_map<std::string, std::unordered_set<int>> proc_to_call_map_;
+	static std::unordered_map<RefType, std::unordered_set<StmtNum>> type_to_stmt_map_;
+	static std::unordered_map<StmtNum,RefType> stmt_to_type_map_;
+	static std::unordered_set<StmtNum> statements_;
 	
 };
