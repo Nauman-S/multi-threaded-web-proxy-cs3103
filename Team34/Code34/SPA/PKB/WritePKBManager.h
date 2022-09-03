@@ -3,8 +3,10 @@
 
 #include "manager/VariableManager.h"
 #include "manager/ConstantManager.h"
+#include "manager/ProcedureManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
+#include "../Utils/type/TypeDef.h"
 
 class WritePKBManager
 {
@@ -15,10 +17,13 @@ public:
 		return manager;
 	}
     // APIs related to Variable entity
-    void AddVariable(std::string var);
+    void AddVariable(Variable var);
 
     // APIs related to Constant entity
-    void AddConstant(int constant);
+    void AddConstant(Constant constant);
+
+	// APIs related to Procedure entity
+	void AddProcedure(Procedure proc);
 
 	// APIs related to Uses relation
 	void SetUses(int stmt_num, std::string var);
@@ -30,6 +35,7 @@ public:
 private:
     VariableManager variable_manager_;
     ConstantManager constant_manager_;
+	ProcedureManager procedure_manager_;
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
 };

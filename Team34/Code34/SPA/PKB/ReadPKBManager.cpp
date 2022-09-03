@@ -1,25 +1,36 @@
 #include "ReadPKBManager.h"
 
 // APIs related to Variable entity
-bool ReadPKBManager::IsVariable(std::string var)
+bool ReadPKBManager::IsVariable(Variable var)
 {
-    return variable_manager_.IsVariable(var);
+    return variable_manager_.IsEntity(var);
 }
 
-const std::unordered_set<std::string>& ReadPKBManager::GetAllVariables()
+const std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllVariables()
 {
-	return variable_manager_.GetAllVariables();
+	return variable_manager_.GetAllEntities();
 }
 
 // APIs related to Constant entity
-bool ReadPKBManager::IsConstant(int constant)
+bool ReadPKBManager::IsConstant(Constant constant)
 {
-    return constant_manager_.IsConstant(constant);
+    return constant_manager_.IsEntity(constant);
 }
 
-const std::unordered_set<int>& ReadPKBManager::GetAllConstants()
+const std::shared_ptr<std::unordered_set<int>> ReadPKBManager::GetAllConstants()
 {
-	return constant_manager_.GetAllConstants();
+	return constant_manager_.GetAllEntities();
+}
+
+// APIs related to Procedure entity
+bool ReadPKBManager::IsProcedure(Procedure proc)
+{
+	return procedure_manager_.IsEntity(proc);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProcedures()
+{
+	return procedure_manager_.GetAllEntities();
 }
 
 // APIs related to Uses relation

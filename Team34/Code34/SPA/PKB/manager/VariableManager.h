@@ -1,13 +1,12 @@
 #pragma once
 
+#include <memory>
 #include <unordered_set>
+#include <unordered_map>
 
-class VariableManager
+#include "EntityManager.h"
+#include "../Utils/type/TypeDef.h"
+
+class VariableManager : public EntityManager<Variable>
 {
-public:
-    void AddVariable(std::string var);
-    bool IsVariable(std::string var);
-    const std::unordered_set<std::string>& GetAllVariables();
-private:
-    static std::unordered_set<std::string> variables_;
 };

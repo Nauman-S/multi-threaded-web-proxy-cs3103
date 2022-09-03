@@ -5,8 +5,10 @@
 
 #include "manager/VariableManager.h"
 #include "manager/ConstantManager.h"
+#include "manager/ProcedureManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
+#include "../Utils/type/TypeDef.h"
 
 class ReadPKBManager
 {
@@ -17,12 +19,16 @@ public:
 		return manager;
 	}
     // APIs related to Variable entity
-    bool IsVariable(std::string var);
-    const std::unordered_set<std::string>& GetAllVariables();
+    bool IsVariable(Variable var);
+    const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
 
     // APIs related to Constant entity
-    bool IsConstant(int constant);
-    const std::unordered_set<int>& GetAllConstants();
+    bool IsConstant(Constant constant);
+    const std::shared_ptr<std::unordered_set<Constant>> GetAllConstants();
+
+	// APIs related to Procedure entity
+	bool IsProcedure(std::string proc);
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
 	// APIs related to Uses relation
 	bool CheckUses(int stmt_num, std::string var);
@@ -46,6 +52,7 @@ public:
 private:
     VariableManager variable_manager_;
     ConstantManager constant_manager_;
+	ProcedureManager procedure_manager_;
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
 };

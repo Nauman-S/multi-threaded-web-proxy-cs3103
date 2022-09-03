@@ -1,13 +1,12 @@
 #pragma once
 
+#include <memory>
 #include <unordered_set>
+#include <unordered_map>
 
-class ConstantManager
+#include "EntityManager.h"
+#include "../../Utils/type/TypeDef.h"
+
+class ConstantManager : public EntityManager<Constant>
 {
-public:
-    void AddConstant(int constant);
-    bool IsConstant(int constant);
-    const std::unordered_set<int>& GetAllConstants();
-private:
-    static std::unordered_set<int> constants_;
 };
