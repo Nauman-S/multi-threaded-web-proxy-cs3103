@@ -24,3 +24,8 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
 {
     return rhs_ref_.ValueAsInt();
 }
+
+std::shared_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& retriever)
+{
+    return std::shared_ptr<ResWrapper>();
+}

@@ -230,3 +230,54 @@ std::unique_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
     }
     return res;
 }
+
+
+std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr) {
+    shared_ptr<SetRes> res = make_shared<SetRes>();
+
+    auto ref_type = ref_ptr->GetRefType();
+
+   /* shared_ptr<unordered_set<string>> set;*/
+    /*if (ref_type == RefType::kProcRef) {
+
+    }
+    else if (ref_type == RefType::kVarRef) {
+
+    }
+    else if (ref_type == RefType::kConstRef) {
+            
+    }
+    else if (ref_type == RefType::kStmtRef) {
+
+    }
+    else if (ref_type == RefType::kIfRef) {
+
+    }
+    else if (ref_type == RefType::kWhileRef) {
+
+    }
+    else if (ref_type == RefType::kAssignRef) {
+
+    }
+    else if (ref_type == RefType::kReadRef) {
+
+    }
+    else if (ref_type == RefType::kPrintRef) {
+
+    }
+    else if (ref_type == RefType::kIfRef) {
+
+    }
+    else if (ref_type == RefType::kCallRef) {
+
+    }
+
+    string syn_name = iter->Value();
+    res->push_back(SetRes(syn_name, *set));
+    }*/
+
+    //shared_ptr<ResWrapper>(new ResWrapper(res));
+
+    return make_shared<ResWrapper>(res);
+} 
+

@@ -65,6 +65,8 @@ public:
 	std::unique_ptr<ResWrapper> retrieve(ProcVarRel rel);
 
 	// TODO
-	// std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);
-};
 
+	//std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);
+
+	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
+};

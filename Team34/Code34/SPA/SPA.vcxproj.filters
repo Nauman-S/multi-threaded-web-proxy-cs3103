@@ -267,6 +267,9 @@
     <ClInclude Include="QPS\relation\UsesSRel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QPS\ResultExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\reference\StmtRef.cpp">
@@ -456,6 +459,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\relation\UsesSRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\ResultExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

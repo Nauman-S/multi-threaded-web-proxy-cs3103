@@ -1,21 +1,53 @@
 #include "QueryEvaluator.h"
+
+#include <memory.h>
+
 #include "Query.h"
 #include "relation/Rel.h"
+#include "ResultExtractor.h"
 
+
+using std::shared_ptr;
 
 QueryEvaluator::QueryEvaluator(Query query) {
 	query_ = query;
+	query_result_ = QueryResult();
+	data_retriever_ = DataRetriever();
 };
 
+
 bool QueryEvaluator::evaluate() {
-	std::shared_ptr<std::vector<Rel>> relations = query_.GetRelations();
+	shared_ptr<std::vector<Ref>> select_tuple = query_.GetSelectTuple();
+	for (Ref& ref : *select_tuple) {
+		shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(std::make_shared<Ref>(ref));
+		bool success = query_result_.MergeResult(*res_wrapper);
+		if (!success) {
+			return false;
+		}
+	}
+
+	shared_ptr<std::vector<Rel>> relations = query_.GetRelations();
 
 	for (auto it = relations->begin(); it != relations->end(); ++it) {
 		
 		// update sym_domain with data retriever
-		//data_retriever_.retrieve(rel, syn_domains);
+
+		shared_ptr<ResWrapper> res_wrapper = it->GetMatch(data_retriever_);
+
+		bool success = query_result_.MergeResult(*res_wrapper);
+		if (!success) {
+			return false;
+		}
+		//data_retriever_.retrieve(*it);
 
 	}
-
 	return false;
 }
+
+string QueryEvaluator::ExtractResult() {
+	ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
+	return result_extractor.GetFormattedResult();
+}
+
+
+	

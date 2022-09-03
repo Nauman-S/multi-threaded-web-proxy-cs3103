@@ -22,7 +22,7 @@ std::optional<int> StmtVarRel::LhsValueAsInt()
     return lhs_ref_.ValueAsInt();
 }
 
-std::unique_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
+std::shared_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
 {
     return retriever.retrieve(*this);
 }

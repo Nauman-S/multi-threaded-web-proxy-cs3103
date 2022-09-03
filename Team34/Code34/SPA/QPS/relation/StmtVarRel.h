@@ -31,6 +31,6 @@ public:
 
     virtual std::optional<int> LhsValueAsInt();
 
-    virtual std::unique_ptr<ResWrapper> GetMatch(DataRetriever& retriever);
+    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 };
 
