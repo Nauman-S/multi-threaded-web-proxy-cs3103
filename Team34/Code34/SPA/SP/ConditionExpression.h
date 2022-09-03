@@ -1,14 +1,13 @@
 #pragma once
 # include "StatementASTNode.h"
-# include <string>
+# include <vector>
 
 class ConditionExpression : public StatementASTNode {
 public:
-	void setValue(std::string);
+	void setVariables(std::vector<VariableIndex>&);
 
-	std::string getValue();
+	std::vector<VariableIndex> getVariables();
 
 protected:
-    // need edit later
-	std::string value;
+	std::vector<VariableIndex> vars;
 };

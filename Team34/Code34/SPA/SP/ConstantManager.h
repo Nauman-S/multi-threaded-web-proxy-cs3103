@@ -3,10 +3,10 @@
 # include <vector>
 class ConstantManager {
 public:
-	void addConstant(double);
+	void addConstant(int&);
 
-	std::vector<double> getConstants();
+	std::vector<int> getConstants();
 
 protected:
-	std::vector<double>* constants;
+	std::vector<int> constants;
 };

@@ -4,18 +4,18 @@
 # include "StatementASTNode.h"
 # include <vector>
 # include <string>
-
+# include"ProcedureIndex.h"
 class ProcedureASTNode : public ASTNode {
 public:
-	std::string getName();
+	ProcedureIndex getProc();
 
 	std::vector<StatementASTNode> getChildren();
 
-	void setName(std::string);
+	void setProc(ProcedureIndex&);
 
 	void setChildren(std::vector<StatementASTNode>&);
 
 protected:
-	std::string name;
+	ProcedureIndex proc;
 	std::vector<StatementASTNode> children;
 };

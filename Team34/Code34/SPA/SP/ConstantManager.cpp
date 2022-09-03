@@ -1,9 +1,9 @@
 # include "ConstantManager.h"
 
-void ConstantManager::addConstant(double num) {
-	constants->push_back(num);
+void ConstantManager::addConstant(int& num) {
+	constants.push_back(num);
 }
 
-std::vector<double> ConstantManager::getConstants() {
-	return *constants;
+std::vector<int> ConstantManager::getConstants() {
+	return constants;
 }

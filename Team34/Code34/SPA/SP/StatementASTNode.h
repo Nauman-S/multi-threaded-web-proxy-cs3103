@@ -2,7 +2,8 @@
 # include "ASTNode.h"
 # include "LineIndex.h"
 # include <string>
-
+# include "VariableIndex.h"
+# include <vector>
 enum class StatementType {
 	sassign,
 	sif,
@@ -24,6 +25,13 @@ public:
 	std::string getTypeVal();
 
 	void setStatementType(StatementType, std::string);
+
+	bool operator < (const StatementASTNode& c) const
+	{
+		return lineIndex < c.lineIndex;
+	}
+
+	// virtual vector<VariableIndex> getModifies() = 0;
 
 protected:
 	LineIndex lineIndex;

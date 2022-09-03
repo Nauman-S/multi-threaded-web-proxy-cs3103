@@ -25,8 +25,9 @@ ProcedureASTNode SourceParser::parseProcedure(vector<SourceToken> tokens, int& t
 // Procedure name {
 	ProcedureASTNode procedure = ProcedureASTNode();
 	vector<StatementASTNode> children = {};
+	ProcedureIndex p = ProcedureIndex();
 	token_idx += 1;
-	procedure.setName(tokens.at(token_idx).GetStringVal());
+	p.setName(tokens.at(token_idx).GetStringVal());
 	token_idx += 2;
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
 		StatementASTNode s_node = parseStatement(tokens, token_idx, line_idx);
@@ -34,30 +35,37 @@ ProcedureASTNode SourceParser::parseProcedure(vector<SourceToken> tokens, int& t
 	}
 	token_idx += 1;
 	procedure.setChildren(children);
+	procedure.setProc(p);
 	return procedure;
 }
 
 StatementASTNode SourceParser::parseStatement(vector<SourceToken> tokens, int& token_idx, int& line_idx) {
 	StatementASTNode s_node;
 	if (tokens.at(token_idx).GetType() == SourceTokenType::kIf) {
+		// cout << "if" << line_idx << endl;
 		s_node = parseIfStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sif, "sif");
-		
 	}
 	else if (tokens.at(token_idx).GetType() == SourceTokenType::kWhile) {
+		cout << "while" << line_idx << endl;
 		s_node = parseWhileStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::swhile, "swhile");
 	}
 	else if (tokens.at(token_idx).GetType() == SourceTokenType::kRead) {
+		// cout << "read" << line_idx << endl;
 		s_node = parseReadStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sread, "sread");
 	} else if (tokens.at(token_idx).GetType() == SourceTokenType::kPrint) {
+		// cout << "print" << line_idx << endl;
 		s_node = parseReadStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sprint, "sprint");
 	} else {
+		cout << "assign" << line_idx << endl;
 		s_node = parseAssignStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sassign, "sassign");
 	}
+	is_mapping.insert(pair<LineIndex, StatementASTNode>(s_node.getLineIndex(), s_node));
+    si_mapping.insert(pair<StatementASTNode, LineIndex>(s_node, s_node.getLineIndex()));
 	return s_node;
 }
 
@@ -93,15 +101,19 @@ ConditionExpression SourceParser::parseConditionExpression(vector<SourceToken> t
 	ConditionExpression cond = ConditionExpression();
 	cond.setStatementType(StatementType::sexpre, "sexpre");
 	LineIndex line_index = LineIndex();
+	vector<VariableIndex> vars = {};
 	line_index.setLineNum(line_idx);
 	cond.setLineIndex(line_index);
 	line_idx += 1;
-	string val = "";
-	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightRound) {
-		val += tokens.at(token_idx).GetStringVal();
+	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightRound) {	
+		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
+			VariableIndex v = VariableIndex();
+			v.setName(tokens.at(token_idx).GetStringVal());
+			vars.push_back(v);
+		}
 		token_idx += 1;
 	}
-	cond.setValue(val);
+	cond.setVariables(vars);
 	token_idx += 1;
 	return cond;
 }
@@ -138,13 +150,13 @@ WhileStatementASTNode SourceParser::parseWhileStatement(vector<SourceToken> toke
 	LineIndex line_index = LineIndex();
 	line_index.setLineNum(line_idx);
 	w_node.setLineIndex(line_index);
-	line_idx += 1;
 	token_idx += 2;
 	ConditionExpression cond = parseConditionExpression(tokens, token_idx, line_idx);
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
 		StatementASTNode s_node = parseStatement(tokens, token_idx, line_idx);
 		children.push_back(s_node);
 	}
+	token_idx += 1;
 	w_node.setChildren(children);
 	w_node.setConditionExpression(cond);
 	return w_node;
