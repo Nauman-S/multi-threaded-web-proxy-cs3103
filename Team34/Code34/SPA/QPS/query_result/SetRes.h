@@ -11,14 +11,14 @@ class SetRes
 {
 protected:
 	string syn_;
-	unordered_set<string> domain_;
+	shared_ptr<unordered_set<string>> domain_ptr_;
 
 public:
-	SetRes(string s, unordered_set<string> d) : syn_{ s }, domain_(d) {};
+	SetRes(string s, shared_ptr<unordered_set<string>> d) : syn_{ s }, domain_ptr_(d) {};
 
 	string GetSyn() { return syn_; }
 
-	shared_ptr<unordered_set<string>> GetDomain() { return shared_ptr<unordered_set<string>>(&domain_); }
+	shared_ptr<unordered_set<string>> GetDomain() { return domain_ptr_; }
 
 	bool Merge(std::shared_ptr<SetRes> other);
 };

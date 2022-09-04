@@ -30,6 +30,9 @@ enum TokenType {
     kSemiColon,
     kComma,
     kUnderscore,
+    kSingleQuote,
+    kDoubleQuote,
+
 
     // Self-defined for parsing usage
     kParseStart,

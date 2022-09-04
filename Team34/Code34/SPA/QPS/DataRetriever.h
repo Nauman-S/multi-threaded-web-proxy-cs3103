@@ -54,7 +54,7 @@ protected:
 	unordered_set<string>& GetLhsStmtByRhsStmt(ProcVarRel rel);
 	const vector<pair<string, string>>& GetAllSSRel(ProcVarRel rel);*/
 
-	std::shared_ptr<unordered_set<string>> StringToIntCollection(unordered_set<int>& set);
+	std::shared_ptr<unordered_set<string>> IntSetToStrSet(std::shared_ptr<unordered_set<int>> set);
 	std::shared_ptr<vector<pair<string, string>>> IntStrToStrStrTable(vector<pair<int, string>> table);
 	
 
@@ -63,9 +63,9 @@ public:
 
 	DataRetriever(std::unique_ptr<ReadPKBManager> pkb) : pkb_ptr_{ std::move(pkb) } {};
 
-	std::unique_ptr<ResWrapper> retrieve(StmtVarRel rel);
+	std::shared_ptr<ResWrapper> retrieve(StmtVarRel rel);
 
-	std::unique_ptr<ResWrapper> retrieve(ProcVarRel rel);
+	std::shared_ptr<ResWrapper> retrieve(ProcVarRel rel);
 
 	// TODO
 	//std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);

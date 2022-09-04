@@ -18,10 +18,10 @@ using StrPair = std::pair<string, string>;
 class TableRes {
 protected:
     unordered_map<string, int> syn_to_col_;  // maps synonym name to tuple col index
-    vector<StrPair> rows_;
+    shared_ptr<vector<StrPair>> rows_ptr_;
 
 public:
-    TableRes(unordered_map<string, int> s2c, vector<StrPair> rows) : syn_to_col_(s2c), rows_(rows) {};
+    TableRes(unordered_map<string, int> s2c, shared_ptr<vector<StrPair>> rows) : syn_to_col_(s2c), rows_ptr_(rows) {};
 
     bool Contains(string key);
 
@@ -29,7 +29,7 @@ public:
 
     shared_ptr<unordered_set<string>> GetColumn(string syn_name);
 
-    StrPair GetRow(int index) { return rows_[index]; }
+    StrPair GetRow(int index) { return (*rows_ptr_)[index]; }
 
     //string GetValue(int index, string syn);
 };
