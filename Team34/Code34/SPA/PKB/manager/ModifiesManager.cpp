@@ -1,7 +1,7 @@
 #include "ModifiesManager.h"
 
-PVRelationStore modifies_pv_store_;
-SVRelationStore modifies_sv_store_;
+SVRelationStore ModifiesManager::modifies_sv_store_;
+PVRelationStore ModifiesManager::modifies_pv_store_;
 
 bool ModifiesManager::CheckModifies(int stmt_num, std::string var)
 {
