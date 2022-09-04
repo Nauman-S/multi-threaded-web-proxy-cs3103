@@ -79,7 +79,8 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 		std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
 		query = *query_ptr;
 	}
-	catch (SyntaxError) {
+	catch (SyntaxError e) {
+		std::cout << e.what() << std::endl;
 		std::cout << "SyntaxError" << std::endl;
 		results.push_back("SyntaxError");
 		return;
@@ -90,6 +91,7 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 		return;
 	}
 
+	cout << query.GetSelectTuple() << endl;
 	QueryEvaluator evaluator(query);
 	string res;
 	if (evaluator.evaluate()) {

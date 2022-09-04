@@ -45,7 +45,7 @@ bool QueryEvaluator::evaluate() {
 		//data_retriever_.retrieve(*it);
 
 	}
-	return false;
+	return true;
 }
 
 string QueryEvaluator::ExtractResult() {

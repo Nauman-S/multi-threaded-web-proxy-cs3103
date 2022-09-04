@@ -41,7 +41,6 @@ string ResultExtractor::GetSingleSynResult() {
 	}
 	return FormatResult(result_set, ref->GetRefType());
 
-
 }
 
 string ResultExtractor::GetMultiSynResult() {
