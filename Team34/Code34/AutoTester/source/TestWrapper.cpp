@@ -1,6 +1,8 @@
 #include "TestWrapper.h"
 #include "../SPA/SP/SourceParser.h"
+#include <iostream>
 
+using namespace std;
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
 AbstractWrapper* WrapperFactory::createWrapper() {
@@ -22,6 +24,12 @@ void TestWrapper::parse(std::string filename) {
   // ...rest of your code...
 	SourceParser parser = SourceParser();
 	ProgramNode node = parser.parse(filename);
+	cout << "TEST" << endl;
+	vector<ProcedureASTNode> p_nodes = node.getChildren();
+	cout << "num of procedures: " << p_nodes.size() << endl;
+	vector<StatementASTNode> s_nodes = p_nodes.at(0).getChildren();
+	cout << "num of statements: " << s_nodes.size() << endl;
+	exit(0);
 }
 
 // method to evaluating a query
