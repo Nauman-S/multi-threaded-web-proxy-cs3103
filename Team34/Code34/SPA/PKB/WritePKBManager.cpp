@@ -9,7 +9,7 @@ void WritePKBManager::AddVariable(Variable var)
 // APIs related to Constant entity
 void WritePKBManager::AddConstant(Constant constant)
 {
-    constant_manager_.AddEntity(constant);
+	constant_manager_.AddEntity(constant);
 }
 
 // APIs related to Procedure entity

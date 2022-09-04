@@ -14,6 +14,7 @@
 #include "../SPA/QPS/parser/SemanticError.h"
 #include "../SPA/QPS/Query.h"
 #include "../SPA/QPS/QueryEvaluator.h"
+#include "../SPA/Utils/type/TypeDef.h"
 
 using namespace std;
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
@@ -52,16 +53,16 @@ void TestWrapper::parse(std::string filename) {
 	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
 	exit(0);
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
+	
 	for (VariableIndex v : vars) {
 		pkb->AddVariable(v.getName());
 	}
 	for (int c : consts) {
-		pkb->AddConstant(c);
+		pkb->AddConstant(Constant(c));
 	}
 	for (ProcedureIndex p : procs) {
-		pkb->AddProcedure(p.getName());
+		pkb->AddProcedure(Procedure(p.getName()));
 	}
-	
 }
 
 // method to evaluating a query
