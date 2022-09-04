@@ -1,25 +1,27 @@
 #pragma once
 
-# include "StatementASTNode.h"
-# include "ConditionExpression.h"
-# include <vector>
+#include <memory>
+#include <vector>
+
+#include "StatementASTNode.h"
+#include "ConditionExpression.h"
 
 class IfStatementASTNode : public StatementASTNode {
 public:
-	void setIfChildren(std::vector<StatementASTNode>&);
+	void setIfChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<StatementASTNode> getIfChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getIfChildren();
 
-	void setElseChildren(std::vector<StatementASTNode>&);
+	void setElseChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<StatementASTNode> getElseChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getElseChildren();
 
-	void setConditionExpression(ConditionExpression&);
+	void setConditionExpression(std::shared_ptr<ConditionExpression>);
 
-	ConditionExpression getCondition();
+	std::shared_ptr<ConditionExpression> getCondition();
 
 protected:
-	ConditionExpression condition;
-	std::vector<StatementASTNode> ifChildren;
-	std::vector<StatementASTNode> elseChildren;
+	std::shared_ptr<ConditionExpression> condition;
+	std::vector<std::shared_ptr<StatementASTNode>> ifChildren;
+	std::vector<std::shared_ptr<StatementASTNode>> elseChildren;
 };
