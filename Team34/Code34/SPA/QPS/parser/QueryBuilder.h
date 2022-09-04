@@ -8,9 +8,8 @@
 #include "..\reference\StmtRef.h"
 #include "..\relation\Rel.h"
 #include "..\reference\VarRef.h"
-
-class Query {};
-class Pattern {};
+#include "../pattern/Pattern.h"
+#include "../Query.h"
 
 
 #ifndef QUERYBUILDER_H
