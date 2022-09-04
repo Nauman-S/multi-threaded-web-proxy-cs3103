@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Utils\type\RefType.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PKB\manager\EntityManager.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
