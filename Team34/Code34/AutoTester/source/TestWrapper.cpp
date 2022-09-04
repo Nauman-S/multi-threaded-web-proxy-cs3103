@@ -52,7 +52,7 @@ void TestWrapper::parse(std::string filename) {
 	vector<ProcedureIndex> procs = extractor.getProcedures(node);
 	map<StatementASTNode, LineIndex> si_map = parser.si_mapping;
 	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
-	exit(0);
+	//exit(0);
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
 	
 	for (VariableIndex v : vars) {
@@ -76,7 +76,7 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 	Query query;
 
 	try {
-		Query* query_ptr = q_builder.GetQuery(query_str).value_or(&Query());
+		std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
 		query = *query_ptr;
 	}
 	catch (SyntaxError) {
