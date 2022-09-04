@@ -51,7 +51,6 @@ void TestWrapper::parse(std::string filename) {
 	vector<ProcedureIndex> procs = extractor.getProcedures(node);
 	map<StatementASTNode, LineIndex> si_map = parser.si_mapping;
 	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
-	exit(0);
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
 	
 	for (VariableIndex v : vars) {

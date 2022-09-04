@@ -11,11 +11,8 @@ public:
 	bool IsEntity(T entity);
 	std::shared_ptr<std::unordered_set<T>> GetAllEntities();
 protected:
-	static std::unordered_set<T> entities_;
+	std::unordered_set<T> entities_;
 };
-
-template<typename T>
-std::unordered_set<T> EntityManager<T>::entities_;
 
 template<typename T>
 inline void EntityManager<T>::AddEntity(T entity)
