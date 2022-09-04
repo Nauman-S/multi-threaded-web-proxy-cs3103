@@ -37,7 +37,7 @@ private:
 public:
 
 	QueryBuilder();
-	std::optional<Query*> GetQuery(const std::string& query_string);
+	std::shared_ptr<Query> GetQuery(const std::string& query_string);
 };
 
 #endif

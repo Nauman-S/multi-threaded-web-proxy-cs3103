@@ -11,6 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PKB\manager\ConstantManager.h" />
+    <ClInclude Include="PKB\manager\EntityManager.h" />
+    <ClInclude Include="PKB\manager\ProcedureManager.h" />
+    <ClInclude Include="PKB\manager\StatementManager.h" />
+    <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
@@ -38,6 +43,7 @@
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
     <ClInclude Include="SP\ConstantManager.h" />
+    <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\ConstantExtractor.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
@@ -96,8 +102,11 @@
     <ClInclude Include="Utils\Token.h" />
     <ClInclude Include="Utils\Tokenizer.h" />
     <ClInclude Include="Utils\type\RefType.h" />
+    <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PKB\manager\EntityManager.cpp" />
+    <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
@@ -124,6 +133,7 @@
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ConditionExpression.cpp" />
     <ClCompile Include="SP\ConstantManager.cpp" />
+    <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />

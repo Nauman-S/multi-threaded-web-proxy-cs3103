@@ -76,6 +76,9 @@
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
+    <ClCompile Include="PKB\manager\EntityManager.cpp" />
+    <ClCompile Include="PKB\manager\StatementManager.cpp" />
+    <ClCompile Include="SP\DesignExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -163,5 +166,12 @@
     <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
+    <ClInclude Include="PKB\manager\ConstantManager.h" />
+    <ClInclude Include="PKB\manager\EntityManager.h" />
+    <ClInclude Include="PKB\manager\ProcedureManager.h" />
+    <ClInclude Include="PKB\manager\StatementManager.h" />
+    <ClInclude Include="PKB\manager\VariableManager.h" />
+    <ClInclude Include="SP\DesignExtractor.h" />
+    <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
 </Project>

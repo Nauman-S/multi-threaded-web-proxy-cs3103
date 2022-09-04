@@ -33,11 +33,12 @@ QueryBuilder::QueryBuilder() {
 	this->lexer_ = new QueryLexer();
 }
 
-std::optional<Query*> QueryBuilder::GetQuery(const std::string& query_string_) {
+std::shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 		this->lexer_->FeedQuery(query_string_);
 		std::vector<Ref*> synonyms_ = ParseDeclarationStatements();
 		Query* query_ = ParseSelectStatement(synonyms_);
-		return query_;
+		std::shared_ptr<Query> sp_ = std::shared_ptr<Query>(query_);
+		return sp_;
 }
 
 std::vector<Ref*> QueryBuilder::ParseDeclarationStatements() {
