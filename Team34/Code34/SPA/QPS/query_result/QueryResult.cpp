@@ -27,7 +27,7 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 
 
 	string sym = set_res->GetSyn();
-	shared_ptr<unordered_set<string>> res_domain = set_res->GetDomain();
+	shared_ptr<unordered_set<string> const> res_domain = set_res->GetDomain();
 
 	// check whether the domain is empty
 	if (res_domain->size() == 0) {

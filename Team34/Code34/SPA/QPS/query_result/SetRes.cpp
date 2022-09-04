@@ -2,19 +2,18 @@
 
 
 bool SetRes::Merge(std::shared_ptr<SetRes> other) {
-	unordered_set<string> merged_result = unordered_set<string>();
+	shared_ptr<unordered_set<string>> merged_result;
 	for (const string& s : *(other->GetDomain())) {
-		if (domain_.count(s)) {
-			merged_result.insert(s);
+		if (domain_ptr_->count(s)) {
+			merged_result->insert(s);
 		}
 	}
-	domain_ = merged_result;
+	domain_ptr_ = merged_result;
 
-	if (merged_result.size() == 0) {
+	if (merged_result->size() == 0) {
 		return false;
 	}
 	else {
 		return true;
 	}
-
 };

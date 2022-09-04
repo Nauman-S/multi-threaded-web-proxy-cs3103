@@ -13,8 +13,8 @@ using StrPair = std::pair<string, string>;
 shared_ptr<vector<string>> TableRes::Columns()
 {
     auto vec = std::shared_ptr<vector<string>>();
-    for (auto& [col, idx] : syn_to_col_) {
-        vec->push_back(col);
+    for (auto& [syn, idx] : syn_to_col_) {
+        vec->push_back(syn);
     }
 
     return vec;
@@ -30,14 +30,15 @@ shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {
     shared_ptr<unordered_set<string>> result_set = std::make_shared<unordered_set<string>>();
     
     if (col_index == 0) {
-        for (StrPair pair : rows_) {
+        for (StrPair pair : *rows_ptr_) {
             result_set->insert(pair.first);
         }
     }
     else if (col_index == 1) {
-        for (StrPair pair : rows_) {
+        for (StrPair pair : *rows_ptr_) {
             result_set->insert(pair.second);
         }
     }
     return result_set;
+
 }
