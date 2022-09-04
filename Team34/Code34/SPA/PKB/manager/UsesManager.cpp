@@ -1,7 +1,7 @@
 #include "UsesManager.h"
 
-PVRelationStore uses_pv_store_;
-SVRelationStore uses_sv_store_;
+PVRelationStore UsesManager::uses_pv_store_;
+SVRelationStore UsesManager::uses_sv_store_;
 
 bool UsesManager::CheckUses(int stmt_num, std::string var)
 {
