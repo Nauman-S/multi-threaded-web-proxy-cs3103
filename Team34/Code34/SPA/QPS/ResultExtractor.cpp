@@ -18,12 +18,12 @@ string ResultExtractor::GetFormattedResult() {
 }
 
 string ResultExtractor::GetSingleSynResult() {
-	Ref& ref = select_tuple_->at(0);
+	shared_ptr<Ref> ref = select_tuple_->at(0);
 
 	// Get the domain in set results;
 	shared_ptr<unordered_map<string, shared_ptr<SetRes>>> set_results = query_result_->GetSetResults();
 	
-	auto iterator = set_results->find(ref.GetName());
+	auto iterator = set_results->find(ref->GetName());
 	assert(iterator != set_results->end() && "Result does not contain the synonym");
 
 	shared_ptr<unordered_set<string>> result_set = iterator->second->GetDomain();
@@ -32,14 +32,14 @@ string ResultExtractor::GetSingleSynResult() {
 
 	shared_ptr<vector<shared_ptr<TableRes>>> table_results = query_result_->GetTableResults();
 	for (shared_ptr<TableRes> table_result : *table_results) {
-		shared_ptr<unordered_set<string>> domain_from_table = table_result->GetColumn(ref.GetName());
+		shared_ptr<unordered_set<string>> domain_from_table = table_result->GetColumn(ref->GetName());
 		if (domain_from_table == nullptr) {
 			continue;
 		}
 		result_set = CombineResult(result_set, domain_from_table);
 		
 	}
-	return FormatResult(result_set, ref.GetRefType());
+	return FormatResult(result_set, ref->GetRefType());
 
 
 }
