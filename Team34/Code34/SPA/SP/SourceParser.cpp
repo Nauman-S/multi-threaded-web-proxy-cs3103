@@ -47,7 +47,7 @@ StatementASTNode SourceParser::parseStatement(vector<SourceToken> tokens, int& t
 		s_node.setStatementType(StatementType::sif, "sif");
 	}
 	else if (tokens.at(token_idx).GetType() == SourceTokenType::kWhile) {
-		cout << "while" << line_idx << endl;
+		// cout << "while" << line_idx << endl;
 		s_node = parseWhileStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::swhile, "swhile");
 	}
@@ -60,7 +60,7 @@ StatementASTNode SourceParser::parseStatement(vector<SourceToken> tokens, int& t
 		s_node = parseReadStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sprint, "sprint");
 	} else {
-		cout << "assign" << line_idx << endl;
+		// cout << "assign" << line_idx << endl;
 		s_node = parseAssignStatement(tokens, token_idx, line_idx);
 		s_node.setStatementType(StatementType::sassign, "sassign");
 	}

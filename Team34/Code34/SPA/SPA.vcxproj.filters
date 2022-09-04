@@ -72,6 +72,10 @@
     <ClCompile Include="SP\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />
     <ClCompile Include="SP\PrintStatementASTNode.cpp" />
+    <ClCompile Include="QPS\parser\QueryLexer.cpp" />
+    <ClCompile Include="QPS\parser\QueryParser.cpp" />
+    <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
+    <ClCompile Include="QPS\parser\SyntaxError.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -155,5 +159,9 @@
     <ClInclude Include="SP\AssignStatementASTNode.h" />
     <ClInclude Include="SP\IfStatementASTNode.h" />
     <ClInclude Include="SP\PrintStatementASTNode.h" />
+    <ClInclude Include="QPS\parser\QueryLexer.h" />
+    <ClInclude Include="QPS\parser\QueryParser.h" />
+    <ClInclude Include="QPS\parser\QueryBuilder.h" />
+    <ClInclude Include="QPS\parser\SyntaxError.h" />
   </ItemGroup>
 </Project>
