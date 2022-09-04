@@ -4,15 +4,13 @@
 # include <string>
 # include "StatementASTNode.h"
 # include "LineIndex.h"
-# include "VariableManager.h"
-# include "ConstantManager.h"
-# include "ProcedureManager.h"
 # include "ProgramNode.h"
+
 class DesignExtractor
 {
 public:
-	VariableManager getVariables(std::string &sourcefile);
-	ConstantManager getConstants(std::string& sourcefile);
-	ProcedureManager getProcedures(ProgramNode);
+	std::vector<VariableIndex> getVariables(std::string& sourcefile);
+	std::vector<int> getConstants(std::string& sourcefile);
+	std::vector<ProcedureIndex> getProcedures(ProgramNode);
 };
 

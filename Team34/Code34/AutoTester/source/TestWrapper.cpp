@@ -1,6 +1,9 @@
 #include "TestWrapper.h"
 #include "../SPA/SP/SourceParser.h"
 #include <iostream>
+#include "../SPA/SP/DesignExtractor.h"
+#include <map>
+#include "../SPA/PKB/WritePKBManager.h"
 
 using namespace std;
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
@@ -30,6 +33,24 @@ void TestWrapper::parse(std::string filename) {
 	vector<StatementASTNode> s_nodes = p_nodes.at(0).getChildren();
 	cout << "num of statements: " << s_nodes.size() << endl;
 	exit(0);
+	DesignExtractor extractor = DesignExtractor();
+	vector<int> consts = extractor.getConstants(filename);
+	vector<VariableIndex> vars = extractor.getVariables(filename);
+	vector<ProcedureIndex> procs = extractor.getProcedures(node);
+	map<StatementASTNode, LineIndex> si_map = parser.si_mapping;
+	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
+	exit(0);
+	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
+	for (VariableIndex v : vars) {
+		pkb->AddVariable(v.getName());
+	}
+	for (int c : consts) {
+		pkb->AddConstant(c);
+	}
+	for (ProcedureIndex p : procs) {
+		pkb->AddProcedure(p.getName());
+	}
+	
 }
 
 // method to evaluating a query

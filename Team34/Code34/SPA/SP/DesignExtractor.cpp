@@ -5,21 +5,21 @@
 
 using namespace std;
 
-ConstantManager DesignExtractor::getConstants(std::string &sourcefile) {
-	ConstantManager manager = ConstantManager();
+vector<int> DesignExtractor::getConstants(std::string &sourcefile) {
+	vector<int> consts;
 	SourceLexer lexer = SourceLexer(sourcefile);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	for (SourceToken t : tokens) {
 		if (t.GetType() == SourceTokenType::kInteger) {
 			int c = stoi(t.GetStringVal());
-			manager.addConstant(c);
+			consts.push_back(c);
 		}
 	}
-	return manager;
+	return consts;
 }
 
-VariableManager DesignExtractor::getVariables(std::string& sourcefile) {
-	VariableManager manager = VariableManager();
+vector<VariableIndex> DesignExtractor::getVariables(std::string& sourcefile) {
+	vector<VariableIndex> vars;
 	SourceLexer lexer = SourceLexer(sourcefile);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	int idx = 0;
@@ -30,21 +30,21 @@ VariableManager DesignExtractor::getVariables(std::string& sourcefile) {
 		else if (tokens.at(idx).GetType() == SourceTokenType::kName) {
 			VariableIndex v = VariableIndex();
 			v.setName(tokens.at(idx).GetStringVal());
-			manager.addVariable(v);
+			vars.push_back(v);
 			idx += 1;
 		}
 		else {
 			idx += 1;
 		}
 	}
-	return manager;
+	return vars;
 }
 
-ProcedureManager DesignExtractor::getProcedures(ProgramNode node) {
-	ProcedureManager manager = ProcedureManager();
+vector<ProcedureIndex> DesignExtractor::getProcedures(ProgramNode node) {
+	vector<ProcedureIndex> procs;
 	vector<ProcedureASTNode> children = node.getChildren();
 	for (ProcedureASTNode proc : children) {
-		manager.addProcedure(proc.getProc());
+		procs.push_back(proc.getProc());
 	}
-	return manager;
+	return procs;
 }
