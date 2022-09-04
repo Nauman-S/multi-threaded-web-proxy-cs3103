@@ -17,7 +17,7 @@ bool ReadPKBManager::IsConstant(Constant constant)
     return constant_manager_.IsEntity(constant);
 }
 
-const std::shared_ptr<std::unordered_set<int>> ReadPKBManager::GetAllConstants()
+const std::shared_ptr<std::unordered_set<Constant>> ReadPKBManager::GetAllConstants()
 {
 	return constant_manager_.GetAllEntities();
 }
@@ -28,10 +28,11 @@ bool ReadPKBManager::IsProcedure(Procedure proc)
 	return procedure_manager_.IsEntity(proc);
 }
 
-std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProcedures()
+const std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProcedures()
 {
 	return procedure_manager_.GetAllEntities();
 }
+
 
 // APIs related to Statements
 bool ReadPKBManager::IsStatement(StmtNum stmt_num)

@@ -30,7 +30,7 @@ public:
 
 	// APIs related to Procedure entity
 	bool IsProcedure(Procedure proc);
-	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
+	const std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
 	// APIs related to Statements
 	bool IsStatement(StmtNum stmt_num);
