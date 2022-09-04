@@ -53,7 +53,7 @@ void TestWrapper::parse(std::string filename) {
 	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
 	exit(0);
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
-	/*
+	
 	for (VariableIndex v : vars) {
 		pkb->AddVariable(v.getName());
 	}
@@ -63,9 +63,6 @@ void TestWrapper::parse(std::string filename) {
 	for (ProcedureIndex p : procs) {
 		pkb->AddProcedure(Procedure(p.getName()));
 	}
-	*/
-	
-
 }
 
 // method to evaluating a query
