@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <memory>
 
 #include "SyntaxError.h"
 #include "..\..\Utils\InvalidTokenException.h"
@@ -33,20 +34,10 @@ QueryBuilder::QueryBuilder() {
 }
 
 std::optional<Query*> QueryBuilder::GetQuery(const std::string& query_string_) {
-	try {
 		this->lexer_->FeedQuery(query_string_);
 		std::vector<Ref*> synonyms_ = ParseDeclarationStatements();
 		Query* query_ = ParseSelectStatement(synonyms_);
 		return query_;
-	}
-	catch (InvalidTokenException e) {
-		std::cout << e.what() << std::endl;
-		return {};
-	}
-	catch (SyntaxError e) {
-		std::cout << e.what() << std::endl;
-		return {};
-	}
 }
 
 std::vector<Ref*> QueryBuilder::ParseDeclarationStatements() {
@@ -132,10 +123,30 @@ Query* QueryBuilder::ParseSelectStatement(std::vector<Ref*> synonyms_) {
 		std::vector<Ref*> select_tuple_ = ParseReturnValues(synonyms_);
 		std::vector<Rel*> relations_ = ParseRelations(synonyms_);
 		std::vector<Pattern*> patterns_ = ParsePatterns();
+
 		if (this->lexer_->HasMoreTokens()) {
 			throw SyntaxError("Unexpected token at end of query");
 		}
-		Query* query = new Query{};
+
+		std::vector<std::shared_ptr<Ref>> select_tuple_s_;
+		for (Ref* ref_ : select_tuple_) {
+			std::shared_ptr <Ref> ref_s_ = std::shared_ptr<Ref>(ref_);
+			select_tuple_s_.push_back(ref_s_);
+		}
+
+		std::vector<std::shared_ptr<Rel>> relations_s_;
+		for (Rel* rel_ : relations_) {
+			std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
+			relations_s_.push_back(rel_s_);
+		}
+
+		std::vector<std::shared_ptr<Pattern>> patterns_s_;
+		for (Pattern* pattern_ : patterns_) {
+			std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
+			patterns_s_.push_back(pattern_s_);
+		}
+
+		Query* query = new Query();
 		return query;
 	}
 	else {

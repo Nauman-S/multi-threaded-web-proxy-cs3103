@@ -1,6 +1,6 @@
 #include "InvalidTokenException.h"
 
-InvalidTokenException::InvalidTokenException(char unidentifiable_character) {
+InvalidTokenException::InvalidTokenException(char unidentifiable_character) : SyntaxError(std::to_string(unidentifiable_character)) {
 	this->unidentifiable_character = unidentifiable_character;
 }
 
