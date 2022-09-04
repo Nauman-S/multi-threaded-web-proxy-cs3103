@@ -10,6 +10,6 @@ public:
 	void AddEntity(T entity);
 	bool IsEntity(T entity);
 	std::shared_ptr<std::unordered_set<T>> GetAllEntities();
-private:
+protected:
 	static std::unordered_set<T> entities_;
 };

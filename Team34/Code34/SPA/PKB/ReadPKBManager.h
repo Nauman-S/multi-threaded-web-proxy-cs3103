@@ -6,6 +6,7 @@
 #include "manager/VariableManager.h"
 #include "manager/ConstantManager.h"
 #include "manager/ProcedureManager.h"
+#include "manager/EntityManager.h"
 #include "manager/StatementManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
@@ -28,7 +29,7 @@ public:
     const std::shared_ptr<std::unordered_set<Constant>> GetAllConstants();
 
 	// APIs related to Procedure entity
-	bool IsProcedure(std::string proc);
+	bool IsProcedure(Procedure proc);
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
 	// APIs related to Statements

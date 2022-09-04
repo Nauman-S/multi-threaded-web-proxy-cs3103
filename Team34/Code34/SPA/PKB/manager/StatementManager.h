@@ -21,5 +21,4 @@ private:
 	static std::unordered_map<RefType, std::unordered_set<StmtNum>> type_to_stmt_map_;
 	static std::unordered_map<StmtNum,RefType> stmt_to_type_map_;
 	static std::unordered_set<StmtNum> statements_;
-	
 };

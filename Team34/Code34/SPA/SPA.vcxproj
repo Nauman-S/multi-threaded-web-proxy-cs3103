@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
@@ -73,6 +72,11 @@
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="PKB\store\PVRelationStore.h" />
     <ClInclude Include="PKB\store\SVRelationStore.h" />
+	<ClInclude Include="PKB\manager\EntityManager.h" />
+	<ClInclude Include="PKB\manager\ConstantManager.h" />
+	<ClInclude Include="PKB\manager\VariableManager.h" />
+	<ClInclude Include="PKB\manager\ProcedureManager.h" />
+	<ClInclude Include="PKB\manager\StatementManager.h" />
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
@@ -97,7 +101,6 @@
     <ClInclude Include="Utils\type\RefType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PKB\manager\EntityManager.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
@@ -153,6 +156,9 @@
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="PKB\store\PVRelationStore.cpp" />
     <ClCompile Include="PKB\store\SVRelationStore.cpp" />
+	<ClCompile Include="PKB\manager\EntityManager.cpp" />
+	<ClCompile Include="PKB\manager\ConstantManager.cpp" />
+	<ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
