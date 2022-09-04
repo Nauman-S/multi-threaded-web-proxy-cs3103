@@ -16,9 +16,6 @@
 # include "StatementASTNode.h"
 # include "VariableIndex.h"
 # include "ProcedureIndex.h"
-# include "VariableManager.h"
-# include "ProcedureManager.h"
-# include "ConstantManager.h"
 # include <map>
 # include <string>
 # include <vector>
