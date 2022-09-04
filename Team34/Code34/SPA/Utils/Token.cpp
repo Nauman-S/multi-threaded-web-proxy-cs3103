@@ -35,7 +35,9 @@ const map<char, TokenType> Token::allowed_special_char_{
     {'}', kRightCurly},
     {';', kSemiColon},
     {',', kComma},
-    {'_', kUnderscore}
+    {'_', kUnderscore},
+    {'\"', kDoubleQuote},
+    {'\'', kSingleQuote}
 };
 
 Token::Token(std::string value, TokenType type) : literal_value_(value), type_(type) {}

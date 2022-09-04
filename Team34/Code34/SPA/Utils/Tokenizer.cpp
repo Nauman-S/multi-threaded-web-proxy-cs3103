@@ -42,7 +42,7 @@ std::optional<int> Tokenizer::getTokenIval() {
 }
 
 
-void Tokenizer::nextToken() throw (InvalidTokenException) {
+void Tokenizer::nextToken() {
 	skipIgnoredChars();
 	if (this->current_index >= this->last_index) {
 		consumeEndOfParsingToken();
