@@ -15,24 +15,29 @@
 
 #ifndef QUERYBUILDER_H
 #define QUERYBUILDER_H
+
+#include <memory>
+
+using std::shared_ptr;
+
 class QueryBuilder
 {
 private:
-	QueryLexer* lexer_;
+	shared_ptr<QueryLexer> lexer_;
 
-	std::vector<Ref*> ParseDeclarationStatements();
-	Query* ParseSelectStatement(std::vector<Ref*> synonyms_);
+	std::vector<shared_ptr<Ref>> ParseDeclarationStatements();
+	shared_ptr<Query> ParseSelectStatement(std::vector<shared_ptr<Ref>> synonyms_);
 
-	Ref* ParseDeclarationStatement();
-	Ref* CreateReference(std::string design_entity_, std::string synonym_);//This method should ideally be inside Ref Class based on factory method
+	shared_ptr<Ref> ParseDeclarationStatement();
+	shared_ptr<Ref> CreateReference(std::string design_entity_, std::string synonym_);//This method should ideally be inside Ref Class based on factory method
 
-	std::vector<Ref*> ParseReturnValues(std::vector<Ref*> synonyms_);
+	std::vector<shared_ptr<Ref>> ParseReturnValues(std::vector<shared_ptr<Ref>> synonyms_);
 	bool HasSuchThatClause();
-	std::vector<Rel*> ParseRelations(std::vector<Ref*> synonyms_);
-	Rel* ParseRelRefClause(std::string relation_reference_, std::vector<Ref*> synonyms_);
-	std::vector<Pattern*> ParsePatterns();
+	std::vector< shared_ptr<Rel>> ParseRelations(std::vector<shared_ptr<Ref>> synonyms_);
+	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_, std::vector<shared_ptr<Ref>> synonyms_);
+	std::vector< shared_ptr<Pattern>> ParsePatterns();
 
-	VarRef* GetRhsVarRef(std::vector<Ref*> synonyms_);
+	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 
 public:
 

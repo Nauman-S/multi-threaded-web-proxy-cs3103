@@ -29,21 +29,23 @@
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
 
+using std::shared_ptr;
+
 QueryBuilder::QueryBuilder() {
-	this->lexer_ = new QueryLexer();
+	lexer_ = std::make_shared<QueryLexer>();
 }
 
-std::shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
+shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 		this->lexer_->FeedQuery(query_string_);
-		std::vector<Ref*> synonyms_ = ParseDeclarationStatements();
-		Query* query_ = ParseSelectStatement(synonyms_);
+		std::vector<shared_ptr<Ref>> synonyms_ = ParseDeclarationStatements();
+		shared_ptr<Query> query_ = ParseSelectStatement(synonyms_);
 		std::shared_ptr<Query> sp_ = std::shared_ptr<Query>(query_);
 		return sp_;
 }
 
-std::vector<Ref*> QueryBuilder::ParseDeclarationStatements() {
-	std::vector<Ref*> synonyms;
-	Ref* synonym_;
+std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
+	std::vector<shared_ptr<Ref>> synonyms;
+	shared_ptr<Ref> synonym_;
 
 	while (this->lexer_->HasDesignEntity()) {
 		synonym_ = ParseDeclarationStatement();
@@ -55,7 +57,7 @@ std::vector<Ref*> QueryBuilder::ParseDeclarationStatements() {
 
 
 
-Ref* QueryBuilder::ParseDeclarationStatement() {
+shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
 	if (this->lexer_->HasIdentity()) {
@@ -63,7 +65,7 @@ Ref* QueryBuilder::ParseDeclarationStatement() {
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			Ref* ref_ = CreateReference(design_entity_, synonym_);
+			shared_ptr<Ref> ref_ = CreateReference(design_entity_, synonym_);
 			return ref_;
 		}
 		else {
@@ -78,38 +80,36 @@ Ref* QueryBuilder::ParseDeclarationStatement() {
 }
 
 //this should be inside Create Ref class based on factory pattern. for now its here
-Ref* QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
-
+shared_ptr<Ref> QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
 	if (design_entity_.compare("STMT") == 0) {
-		return new StmtRef(ValType::kSynonym, synonym_);
+		return shared_ptr<StmtRef>(new StmtRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("READ") == 0) {
-		return new ReadRef(ValType::kSynonym, synonym_);
-
+		return shared_ptr<ReadRef>(new ReadRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("PRINT") == 0) {
-		return new PrintRef(ValType::kSynonym, synonym_);
+		return shared_ptr<PrintRef>(new PrintRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("CALL") == 0) {
-		return new CallRef(ValType::kSynonym, synonym_);
+		return shared_ptr<CallRef>(new CallRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("WHILE") == 0) {
-		return new WhileRef(ValType::kSynonym, synonym_);
+		return shared_ptr<WhileRef>(new WhileRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("IF") == 0) {
-		return new IfRef(ValType::kSynonym, synonym_);
+		return shared_ptr<IfRef>(new IfRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("ASSIGN") == 0) {
-		return new AssignRef(ValType::kSynonym, synonym_);
+		return shared_ptr<AssignRef>(new AssignRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("VARIABLE") == 0) {
-		return new VarRef(ValType::kSynonym, synonym_);
+		return shared_ptr<VarRef>(new VarRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("CONSTANT") == 0) {
-		return new ConstRef(ValType::kSynonym, synonym_);
+		return shared_ptr<ConstRef>(new ConstRef(ValType::kSynonym, synonym_));
 	}
 	else if (design_entity_.compare("PROCEDURE") == 0) {
-		return new ProcRef(ValType::kSynonym, synonym_);
+		return shared_ptr<ProcRef>(new ProcRef(ValType::kSynonym, synonym_));
 	}
 	else {
 		throw new SyntaxError("This error should never be called - Iconsistent Naming OF design_entities");
@@ -117,37 +117,37 @@ Ref* QueryBuilder::CreateReference(std::string design_entity_, std::string synon
 
 }
 
-Query* QueryBuilder::ParseSelectStatement(std::vector<Ref*> synonyms_) {
+shared_ptr<Query> QueryBuilder::ParseSelectStatement(std::vector<shared_ptr<Ref>> synonyms_) {
 
 	if (this->lexer_->HasKeyword("SELECT")) {
 		this->lexer_->MatchKeyword();
-		std::vector<Ref*> select_tuple_ = ParseReturnValues(synonyms_);
-		std::vector<Rel*> relations_ = ParseRelations(synonyms_);
-		std::vector<Pattern*> patterns_ = ParsePatterns();
+		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues(synonyms_);
+		std::vector<shared_ptr<Rel>> relations_ = ParseRelations(synonyms_);
+		std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
 
 		if (this->lexer_->HasMoreTokens()) {
 			throw SyntaxError("Unexpected token at end of query");
 		}
 
 		std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple_s_ = std::make_shared<std::vector<std::shared_ptr<Ref>>>();
-		for (Ref* ref_ : select_tuple_) {
+		for (shared_ptr<Ref> ref_ : select_tuple_) {
 			std::shared_ptr <Ref> ref_s_ = std::shared_ptr<Ref>(ref_);
 			select_tuple_s_->push_back(ref_s_);
 		}
 
 		std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
-		for (Rel* rel_ : relations_) {
+		for (shared_ptr<Rel> rel_ : relations_) {
 			std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
 			relations_s_->push_back(rel_s_);
 		}
 
 		std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
-		for (Pattern* pattern_ : patterns_) {
+		for (shared_ptr<Pattern> pattern_ : patterns_) {
 			std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
 			patterns_s_->push_back(pattern_s_);
 		}
 
-		Query* query = new Query(select_tuple_s_, relations_s_, patterns_s_);
+		shared_ptr<Query> query = shared_ptr<Query>(new Query(select_tuple_s_, relations_s_, patterns_s_));
 		return query;
 	}
 	else {
@@ -155,13 +155,13 @@ Query* QueryBuilder::ParseSelectStatement(std::vector<Ref*> synonyms_) {
 	}
 }
 
-std::vector<Ref*> QueryBuilder::ParseReturnValues(std::vector<Ref*> synonyms) {
-	std::vector<Ref*> select_tuple_;
+std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues(std::vector<shared_ptr<Ref>> synonyms) {
+	std::vector<shared_ptr<Ref>> select_tuple_;
 
 	if (this->lexer_->HasIdentity()) {
 		std::string identity_ = this->lexer_->MatchIdentity();
 
-		for (Ref* ref : synonyms) {
+		for (shared_ptr<Ref> ref : synonyms) {
 			if (ref->GetName().compare(identity_) == 0) {
 				select_tuple_.push_back(ref);
 			}
@@ -195,8 +195,8 @@ bool QueryBuilder::HasSuchThatClause() {
 
 
 //Continue from here
-std::vector <Rel*> QueryBuilder::ParseRelations(std::vector<Ref*> synonyms_) {
-	std::vector<Rel*> relations_;
+std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations(std::vector<shared_ptr<Ref>> synonyms_) {
+	std::vector<shared_ptr<Rel>> relations_;
 	if (!HasSuchThatClause()) {
 		return relations_;
 	}
@@ -217,7 +217,7 @@ std::vector <Rel*> QueryBuilder::ParseRelations(std::vector<Ref*> synonyms_) {
 	}
 
 	//ParseRelation the relation clause
-	Rel* rel_ref_clause_ = ParseRelRefClause(relation_reference_, synonyms_);
+	shared_ptr<Rel> rel_ref_clause_ = ParseRelRefClause(relation_reference_, synonyms_);
 
 
 	if (this->lexer_->HasClosingBrace()) {
@@ -232,7 +232,7 @@ std::vector <Rel*> QueryBuilder::ParseRelations(std::vector<Ref*> synonyms_) {
 	return relations_;
 }
 
-Rel* QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vector<Ref*> synonyms_) {
+shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vector<shared_ptr<Ref>> synonyms_) {
 	std::set <std::string> stmt_ref_ = { "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*", "MODIFIES" };
 
 
@@ -242,32 +242,32 @@ Rel* QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vec
 	else if (relational_reference_.compare("USES") == 0) {
 			if (this->lexer_->HasIdentity()) {
 				std::string identity_ = this->lexer_->MatchIdentity();
-				for (Ref* synonym_lhs_ : synonyms_) {
+				for (shared_ptr<Ref> synonym_lhs_ : synonyms_) {
 					if (synonym_lhs_->GetValType() == ValType::kSynonym && synonym_lhs_->GetName().compare(identity_) == 0) {
 						if (synonym_lhs_->GetRefType() == RefType::kAssignRef) {
-							AssignRef* lhs_ = (AssignRef*)synonym_lhs_;
-							VarRef* rhs_ = GetRhsVarRef(synonyms_);
-							return new UsesSRel(*lhs_, *rhs_);
+							shared_ptr<AssignRef> lhs_ = std::dynamic_pointer_cast<AssignRef>(synonym_lhs_);
+							shared_ptr<VarRef> rhs_ = GetRhsVarRef(synonyms_);
+							return shared_ptr<Rel>(new UsesSRel(*lhs_, *rhs_));
 						}
 						else if (synonym_lhs_->GetRefType() == RefType::kPrintRef) {
-							PrintRef* lhs_ = (PrintRef*)synonym_lhs_;
-							VarRef* rhs_ = GetRhsVarRef(synonyms_);
-							return new UsesSRel(*lhs_, *rhs_);
+							shared_ptr<PrintRef> lhs_ = std::dynamic_pointer_cast<PrintRef>(synonym_lhs_);
+							shared_ptr<VarRef> rhs_ = GetRhsVarRef(synonyms_);
+							return shared_ptr<Rel>(new UsesSRel(*lhs_, *rhs_));
 						}
 						else if (synonym_lhs_->GetRefType() == RefType::kIfRef) {
-							IfRef* lhs_ = (IfRef*)synonym_lhs_;
-							VarRef* rhs_ = GetRhsVarRef(synonyms_);
-							return new UsesSRel(*lhs_, *rhs_);
+							shared_ptr <IfRef> lhs_ = std::dynamic_pointer_cast<IfRef>(synonym_lhs_);
+							shared_ptr <VarRef> rhs_ = GetRhsVarRef(synonyms_);
+							return shared_ptr<Rel>(new UsesSRel(*lhs_, *rhs_));
 						}
 						else if (synonym_lhs_->GetRefType() == RefType::kWhileRef) {
-							WhileRef* lhs_ = (WhileRef*)synonym_lhs_;
-							VarRef* rhs_ = GetRhsVarRef(synonyms_);
-							return new UsesSRel(*lhs_, *rhs_);
+							shared_ptr<WhileRef> lhs_ = std::dynamic_pointer_cast<WhileRef>(synonym_lhs_);
+							shared_ptr <VarRef> rhs_ = GetRhsVarRef(synonyms_);
+							return shared_ptr<Rel>(new UsesSRel(*lhs_, *rhs_));
 						}
 						else if (synonym_lhs_->GetRefType() == RefType::kProcRef) {
-							ProcRef* lhs_ = (ProcRef*)synonym_lhs_;
-							VarRef* rhs_ = GetRhsVarRef(synonyms_);
-							return new UsesPRel(*lhs_, *rhs_);
+							shared_ptr <ProcRef> lhs_ = std::dynamic_pointer_cast<ProcRef>(synonym_lhs_);
+							shared_ptr <VarRef> rhs_ = GetRhsVarRef(synonyms_);
+							return shared_ptr<Rel>(new UsesPRel(*lhs_, *rhs_));
 						}
 					}
 				}
@@ -276,8 +276,8 @@ Rel* QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vec
 			else if (this->lexer_->HasInteger()) {
 				int statement_number_ = this->lexer_->MatchInteger();
 				StmtRef* lhs_ = new StmtRef(ValType::kLineNum, std::to_string(statement_number_));
-				VarRef* rhs_ = GetRhsVarRef(synonyms_);
-				return new UsesSRel(*lhs_, *rhs_);
+				shared_ptr <VarRef> rhs_ = GetRhsVarRef(synonyms_);
+				return shared_ptr<Rel>(new UsesSRel(*lhs_, *rhs_));
 			}
 			else if (this->lexer_->HasQuotationMarks()) {
 				this->lexer_->MatchQuotationMarks();
@@ -286,8 +286,8 @@ Rel* QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vec
 					ProcRef* lhs_ = new ProcRef(ValType::kProcName, identity_);
 					if (this->lexer_->HasQuotationMarks()) {
 						this->lexer_->MatchQuotationMarks();
-						VarRef* rhs_ = GetRhsVarRef(synonyms_);
-						return new UsesPRel(*lhs_, *rhs_);
+						shared_ptr <VarRef> rhs_ = GetRhsVarRef(synonyms_);
+						return shared_ptr<Rel>(new UsesPRel(*lhs_, *rhs_));
 					}
 					else {
 						throw SyntaxError("Select statement - [suchthatcl] - missing ending quotation marks at end of identity token");
@@ -310,7 +310,7 @@ Rel* QueryBuilder::ParseRelRefClause(std::string relational_reference_, std::vec
 	}
 }
 
-VarRef* QueryBuilder::GetRhsVarRef(std::vector<Ref*> synonyms_) {
+shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_) {
 	if (this->lexer_->HasCommaDelimeter()) {
 		this->lexer_->MatchCommaDelimeter();
 	}
@@ -320,10 +320,10 @@ VarRef* QueryBuilder::GetRhsVarRef(std::vector<Ref*> synonyms_) {
 
 	if (this->lexer_->HasIdentity()) {
 		std::string identity_rhs_ = this->lexer_->MatchIdentity();
-		for (Ref* synonym_var_rhs_ : synonyms_) {
+		for (shared_ptr<Ref> synonym_var_rhs_ : synonyms_) {
 
 			if (synonym_var_rhs_->GetValType() == ValType::kSynonym && synonym_var_rhs_->GetRefType() == RefType::kVarRef && synonym_var_rhs_->GetName().compare(identity_rhs_) == 0) {
-				VarRef* rhs_ = (VarRef*)synonym_var_rhs_;
+				shared_ptr <VarRef> rhs_ = std::dynamic_pointer_cast<VarRef>(synonym_var_rhs_);
 				return rhs_;
 			}
 		}
@@ -332,7 +332,7 @@ VarRef* QueryBuilder::GetRhsVarRef(std::vector<Ref*> synonyms_) {
 	else if (this->lexer_->HasQuotationMarks()) {
 		this->lexer_->MatchQuotationMarks();
 		if (this->lexer_->HasIdentity()) {
-			VarRef* rhs_ = new VarRef(ValType::kVarName, this->lexer_->MatchIdentity());
+			shared_ptr <VarRef> rhs_ = shared_ptr <VarRef>(new VarRef(ValType::kVarName, this->lexer_->MatchIdentity()));
 			return rhs_;
 		}
 		else {
@@ -348,8 +348,8 @@ VarRef* QueryBuilder::GetRhsVarRef(std::vector<Ref*> synonyms_) {
 
 //Continue working on parsing pattern clause
 
-std::vector <Pattern*> QueryBuilder::ParsePatterns() {
-	std::vector<Pattern*> patterns_;
+std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
+	std::vector<shared_ptr<Pattern>> patterns_;
 	//if (HasPatternClause()) {
 	//	this->lexer_->MatchPatternKeyword();
 	//	if (this->lexer_->HasIdentity()) {
