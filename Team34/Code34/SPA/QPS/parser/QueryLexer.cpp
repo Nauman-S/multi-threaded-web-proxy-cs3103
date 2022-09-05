@@ -63,7 +63,7 @@ bool QueryLexer::HasKeyword(std::string keyword_) {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
 		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
-		return this->relational_references_.find(sval_) != this->relational_references_.end() && sval_.compare(keyword_) == 0;
+		return this->keywords_.find(sval_) != this->keywords_.end() && sval_.compare(keyword_) == 0;
 	}
 	return false;
 }

@@ -10,38 +10,41 @@
 #include <string>
 #include <memory>
 
+using std::vector;
+using std::shared_ptr;
+
 class Query
 {
 protected:
-	std::shared_ptr<std::vector<Ref>> select_tuple_;
-	std::shared_ptr<std::vector<Rel>> relations_;
-	std::shared_ptr < std::vector<Pattern>> patterns_;
+	shared_ptr<vector<shared_ptr<Ref>>> select_tuple_;
+	shared_ptr< vector<shared_ptr<Rel>>> relations_;
+	shared_ptr< vector<shared_ptr<Pattern>>> patterns_;
 
 public:
 	Query() {};
 
-	explicit Query(std::shared_ptr<std::vector<Ref>> select_tuple)
+	explicit Query(shared_ptr<vector<shared_ptr<Ref>>> select_tuple)
 		: select_tuple_{ select_tuple_ } {};
 	
 
-	Query(std::shared_ptr<std::vector<Ref>> select_tuple, std::shared_ptr<std::vector<Rel>> relations)
+	Query(shared_ptr<vector<shared_ptr<Ref>>> select_tuple, shared_ptr< vector<shared_ptr<Rel>>> relations)
 		: select_tuple_{ select_tuple }, relations_{ relations } {};
 
-	Query(std::shared_ptr<std::vector<Ref>> select_tuple, std::shared_ptr < std::vector<Pattern>> patterns)
+	Query(shared_ptr<vector<shared_ptr<Ref>>> select_tuple, shared_ptr< vector<shared_ptr<Pattern>>> patterns)
 		: select_tuple_{ select_tuple }, patterns_{patterns} {};
 
-	Query(std::shared_ptr<std::vector<Ref>> select_tuple, std::shared_ptr<std::vector<Rel>> relations, std::shared_ptr < std::vector<Pattern>> patterns)
+	Query(shared_ptr<vector<shared_ptr<Ref>>> select_tuple, shared_ptr< vector<shared_ptr<Rel>>> relations, shared_ptr< vector<shared_ptr<Pattern>>> patterns)
 		: select_tuple_{ select_tuple }, relations_{ relations }, patterns_{ patterns } {};
 
-	std::shared_ptr<std::vector<Ref>> GetSelectTuple() {
+	shared_ptr<vector<shared_ptr<Ref>>> GetSelectTuple() {
 		return select_tuple_;
 	}
 
-	std::shared_ptr<std::vector<Rel>> GetRelations() {
+	shared_ptr< vector<shared_ptr<Rel>>> GetRelations() {
 		return relations_;
 	}
 
-	std::shared_ptr<std::vector<Pattern>> GetPatterns() {
+	shared_ptr< vector<shared_ptr<Pattern>>> GetPatterns() {
 		return patterns_;
 	}
 };

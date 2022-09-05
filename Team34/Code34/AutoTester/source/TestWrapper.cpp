@@ -16,6 +16,7 @@
 #include "../SPA/QPS/QueryEvaluator.h"
 #include "../SPA/Utils/type/TypeDef.h"
 
+
 using namespace std;
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -74,10 +75,11 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 	Query query;
 
 	try {
-		Query* query_ptr = q_builder.GetQuery(query_str).value_or(&Query());
+		std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
 		query = *query_ptr;
 	}
-	catch (SyntaxError) {
+	catch (SyntaxError e) {
+		std::cout << e.what() << std::endl;
 		std::cout << "SyntaxError" << std::endl;
 		results.push_back("SyntaxError");
 		return;
@@ -88,6 +90,7 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 		return;
 	}
 
+	cout << query.GetSelectTuple() << endl;
 	QueryEvaluator evaluator(query);
 	string res;
 	if (evaluator.evaluate()) {

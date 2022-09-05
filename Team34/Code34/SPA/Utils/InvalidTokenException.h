@@ -1,7 +1,7 @@
 #pragma once
-#ifndef INVALIDTOKENEXCEPTION_H
-#define INVALIDTOKENEXCEPTION_H
-class InvalidTokenException
+
+#include"..\QPS\parser\SyntaxError.h"
+class InvalidTokenException : public SyntaxError
 {
 private:
 	char unidentifiable_character;
@@ -9,5 +9,4 @@ public:
 	InvalidTokenException(char unidentifiable_character);
 	const char* what() const throw ();
 };
-#endif
 
