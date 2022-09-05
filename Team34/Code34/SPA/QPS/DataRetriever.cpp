@@ -240,7 +240,7 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
 
 
     unordered_set<RefType> valid_types {
-        RefType::kProcRef,
+            RefType::kProcRef,
             RefType::kVarRef,
             RefType::kConstRef,
             RefType::kAssignRef,
@@ -248,7 +248,8 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
             RefType::kIfRef,
             RefType::kWhileRef,
             RefType::kReadRef,
-            RefType::kPrintRef
+            RefType::kPrintRef,
+            RefType::kStmtRef
     };
     assert(valid_types.count(ref_type) > 0);
 
