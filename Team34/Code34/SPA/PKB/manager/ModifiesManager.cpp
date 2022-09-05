@@ -1,8 +1,5 @@
 #include "ModifiesManager.h"
 
-SVRelationStore ModifiesManager::modifies_sv_store_;
-PVRelationStore ModifiesManager::modifies_pv_store_;
-
 bool ModifiesManager::CheckModifies(int stmt_num, std::string var)
 {
 	return modifies_sv_store_.CheckSVRelation(stmt_num, var);
