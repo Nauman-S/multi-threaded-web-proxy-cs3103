@@ -68,6 +68,7 @@ string ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_se
 	for (string value : result_vector) {
 		final_result += (value + " ");
 	}
+	final_result.pop_back();
 	return final_result;
 }
 
