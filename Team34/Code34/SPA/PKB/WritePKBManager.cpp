@@ -3,45 +3,45 @@
 // APIs related to Variable entity
 void WritePKBManager::AddVariable(Variable var)
 {
-    variable_manager_.AddEntity(var);
+    pkb.variable_manager_.AddEntity(var);
 }
 
 // APIs related to Constant entity
 void WritePKBManager::AddConstant(Constant constant)
 {
-	constant_manager_.AddEntity(constant);
+	pkb.constant_manager_.AddEntity(constant);
 }
 
 // APIs related to Procedure entity
 void WritePKBManager::AddProcedure(Procedure proc)
 {
-	procedure_manager_.AddEntity(proc);
+	pkb.procedure_manager_.AddEntity(proc);
 }
 
 // APIs related to Statement
 void WritePKBManager::AddStatement(StmtNum stmt_num, RefType type)
 {
-	statement_manager_.AddStatement(stmt_num, type);
+	pkb.statement_manager_.AddStatement(stmt_num, type);
 }
 
 // APIs related to Uses relation
 void WritePKBManager::SetUses(int stmt_num, std::string var)
 {
-	uses_manager_.SetUses(stmt_num, var);
+	pkb.uses_manager_.SetUses(stmt_num, var);
 }
 
 void WritePKBManager::SetUses(std::string proc_name, std::string var)
 {
-	uses_manager_.SetUses(proc_name, var);
+	pkb.uses_manager_.SetUses(proc_name, var);
 }
 
 //APIs related to Modifies relation
 void WritePKBManager::SetModifies(int stmt_num, std::string var)
 {
-	modifies_manager_.SetModifies(stmt_num, var);
+	pkb.modifies_manager_.SetModifies(stmt_num, var);
 }
 
 void WritePKBManager::SetModifies(std::string proc_name, std::string var)
 {
-	modifies_manager_.SetModifies(proc_name, var);
+	pkb.modifies_manager_.SetModifies(proc_name, var);
 }

@@ -1,9 +1,5 @@
 #include "StatementManager.h"
 
-std::unordered_map<RefType, std::unordered_set<StmtNum>> StatementManager::type_to_stmt_map_;
-std::unordered_map<StmtNum, RefType> StatementManager::stmt_to_type_map_;
-std::unordered_set<StmtNum> StatementManager::statements_;
-
 void StatementManager::AddStatement(StmtNum stmt_num, RefType type)
 {
 	assert(type != RefType::kConstRef || type != RefType::kVarRef);

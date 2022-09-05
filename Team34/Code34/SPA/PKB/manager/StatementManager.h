@@ -18,7 +18,7 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 
 private:
-	static std::unordered_map<RefType, std::unordered_set<StmtNum>> type_to_stmt_map_;
-	static std::unordered_map<StmtNum,RefType> stmt_to_type_map_;
-	static std::unordered_set<StmtNum> statements_;
+	std::unordered_map<RefType, std::unordered_set<StmtNum>> type_to_stmt_map_;
+	std::unordered_map<StmtNum,RefType> stmt_to_type_map_;
+	std::unordered_set<StmtNum> statements_;
 };
