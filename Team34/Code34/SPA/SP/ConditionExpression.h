@@ -8,6 +8,8 @@ public:
 
 	std::vector<VariableIndex> getVariables();
 
+	virtual void Extract(NodeExtractor&);
+
 protected:
 	std::vector<VariableIndex> vars;
 };

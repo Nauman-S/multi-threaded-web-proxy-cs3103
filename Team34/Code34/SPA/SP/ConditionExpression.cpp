@@ -9,3 +9,7 @@ void ConditionExpression::setVariables(std::vector<VariableIndex>& v) {
 std::vector<VariableIndex> ConditionExpression::getVariables() {
 	return vars;
 }
+
+void ConditionExpression::Extract(NodeExtractor& extractor) {
+
+}

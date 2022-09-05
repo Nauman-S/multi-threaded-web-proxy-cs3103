@@ -9,6 +9,8 @@ public:
 
 	ProcedureIndex getProcedure();
 
+	virtual void Extract(NodeExtractor&);
+
 protected:
 	ProcedureIndex proc;
 };

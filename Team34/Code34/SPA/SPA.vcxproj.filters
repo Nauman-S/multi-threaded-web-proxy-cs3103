@@ -47,7 +47,7 @@
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="PKB\store\PVRelationStore.cpp" />
     <ClCompile Include="PKB\store\SVRelationStore.cpp" />
-	<ClCompile Include="PKB\manager\StatementManager.cpp" />
+    <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
@@ -79,6 +79,7 @@
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
+    <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -133,11 +134,11 @@
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="PKB\store\PVRelationStore.h" />
     <ClInclude Include="PKB\store\SVRelationStore.h" />
-	<ClInclude Include="PKB\manager\EntityManager.h" />
-	<ClInclude Include="PKB\manager\ConstantManager.h" />
-	<ClInclude Include="PKB\manager\VariableManager.h" />
-	<ClInclude Include="PKB\manager\ProcedureManager.h" />
-	<ClInclude Include="PKB\manager\StatementManager.h" />
+    <ClInclude Include="PKB\manager\EntityManager.h" />
+    <ClInclude Include="PKB\manager\ConstantManager.h" />
+    <ClInclude Include="PKB\manager\VariableManager.h" />
+    <ClInclude Include="PKB\manager\ProcedureManager.h" />
+    <ClInclude Include="PKB\manager\StatementManager.h" />
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
@@ -173,5 +174,6 @@
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
+    <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,8 @@ public:
 
 	VariableIndex getVariable();
 
+	virtual void Extract(NodeExtractor&);
+
 protected:
 	VariableIndex var;
 };

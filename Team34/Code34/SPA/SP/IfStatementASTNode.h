@@ -20,6 +20,8 @@ public:
 
 	std::shared_ptr<ConditionExpression> getCondition();
 
+	virtual void Extract(NodeExtractor&);
+
 protected:
 	std::shared_ptr<ConditionExpression> condition;
 	std::vector<std::shared_ptr<StatementASTNode>> ifChildren;

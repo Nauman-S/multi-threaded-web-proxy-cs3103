@@ -17,3 +17,8 @@ void WhileStatementASTNode::setConditionExpression(std::shared_ptr<ConditionExpr
 shared_ptr<ConditionExpression> WhileStatementASTNode::getCondition() {
 	return condition;
 }
+
+void WhileStatementASTNode::Extract(NodeExtractor& extractor) {
+
+}
+

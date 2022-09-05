@@ -7,7 +7,9 @@
 #include "ASTNode.h"
 #include "StatementASTNode.h"
 #include"ProcedureIndex.h"
-class ProcedureASTNode : public ASTNode {
+#include "design_extractor/Extractable.h"
+
+class ProcedureASTNode : public ASTNode, public Extractable {
 public:
 	ProcedureIndex getProc();
 
@@ -16,6 +18,8 @@ public:
 	void setProc(ProcedureIndex&);
 
 	void setChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+
+	virtual void Extract(NodeExtractor&);
 
 protected:
 	ProcedureIndex proc;

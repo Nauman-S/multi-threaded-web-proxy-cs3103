@@ -17,3 +17,8 @@ void ProcedureASTNode::setProc(ProcedureIndex& p) {
 void ProcedureASTNode::setChildren(std::vector<std::shared_ptr<StatementASTNode>>& chd) {
 	children = chd;
 }
+
+void ProcedureASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractProcedureNode(*this);
+}
+

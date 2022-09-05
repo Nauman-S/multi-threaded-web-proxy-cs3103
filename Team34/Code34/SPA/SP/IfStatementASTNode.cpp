@@ -25,3 +25,8 @@ void IfStatementASTNode::setConditionExpression(shared_ptr<ConditionExpression> 
 shared_ptr<ConditionExpression> IfStatementASTNode::getCondition() {
 	return condition;
 }
+
+void IfStatementASTNode::Extract(NodeExtractor& extractor) {
+
+}
+

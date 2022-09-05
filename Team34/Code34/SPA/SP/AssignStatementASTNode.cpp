@@ -17,3 +17,7 @@ VariableIndex AssignStatementASTNode::getLeft() {
 std::vector<VariableIndex> AssignStatementASTNode::getRight() {
 	return right;
 }
+
+void AssignStatementASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractAssignmentNode(*this);
+}
