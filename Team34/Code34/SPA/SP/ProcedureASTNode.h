@@ -7,9 +7,8 @@
 #include "ASTNode.h"
 #include "StatementASTNode.h"
 #include"ProcedureIndex.h"
-#include "design_extractor/Extractable.h"
 
-class ProcedureASTNode : public ASTNode, public Extractable {
+class ProcedureASTNode : public ASTNode {
 public:
 	ProcedureIndex getProc();
 
