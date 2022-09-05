@@ -6,7 +6,7 @@
 
 #include "../SPA/SP/SourceParser.h"
 #include "../SPA/SP/DesignExtractor.h"
-#include "../SPA/SP/design_extractor/UsesExtractor.h"
+#include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
 
 #include "../SPA/PKB/WritePKBManager.h"
 
@@ -41,8 +41,9 @@ void TestWrapper::parse(std::string filename) {
 	SourceParser parser = SourceParser();
 	ProgramNode node = parser.parse(filename);
 
-	UsesExtractor uses_ex;
-	node.Extract(uses_ex);
+	//TODO: Move all population logic to Design Extractor
+	UsesModifiesExtractor ex;
+	node.Extract(ex);
 
 	cout << "TEST" << endl;
 	vector<ProcedureASTNode> p_nodes = node.getChildren();

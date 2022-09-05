@@ -12,11 +12,11 @@
 
 #include "../../PKB/WritePKBManager.h"
 
-class UsesExtractor : public NodeExtractor {
+class UsesModifiesExtractor : public NodeExtractor {
 public:
 	std::unique_ptr<WritePKBManager> write_manager_;
 
-	UsesExtractor();
+	UsesModifiesExtractor();
 
 	virtual void ExtractProgramNode(ProgramNode&);
 	virtual void ExtractProcedureNode(ProcedureASTNode&);

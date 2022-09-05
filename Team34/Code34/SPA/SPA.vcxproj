@@ -46,7 +46,7 @@
     <ClInclude Include="SP\design_extractor\ConstantExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
-    <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
+    <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
     <ClInclude Include="SP\IfStatementASTNode.h" />
     <ClInclude Include="SP\LineIndex.h" />
     <ClInclude Include="SP\PrintStatementASTNode.h" />
@@ -133,7 +133,7 @@
     <ClCompile Include="SP\ConditionExpression.cpp" />
     <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp" />
-    <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />
     <ClCompile Include="SP\LineIndex.cpp" />
     <ClCompile Include="SP\PrintStatementASTNode.cpp" />
