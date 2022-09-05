@@ -79,7 +79,7 @@
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
-    <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
   </ItemGroup>
   <ItemGroup>
