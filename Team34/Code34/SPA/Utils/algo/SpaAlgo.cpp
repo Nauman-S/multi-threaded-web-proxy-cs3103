@@ -22,7 +22,10 @@ string SpaAlgo::InfixToPostfix(string infix)
 	stack<char> stk;
 	string postfix = "";
 	for (char& iter : infix) {
-		if (iter == '(') {
+		if (iter == ' ') {
+			continue;
+		}
+		else if (iter == '(') {
 			stk.push(iter);
 		}
 		else if (iter == ')') {
