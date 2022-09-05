@@ -3,13 +3,7 @@
 #include <unordered_set>
 #include <memory>
 
-#include "manager/VariableManager.h"
-#include "manager/ConstantManager.h"
-#include "manager/ProcedureManager.h"
-#include "manager/EntityManager.h"
-#include "manager/StatementManager.h"
-#include "manager/ModifiesManager.h"
-#include "manager/UsesManager.h"
+#include "PKB.h"
 #include "../Utils/type/TypeDef.h"
 
 class ReadPKBManager
@@ -57,11 +51,4 @@ public:
 	std::unordered_set<std::string> GetModifiesVarByProcName(std::string proc_name);
 	std::unordered_set<int> GetModifiesStmtNumByVar(std::string var);
 	std::unordered_set<std::string> GetModifiesProcNameByVar(std::string var);
-private:
-    VariableManager variable_manager_;
-    ConstantManager constant_manager_;
-	ProcedureManager procedure_manager_;
-	StatementManager statement_manager_;
-	ModifiesManager modifies_manager_;
-	UsesManager uses_manager_;
 };
