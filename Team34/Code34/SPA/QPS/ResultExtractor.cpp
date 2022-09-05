@@ -3,7 +3,6 @@
 #include <assert.h>
 #include <algorithm>
 #include "../Utils/type/RefType.h"
-#include <iostream>
 
 string ResultExtractor::GetFormattedResult() {
 
@@ -40,12 +39,8 @@ string ResultExtractor::GetSingleSynResult() {
 		result_set = CombineResult(result_set, domain_from_table);
 		
 	}
+	return FormatResult(result_set, ref->GetRefType());
 
-	string formatted_result = FormatResult(result_set, ref->GetRefType());
-
-	std::cout << "test" << std::endl;
-
-	return formatted_result;
 }
 
 string ResultExtractor::GetMultiSynResult() {
