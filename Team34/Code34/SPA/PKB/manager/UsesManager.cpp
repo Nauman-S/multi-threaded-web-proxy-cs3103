@@ -1,50 +1,50 @@
 #include "UsesManager.h"
 
-bool UsesManager::CheckUses(int stmt_num, std::string var)
+bool UsesManager::CheckUses(StmtNum stmt_num, Variable var)
 {
-	return uses_sv_store_.CheckSVRelation(stmt_num, var);
+	return uses_sv_store_.CheckRelation(stmt_num, var);
 }
 
-bool UsesManager::CheckUses(std::string proc_name, std::string var)
+bool UsesManager::CheckUses(Procedure proc_name, Variable var)
 {
-	return uses_pv_store_.CheckPVRelation(proc_name, var);
+	return uses_pv_store_.CheckRelation(proc_name, var);
 }
 
-void UsesManager::SetUses(int stmt_num, std::string var)
+void UsesManager::SetUses(StmtNum stmt_num, Variable var)
 {
-	uses_sv_store_.SetSVRelation(stmt_num, var);
+	uses_sv_store_.SetRelation(stmt_num, var);
 }
-void UsesManager::SetUses(std::string proc_name, std::string var)
+void UsesManager::SetUses(Procedure proc_name, Variable var)
 {
-	uses_pv_store_.SetPVRelation(proc_name, var);
-}
-
-const std::vector<std::pair<int, std::string>>& UsesManager::GetAllSVUses()
-{
-	return *uses_sv_store_.GetAllSVRelations();
+	uses_pv_store_.SetRelation(proc_name, var);
 }
 
-const std::vector<std::pair<std::string, std::string>>& UsesManager::GetAllPVUses()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> UsesManager::GetAllSVUses()
 {
-	return *uses_pv_store_.GetAllPVRelations();
+	return uses_sv_store_.GetAllRelations();
 }
 
-std::unordered_set<std::string> UsesManager::GetVarByStmtNum(int stmt_num)
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> UsesManager::GetAllPVUses()
 {
-	return uses_sv_store_.GetVarByStmtNum(stmt_num);
+	return uses_pv_store_.GetAllRelations();
 }
 
-std::unordered_set<std::string> UsesManager::GetVarByProcName(std::string proc_name)
+std::shared_ptr <std::unordered_set<Variable>> UsesManager::GetVarByStmtNum(StmtNum stmt_num)
 {
-	return uses_pv_store_.GetVarByProc(proc_name);
+	return uses_sv_store_.GetTByS(stmt_num);
 }
 
-std::unordered_set<int> UsesManager::GetStmtNumByVar(std::string var)
+std::shared_ptr <std::unordered_set<Variable>> UsesManager::GetVarByProcName(Procedure proc_name)
 {
-	return uses_sv_store_.GetStmtNumByVar(var);
+	return uses_pv_store_.GetTByS(proc_name);
 }
 
-std::unordered_set<std::string> UsesManager::GetProcNameByVar(std::string var)
+std::shared_ptr <std::unordered_set<StmtNum>> UsesManager::GetStmtNumByVar(Variable var)
 {
-	return uses_pv_store_.GetProcByVar(var);
+	return uses_sv_store_.GetSByT(var);
+}
+
+std::shared_ptr <std::unordered_set<Procedure>> UsesManager::GetProcNameByVar(Variable var)
+{
+	return uses_pv_store_.GetSByT(var);
 }

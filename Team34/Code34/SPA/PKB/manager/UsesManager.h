@@ -1,24 +1,28 @@
 #pragma once
+
+#include <memory>
 #include <vector>
 #include <unordered_set>
 
 #include "../store/PVRelationStore.h"
 #include "../store/SVRelationStore.h"
+#include "../store/RelationStore.h"
+#include "../../Utils/type/TypeDef.h"
 
 class UsesManager
 {
 public:
-	bool CheckUses(int stmt_num, std::string var);
-	bool CheckUses(std::string proc_name, std::string var);
-	void SetUses(int stmt_num, std::string var);
-	void SetUses(std::string proc_name, std::string var);
-	const std::vector<std::pair<int, std::string>>& GetAllSVUses();
-	const std::vector<std::pair<std::string, std::string>>& GetAllPVUses();
-	std::unordered_set<std::string> GetVarByStmtNum(int stmt_num);
-	std::unordered_set<std::string> GetVarByProcName(std::string proc_name);
-	std::unordered_set<int> GetStmtNumByVar(std::string var);
-	std::unordered_set<std::string> GetProcNameByVar(std::string var);
+	bool CheckUses(StmtNum stmt_num, Variable var);
+	bool CheckUses(Procedure proc_name, Variable var);
+	void SetUses(StmtNum stmt_num, Variable var);
+	void SetUses(Procedure proc_name, Variable var);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
+	std::shared_ptr <std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
+	std::shared_ptr <std::unordered_set<Variable>> GetVarByStmtNum(StmtNum stmt_num);
+	std::shared_ptr <std::unordered_set<Variable>> GetVarByProcName(Procedure proc_name);
+	std::shared_ptr <std::unordered_set<StmtNum>> GetStmtNumByVar(Variable var);
+	std::shared_ptr <std::unordered_set<Procedure>> GetProcNameByVar(Variable var);
 private:
-	PVRelationStore uses_pv_store_;
-	SVRelationStore uses_sv_store_;
+	RelationStore<Procedure, Variable> uses_pv_store_;
+	RelationStore<StmtNum, Variable> uses_sv_store_;
 };

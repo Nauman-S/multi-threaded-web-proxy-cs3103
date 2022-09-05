@@ -135,6 +135,7 @@
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="PKB\store\PVRelationStore.h" />
     <ClInclude Include="PKB\store\SVRelationStore.h" />
+	<ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
