@@ -9,3 +9,8 @@ void CallStatementASTNode::setProcedure(ProcedureIndex& p) {
 ProcedureIndex CallStatementASTNode::getProcedure() {
 	return proc;
 }
+
+void CallStatementASTNode::Extract(NodeExtractor& extractor) {
+
+}
+

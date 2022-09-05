@@ -9,3 +9,7 @@ void ReadStatementASTNode::setVariable(VariableIndex& v) {
 VariableIndex ReadStatementASTNode::getReadVariable() {
 	return var;
 }
+
+void ReadStatementASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractReadNode(*this);
+}

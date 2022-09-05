@@ -1,21 +1,25 @@
 #pragma once
 
-# include "StatementASTNode.h"
-# include "ConditionExpression.h"
-# include <vector>
+#include <vector>
+#include <memory>
+
+#include "StatementASTNode.h"
+#include "ConditionExpression.h"
 
 class WhileStatementASTNode : public StatementASTNode {
 public:
-	void setChildren(std::vector<StatementASTNode>&);
+	void setChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<StatementASTNode> getChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getChildren();
 
-	void setConditionExpression(ConditionExpression&);
+	void setConditionExpression(std::shared_ptr<ConditionExpression>);
 
-	ConditionExpression getCondition();
+	std::shared_ptr<ConditionExpression> getCondition();
+
+	virtual void Extract(NodeExtractor&);
 
 protected:
-	ConditionExpression condition;
-	std::vector<StatementASTNode> children;
+	std::shared_ptr<ConditionExpression> condition;
+	std::vector<std::shared_ptr<StatementASTNode>> children;
 
 };

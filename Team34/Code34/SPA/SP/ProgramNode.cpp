@@ -9,3 +9,7 @@ std::vector<ProcedureASTNode> ProgramNode::getChildren() {
 void ProgramNode::setChildren(std::vector<ProcedureASTNode>& c) {
 	children = c;
 }
+
+void ProgramNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractProgramNode(*this);
+}

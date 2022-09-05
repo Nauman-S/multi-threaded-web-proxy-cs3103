@@ -6,7 +6,7 @@ ProcedureIndex ProcedureASTNode::getProc() {
 	return proc;
 }
 
-std::vector<StatementASTNode> ProcedureASTNode::getChildren() {
+std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::getChildren() {
 	return children;
 }
 
@@ -14,6 +14,11 @@ void ProcedureASTNode::setProc(ProcedureIndex& p) {
 	proc = p;
 }
 
-void ProcedureASTNode::setChildren(std::vector<StatementASTNode>& chd) {
+void ProcedureASTNode::setChildren(std::vector<std::shared_ptr<StatementASTNode>>& chd) {
 	children = chd;
 }
+
+void ProcedureASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractProcedureNode(*this);
+}
+

@@ -9,3 +9,7 @@ void PrintStatementASTNode::setVariable(VariableIndex& v) {
 VariableIndex PrintStatementASTNode::getVariable() {
 	return var;
 }
+
+void PrintStatementASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractPrintNode(*this);
+}

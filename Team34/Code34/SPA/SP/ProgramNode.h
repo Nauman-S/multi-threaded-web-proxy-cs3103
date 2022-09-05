@@ -1,14 +1,18 @@
 #pragma once
 
-# include "ASTNode.h"
-# include "ProcedureASTNode.h"
-# include<vector>
+#include<vector>
 
-class ProgramNode : ASTNode {
+#include "ASTNode.h"
+#include "ProcedureASTNode.h"
+#include "design_extractor/Extractable.h"
+
+class ProgramNode : ASTNode, public Extractable {
 public:
 	std::vector<ProcedureASTNode> getChildren();
 
 	void setChildren(std::vector<ProcedureASTNode>&);
+
+	virtual void Extract(NodeExtractor&);
 
 protected:
 	std::vector<ProcedureASTNode> children;

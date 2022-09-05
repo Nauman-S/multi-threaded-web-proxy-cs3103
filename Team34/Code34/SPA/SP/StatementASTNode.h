@@ -1,9 +1,13 @@
 #pragma once
-# include "ASTNode.h"
-# include "LineIndex.h"
-# include <string>
-# include "VariableIndex.h"
-# include <vector>
+
+#include <string>
+#include <vector>
+
+#include "ASTNode.h"
+#include "LineIndex.h"
+#include "VariableIndex.h"
+#include "design_extractor/Extractable.h"
+
 enum class StatementType {
 	sassign,
 	sif,
@@ -14,7 +18,7 @@ enum class StatementType {
 	scall,
 };
 
-class StatementASTNode : public ASTNode {
+class StatementASTNode : public ASTNode, public Extractable {
 public:
 	LineIndex getLineIndex();
 
@@ -31,6 +35,7 @@ public:
 		return lineIndex < c.lineIndex;
 	}
 
+	virtual void Extract(NodeExtractor&) = 0;
 	// virtual vector<VariableIndex> getModifies() = 0;
 
 protected:
