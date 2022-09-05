@@ -6,6 +6,7 @@
 
 #include "../SPA/SP/SourceParser.h"
 #include "../SPA/SP/DesignExtractor.h"
+#include "../SPA/SP/design_extractor/UsesExtractor.h"
 
 #include "../SPA/PKB/WritePKBManager.h"
 
@@ -40,18 +41,21 @@ void TestWrapper::parse(std::string filename) {
 	SourceParser parser = SourceParser();
 	ProgramNode node = parser.parse(filename);
 
+	UsesExtractor uses_ex;
+	node.Extract(uses_ex);
+
 	cout << "TEST" << endl;
 	vector<ProcedureASTNode> p_nodes = node.getChildren();
 	cout << "num of procedures: " << p_nodes.size() << endl;
-	vector<StatementASTNode> s_nodes = p_nodes.at(0).getChildren();
+	vector<std::shared_ptr<StatementASTNode>> s_nodes = p_nodes.at(0).getChildren();
 	cout << "num of statements: " << s_nodes.size() << endl;
 
 	DesignExtractor extractor = DesignExtractor();
 	vector<int> consts = extractor.getConstants(filename);
 	vector<VariableIndex> vars = extractor.getVariables(filename);
 	vector<ProcedureIndex> procs = extractor.getProcedures(node);
-	map<StatementASTNode, LineIndex> si_map = parser.si_mapping;
-	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
+	map<std::shared_ptr<StatementASTNode>, LineIndex> si_map = parser.si_mapping;
+	map<LineIndex, std::shared_ptr<StatementASTNode>> is_map = parser.is_mapping;
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
 	map<StatementType, RefType> mapping;
 	mapping.insert(pair<StatementType, RefType>(StatementType::sassign, RefType::kAssignRef));
@@ -71,8 +75,8 @@ void TestWrapper::parse(std::string filename) {
 		pkb->AddProcedure(Procedure(p.getName()));
 	}
 
-	for (pair<StatementASTNode, LineIndex> p : si_map) {
-		pkb->AddStatement(p.second.getLineNum(), mapping[p.first.getStatementType()]);
+	for (pair<std::shared_ptr<StatementASTNode>, LineIndex> p : si_map) {
+		pkb->AddStatement(p.second.getLineNum(), mapping[p.first->getStatementType()]);
 	}
 }
 
