@@ -6,7 +6,6 @@
 #include "ASTNode.h"
 #include "LineIndex.h"
 #include "VariableIndex.h"
-#include "design_extractor/Extractable.h"
 
 enum class StatementType {
 	sassign,
@@ -18,7 +17,7 @@ enum class StatementType {
 	scall,
 };
 
-class StatementASTNode : public ASTNode, public Extractable {
+class StatementASTNode : public ASTNode {
 public:
 	LineIndex getLineIndex();
 

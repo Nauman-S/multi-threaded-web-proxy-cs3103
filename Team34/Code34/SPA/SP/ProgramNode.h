@@ -4,9 +4,8 @@
 
 #include "ASTNode.h"
 #include "ProcedureASTNode.h"
-#include "design_extractor/Extractable.h"
 
-class ProgramNode : ASTNode, public Extractable {
+class ProgramNode : ASTNode {
 public:
 	std::vector<ProcedureASTNode> getChildren();
 
