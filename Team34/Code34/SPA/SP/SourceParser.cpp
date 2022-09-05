@@ -59,7 +59,7 @@ shared_ptr<StatementASTNode> SourceParser::parseStatement(vector<SourceToken> to
 		s_node->setStatementType(StatementType::sread, "sread");
 	} else if (tokens.at(token_idx).GetType() == SourceTokenType::kPrint) {
 		// cout << "print" << line_idx << endl;
-		s_node = parseReadStatement(tokens, token_idx, line_idx);
+		s_node = parsePrintStatement(tokens, token_idx, line_idx);
 		s_node->setStatementType(StatementType::sprint, "sprint");
 	} else {
 		// cout << "assign" << line_idx << endl;
