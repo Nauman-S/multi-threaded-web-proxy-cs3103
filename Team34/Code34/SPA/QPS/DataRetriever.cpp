@@ -238,6 +238,7 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     shared_ptr<SetRes> res;
     auto ref_type = ref_ptr->GetRefType();
 
+
     unordered_set<RefType> valid_types {
         RefType::kProcRef,
             RefType::kVarRef,
@@ -260,28 +261,28 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
         str_set = pkb_ptr_->GetAllVariables();
     }
     else if (ref_type == RefType::kConstRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetAllConstants();
+        int_set = pkb_ptr_->GetAllConstants();
     }
     else if (ref_type == RefType::kStmtRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetAllStatements();
+        int_set = pkb_ptr_->GetAllStatements();
     }
     else if (ref_type == RefType::kAssignRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
     }
     else if (ref_type == RefType::kCallRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
     }
     else if (ref_type == RefType::kIfRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
     }
     else if (ref_type == RefType::kWhileRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
     }
     else if (ref_type == RefType::kReadRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
     }
     else if (ref_type == RefType::kPrintRef) {
-        shared_ptr<unordered_set<int>> int_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
+        int_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
     }
 
     if (int_set != nullptr) {
