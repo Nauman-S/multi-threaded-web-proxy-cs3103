@@ -1,0 +1,25 @@
+4 - select statements
+stmt s;
+Select s
+1, 2, 3, 4, 5, 6
+5000
+2 - select constants
+constant c;
+Select c
+2, 3
+5000
+3 - select procedures
+procedure p;
+Select p
+proc1
+5000
+1 - select variables
+variable v;
+Select v
+x, y
+5000
+7 - test ModifiesS
+stmt s;
+Select s such that Modifies(s, "x")
+3
+5000

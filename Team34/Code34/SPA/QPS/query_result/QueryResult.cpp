@@ -1,6 +1,9 @@
 #include "QueryResult.h"
 
+#include <assert.h>
+
 #include "ResType.h"
+
 
 bool QueryResult::MergeResult(ResWrapper& res_wrapper) {
 	ResType type = res_wrapper.GetResType();
@@ -27,9 +30,11 @@ bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
 
 
 	string sym = set_res->GetSyn();
-	shared_ptr<unordered_set<string> const> res_domain = set_res->GetDomain();
+	shared_ptr<unordered_set<string>> res_domain = set_res->GetDomain();
 
 	// check whether the domain is empty
+	assert(res_domain != nullptr && "The result domain cannot be a nullptr");
+
 	if (res_domain->size() == 0) {
 		return false;
 	}
