@@ -4,8 +4,6 @@
 #include <vector>
 #include <unordered_set>
 
-#include "../store/PVRelationStore.h"
-#include "../store/SVRelationStore.h"
 #include "../store/RelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 

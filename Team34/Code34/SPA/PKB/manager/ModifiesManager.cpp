@@ -1,50 +1,50 @@
 #include "ModifiesManager.h"
 
-bool ModifiesManager::CheckModifies(int stmt_num, std::string var)
+bool ModifiesManager::CheckModifies(StmtNum stmt_num, Variable var)
 {
-	return modifies_sv_store_.CheckSVRelation(stmt_num, var);
+	return modifies_sv_store_.CheckRelation(stmt_num, var);
 }
 
-bool ModifiesManager::CheckModifies(std::string proc_name, std::string var)
+bool ModifiesManager::CheckModifies(Procedure proc_name, Variable var)
 {
-	return modifies_pv_store_.CheckPVRelation(proc_name, var);
+	return modifies_pv_store_.CheckRelation(proc_name, var);
 }
 
-void ModifiesManager::SetModifies(int stmt_num, std::string var)
+void ModifiesManager::SetModifies(StmtNum stmt_num, Variable var)
 {
-	modifies_sv_store_.SetSVRelation(stmt_num, var);
+	modifies_sv_store_.SetRelation(stmt_num, var);
 }
-void ModifiesManager::SetModifies(std::string proc_name, std::string var)
+void ModifiesManager::SetModifies(Procedure proc_name, Variable var)
 {
-	modifies_pv_store_.SetPVRelation(proc_name, var);
-}
-
-const std::vector<std::pair<int, std::string>>& ModifiesManager::GetAllSVModifies()
-{
-	return *modifies_sv_store_.GetAllSVRelations();
+	modifies_pv_store_.SetRelation(proc_name, var);
 }
 
-const std::vector<std::pair<std::string, std::string>>& ModifiesManager::GetAllPVModifies()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ModifiesManager::GetAllSVModifies()
 {
-	return *modifies_pv_store_.GetAllPVRelations();
+	return modifies_sv_store_.GetAllRelations();
 }
 
-std::unordered_set<std::string> ModifiesManager::GetVarByStmtNum(int stmt_num)
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ModifiesManager::GetAllPVModifies()
 {
-	return modifies_sv_store_.GetVarByStmtNum(stmt_num);
+	return modifies_pv_store_.GetAllRelations();
 }
 
-std::unordered_set<std::string> ModifiesManager::GetVarByProcName(std::string proc_name)
+std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
 {
-	return modifies_pv_store_.GetVarByProc(proc_name);
+	return modifies_sv_store_.GetTByS(stmt_num);
 }
 
-std::unordered_set<int> ModifiesManager::GetStmtNumByVar(std::string var)
+std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByProcName(Procedure proc_name)
 {
-	return modifies_sv_store_.GetStmtNumByVar(var);
+	return modifies_pv_store_.GetTByS(proc_name);
 }
 
-std::unordered_set<std::string> ModifiesManager::GetProcNameByVar(std::string var)
+std::shared_ptr<std::unordered_set<StmtNum>> ModifiesManager::GetStmtNumByVar(Variable var)
 {
-	return modifies_pv_store_.GetProcByVar(var);
+	return modifies_sv_store_.GetSByT(var);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ModifiesManager::GetProcNameByVar(Variable var)
+{
+	return modifies_pv_store_.GetSByT(var);
 }

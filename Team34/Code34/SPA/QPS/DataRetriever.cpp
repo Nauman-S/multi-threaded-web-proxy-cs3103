@@ -11,6 +11,7 @@
 #include "relation/RelType.h"
 #include "reference/ValType.h"
 #include "../PKB/ReadPKBManager.h"
+#include "../Utils/type/TypeDef.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -74,14 +75,14 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
-    vector<pair<int, string>> table;
+    std::shared_ptr<vector<pair<StmtNum, Variable>>> table;
     if (type == RelType::kUsesSRel) {
         table = pkb_ptr_->GetAllSVUses();
     }
     else if (type == RelType::kModifiesSRel) {
         table = pkb_ptr_->GetAllSVModifies();
     }
-    auto res = IntStrToStrStrTable(table);
+    auto res = IntStrToStrStrTable(*table);
     return res;
 }
 
