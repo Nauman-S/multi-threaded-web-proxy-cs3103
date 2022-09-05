@@ -175,7 +175,7 @@
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
-    <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
+    <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
     <ClInclude Include="Utils\type\TypeDef.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
   </ItemGroup>
