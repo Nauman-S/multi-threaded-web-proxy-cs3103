@@ -36,17 +36,17 @@ protected:
 	std::unique_ptr<ReadPKBManager> pkb_ptr_;
 
 	// Stmt-Var relations
-	bool CheckSVRel(StmtVarRel rel);
-	std::shared_ptr<unordered_set<string>> GetVarByStmt(StmtVarRel rel);
-	std::shared_ptr<unordered_set<string>> GetStmtByVar(StmtVarRel rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllSVRel(StmtVarRel rel);
+	bool CheckSVRel(StmtVarRel& rel);
+	std::shared_ptr<unordered_set<string>> GetVarByStmt(StmtVarRel& rel);
+	std::shared_ptr<unordered_set<string>> GetStmtByVar(StmtVarRel& rel);
+	std::shared_ptr<vector<pair<string, string>>> GetAllSVRel(StmtVarRel& rel);
 	
 
 	// Proc-Var relations
-	bool CheckPVRel(ProcVarRel rel);
-	std::shared_ptr<unordered_set<string>> GetVarByProc(ProcVarRel rel);
-	std::shared_ptr<unordered_set<string>> GetProcByVar(ProcVarRel rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllPVRel(ProcVarRel rel);
+	bool CheckPVRel(ProcVarRel& rel);
+	std::shared_ptr<unordered_set<string>> GetVarByProc(ProcVarRel& rel);
+	std::shared_ptr<unordered_set<string>> GetProcByVar(ProcVarRel& rel);
+	std::shared_ptr<vector<pair<string, string>>> GetAllPVRel(ProcVarRel& rel);
 
 	// Stmt-Stmt relations
 	/*bool CheckSSRel(ProcVarRel rel);
@@ -63,9 +63,9 @@ public:
 
 	DataRetriever(std::unique_ptr<ReadPKBManager> pkb) : pkb_ptr_{ std::move(pkb) } {};
 
-	std::shared_ptr<ResWrapper> retrieve(StmtVarRel rel);
+	std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
 
-	std::shared_ptr<ResWrapper> retrieve(ProcVarRel rel);
+	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
 
 	// TODO
 	//std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);

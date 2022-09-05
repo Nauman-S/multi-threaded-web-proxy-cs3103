@@ -15,7 +15,7 @@
 using std::shared_ptr;
 using std::make_shared;
 
-bool DataRetriever::CheckSVRel(StmtVarRel rel)
+bool DataRetriever::CheckSVRel(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
@@ -32,7 +32,7 @@ bool DataRetriever::CheckSVRel(StmtVarRel rel)
     return res;
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel rel)
+shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
@@ -49,7 +49,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel rel)
 
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel rel)
+shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
@@ -69,7 +69,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel rel)
     return res;
 }
 
-shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel rel)
+shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
@@ -85,7 +85,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel r
     return res;
 }
 
-bool DataRetriever::CheckPVRel(ProcVarRel rel)
+bool DataRetriever::CheckPVRel(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
@@ -100,7 +100,7 @@ bool DataRetriever::CheckPVRel(ProcVarRel rel)
     return res;
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel rel)
+shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
@@ -117,7 +117,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel rel)
     return res;
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel rel)
+shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
@@ -134,7 +134,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel rel)
     return res;
 }
 
-shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel rel)
+shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
@@ -170,8 +170,9 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntStrToStrStrTable
     return res;
 }
 
-std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel rel)
+std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
 {
+    RelType type = rel.GetRelType();
     auto [lhs_type, rhs_type] = rel.ValTypes();
     
     std::shared_ptr<ResWrapper> res;
@@ -202,7 +203,7 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel rel)
     return res;
 }
 
-shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel rel)
+shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 {
     auto [lhs_type, rhs_type] = rel.ValTypes();
 
