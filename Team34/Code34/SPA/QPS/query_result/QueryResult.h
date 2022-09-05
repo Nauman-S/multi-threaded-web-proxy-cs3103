@@ -21,12 +21,19 @@ protected:
 public:
 	bool MergeResult(ResWrapper& res_wrapper);
 	
-	shared_ptr<unordered_map<string, shared_ptr<SetRes>>> GetSetResults() {
+	/*shared_ptr<unordered_map<string, shared_ptr<SetRes>>> GetSetResults() {
 		return shared_ptr < unordered_map<string, shared_ptr<SetRes>>>(&set_results_);
+	}*/
+
+	unordered_map<string, shared_ptr<SetRes>> GetSetResults() {
+		return set_results_;
 	}
 
-	shared_ptr<vector<shared_ptr<TableRes>>> GetTableResults() {
-		return shared_ptr<vector<shared_ptr<TableRes>>>(&table_results_);
+	//shared_ptr<vector<shared_ptr<TableRes>>> GetTableResults() {
+	//	return shared_ptr<vector<shared_ptr<TableRes>>>(&table_results_);
+	//}
+	vector<shared_ptr<TableRes>> GetTableResults() {
+		return table_results_;
 	}
 };
 
