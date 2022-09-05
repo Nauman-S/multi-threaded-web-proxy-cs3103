@@ -53,7 +53,14 @@ void TestWrapper::parse(std::string filename) {
 	map<StatementASTNode, LineIndex> si_map = parser.si_mapping;
 	map<LineIndex, StatementASTNode> is_map = parser.is_mapping;
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
-	
+	map<StatementType, RefType> mapping;
+	mapping.insert(pair<StatementType, RefType>(StatementType::sassign, RefType::kAssignRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::sif, RefType::kIfRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::sprint, RefType::kPrintRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::sread, RefType::kReadRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::swhile, RefType::kWhileRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::scall, RefType::kCallRef));
+	mapping.insert(pair<StatementType, RefType>(StatementType::sexpre, RefType::kStmtRef)); // need edit
 	for (VariableIndex v : vars) {
 		pkb->AddVariable(v.getName());
 	}
@@ -62,6 +69,10 @@ void TestWrapper::parse(std::string filename) {
 	}
 	for (ProcedureIndex p : procs) {
 		pkb->AddProcedure(Procedure(p.getName()));
+	}
+
+	for (pair<StatementASTNode, LineIndex> p : si_map) {
+		pkb->AddStatement(p.second.getLineNum(), mapping[p.first.getStatementType()]);
 	}
 }
 
@@ -88,6 +99,9 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 		std::cout << "SemanticError" << std::endl;
 		results.push_back("SemanticError");
 		return;
+	}
+	catch (...) {
+		std::cout << "Unknown Exception" << endl;
 	}
 
 	cout << query.GetSelectTuple() << endl;
