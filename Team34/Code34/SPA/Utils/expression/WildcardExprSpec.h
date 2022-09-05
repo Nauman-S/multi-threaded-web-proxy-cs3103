@@ -1,6 +1,8 @@
 #pragma once
+
 #include "ExprSpec.h"
 #include "Expr.h"
+
 class WildcardExprSpec :
     public ExprSpec
 {
