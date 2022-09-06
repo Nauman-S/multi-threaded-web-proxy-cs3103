@@ -16,11 +16,11 @@ class ProcVarRel :
     public Rel
 {
 protected:
-    ProcRef lhs_ref_;
-    VarRef rhs_ref_;
+    ProcRef& lhs_ref_;
+    VarRef& rhs_ref_;
 
 public:
-    ProcVarRel(ProcRef lhs, VarRef rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    ProcVarRel(ProcRef& lhs, VarRef& rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
 
     std::string LhsValue() override;
 
@@ -31,5 +31,9 @@ public:
     RelType GetRelType() override { return RelType::kProcVarRel; }
 
     virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
+
+    virtual RefType LhsRefType() { return lhs_ref_.GetRefType(); }
+
+    virtual RefType RhsRefType() { return rhs_ref_.GetRefType(); }
 };
 
