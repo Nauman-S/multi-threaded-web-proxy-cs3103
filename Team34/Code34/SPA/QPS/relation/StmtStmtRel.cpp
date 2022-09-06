@@ -38,5 +38,5 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
 
 std::shared_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& retriever)
 {
-    return std::shared_ptr<ResWrapper>();
+    return retriever.retrieve(*this);
 }
