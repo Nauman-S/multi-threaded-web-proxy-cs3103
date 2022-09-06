@@ -1,7 +1,7 @@
-4 - select statements
-stmt s;
-Select s
-1, 2, 3, 4, 5, 6
+1 - select variables
+variable v;
+Select v
+x, y
 5000
 2 - select constants
 constant c;
@@ -13,13 +13,8 @@ procedure p;
 Select p
 proc1
 5000
-1 - select variables
-variable v;
-Select v
-x, y
-5000
-7 - test ModifiesS
+4 - select statements
 stmt s;
-Select s such that Modifies(s, "x")
-3
+Select s
+1, 2, 3, 4, 5, 6
 5000
