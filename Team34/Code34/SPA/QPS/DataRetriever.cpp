@@ -172,7 +172,6 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntStrToStrStrTable
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
 {
-    RelType type = rel.GetRelType();
     auto [lhs_type, rhs_type] = rel.ValTypes();
     
     std::shared_ptr<ResWrapper> res;
