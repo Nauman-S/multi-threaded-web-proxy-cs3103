@@ -31,20 +31,20 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ModifiesManager::Ge
 
 std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
 {
-	return modifies_sv_store_.GetTByS(stmt_num);
+	return modifies_sv_store_.GetRHSByLHS(stmt_num);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByProcName(Procedure proc_name)
 {
-	return modifies_pv_store_.GetTByS(proc_name);
+	return modifies_pv_store_.GetRHSByLHS(proc_name);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ModifiesManager::GetStmtNumByVar(Variable var)
 {
-	return modifies_sv_store_.GetSByT(var);
+	return modifies_sv_store_.GetLHSByRHS(var);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ModifiesManager::GetProcNameByVar(Variable var)
 {
-	return modifies_pv_store_.GetSByT(var);
+	return modifies_pv_store_.GetLHSByRHS(var);
 }

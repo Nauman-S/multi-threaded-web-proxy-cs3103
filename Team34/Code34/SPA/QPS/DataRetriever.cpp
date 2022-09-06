@@ -61,7 +61,6 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     if (type == RelType::kUsesSRel) {
         // TODO: Ask PKB side to change return res to shared_ptr
         set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
-        set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
     }
     else if (type == RelType::kModifiesSRel) {
         // TODO: Ask PKB side to change return res to shared_ptr
