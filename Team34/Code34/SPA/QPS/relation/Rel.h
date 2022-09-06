@@ -6,6 +6,7 @@
 #include "../Clause.h"
 #include "../reference/ValType.h"
 #include "RelType.h"
+#include "../../Utils/type/RefType.h"
 #include "../query_result/ResWrapper.h"
 class DataRetriever;
 
