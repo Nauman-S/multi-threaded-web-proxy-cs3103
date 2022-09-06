@@ -11,6 +11,8 @@
 #include "relation/RelType.h"
 #include "reference/ValType.h"
 #include "../PKB/ReadPKBManager.h"
+#include "../PKB/manager/UsesManager.h"
+#include "../Utils/type/TypeDef.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -40,10 +42,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
     int stmt_num = rel.LhsValueAsInt().value_or(-1);
     shared_ptr<unordered_set<string>> res;
     if (type == RelType::kUsesSRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetUsesVarByStmtNum(stmt_num));
+        res = pkb_ptr_->GetUsesVarByStmtNum(stmt_num);
     }
     else if (type == RelType::kModifiesSRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetModifiesVarByStmtNum(stmt_num));
+        res = pkb_ptr_->GetModifiesVarByStmtNum(stmt_num);
     }
     return res;
 
@@ -58,11 +60,11 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     shared_ptr<unordered_set<int>> set;
     if (type == RelType::kUsesSRel) {
         // TODO: Ask PKB side to change return res to shared_ptr
-        set = make_shared<unordered_set<int>>(pkb_ptr_->GetUsesStmtNumByVar(var_name));
+        set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
     }
     else if (type == RelType::kModifiesSRel) {
         // TODO: Ask PKB side to change return res to shared_ptr
-        set = make_shared<unordered_set<int>>(pkb_ptr_->GetModifiesStmtNumByVar(var_name));
+        set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
     }
 
     shared_ptr<unordered_set<string>> res = IntSetToStrSet(set);
@@ -74,14 +76,14 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
-    vector<pair<int, string>> table;
+    std::shared_ptr<vector<pair<StmtNum, Variable>>> table;
     if (type == RelType::kUsesSRel) {
         table = pkb_ptr_->GetAllSVUses();
     }
     else if (type == RelType::kModifiesSRel) {
         table = pkb_ptr_->GetAllSVModifies();
     }
-    auto res = IntStrToStrStrTable(table);
+    auto res = IntStrToStrStrTable(*table);
     return res;
 }
 
@@ -106,12 +108,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
     string proc_name = rel.LhsValue();
-    shared_ptr<unordered_set<string>> res;
+    shared_ptr<unordered_set<Variable>> res;
     if (type == RelType::kUsesPRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetUsesVarByProcName(proc_name));
+        res = pkb_ptr_->GetUsesVarByProcName(proc_name);
     }
     else if (type == RelType::kModifiesPRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetModifiesVarByProcName(proc_name));
+        res = pkb_ptr_->GetModifiesVarByProcName(proc_name);
     }
 
     return res;
@@ -125,12 +127,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
     string var_name = rel.RhsValue();
     shared_ptr<unordered_set<string>> res;
     if (type == RelType::kUsesPRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetUsesProcNameByVar(var_name));
+        res = pkb_ptr_->GetUsesProcNameByVar(var_name);
     }
     else if (type == RelType::kModifiesPRel) {
-        res = make_shared<unordered_set<string>>(pkb_ptr_->GetModifiesProcNameByVar(var_name));
+        res = pkb_ptr_->GetModifiesProcNameByVar(var_name);
     }
-
+ 
     return res;
 }
 
@@ -141,10 +143,10 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& 
 
     shared_ptr<vector<pair<string, string>>> res;
     if (type == RelType::kUsesPRel) {
-        res = make_shared<vector<pair<string, string>>>(pkb_ptr_->GetAllPVUses());
+        res = pkb_ptr_->GetAllPVUses();
     }
     else if (type == RelType::kModifiesPRel) {
-        res = make_shared<vector<pair<string, string>>>(pkb_ptr_->GetAllPVModifies());
+        res = pkb_ptr_->GetAllPVModifies();
     }
 
     return res;

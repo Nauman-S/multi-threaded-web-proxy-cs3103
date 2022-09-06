@@ -56,84 +56,84 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllStatements()
 }
 
 // APIs related to Uses relation
-bool ReadPKBManager::CheckUses(int stmt_num, std::string var)
+bool ReadPKBManager::CheckUses(StmtNum stmt_num, Variable var)
 {
 	return pkb.uses_manager_.CheckUses(stmt_num, var);
 }
 
-bool ReadPKBManager::CheckUses(std::string proc_name, std::string var)
+bool ReadPKBManager::CheckUses(Procedure proc_name, Variable var)
 {
 	return pkb.uses_manager_.CheckUses(proc_name, var);
 }
 
-const std::vector<std::pair<int, std::string>>& ReadPKBManager::GetAllSVUses()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVUses()
 {
 	return pkb.uses_manager_.GetAllSVUses();
 }
 
-const std::vector<std::pair<std::string, std::string>>& ReadPKBManager::GetAllPVUses()
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVUses()
 {
 	return pkb.uses_manager_.GetAllPVUses();
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetUsesVarByStmtNum(int stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByStmtNum(StmtNum stmt_num)
 {
 	return pkb.uses_manager_.GetVarByStmtNum(stmt_num);
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetUsesVarByProcName(std::string proc_name)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByProcName(Procedure proc_name)
 {
 	return pkb.uses_manager_.GetVarByProcName(proc_name);
 }
 
-std::unordered_set<int> ReadPKBManager::GetUsesStmtNumByVar(std::string var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetUsesStmtNumByVar(Variable var)
 {
 	return pkb.uses_manager_.GetStmtNumByVar(var);
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetUsesProcNameByVar(std::string var)
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameByVar(Variable var)
 {
 	return pkb.uses_manager_.GetProcNameByVar(var);
 }
 
 
 // APIs related to Modifies relation
-bool ReadPKBManager::CheckModifies(int stmt_num, std::string var)
+bool ReadPKBManager::CheckModifies(StmtNum stmt_num, Variable var)
 {
 	return pkb.modifies_manager_.CheckModifies(stmt_num, var);
 }
 
-bool ReadPKBManager::CheckModifies(std::string proc_name, std::string var)
+bool ReadPKBManager::CheckModifies(Procedure proc_name, Variable var)
 {
 	return pkb.modifies_manager_.CheckModifies(proc_name, var);
 }
 
-const std::vector<std::pair<int, std::string>>& ReadPKBManager::GetAllSVModifies()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVModifies()
 {
 	return pkb.modifies_manager_.GetAllSVModifies();
 }
 
-const std::vector<std::pair<std::string, std::string>>& ReadPKBManager::GetAllPVModifies()
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVModifies()
 {
 	return pkb.modifies_manager_.GetAllPVModifies();
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetModifiesVarByStmtNum(int stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
 	return pkb.modifies_manager_.GetVarByStmtNum(stmt_num);
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetModifiesVarByProcName(std::string proc_name)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByProcName(Procedure proc_name)
 {
 	return pkb.modifies_manager_.GetVarByProcName(proc_name);
 }
 
-std::unordered_set<int> ReadPKBManager::GetModifiesStmtNumByVar(std::string var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumByVar(Variable var)
 {
 	return pkb.modifies_manager_.GetStmtNumByVar(var);
 }
 
-std::unordered_set<std::string> ReadPKBManager::GetModifiesProcNameByVar(std::string var)
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNameByVar(Variable var)
 {
 	return pkb.modifies_manager_.GetProcNameByVar(var);
 }
