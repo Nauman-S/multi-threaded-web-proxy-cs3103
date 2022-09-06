@@ -11,6 +11,16 @@ std::string StmtStmtRel::RhsValue()
     return rhs_ref_.GetName();
 }
 
+RefType StmtStmtRel::LhsRefType()
+{
+    return lhs_ref_.GetRefType();
+}
+
+RefType StmtStmtRel::RhsRefType()
+{
+    return rhs_ref_.GetRefType();
+}
+
 std::pair<ValType, ValType> StmtStmtRel::ValTypes()
 {
     return std::pair<ValType, ValType>(lhs_ref_.GetValType(), rhs_ref_.GetValType());

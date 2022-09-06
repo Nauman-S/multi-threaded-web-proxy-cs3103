@@ -24,19 +24,19 @@ public:
 
     std::string RhsValue() override;
 
-    std::pair<ValType, ValType> ValTypes() override;
-
     RelType GetRelType() override { return RelType::kStmtStmtRel; }
+
+    RefType LhsRefType() override;
+
+    RefType RhsRefType() override;
+
+    std::pair<ValType, ValType> ValTypes() override;
 
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::optional<int> RhsValueAsInt();
-
-    virtual RefType LhsRefType() { return lhs_ref_.GetRefType(); }
-
-    virtual RefType RhsRefType() { return rhs_ref_.GetRefType(); }
 
     
 };

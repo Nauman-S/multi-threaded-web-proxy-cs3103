@@ -26,14 +26,16 @@ public:
 
     std::string RhsValue() override;
 
-    std::pair<ValType, ValType> ValTypes() override;
-
     RelType GetRelType() override { return RelType::kProcVarRel; }
 
-    virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever);
+    RefType LhsRefType() override;
 
-    virtual RefType LhsRefType() { return lhs_ref_.GetRefType(); }
+    RefType RhsRefType() override;
 
-    virtual RefType RhsRefType() { return rhs_ref_.GetRefType(); }
+    std::pair<ValType, ValType> ValTypes() override;
+
+    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) override;
+
+    
 };
 
