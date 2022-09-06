@@ -45,8 +45,6 @@
     <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
-    <ClCompile Include="PKB\store\PVRelationStore.cpp" />
-    <ClCompile Include="PKB\store\SVRelationStore.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
@@ -133,8 +131,6 @@
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
-    <ClInclude Include="PKB\store\PVRelationStore.h" />
-    <ClInclude Include="PKB\store\SVRelationStore.h" />
 	<ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
