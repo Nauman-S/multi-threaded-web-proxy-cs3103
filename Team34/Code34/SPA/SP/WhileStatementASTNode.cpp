@@ -19,6 +19,6 @@ shared_ptr<ConditionExpression> WhileStatementASTNode::getCondition() {
 }
 
 void WhileStatementASTNode::Extract(NodeExtractor& extractor) {
-
+	extractor.ExtractWhileNode(*this);
 }
 
