@@ -46,7 +46,9 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 	this->write_manager_->SetModifies(line_no, lhs.getName());
 }
 
-void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {}
+void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
+	//TODO: Implement after Parent is set in AST Node
+}
 
 // Uses: variable used by print
 void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {

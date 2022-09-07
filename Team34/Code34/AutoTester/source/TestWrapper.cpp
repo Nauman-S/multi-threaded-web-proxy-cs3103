@@ -5,10 +5,7 @@
 #include <map>
 
 #include "../SPA/SP/SourceParser.h"
-#include "../SPA/SP/DesignExtractor.h"
-#include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
-
-#include "../SPA/PKB/WritePKBManager.h"
+#include "../SPA/SP/design_extractor/DesignExtractor.h"
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
 #include "../SPA/QPS/parser/SyntaxError.h"
@@ -39,46 +36,11 @@ void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
     // ...rest of your code...
 	SourceParser parser = SourceParser();
-	ProgramNode node = parser.parse(filename);
+	ProgramNode root = parser.parse(filename);
 
-	//TODO: Move all population logic to Design Extractor
-	UsesModifiesExtractor ex;
-	node.Extract(ex);
-
-	cout << "TEST" << endl;
-	vector<ProcedureASTNode> p_nodes = node.getChildren();
-	cout << "num of procedures: " << p_nodes.size() << endl;
-	vector<std::shared_ptr<StatementASTNode>> s_nodes = p_nodes.at(0).getChildren();
-	cout << "num of statements: " << s_nodes.size() << endl;
-
-	DesignExtractor extractor = DesignExtractor();
-	vector<int> consts = extractor.getConstants(filename);
-	vector<VariableIndex> vars = extractor.getVariables(filename);
-	vector<ProcedureIndex> procs = extractor.getProcedures(node);
-	map<std::shared_ptr<StatementASTNode>, LineIndex> si_map = parser.si_mapping;
-	map<LineIndex, std::shared_ptr<StatementASTNode>> is_map = parser.is_mapping;
-	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
-	map<StatementType, RefType> mapping;
-	mapping.insert(pair<StatementType, RefType>(StatementType::sassign, RefType::kAssignRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::sif, RefType::kIfRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::sprint, RefType::kPrintRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::sread, RefType::kReadRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::swhile, RefType::kWhileRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::scall, RefType::kCallRef));
-	mapping.insert(pair<StatementType, RefType>(StatementType::sexpre, RefType::kStmtRef)); // need edit
-	for (VariableIndex v : vars) {
-		pkb->AddVariable(v.getName());
-	}
-	for (int c : consts) {
-		pkb->AddConstant(Constant(c));
-	}
-	for (ProcedureIndex p : procs) {
-		pkb->AddProcedure(Procedure(p.getName()));
-	}
-
-	for (pair<std::shared_ptr<StatementASTNode>, LineIndex> p : si_map) {
-		pkb->AddStatement(p.second.getLineNum(), mapping[p.first->getStatementType()]);
-	}
+	DesignExtractor extractor;
+	extractor.PopulatePKB(root);
+	extractor.AddConstants(filename);
 }
 
 // method to evaluating a query
