@@ -20,7 +20,7 @@ public:
 
 	std::shared_ptr<ConditionExpression> getCondition();
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	std::shared_ptr<ConditionExpression> condition;

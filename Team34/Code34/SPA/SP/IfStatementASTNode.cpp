@@ -27,6 +27,6 @@ shared_ptr<ConditionExpression> IfStatementASTNode::getCondition() {
 }
 
 void IfStatementASTNode::Extract(NodeExtractor& extractor) {
-
+	extractor.ExtractIfNode(*this);
 }
 

@@ -11,5 +11,6 @@ std::vector<VariableIndex> ConditionExpression::getVariables() {
 }
 
 void ConditionExpression::Extract(NodeExtractor& extractor) {
-
+	extractor.ExtractConditionExpression(*this);
 }
+
