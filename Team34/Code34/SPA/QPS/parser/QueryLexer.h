@@ -4,6 +4,7 @@
 #include "..\..\Utils\Tokenizer.h"
 #include "..\..\Utils\Token.h"
 
+using std::string;
 
 #ifndef QUERYLEXER_H
 #define QUERYLEXER_H
@@ -35,7 +36,7 @@ public:
 	std::string MatchEndOfDeclarationStatement();
 
 	bool HasKeyword(std::string keyword_);
-	void MatchKeyword();
+	void MatchKeyword(std::string keyword_);
 
 
 	bool HasReferenceKeyword();
@@ -65,7 +66,7 @@ public:
 	bool HasQuotationMarks();
 	void MatchQuotationMarks();
 
-
+	string GenerateErrorMessage(string expected, string actual);
 };
 #endif
 

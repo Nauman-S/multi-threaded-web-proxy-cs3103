@@ -33,6 +33,7 @@ bool QueryLexer::HasDesignEntity() {
 }
 
 std::string QueryLexer::MatchDesignEntityKeyword() {
+	if (!HasDesignEntity()) throw SyntaxError(GenerateErrorMessage("design entity keyword", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
 	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 	this->tokenizer_->nextToken();
@@ -44,6 +45,7 @@ bool QueryLexer::HasIdentity() {
 }
 
 std::string QueryLexer::MatchIdentity() {
+	if (!HasIdentity()) throw SyntaxError(GenerateErrorMessage("IDENTITY", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
 	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 	this->tokenizer_->nextToken();
@@ -55,6 +57,7 @@ bool QueryLexer::HasEndOfDeclarationStatement() {
 }
 
 std::string QueryLexer::MatchEndOfDeclarationStatement() {
+	if (!HasEndOfDeclarationStatement()) throw SyntaxError(GenerateErrorMessage(";", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return ";";
 }
@@ -68,7 +71,8 @@ bool QueryLexer::HasKeyword(std::string keyword_) {
 	return false;
 }
 
-void QueryLexer::MatchKeyword() {
+void QueryLexer::MatchKeyword(std::string keyword_) {
+	if (!HasKeyword(keyword_)) throw SyntaxError(GenerateErrorMessage(keyword_, tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 }
 
@@ -85,6 +89,7 @@ bool QueryLexer::HasReferenceKeyword() {
 }
 
 std::string QueryLexer::MatchReferenceKeyword() {
+	if (!HasReferenceKeyword()) throw SyntaxError(GenerateErrorMessage("ReferenceKeyword", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
 	this->tokenizer_->nextToken();
 	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
@@ -103,6 +108,7 @@ bool QueryLexer::HasOpeningBrace() {
 }
 
 std::string QueryLexer::MatchOpeningBrace() {
+	if (!HasOpeningBrace()) throw SyntaxError(GenerateErrorMessage("(", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return "(";
 }
@@ -112,6 +118,7 @@ bool QueryLexer::HasClosingBrace() {
 }
 
 std::string QueryLexer::MatchClosingBrace() {
+	if (!HasClosingBrace()) throw SyntaxError(GenerateErrorMessage(")", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return ")";
 }
@@ -121,6 +128,7 @@ bool QueryLexer::HasUnderScore() {
 }
 
 void QueryLexer::MatchUnderScore() {
+	if (!HasUnderScore()) throw SyntaxError(GenerateErrorMessage("_", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 }
 
@@ -129,6 +137,7 @@ bool QueryLexer::HasQuotationMarks() {
 }
 
 void QueryLexer::MatchQuotationMarks() {
+	if (!HasQuotationMarks()) throw SyntaxError(GenerateErrorMessage("\"", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 }
 
@@ -137,6 +146,7 @@ bool QueryLexer::HasCommaDelimeter() {
 }
 
 std::string QueryLexer::MatchCommaDelimeter() {
+	if (!HasCommaDelimeter()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return ",";
 }
@@ -146,6 +156,7 @@ bool QueryLexer::HasInteger() {
 }
 
 int QueryLexer::MatchInteger() {
+	if (!HasInteger()) throw SyntaxError(GenerateErrorMessage("INTEGER", tokenizer_->getTokenSval().value_or("INTEGER")));
 	int i = this->tokenizer_->getTokenIval().value();
 	this->tokenizer_->nextToken();
 	return i;
@@ -161,6 +172,8 @@ bool QueryLexer::HasPatternKeyword() {
 }
 
 std::string QueryLexer::MatchPatternKeyword() {
+	if (!HasPatternKeyword()) throw SyntaxError(GenerateErrorMessage("Pattern", tokenizer_->getTokenSval().value_or("INTEGER")));
+
 	this->tokenizer_->nextToken();
 	return "PATTERN";
 }
@@ -168,3 +181,9 @@ std::string QueryLexer::MatchPatternKeyword() {
 bool QueryLexer::HasMoreTokens() {
 	return this->tokenizer_->getToken().type_ != TokenType::kParseEnd;
 }
+
+
+
+string QueryLexer::GenerateErrorMessage(string expected, string actual) {
+	return "Expected Token: " + expected + " ; Actual Token: " + actual;
+};
