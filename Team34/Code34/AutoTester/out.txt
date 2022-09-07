@@ -5,4 +5,4 @@
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select statements">4</id><querystr><![CDATA[stmt s; Select s]]></querystr>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test ModifiesS">7</id><querystr><![CDATA[stmt s; Select s such that Modifies(s, "x")]]></querystr>

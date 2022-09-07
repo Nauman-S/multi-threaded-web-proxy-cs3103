@@ -4,6 +4,7 @@
 #include "..\..\Utils\Tokenizer.h"
 #include "..\..\Utils\Token.h"
 
+using std::string;
 
 #ifndef QUERYLEXER_H
 #define QUERYLEXER_H
@@ -13,7 +14,7 @@ private:
 
 	Tokenizer* tokenizer_;
 	std::unordered_set<std::string> design_entities_;
-	std::unordered_set<std::string> relational_references_;
+	std::unordered_set<std::string> relation_keywords_;
 	std::unordered_set<std::string> keywords_;
 	std::unordered_set <char> delimiters_;
 
@@ -35,7 +36,7 @@ public:
 	std::string MatchEndOfDeclarationStatement();
 
 	bool HasKeyword(std::string keyword_);
-	void MatchKeyword();
+	void MatchKeyword(std::string keyword_);
 
 
 	bool HasReferenceKeyword();
@@ -65,7 +66,7 @@ public:
 	bool HasQuotationMarks();
 	void MatchQuotationMarks();
 
-
+	string GenerateErrorMessage(string expected, string actual);
 };
 #endif
 
