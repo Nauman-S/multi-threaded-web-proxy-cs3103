@@ -1,3 +1,8 @@
+10 - test UsesS
+stmt s;
+Select s such that Uses(s, "x")
+4, 5
+5000
 1 - select variables
 variable v;
 Select v

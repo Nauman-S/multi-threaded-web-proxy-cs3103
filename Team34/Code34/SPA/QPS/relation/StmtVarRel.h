@@ -15,22 +15,28 @@ class StmtVarRel :
     public Rel
 {
 protected:
-    StmtRef lhs_ref_;
-    VarRef rhs_ref_;
+    StmtRef& lhs_ref_;
+    VarRef& rhs_ref_;
 
 public:
-    StmtVarRel(StmtRef lhs, VarRef rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    StmtVarRel(StmtRef& lhs, VarRef& rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
 
     std::string LhsValue() override;
 
     std::string RhsValue() override;
 
+    RelType GetRelType() override { return RelType::kStmtVarRel; }
+
+    RefType LhsRefType() override;
+
+    RefType RhsRefType() override;
+
     std::pair<ValType, ValType> ValTypes() override;
 
-    RelType GetRelType() override { return RelType::kStmtVarRel; }
+    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
     virtual std::optional<int> LhsValueAsInt();
 
-    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+    
 };
 
