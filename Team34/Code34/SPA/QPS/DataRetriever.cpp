@@ -85,7 +85,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
     else if (type == RelType::kModifiesSRel) {
         // table = pkb_ptr_->GetAllSVModifies(lhs_stmt_type);
     }
-    auto res = IntStrToStrStrTable(*table);
+    auto res = IntStrToStrStrTable(table);
     return res;
 }
 
