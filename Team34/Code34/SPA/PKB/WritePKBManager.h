@@ -25,10 +25,10 @@ public:
 	void AddStatement(StmtNum stmt_num, RefType type);
 
 	// APIs related to Uses relation
-	void SetUses(int stmt_num, std::string var);
-	void SetUses(std::string proc_name, std::string var);
+	void SetUses(StmtNum stmt_num, Variable var);
+	void SetUses(Procedure proc_name, Variable var);
 
 	//APIs related to Modifies relation
-	void SetModifies(int stmt_num, std::string var);
-	void SetModifies(std::string proc_name, std::string var);
+	void SetModifies(StmtNum stmt_num, Variable var);
+	void SetModifies(Procedure proc_name, Variable var);
 };

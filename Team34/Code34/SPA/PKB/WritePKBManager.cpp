@@ -25,23 +25,23 @@ void WritePKBManager::AddStatement(StmtNum stmt_num, RefType type)
 }
 
 // APIs related to Uses relation
-void WritePKBManager::SetUses(int stmt_num, std::string var)
+void WritePKBManager::SetUses(StmtNum stmt_num, Variable var)
 {
 	pkb.uses_manager_.SetUses(stmt_num, var);
 }
 
-void WritePKBManager::SetUses(std::string proc_name, std::string var)
+void WritePKBManager::SetUses(Procedure proc_name, Variable var)
 {
 	pkb.uses_manager_.SetUses(proc_name, var);
 }
 
 //APIs related to Modifies relation
-void WritePKBManager::SetModifies(int stmt_num, std::string var)
+void WritePKBManager::SetModifies(StmtNum stmt_num, Variable var)
 {
 	pkb.modifies_manager_.SetModifies(stmt_num, var);
 }
 
-void WritePKBManager::SetModifies(std::string proc_name, std::string var)
+void WritePKBManager::SetModifies(Procedure proc_name, Variable var)
 {
 	pkb.modifies_manager_.SetModifies(proc_name, var);
 }

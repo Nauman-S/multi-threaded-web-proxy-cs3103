@@ -1,24 +1,25 @@
 #pragma once
+
 #include <vector>
 #include <unordered_set>
 
-#include "../store/PVRelationStore.h"
-#include "../store/SVRelationStore.h"
+#include "../store/RelationStore.h"
+#include "../../Utils/type/TypeDef.h"
 
 class ModifiesManager
 {
 public:
-	bool CheckModifies(int stmt_num, std::string var);
-	bool CheckModifies(std::string proc_name, std::string var);
-	void SetModifies(int stmt_num, std::string var);
-	void SetModifies(std::string proc_name, std::string var);
-	const std::vector<std::pair<int, std::string>>& GetAllSVModifies();
-	const std::vector<std::pair<std::string, std::string>>& GetAllPVModifies();
-	std::unordered_set<std::string> GetVarByStmtNum(int stmt_num);
-	std::unordered_set<std::string> GetVarByProcName(std::string proc_name);
-	std::unordered_set<int> GetStmtNumByVar(std::string var);
-	std::unordered_set<std::string> GetProcNameByVar(std::string var);
+	bool CheckModifies(StmtNum stmt_num, Variable var);
+	bool CheckModifies(Procedure proc_name, Variable var);
+	void SetModifies(StmtNum stmt_num, Variable var);
+	void SetModifies(Procedure proc_name, Variable var);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
+	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+	std::shared_ptr<std::unordered_set<Variable>> GetVarByStmtNum(StmtNum stmt_num);
+	std::shared_ptr<std::unordered_set<Variable>> GetVarByProcName(Procedure proc_name);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetStmtNumByVar(Variable var);
+	std::shared_ptr<std::unordered_set<Procedure>> GetProcNameByVar(Variable var);
 private:
-	PVRelationStore modifies_pv_store_;
-	SVRelationStore modifies_sv_store_;
+	RelationStore<Procedure, Variable> modifies_pv_store_;
+	RelationStore<StmtNum, Variable> modifies_sv_store_;
 };
