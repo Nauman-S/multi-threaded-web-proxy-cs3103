@@ -1,5 +1,9 @@
 #include "DataRetriever.h"
 
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
 #include <memory>
 #include <cassert>
 
@@ -15,6 +19,11 @@
 #include "../PKB/manager/UsesManager.h"
 #include "../Utils/type/TypeDef.h"
 
+using std::string;
+using std::unordered_set;
+using std::unordered_map;
+using std::vector;
+using std::pair;
 using std::shared_ptr;
 using std::make_shared;
 
