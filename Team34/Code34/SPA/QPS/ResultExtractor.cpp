@@ -1,8 +1,20 @@
 #include "ResultExtractor.h"
 
-#include <assert.h>
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
 #include <algorithm>
+#include <memory>
+#include <assert.h>
+
 #include "../Utils/type/RefType.h"
+
+using std::string;
+using std::unordered_set;
+using std::shared_ptr;
+using std::unordered_map;
+using std::vector;
 
 string ResultExtractor::GetFormattedResult() {
 
