@@ -3,6 +3,7 @@
 #include <memory>
 #include <cassert>
 
+#include "pattern/Pattern.h"
 #include "relation/StmtVarRel.h"
 #include "relation/ProcVarRel.h"
 #include "relation/StmtStmtRel.h"
@@ -235,7 +236,12 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
     return res;
 }
 
-shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {    
+std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
+{
+    return std::shared_ptr<ResWrapper>();
+}
+
+shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     //shared_ptr<SetRes> res = make_shared<SetRes>();
     shared_ptr<SetRes> res;
     auto ref_type = ref_ptr->GetRefType();
