@@ -21,6 +21,6 @@ public:
 
 	virtual RelType GetRelType() = 0;
 
-	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
+	// virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
 };
 

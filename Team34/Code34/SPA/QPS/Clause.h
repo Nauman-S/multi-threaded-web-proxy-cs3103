@@ -3,7 +3,8 @@
 #include <memory>
 
 #include "query_result/ResWrapper.h"
-#include "DataRetriever.h"
+//#include "DataRetriever.h"
+class DataRetriever;
 
 class Clause
 {
