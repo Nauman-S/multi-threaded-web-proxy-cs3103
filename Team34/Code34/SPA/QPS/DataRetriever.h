@@ -49,13 +49,15 @@ protected:
 	std::shared_ptr<vector<pair<string, string>>> GetAllPVRel(ProcVarRel& rel);
 
 	// Stmt-Stmt relations
-	/*bool CheckSSRel(ProcVarRel rel);
-	unordered_set<string>& GetRhsStmtByLhsStmt(ProcVarRel rel);
-	unordered_set<string>& GetLhsStmtByRhsStmt(ProcVarRel rel);
-	const vector<pair<string, string>>& GetAllSSRel(ProcVarRel rel);*/
+	bool CheckSSRel(StmtStmtRel& rel);
+	std::shared_ptr<unordered_set<string>> GetRhsStmtByLhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<unordered_set<string>> GetLhsStmtByRhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<vector<pair<string, string>>> GetAllSSRel(StmtStmtRel& rel);
 
+	// type conversion helpers
 	std::shared_ptr<unordered_set<string>> IntSetToStrSet(std::shared_ptr<unordered_set<int>> set);
-	std::shared_ptr<vector<pair<string, string>>> IntStrToStrStrTable(vector<pair<int, string>> table);
+	std::shared_ptr<vector<pair<string, string>>> IntStrToStrStrTable(std::shared_ptr<vector<pair<int, string>>> table);
+	std::shared_ptr<vector<pair<string, string>>> IntIntToStrStrTable(std::shared_ptr<vector<pair<int, int>>> table);
 	
 
 public:
@@ -67,8 +69,7 @@ public:
 
 	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
 
-	// TODO
-	//std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);
+	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
 
 	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
 };
