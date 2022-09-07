@@ -2,7 +2,7 @@
 #include <algorithm>
 
 void QueryLexer::InitializeKeywords() {
-	this->relational_references_.insert({ "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*", "USES", "MODIFIES" });
+	this->relation_keywords_.insert({ "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*", "USES", "MODIFIES" });
 	this->design_entities_.insert({ "STMT", "READ", "PRINT", "CALL", "WHILE", "IF", "ASSIGN", "VARIABLE", "CONSTANT", "PROCEDURE" });
 	this->keywords_.insert({ "SELECT", "SUCH", "THAT" });
 	this->delimiters_.insert({ ';',',','(',')','\"' });
@@ -77,7 +77,7 @@ bool QueryLexer::HasReferenceKeyword() {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
 		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
-		if (this->relational_references_.find(sval_) != this->relational_references_.end()) {
+		if (this->relation_keywords_.find(sval_) != this->relation_keywords_.end()) {
 			return true;
 		}
 	}

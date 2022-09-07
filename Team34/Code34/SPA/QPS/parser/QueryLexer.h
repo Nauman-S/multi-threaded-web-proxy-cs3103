@@ -13,7 +13,7 @@ private:
 
 	Tokenizer* tokenizer_;
 	std::unordered_set<std::string> design_entities_;
-	std::unordered_set<std::string> relational_references_;
+	std::unordered_set<std::string> relation_keywords_;
 	std::unordered_set<std::string> keywords_;
 	std::unordered_set <char> delimiters_;
 
