@@ -9,7 +9,7 @@ public:
 
 	VariableIndex getVariable();
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	VariableIndex var;
