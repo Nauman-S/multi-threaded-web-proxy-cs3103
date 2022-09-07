@@ -27,5 +27,6 @@ public:
 	virtual std::pair<ValType, ValType> ValTypes() = 0;
 
 	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
+
 };
 

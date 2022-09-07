@@ -14,6 +14,7 @@
 class StmtVarRel;
 class ProcVarRel;
 class StmtStmtRel;
+class Pattern;
 #include "relation/UsesSRel.h"
 #include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
@@ -70,6 +71,8 @@ public:
 	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
 
 	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
 
 	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
 };
