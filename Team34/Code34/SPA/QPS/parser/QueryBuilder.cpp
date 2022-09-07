@@ -29,6 +29,7 @@
 #include "..\relation\ParentTRel.h"
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
+#include "..\reference\RefFactory.h"
 
 using std::shared_ptr;
 
@@ -49,9 +50,10 @@ shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 	std::vector<shared_ptr<Ref>> synonyms;
 	shared_ptr<Ref> synonym_;
+	RefFactory* ref_factory_ = new RefFactory();
 
 	while (this->lexer_->HasDesignEntity()) {
-		synonym_ = ParseDeclarationStatement();
+		synonym_ = ParseDeclarationStatement(ref_factory_);
 		synonyms.push_back(synonym_);
 	}
 
@@ -60,7 +62,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 
 
-shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
+shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(RefFactory* ref_factory_) {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
 	if (this->lexer_->HasIdentity()) {
@@ -68,8 +70,13 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			shared_ptr<Ref> ref_ = CreateReference(design_entity_, synonym_);
-			return ref_;
+			std::optional<shared_ptr<Ref>> ref_ = ref_factory_->CreateReference(design_entity_, synonym_);
+			if (ref_) {
+				return *ref_;
+			}
+			else {
+				throw new SyntaxError("Declaration Statement - Reference factory unable to produce reference");
+			}
 		}
 		else {
 			throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
@@ -77,44 +84,6 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 	}
 	else {
 		throw SyntaxError("Declaration Statement - Missing Synonym");
-	}
-
-}
-
-// this should be inside Create Ref class based on factory pattern. for now its here
-shared_ptr<Ref> QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
-	if (design_entity_.compare("STMT") == 0) {
-		return shared_ptr<StmtRef>(new StmtRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("READ") == 0) {
-		return shared_ptr<ReadRef>(new ReadRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PRINT") == 0) {
-		return shared_ptr<PrintRef>(new PrintRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CALL") == 0) {
-		return shared_ptr<CallRef>(new CallRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("WHILE") == 0) {
-		return shared_ptr<WhileRef>(new WhileRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("IF") == 0) {
-		return shared_ptr<IfRef>(new IfRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("ASSIGN") == 0) {
-		return shared_ptr<AssignRef>(new AssignRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("VARIABLE") == 0) {
-		return shared_ptr<VarRef>(new VarRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CONSTANT") == 0) {
-		return shared_ptr<ConstRef>(new ConstRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PROCEDURE") == 0) {
-		return shared_ptr<ProcRef>(new ProcRef(ValType::kSynonym, synonym_));
-	}
-	else {
-		throw new SyntaxError("This error should never be called - Iconsistent Naming OF design_entities");
 	}
 
 }
