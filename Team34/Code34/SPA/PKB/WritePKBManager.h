@@ -21,8 +21,14 @@ public:
 	// APIs related to Procedure entity
 	void AddProcedure(Procedure proc);
 
-	//APIs related to Statement
+	// APIs related to Statement
 	void AddStatement(StmtNum stmt_num, RefType type);
+
+	// APIs related to Parent relation
+	void SetParent(StmtNum child, StmtNum parent);
+
+	// APIs related to Parent* relation
+	void SetParentS(StmtNum child, StmtNum parent);
 
 	// APIs related to Uses relation
 	void SetUses(StmtNum stmt_num, Variable var);

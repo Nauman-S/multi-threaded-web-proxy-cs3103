@@ -55,6 +55,49 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllStatements()
 	return pkb.statement_manager_.GetAllStatements();
 }
 
+// APIs related to Parent relation
+bool ReadPKBManager::CheckParent(StmtNum child, StmtNum parent)
+{
+	return pkb.parent_manager_.CheckParent(child, parent);
+}
+
+StmtNum ReadPKBManager::GetChild(StmtNum parent)
+{
+	return pkb.parent_manager_.GetChild(parent);
+}
+
+StmtNum ReadPKBManager::GetParent(StmtNum child)
+{
+	return pkb.parent_manager_.GetParent(child);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
+{
+	return pkb.parent_manager_.GetAllParentRelations();
+}
+
+// APIs related to Parent* relation
+bool ReadPKBManager::CheckParentS(StmtNum child, StmtNum parent)
+{
+	return pkb.parent_manager_.CheckParentS(child, parent);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(StmtNum parent)
+{
+	return pkb.parent_manager_.GetAllChildren(parent);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents(StmtNum parent)
+{
+	return pkb.parent_manager_.GetAllParents(parent);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentSRelations()
+{
+	return pkb.parent_manager_.GetAllParentSRelations();
+}
+
+
 // APIs related to Uses relation
 bool ReadPKBManager::CheckUses(StmtNum stmt_num, Variable var)
 {

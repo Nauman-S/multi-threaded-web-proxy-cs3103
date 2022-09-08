@@ -24,6 +24,18 @@ void WritePKBManager::AddStatement(StmtNum stmt_num, RefType type)
 	pkb.statement_manager_.AddStatement(stmt_num, type);
 }
 
+// APIs related to Parent relation
+void WritePKBManager::SetParent(StmtNum child, StmtNum parent)
+{
+	return pkb.parent_manager_.SetParent(child, parent);
+}
+
+// APIs related to Parent* relation
+void WritePKBManager::SetParentS(StmtNum child, StmtNum parent)
+{
+	return pkb.parent_manager_.SetParentS(child, parent);
+}
+
 // APIs related to Uses relation
 void WritePKBManager::SetUses(StmtNum stmt_num, Variable var)
 {
