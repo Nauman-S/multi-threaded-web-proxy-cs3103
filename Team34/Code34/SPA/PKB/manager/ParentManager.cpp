@@ -64,14 +64,41 @@ bool ParentManager::CheckParentS(StmtNum parent, StmtNum child)
 	return std::find(all_parent_s_relations_.begin(), all_parent_s_relations_.end(), pair) != all_parent_s_relations_.end();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllChildren(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllChildren(StmtNum stmt)
 {
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_children = std::make_shared<std::unordered_set<StmtNum>>();
+	std::queue<StmtNum> queue;
+	queue.push(stmt);
+	while (!queue.empty())
+	{
+		StmtNum parent = queue.front();
+		queue.pop();
+		auto iter = parent_to_child_map_.find(parent);
+		if (iter == parent_to_child_map_.end())
+		{
+			continue;
+		}
+		std::unordered_set<StmtNum>& children = parent_to_child_map_[parent];
+		for (auto iter = children.begin(); iter != children.end(); ++iter)
+		{
+			all_children->insert(*iter);
+			queue.push(*iter);
+		}
+	}
+	return all_children;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllParents(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllParents(StmtNum stmt)
 {
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_parents = std::make_shared<std::unordered_set<StmtNum>>();
+	auto iter = child_to_parent_map_.find(stmt);
+	while (iter != child_to_parent_map_.end())
+	{
+		StmtNum parent = child_to_parent_map_[stmt];
+		all_parents->insert(parent);
+		iter = child_to_parent_map_.find(parent);
+	}
+	return all_parents;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentManager::GetAllParentSRelations()

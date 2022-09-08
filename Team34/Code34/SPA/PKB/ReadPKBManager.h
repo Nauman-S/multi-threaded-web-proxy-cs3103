@@ -40,8 +40,8 @@ public:
 
 	// APIs related to Parent* relation
 	bool CheckParentS(StmtNum child, StmtNum parent);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(StmtNum parent);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(StmtNum parent);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentSRelations();
 
 	// APIs related to Uses relation
