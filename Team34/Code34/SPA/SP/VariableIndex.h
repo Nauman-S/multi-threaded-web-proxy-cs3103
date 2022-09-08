@@ -3,9 +3,9 @@
 
 class VariableIndex {
 public:
-	void setName(std::string nm);
+	void SetName(std::string nm);
 
-	std::string getName();
+	std::string GetName();
 
 protected:
 	std::string varName;

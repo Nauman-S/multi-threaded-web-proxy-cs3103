@@ -2,11 +2,11 @@
 
 using namespace std;
 
-std::vector<ProcedureASTNode> ProgramNode::getChildren() {
+std::vector<shared_ptr<ProcedureASTNode>> ProgramNode::GetChildren() {
 	return children;
 }
 
-void ProgramNode::setChildren(std::vector<ProcedureASTNode>& c) {
+void ProgramNode::SetChildren(std::vector<std::shared_ptr<ProcedureASTNode>> c) {
 	children = c;
 }
 
