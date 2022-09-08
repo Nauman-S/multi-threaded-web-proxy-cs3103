@@ -15,8 +15,8 @@
 #include "../SPA/QPS/QueryEvaluator.h"
 #include "../SPA/Utils/type/TypeDef.h"
 
-
 using namespace std;
+
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
 AbstractWrapper* WrapperFactory::createWrapper() {
