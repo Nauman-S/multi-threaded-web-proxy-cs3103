@@ -46,8 +46,8 @@ private:
 	shared_ptr<Ref> GetNextStmtRef();
 	shared_ptr<Ref> GetNextProcRef();
 	shared_ptr<Ref> GetNextVarRef();
+	std::pair<shared_ptr<Ref>, shared_ptr<Ref>> GetModifiesOrUsesSyns();
 	//shared_ptr<Ref> GetNextConstRef();
-
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);

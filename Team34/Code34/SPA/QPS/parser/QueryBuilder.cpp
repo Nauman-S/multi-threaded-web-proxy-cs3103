@@ -239,10 +239,8 @@ shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseUsesRel() {
-	//shared_ptr<Ref> lhs_ref = ParseNextRef();
 	shared_ptr<Ref> lhs_syn;
 	shared_ptr<Ref> rhs_syn;
-
 	if (lexer_->HasIdentity()) {
 		lhs_syn = GetNextStmtRef();
 	}
@@ -252,13 +250,14 @@ shared_ptr<Rel> QueryBuilder::ParseUsesRel() {
 
 	lexer_->MatchCommaDelimeter();
 
-
 	rhs_syn = GetNextVarRef();
-
 	if (lhs_syn->GetRefType() == RefType::kProcRef) {
 		return shared_ptr<Rel>(new UsesPRel(*std::dynamic_pointer_cast<ProcRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 	else {
+		
+		//shared_ptr<VarRef> rhs_var_syn = std::dynamic_pointer_cast<VarRef>(rhs_syn);
+
 		return shared_ptr<Rel>(new UsesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 }
@@ -266,7 +265,6 @@ shared_ptr<Rel> QueryBuilder::ParseUsesRel() {
 shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 	shared_ptr<Ref> lhs_syn;
 	shared_ptr<Ref> rhs_syn;
-
 	if (lexer_->HasIdentity()) {
 		lhs_syn = GetNextStmtRef();
 	}
@@ -275,7 +273,6 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 	}
 
 	lexer_->MatchCommaDelimeter();
-
 
 	rhs_syn = GetNextVarRef();
 
@@ -285,7 +282,22 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 	else {
 		return shared_ptr<Rel>(new ModifiesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
+}
 
+std::pair<shared_ptr<Ref>, shared_ptr<Ref>> QueryBuilder::GetModifiesOrUsesSyns() {
+	shared_ptr<Ref> lhs_syn;
+	shared_ptr<Ref> rhs_syn;
+	if (lexer_->HasIdentity()) {
+		lhs_syn = GetNextStmtRef();
+	}
+	else {
+		lhs_syn = GetNextProcRef();
+	}
+
+	lexer_->MatchCommaDelimeter();
+
+	rhs_syn = GetNextVarRef();
+	return { lhs_syn, rhs_syn };
 }
 
 //shared_ptr<Ref> QueryBuilder::ParseNextRef() {
