@@ -18,7 +18,7 @@ public:
 
 	void setChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	ProcedureIndex proc;

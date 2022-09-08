@@ -14,6 +14,7 @@
 class StmtVarRel;
 class ProcVarRel;
 class StmtStmtRel;
+class Pattern;
 #include "relation/UsesSRel.h"
 #include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
@@ -24,12 +25,6 @@ class StmtStmtRel;
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
 
-
-using std::string;
-using std::unordered_set;
-using std::vector;
-using std::pair;
-
 class DataRetriever
 {
 protected:
@@ -37,25 +32,27 @@ protected:
 
 	// Stmt-Var relations
 	bool CheckSVRel(StmtVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetVarByStmt(StmtVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetStmtByVar(StmtVarRel& rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllSVRel(StmtVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetVarByStmt(StmtVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetStmtByVar(StmtVarRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSVRel(StmtVarRel& rel);
 	
 
 	// Proc-Var relations
 	bool CheckPVRel(ProcVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetVarByProc(ProcVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetProcByVar(ProcVarRel& rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllPVRel(ProcVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetVarByProc(ProcVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetProcByVar(ProcVarRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPVRel(ProcVarRel& rel);
 
 	// Stmt-Stmt relations
-	/*bool CheckSSRel(ProcVarRel rel);
-	unordered_set<string>& GetRhsStmtByLhsStmt(ProcVarRel rel);
-	unordered_set<string>& GetLhsStmtByRhsStmt(ProcVarRel rel);
-	const vector<pair<string, string>>& GetAllSSRel(ProcVarRel rel);*/
+	bool CheckSSRel(StmtStmtRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetRhsStmtByLhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByRhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(StmtStmtRel& rel);
 
-	std::shared_ptr<unordered_set<string>> IntSetToStrSet(std::shared_ptr<unordered_set<int>> set);
-	std::shared_ptr<vector<pair<string, string>>> IntStrToStrStrTable(vector<pair<int, string>> table);
+	// type conversion helpers
+	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntStrToStrStrTable(std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntIntToStrStrTable(std::shared_ptr<std::vector<std::pair<int, int>>> table);
 	
 
 public:
@@ -67,8 +64,9 @@ public:
 
 	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
 
-	// TODO
-	//std::unique_ptr<ResWrapper> retrieve(StmtStmtRel rel);
+	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
 
 	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
 };

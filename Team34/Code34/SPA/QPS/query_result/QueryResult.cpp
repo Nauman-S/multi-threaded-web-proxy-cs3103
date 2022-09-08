@@ -4,6 +4,11 @@
 
 #include "ResType.h"
 
+using std::shared_ptr;
+using std::unordered_map;
+using std::vector;
+using std::string;
+using std::unordered_set;
 
 bool QueryResult::MergeResult(ResWrapper& res_wrapper) {
 	ResType type = res_wrapper.GetResType();

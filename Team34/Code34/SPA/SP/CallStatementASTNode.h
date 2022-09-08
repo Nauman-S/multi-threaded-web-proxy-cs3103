@@ -9,7 +9,7 @@ public:
 
 	ProcedureIndex getProcedure();
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	ProcedureIndex proc;

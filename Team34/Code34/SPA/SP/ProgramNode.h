@@ -11,7 +11,7 @@ public:
 
 	void setChildren(std::vector<ProcedureASTNode>&);
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	std::vector<ProcedureASTNode> children;

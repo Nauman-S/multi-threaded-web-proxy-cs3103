@@ -1,8 +1,9 @@
 #pragma once
-#include "IntValueableRef.h"
-#include "../../Utils/type/RefType.h"
 
 #include <optional>
+
+#include "IntValueableRef.h"
+#include "../../Utils/type/RefType.h"
 
 class StmtRef :
     public IntValueableRef
