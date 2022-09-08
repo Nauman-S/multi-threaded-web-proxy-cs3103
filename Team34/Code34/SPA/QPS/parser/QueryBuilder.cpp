@@ -50,7 +50,7 @@ shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 	std::vector<shared_ptr<Ref>> synonyms;
 	shared_ptr<Ref> synonym_;
-	RefFactory* ref_factory_ = new RefFactory();
+	std::shared_ptr<RefFactory> ref_factory_ = std::make_shared<RefFactory>();
 
 	while (this->lexer_->HasDesignEntity()) {
 		synonym_ = ParseDeclarationStatement(ref_factory_);
@@ -62,7 +62,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 
 
-shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(RefFactory* ref_factory_) {
+shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(std::shared_ptr<RefFactory> ref_factory_) {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
 	if (this->lexer_->HasIdentity()) {

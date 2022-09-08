@@ -36,7 +36,7 @@ private:
 	std::vector<shared_ptr<Ref>> ParseDeclarationStatements();
 	shared_ptr<Query> ParseSelectStatement();
 
-	shared_ptr<Ref> ParseDeclarationStatement(RefFactory* ref_factory_);
+	shared_ptr<Ref> ParseDeclarationStatement(std::shared_ptr<RefFactory> ref_factory_);
 
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
 	//shared_ptr<Ref> ParseNextRef();

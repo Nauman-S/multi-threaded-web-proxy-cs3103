@@ -177,5 +177,6 @@
     <ClInclude Include="Utils\type\TypeDef.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="QPS\reference\RefFactory.h" />
+    <ClInclude Include="QPS\reference\EntityRef.h" />
   </ItemGroup>
 </Project>

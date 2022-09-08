@@ -24,6 +24,7 @@
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />
     <ClInclude Include="QPS\query_result\TableRes.h" />
+    <ClInclude Include="QPS\reference\EntityRef.h" />
     <ClInclude Include="QPS\reference\RefFactory.h" />
     <ClInclude Include="QPS\relation\FollowsRel.h" />
     <ClInclude Include="QPS\relation\FollowsTRel.h" />
