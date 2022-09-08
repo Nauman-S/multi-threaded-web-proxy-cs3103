@@ -25,10 +25,10 @@ public:
 	void AddStatement(StmtNum stmt_num, RefType type);
 
 	// APIs related to Parent relation
-	void SetParent(StmtNum child, StmtNum parent);
+	void SetParent(StmtNum parent, StmtNum child);
 
 	// APIs related to Parent* relation
-	void SetParentS(StmtNum child, StmtNum parent);
+	void SetParentS(StmtNum parent, StmtNum child);
 
 	// APIs related to Uses relation
 	void SetUses(StmtNum stmt_num, Variable var);

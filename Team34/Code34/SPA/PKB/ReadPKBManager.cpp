@@ -61,7 +61,7 @@ bool ReadPKBManager::CheckParent(StmtNum child, StmtNum parent)
 	return pkb.parent_manager_.CheckParent(child, parent);
 }
 
-StmtNum ReadPKBManager::GetChild(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChild(StmtNum parent)
 {
 	return pkb.parent_manager_.GetChild(parent);
 }
