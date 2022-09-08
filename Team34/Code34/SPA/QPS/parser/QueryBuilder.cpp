@@ -32,6 +32,7 @@
 
 using std::shared_ptr;
 
+
 QueryBuilder::QueryBuilder() {
 	lexer_ = std::make_shared<QueryLexer>();
 }
@@ -252,13 +253,15 @@ shared_ptr<Rel> QueryBuilder::ParseUsesRel() {
 
 	rhs_syn = GetNextVarRef();
 	if (lhs_syn->GetRefType() == RefType::kProcRef) {
-		return shared_ptr<Rel>(new UsesPRel(*std::dynamic_pointer_cast<ProcRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new UsesPRel(std::dynamic_pointer_cast<ProcRef>(lhs_syn), std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 	else {
 		
-		//shared_ptr<VarRef> rhs_var_syn = std::dynamic_pointer_cast<VarRef>(rhs_syn);
+		shared_ptr<StmtRef> lhs_var_syn = std::dynamic_pointer_cast<StmtRef>(lhs_syn);
+		shared_ptr<VarRef> rhs_var_syn = std::dynamic_pointer_cast<VarRef>(rhs_syn);
+		string s = rhs_var_syn->TestString();
 
-		return shared_ptr<Rel>(new UsesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new UsesSRel(std::dynamic_pointer_cast<StmtRef>(lhs_syn), std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 }
 
@@ -277,10 +280,10 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 	rhs_syn = GetNextVarRef();
 
 	if (lhs_syn->GetRefType() == RefType::kProcRef) {
-		return shared_ptr<Rel>(new ModifiesPRel(*std::dynamic_pointer_cast<ProcRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new ModifiesPRel(std::dynamic_pointer_cast<ProcRef>(lhs_syn), std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 	else {
-		return shared_ptr<Rel>(new ModifiesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new ModifiesSRel(std::dynamic_pointer_cast<StmtRef>(lhs_syn), std::dynamic_pointer_cast<VarRef>(rhs_syn)));
 	}
 }
 

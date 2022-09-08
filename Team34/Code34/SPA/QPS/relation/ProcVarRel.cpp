@@ -3,25 +3,25 @@
 
 
 std::string ProcVarRel::LhsValue() {
-    return lhs_ref_.GetName();
+    return lhs_ref_->GetName();
 }
 
 std::string ProcVarRel::RhsValue() {
-    return rhs_ref_.GetName();
+    return rhs_ref_->GetName();
 }
 
 RefType ProcVarRel::LhsRefType()
 {
-    return lhs_ref_.GetRefType();
+    return lhs_ref_->GetRefType();
 }
 
 RefType ProcVarRel::RhsRefType()
 {
-    return rhs_ref_.GetRefType();
+    return rhs_ref_->GetRefType();
 }
 
 std::pair<ValType, ValType> ProcVarRel::ValTypes() {
-    return std::pair<ValType, ValType>(lhs_ref_.GetValType(), rhs_ref_.GetValType());
+    return std::pair<ValType, ValType>(lhs_ref_->GetValType(), rhs_ref_->GetValType());
 }
 
 std::shared_ptr<ResWrapper> ProcVarRel::GetMatch(DataRetriever& data_retriever) {
