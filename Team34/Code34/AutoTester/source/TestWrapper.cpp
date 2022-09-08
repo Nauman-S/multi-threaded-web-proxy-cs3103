@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <optional>
+#include <memory>
 #include <map>
 
 #include "../SPA/SP/SourceParser.h"
@@ -14,8 +15,8 @@
 #include "../SPA/QPS/QueryEvaluator.h"
 #include "../SPA/Utils/type/TypeDef.h"
 
-
 using namespace std;
+
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
 AbstractWrapper* WrapperFactory::createWrapper() {
@@ -36,7 +37,7 @@ void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
     // ...rest of your code...
 	SourceParser parser = SourceParser();
-	ProgramNode root = parser.parse(filename);
+	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
 
 	DesignExtractor extractor;
 	extractor.PopulatePKB(root);

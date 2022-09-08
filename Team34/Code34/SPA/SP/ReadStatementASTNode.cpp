@@ -2,11 +2,11 @@
 #include <iostream>
 using namespace std;
 
-void ReadStatementASTNode::setVariable(VariableIndex& v) {
+void ReadStatementASTNode::SetVariable(VariableIndex& v) {
 	var = v;
 }
 
-VariableIndex ReadStatementASTNode::getReadVariable() {
+VariableIndex ReadStatementASTNode::GetReadVariable() {
 	return var;
 }
 
