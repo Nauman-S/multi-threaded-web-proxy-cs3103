@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "../../Utils/type/TypeDef.h"
+
 using std::string;
 using std::unordered_map;
 using std::unordered_set;
@@ -9,6 +11,7 @@ using std::vector;
 using std::tuple;
 using std::shared_ptr;
 using StrPair = std::pair<string, string>;
+
 
 shared_ptr<vector<string>> TableRes::Columns()
 {
@@ -30,12 +33,12 @@ shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {
     shared_ptr<unordered_set<string>> result_set = std::make_shared<unordered_set<string>>();
     
     if (col_index == 0) {
-        for (StrPair pair : *rows_ptr_) {
+        for (StrPair pair : (*rows_ptr_)) {
             result_set->insert(pair.first);
         }
     }
     else if (col_index == 1) {
-        for (StrPair pair : *rows_ptr_) {
+        for (StrPair pair : (*rows_ptr_)) {
             result_set->insert(pair.second);
         }
     }

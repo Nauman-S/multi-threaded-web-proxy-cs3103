@@ -25,12 +25,6 @@ class Pattern;
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
 
-
-using std::string;
-using std::unordered_set;
-using std::vector;
-using std::pair;
-
 class DataRetriever
 {
 protected:
@@ -38,27 +32,27 @@ protected:
 
 	// Stmt-Var relations
 	bool CheckSVRel(StmtVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetVarByStmt(StmtVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetStmtByVar(StmtVarRel& rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllSVRel(StmtVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetVarByStmt(StmtVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetStmtByVar(StmtVarRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSVRel(StmtVarRel& rel);
 	
 
 	// Proc-Var relations
 	bool CheckPVRel(ProcVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetVarByProc(ProcVarRel& rel);
-	std::shared_ptr<unordered_set<string>> GetProcByVar(ProcVarRel& rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllPVRel(ProcVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetVarByProc(ProcVarRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetProcByVar(ProcVarRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPVRel(ProcVarRel& rel);
 
 	// Stmt-Stmt relations
 	bool CheckSSRel(StmtStmtRel& rel);
-	std::shared_ptr<unordered_set<string>> GetRhsStmtByLhsStmt(StmtStmtRel& rel);
-	std::shared_ptr<unordered_set<string>> GetLhsStmtByRhsStmt(StmtStmtRel& rel);
-	std::shared_ptr<vector<pair<string, string>>> GetAllSSRel(StmtStmtRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetRhsStmtByLhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByRhsStmt(StmtStmtRel& rel);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(StmtStmtRel& rel);
 
 	// type conversion helpers
-	std::shared_ptr<unordered_set<string>> IntSetToStrSet(std::shared_ptr<unordered_set<int>> set);
-	std::shared_ptr<vector<pair<string, string>>> IntStrToStrStrTable(std::shared_ptr<vector<pair<int, string>>> table);
-	std::shared_ptr<vector<pair<string, string>>> IntIntToStrStrTable(std::shared_ptr<vector<pair<int, int>>> table);
+	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntStrToStrStrTable(std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntIntToStrStrTable(std::shared_ptr<std::vector<std::pair<int, int>>> table);
 	
 
 public:

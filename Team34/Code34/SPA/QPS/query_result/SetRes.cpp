@@ -1,7 +1,10 @@
 #include "SetRes.h"
 
+using std::string;
+using std::unordered_set;
+using std::shared_ptr;
 
-bool SetRes::Merge(std::shared_ptr<SetRes> other) {
+bool SetRes::Merge(shared_ptr<SetRes> other) {
 	shared_ptr<unordered_set<string>> merged_result;
 	for (const string& s : *(other->GetDomain())) {
 		if (domain_ptr_->count(s)) {
