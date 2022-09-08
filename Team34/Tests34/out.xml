@@ -1,0 +1,24 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>AutoTester</name><parsing_time_taken>3.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test UsesS">10</id><querystr><![CDATA[stmt s; Select s such that Uses(s, "x")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>4,5</correct>
+<time_taken>4.000000</time_taken>
+<failed>
+<missing>4,5</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+</queries>
+</test_results>

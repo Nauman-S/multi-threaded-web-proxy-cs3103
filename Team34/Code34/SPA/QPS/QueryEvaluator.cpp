@@ -33,7 +33,6 @@ bool QueryEvaluator::evaluate() {
 
 	for (auto it = relations->begin(); it != relations->end(); ++it) {
 		shared_ptr<Rel> relation = *it;
-
 		// update sym_domain with data retriever
 
 		shared_ptr<ResWrapper> res_wrapper = relation->GetMatch(data_retriever_);

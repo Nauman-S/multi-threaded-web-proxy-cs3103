@@ -14,7 +14,7 @@ public:
 
 	std::vector<VariableIndex> getRight();
 
-	virtual void Extract(NodeExtractor&);
+	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	VariableIndex left;

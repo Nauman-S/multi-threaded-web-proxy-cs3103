@@ -11,6 +11,6 @@ ProcedureIndex CallStatementASTNode::getProcedure() {
 }
 
 void CallStatementASTNode::Extract(NodeExtractor& extractor) {
-
+	extractor.ExtractCallNode(*this);
 }
 
