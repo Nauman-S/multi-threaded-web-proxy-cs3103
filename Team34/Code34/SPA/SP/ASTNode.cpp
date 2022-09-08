@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void ASTNode::setParent(ASTNode* p) {
+void ASTNode::SetParent(shared_ptr<ASTNode> p) {
 	parent = p;
 }
 
-ASTNode* ASTNode::getParent() {
+shared_ptr<ASTNode> ASTNode::GetParent() {
 	return parent;
 }

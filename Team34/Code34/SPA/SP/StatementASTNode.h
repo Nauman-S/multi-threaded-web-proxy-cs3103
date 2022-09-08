@@ -19,15 +19,15 @@ enum class StatementType {
 
 class StatementASTNode : public ASTNode {
 public:
-	LineIndex getLineIndex();
+	LineIndex GetLineIndex();
 
-	void setLineIndex(LineIndex&);
+	void SetLineIndex(LineIndex&);
 
-	StatementType getStatementType();
+	StatementType GetStatementType();
 
-	std::string getTypeVal();
+	std::string GetTypeVal();
 
-	void setStatementType(StatementType, std::string);
+	void SetStatementType(StatementType, std::string);
 
 	bool operator < (const StatementASTNode& c) const
 	{

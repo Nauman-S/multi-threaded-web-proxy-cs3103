@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <optional>
+#include <memory>
 #include <map>
 
 #include "../SPA/SP/SourceParser.h"
@@ -39,21 +40,21 @@ void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
     // ...rest of your code...
 	SourceParser parser = SourceParser();
-	ProgramNode node = parser.parse(filename);
+	shared_ptr<ProgramNode> node = parser.Parse(filename);
 
 	//TODO: Move all population logic to Design Extractor
 	UsesModifiesExtractor ex;
-	node.Extract(ex);
+	node->Extract(ex);
 
 	cout << "TEST" << endl;
-	vector<ProcedureASTNode> p_nodes = node.getChildren();
+	vector<shared_ptr<ProcedureASTNode>> p_nodes = node->GetChildren();
 	cout << "num of procedures: " << p_nodes.size() << endl;
-	vector<std::shared_ptr<StatementASTNode>> s_nodes = p_nodes.at(0).getChildren();
+	vector<std::shared_ptr<StatementASTNode>> s_nodes = p_nodes.at(0)->GetChildren();
 	cout << "num of statements: " << s_nodes.size() << endl;
 	DesignExtractor extractor = DesignExtractor();
-	vector<int> consts = extractor.getConstants(filename);
-	vector<VariableIndex> vars = extractor.getVariables(filename);
-	vector<ProcedureIndex> procs = extractor.getProcedures(node);
+	vector<int> consts = extractor.GetConstants(filename);
+	vector<VariableIndex> vars = extractor.GetVariables(filename);
+	vector<ProcedureIndex> procs = extractor.GetProcedures(node);
 	map<std::shared_ptr<StatementASTNode>, LineIndex> si_map = parser.si_mapping;
 	map<LineIndex, std::shared_ptr<StatementASTNode>> is_map = parser.is_mapping;
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
@@ -66,17 +67,17 @@ void TestWrapper::parse(std::string filename) {
 	mapping.insert(pair<StatementType, RefType>(StatementType::scall, RefType::kCallRef));
 	mapping.insert(pair<StatementType, RefType>(StatementType::sexpre, RefType::kStmtRef)); // need edit
 	for (VariableIndex v : vars) {
-		pkb->AddVariable(v.getName());
+		pkb->AddVariable(v.GetName());
 	}
 	for (int c : consts) {
 		pkb->AddConstant(Constant(c));
 	}
 	for (ProcedureIndex p : procs) {
-		pkb->AddProcedure(Procedure(p.getName()));
+		pkb->AddProcedure(Procedure(p.GetName()));
 	}
 
 	for (pair<std::shared_ptr<StatementASTNode>, LineIndex> p : si_map) {
-		pkb->AddStatement(p.second.getLineNum(), mapping[p.first->getStatementType()]);
+		pkb->AddStatement(p.second.GetLineNum(), mapping[p.first->GetStatementType()]);
 	}
 }
 

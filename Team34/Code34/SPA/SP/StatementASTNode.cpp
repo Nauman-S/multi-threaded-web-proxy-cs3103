@@ -4,23 +4,23 @@ using namespace std;
 
 
 
-LineIndex StatementASTNode::getLineIndex() {
+LineIndex StatementASTNode::GetLineIndex() {
 	return lineIndex;
 }
 
-void StatementASTNode::setLineIndex(LineIndex& idx) {
+void StatementASTNode::SetLineIndex(LineIndex& idx) {
 	lineIndex = idx;
 }	
 
-StatementType StatementASTNode::getStatementType() {
+StatementType StatementASTNode::GetStatementType() {
 	return statement_type;
 }
 
-std::string StatementASTNode::getTypeVal() {
+std::string StatementASTNode::GetTypeVal() {
 	return type_val;
 }
 
-void StatementASTNode::setStatementType(StatementType tp, string val) {
+void StatementASTNode::SetStatementType(StatementType tp, string val) {
 	statement_type = tp;
 	type_val = val;
 }
