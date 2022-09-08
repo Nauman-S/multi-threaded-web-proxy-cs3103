@@ -57,6 +57,12 @@ void TestWrapper::parse(std::string filename) {
 	vector<ProcedureIndex> procs = extractor.GetProcedures(node);
 	map<std::shared_ptr<StatementASTNode>, LineIndex> si_map = parser.si_mapping;
 	map<LineIndex, std::shared_ptr<StatementASTNode>> is_map = parser.is_mapping;
+	/*
+	for (auto const& c : is_map) {
+		cout << c.second->GetLineIndex().GetLineNum() << c.second->GetTypeVal() << "\n parent proc: " << c.second->GetParentProcIndex().GetName() << "\n parent statement: " << c.second->GetParentSatementLineIndex().GetLineNum() << endl;
+	}
+	exit(0);
+	*/
 	std::unique_ptr<WritePKBManager> pkb = WritePKBManager::GetInstance();
 	map<StatementType, RefType> mapping;
 	mapping.insert(pair<StatementType, RefType>(StatementType::sassign, RefType::kAssignRef));
