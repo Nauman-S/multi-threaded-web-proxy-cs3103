@@ -10,7 +10,7 @@ LineIndex StatementASTNode::getLineIndex() {
 
 void StatementASTNode::setLineIndex(LineIndex& idx) {
 	lineIndex = idx;
-}
+}	
 
 StatementType StatementASTNode::getStatementType() {
 	return statement_type;

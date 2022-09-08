@@ -1,8 +1,175 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>AutoTester</name><parsing_time_taken>4.000000</parsing_time_taken>
+<name>AutoTester</name><parsing_time_taken>6.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select statements">4</id><querystr><![CDATA[stmt s; Select s]]></querystr>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select variables">1</id><querystr><![CDATA[variable v; Select v]]></querystr>
+<stuans>x y</stuans>
+<correct>x,y</correct>
+<time_taken>17.000000</time_taken>
+<failed>
+<missing>x,y</missing>
+<additional>x y</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select constants">2</id><querystr><![CDATA[constant c; Select c]]></querystr>
+<stuans>2 3</stuans>
+<correct>2,3</correct>
+<time_taken>40.000000</time_taken>
+<failed>
+<missing>2,3</missing>
+<additional>2 3</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select procedures">3</id><querystr><![CDATA[procedure p; Select p]]></querystr>
+<stuans>proc1</stuans>
+<correct>proc1</correct>
+<time_taken>28.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select statements">3</id><querystr><![CDATA[stmt s; Select s]]></querystr>
+<stuans>1 2 3 4 5 6</stuans>
+<correct>1,2,3,4,5,6</correct>
+<time_taken>34.000000</time_taken>
+<failed>
+<missing>1,2,3,4,5,6</missing>
+<additional>1 2 3 4 5 6</additional>
+<summary>
+<expected>6</expected>
+<matched>0</matched>
+<missing>6</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select read statements">4</id><querystr><![CDATA[read r; Select r]]></querystr>
+<stuans>1 2</stuans>
+<correct>1,2</correct>
+<time_taken>25.000000</time_taken>
+<failed>
+<missing>1,2</missing>
+<additional>1 2</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select print statements">5</id><querystr><![CDATA[print p; Select p]]></querystr>
+<stuans>5 6</stuans>
+<correct>5,6</correct>
+<time_taken>34.000000</time_taken>
+<failed>
+<missing>5,6</missing>
+<additional>5 6</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select assign statements">6</id><querystr><![CDATA[assign a; Select a]]></querystr>
+<stuans>3 4</stuans>
+<correct>3,4</correct>
+<time_taken>35.000000</time_taken>
+<failed>
+<missing>3,4</missing>
+<additional>3 4</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test ModifiesS">7</id><querystr><![CDATA[stmt s; Select s such that Modifies(s, "x")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>3</correct>
+<time_taken>30.000000</time_taken>
+<failed>
+<missing>3</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test ModifiesS">8</id><querystr><![CDATA[variable v; Select v such that Modifies(4, v)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>y</correct>
+<time_taken>24.000000</time_taken>
+<failed>
+<missing>y</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test ModifiesS">9</id><querystr><![CDATA[variable v; Select v such that Modifies(4, "x")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<failed>
+<missing></missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>0</expected>
+<matched>0</matched>
+<missing>0</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test UsesS">10</id><querystr><![CDATA[stmt s; Select s such that Uses(s, "x")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>4</correct>
+<time_taken>29.000000</time_taken>
+<failed>
+<missing>4</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test UsesS">11</id><querystr><![CDATA[variable v; Select v such that Uses(4, v)]]></querystr>

@@ -37,6 +37,7 @@ ProcedureASTNode SourceParser::parseProcedure(vector<SourceToken> tokens, int& t
 	}
 	token_idx += 1;
 	procedure.setChildren(children);
+	cout << children.size() << endl;
 	procedure.setProc(p);
 	return procedure;
 }

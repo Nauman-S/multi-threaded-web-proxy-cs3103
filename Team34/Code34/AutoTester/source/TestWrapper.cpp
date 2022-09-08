@@ -50,7 +50,6 @@ void TestWrapper::parse(std::string filename) {
 	cout << "num of procedures: " << p_nodes.size() << endl;
 	vector<std::shared_ptr<StatementASTNode>> s_nodes = p_nodes.at(0).getChildren();
 	cout << "num of statements: " << s_nodes.size() << endl;
-
 	DesignExtractor extractor = DesignExtractor();
 	vector<int> consts = extractor.getConstants(filename);
 	vector<VariableIndex> vars = extractor.getVariables(filename);
