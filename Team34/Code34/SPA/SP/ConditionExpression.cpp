@@ -1,5 +1,7 @@
 #include "ConditionExpression.h"
 
+#include "design_extractor/NodeExtractor.h"
+
 using namespace std;
 
 void ConditionExpression::SetVariables(std::vector<VariableIndex>& v) {
