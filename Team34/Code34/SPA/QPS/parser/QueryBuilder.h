@@ -10,7 +10,6 @@
 #include "..\reference\VarRef.h"
 #include "..\pattern\Pattern.h"
 #include "..\Query.h"
-#include "..\reference\RefFactory.h"
 
 
 
@@ -36,7 +35,8 @@ private:
 	std::vector<shared_ptr<Ref>> ParseDeclarationStatements();
 	shared_ptr<Query> ParseSelectStatement();
 
-	shared_ptr<Ref> ParseDeclarationStatement(std::shared_ptr<RefFactory> ref_factory_);
+	shared_ptr<Ref> ParseDeclarationStatement();
+	shared_ptr<Ref> CreateReference(std::string design_entity_, std::string synonym_);//This method should ideally be inside Ref Class based on factory method
 
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
 	//shared_ptr<Ref> ParseNextRef();

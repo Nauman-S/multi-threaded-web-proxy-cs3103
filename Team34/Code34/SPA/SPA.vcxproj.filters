@@ -77,7 +77,6 @@
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
-    <ClCompile Include="QPS\reference\RefFactory.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
   </ItemGroup>
@@ -131,8 +130,6 @@
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
-    <ClInclude Include="PKB\store\RelationStore.h" />
-    <ClInclude Include="PKB\manager\EntityManager.h" />
 	<ClInclude Include="PKB\store\EntityStore.h" />
 	<ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
@@ -176,8 +173,6 @@
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
     <ClInclude Include="Utils\type\TypeDef.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
-    <ClInclude Include="QPS\reference\RefFactory.h" />
-    <ClInclude Include="QPS\reference\EntityRef.h" />
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
   </ItemGroup>

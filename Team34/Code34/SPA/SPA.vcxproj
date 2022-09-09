@@ -20,8 +20,6 @@
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />
     <ClInclude Include="QPS\query_result\TableRes.h" />
-    <ClInclude Include="QPS\reference\EntityRef.h" />
-    <ClInclude Include="QPS\reference\RefFactory.h" />
     <ClInclude Include="QPS\relation\FollowsRel.h" />
     <ClInclude Include="QPS\relation\FollowsTRel.h" />
     <ClInclude Include="QPS\relation\ModifiesPRel.h" />
@@ -74,11 +72,11 @@
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
-    <ClInclude Include="PKB\store\EntityStore.h" />
-    <ClInclude Include="PKB\store\RelationStore.h" />
-    <ClInclude Include="PKB\manager\ConstantManager.h" />
-    <ClInclude Include="PKB\manager\ProcedureManager.h" />
-    <ClInclude Include="PKB\manager\VariableManager.h" />
+	<ClInclude Include="PKB\store\EntityStore.h" />
+	<ClInclude Include="PKB\store\RelationStore.h" />
+	<ClInclude Include="PKB\manager\ConstantManager.h" />
+	<ClInclude Include="PKB\manager\ProcedureManager.h" />
+	<ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\manager\StatementManager.h" />
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
@@ -114,7 +112,6 @@
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
-    <ClCompile Include="QPS\reference\RefFactory.cpp" />
     <ClCompile Include="QPS\relation\FollowsRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
