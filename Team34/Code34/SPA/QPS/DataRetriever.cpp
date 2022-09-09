@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include <algorithm>
+#include <iterator>
 #include <cassert>
 
 #include "pattern/Pattern.h"
@@ -71,12 +73,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     RefType stmt_type = rel.LhsRefType();
     shared_ptr<unordered_set<int>> set;
     if (type == RelType::kUsesSRel) {
-        // TODO: Ask PKB side to add stmt type filter
-        // set = pkb_ptr_->GetUsesStmtNumByVar(var_name, stmt_type);
+        set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
+        set = FilterStmtSetByType(set, stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
-        // TODO: Ask PKB side to add stmt type filter
-        // set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, stmt_type);
+        set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
+        set = FilterStmtSetByType(set, stmt_type);
     }
 
     shared_ptr<unordered_set<string>> res = IntSetToStrSet(set);
@@ -91,10 +93,12 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
     RefType lhs_stmt_type = rel.LhsRefType();
     shared_ptr<vector<pair<StmtNum, Variable>>> table;
     if (type == RelType::kUsesSRel) {
-        // table = pkb_ptr_->GetAllSVUses(lhs_stmt_type);
+        table = pkb_ptr_->GetAllSVUses();
+        table = FilterStmtTableByType(table, lhs_stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
-        // table = pkb_ptr_->GetAllSVModifies(lhs_stmt_type);
+        table = pkb_ptr_->GetAllSVModifies();
+        table = FilterStmtTableByType(table, lhs_stmt_type);
     }
     auto res = IntStrToStrStrTable(table);
     return res;
@@ -288,6 +292,48 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntIntToStrStrTable
     for (auto iter = table->begin(); iter != table->end(); ++iter) {
         auto& [k1, k2] = *iter;
         res->push_back(std::make_pair(std::to_string(k1), std::to_string(k2)));
+    }
+
+    return res;
+}
+
+shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<unordered_set<int>> stmts, RefType stmt_type)
+{
+    shared_ptr<unordered_set<int>> res;
+
+    for (auto iter = stmts->begin(); iter != stmts->end(); ++iter) {
+        if (pkb_ptr_->GetStatementType(*iter) == stmt_type) {
+            res->insert(*iter);
+        }
+    }
+
+    return res;
+}
+
+shared_ptr<vector<pair<int, string>>> DataRetriever::FilterStmtTableByType(shared_ptr<vector<pair<int, string>>> table, RefType stmt_type)
+{
+    shared_ptr<vector<pair<int, string>>> res;
+    auto type_predicate = [this, stmt_type] (int stmt) -> bool {this->pkb_ptr_->GetStatementType(stmt) == stmt_type; };
+    
+    for (auto iter=table->begin(); iter != table->end(); ++iter) {
+        if (type_predicate(iter->first)) {
+            res->push_back(*iter);
+        }
+    }
+
+    return res;
+}
+
+shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByType(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
+{
+    shared_ptr<vector<pair<int, int>>> res;
+    auto lhs_type_predicate = [this, lhs_stmt_type](int stmt) -> bool {this->pkb_ptr_->GetStatementType(stmt) == lhs_stmt_type; };
+    auto rhs_type_predicate = [this, rhs_stmt_type](int stmt) -> bool {this->pkb_ptr_->GetStatementType(stmt) == rhs_stmt_type; };
+
+    for (auto iter = table->begin(); iter != table->end(); ++iter) {
+        if (lhs_type_predicate(iter->first) && rhs_type_predicate(iter->second)) {
+            res->push_back(*iter);
+        }
     }
 
     return res;
