@@ -16,11 +16,11 @@ class ProcVarRel :
     public Rel
 {
 protected:
-    ProcRef& lhs_ref_;
-    VarRef& rhs_ref_;
+    std::shared_ptr<ProcRef> lhs_ref_;
+    std::shared_ptr<VarRef> rhs_ref_;
 
 public:
-    ProcVarRel(ProcRef& lhs, VarRef& rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    ProcVarRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
 
     std::string LhsValue() override;
 

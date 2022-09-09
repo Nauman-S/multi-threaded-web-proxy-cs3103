@@ -1,15 +1,20 @@
 #pragma once
-# include "StatementASTNode.h"
+
 # include <vector>
+# include "StatementASTNode.h"
+
 
 class ConditionExpression : public StatementASTNode {
 public:
-	void setVariables(std::vector<VariableIndex>&);
+	void SetVariables(std::vector<VariableIndex>&);
 
-	std::vector<VariableIndex> getVariables();
+	std::vector<VariableIndex> GetVariables();
 
 	virtual void Extract(NodeExtractor&) override;
 
+	void SetPostfix(std::string);
+
 protected:
 	std::vector<VariableIndex> vars;
+	std::string postfix;
 };
