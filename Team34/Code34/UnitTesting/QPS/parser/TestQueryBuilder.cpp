@@ -26,7 +26,7 @@ namespace UnitTesting
 			//Check if entity references are correct
 			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
 			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
-			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() ==  ValType::kVarName);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() ==  ValType::kSynonym);
 			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), var);
 
 			//Check if such that clauses are correct
