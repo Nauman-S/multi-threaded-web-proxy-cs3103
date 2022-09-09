@@ -29,9 +29,9 @@
 #include "..\relation\ParentTRel.h"
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
-#include "..\reference\RefFactory.h"
 
 using std::shared_ptr;
+
 
 QueryBuilder::QueryBuilder() {
 	lexer_ = std::make_shared<QueryLexer>();
@@ -50,10 +50,9 @@ shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 	std::vector<shared_ptr<Ref>> synonyms;
 	shared_ptr<Ref> synonym_;
-	std::shared_ptr<RefFactory> ref_factory_ = std::make_shared<RefFactory>();
 
 	while (this->lexer_->HasDesignEntity()) {
-		synonym_ = ParseDeclarationStatement(ref_factory_);
+		synonym_ = ParseDeclarationStatement();
 		synonyms.push_back(synonym_);
 	}
 
@@ -62,7 +61,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 
 
-shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(std::shared_ptr<RefFactory> ref_factory_) {
+shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
 	if (this->lexer_->HasIdentity()) {
@@ -70,13 +69,8 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(std::shared_ptr<RefFacto
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			std::optional<shared_ptr<Ref>> ref_ = ref_factory_->CreateReference(design_entity_, synonym_);
-			if (ref_) {
-				return *ref_;
-			}
-			else {
-				throw new SyntaxError("Declaration Statement - Reference factory unable to produce reference");
-			}
+			shared_ptr<Ref> ref_ = CreateReference(design_entity_, synonym_);
+			return ref_;
 		}
 		else {
 			throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
@@ -84,6 +78,44 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement(std::shared_ptr<RefFacto
 	}
 	else {
 		throw SyntaxError("Declaration Statement - Missing Synonym");
+	}
+
+}
+
+// this should be inside Create Ref class based on factory pattern. for now its here
+shared_ptr<Ref> QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
+	if (design_entity_.compare("STMT") == 0) {
+		return shared_ptr<StmtRef>(new StmtRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("READ") == 0) {
+		return shared_ptr<ReadRef>(new ReadRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("PRINT") == 0) {
+		return shared_ptr<PrintRef>(new PrintRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("CALL") == 0) {
+		return shared_ptr<CallRef>(new CallRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("WHILE") == 0) {
+		return shared_ptr<WhileRef>(new WhileRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("IF") == 0) {
+		return shared_ptr<IfRef>(new IfRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("ASSIGN") == 0) {
+		return shared_ptr<AssignRef>(new AssignRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("VARIABLE") == 0) {
+		return shared_ptr<VarRef>(new VarRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("CONSTANT") == 0) {
+		return shared_ptr<ConstRef>(new ConstRef(ValType::kSynonym, synonym_));
+	}
+	else if (design_entity_.compare("PROCEDURE") == 0) {
+		return shared_ptr<ProcRef>(new ProcRef(ValType::kSynonym, synonym_));
+	}
+	else {
+		throw new SyntaxError("This error should never be called - Iconsistent Naming OF design_entities");
 	}
 
 }
@@ -190,11 +222,17 @@ std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
-	std::set <std::string> stmt_ref_ = { "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*"};
-
-
-	if (stmt_ref_.find(relation_name) != stmt_ref_.end()) {
-		throw SyntaxError("FOLLOWS, FOLLOWS*, PARENT, PARENT* have not yet been implemented");
+	if (relation_name == "FOLLOWS") {
+		return ParseFollowsRel();
+	} 
+	else if (relation_name == "FOLLOWS*") {
+		return ParseFollowsTRel();
+	}
+	else if (relation_name == "PARENT") {
+		return ParseParentRel();
+	}
+	else if (relation_name == "PARENT*") {
+		return ParseParentTRel();
 	}
 	else if (relation_name == "USES") {
 		return ParseUsesRel();
@@ -207,35 +245,53 @@ shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
 	}
 }
 
+
 shared_ptr<Rel> QueryBuilder::ParseUsesRel() {
-	//shared_ptr<Ref> lhs_ref = ParseNextRef();
-	shared_ptr<Ref> lhs_syn;
-	shared_ptr<Ref> rhs_syn;
-
-	if (lexer_->HasIdentity()) {
-		lhs_syn = GetNextStmtRef();
-	}
-	else {
-		lhs_syn = GetNextProcRef();
-	}
-
-	lexer_->MatchCommaDelimeter();
-
-
-	rhs_syn = GetNextVarRef();
+	auto [lhs_syn, rhs_syn] = GetModifiesOrUsesSyns();
 
 	if (lhs_syn->GetRefType() == RefType::kProcRef) {
-		return shared_ptr<Rel>(new UsesPRel(*std::dynamic_pointer_cast<ProcRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new UsesPRel(std::dynamic_pointer_cast<ProcRef>(lhs_syn), rhs_syn));
 	}
 	else {
-		return shared_ptr<Rel>(new UsesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
+		return shared_ptr<Rel>(new UsesSRel(std::dynamic_pointer_cast<StmtRef>(lhs_syn), rhs_syn));
 	}
 }
 
 shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
-	shared_ptr<Ref> lhs_syn;
-	shared_ptr<Ref> rhs_syn;
+	auto [lhs_syn, rhs_syn] = GetModifiesOrUsesSyns();
 
+	if (lhs_syn->GetRefType() == RefType::kProcRef) {
+		return shared_ptr<Rel>(new ModifiesPRel(std::dynamic_pointer_cast<ProcRef>(lhs_syn), rhs_syn));
+	}
+	else {
+		return shared_ptr<Rel>(new ModifiesSRel(std::dynamic_pointer_cast<StmtRef>(lhs_syn), rhs_syn));
+	}
+}
+
+shared_ptr<Rel> QueryBuilder::ParseFollowsRel() {
+	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	return shared_ptr<Rel>(new FollowsRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseFollowsTRel() {
+	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	return shared_ptr<Rel>(new FollowsTRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseParentRel() {
+	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	return shared_ptr<Rel>(new ParentRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseParentTRel() {
+	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	return shared_ptr<Rel>(new ParentTRel(lhs_syn, rhs_syn));
+}
+
+
+std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSyns() {
+	shared_ptr<Ref> lhs_syn;
+	shared_ptr<VarRef> rhs_syn;
 	if (lexer_->HasIdentity()) {
 		lhs_syn = GetNextStmtRef();
 	}
@@ -245,16 +301,15 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 
 	lexer_->MatchCommaDelimeter();
 
-
 	rhs_syn = GetNextVarRef();
+	return { lhs_syn, rhs_syn };
+}
 
-	if (lhs_syn->GetRefType() == RefType::kProcRef) {
-		return shared_ptr<Rel>(new ModifiesPRel(*std::dynamic_pointer_cast<ProcRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
-	}
-	else {
-		return shared_ptr<Rel>(new ModifiesSRel(*std::dynamic_pointer_cast<StmtRef>(lhs_syn), *std::dynamic_pointer_cast<VarRef>(rhs_syn)));
-	}
-
+std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> QueryBuilder::GetParentOrFollowsSyns() {
+	shared_ptr<StmtRef> lhs_syn = GetNextStmtRef();
+	lexer_->MatchCommaDelimeter();
+	shared_ptr<StmtRef>rhs_syn = GetNextStmtRef();
+	return { lhs_syn, rhs_syn };
 }
 
 //shared_ptr<Ref> QueryBuilder::ParseNextRef() {
@@ -297,8 +352,8 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 //
 //}
 
-shared_ptr<Ref> QueryBuilder::GetNextStmtRef() {
-	shared_ptr<Ref> stmt_ref;
+shared_ptr<StmtRef> QueryBuilder::GetNextStmtRef() {
+	shared_ptr<StmtRef> stmt_ref;
 	if (lexer_->HasInteger()) {
 		int line_number = lexer_->MatchInteger();
 		stmt_ref = std::make_shared<StmtRef>(ValType::kLineNum, std::to_string(line_number));
@@ -309,7 +364,7 @@ shared_ptr<Ref> QueryBuilder::GetNextStmtRef() {
 	}
 	else if (lexer_->HasIdentity()) {
 		string ref_name = lexer_->MatchIdentity();
-		stmt_ref = GetDeclaredSyn(ref_name, RefType::kStmtRef);
+		stmt_ref = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
 	}
 	else {
 		throw SyntaxError("Incorrect Reference Type: Not a stmt type");
@@ -317,8 +372,8 @@ shared_ptr<Ref> QueryBuilder::GetNextStmtRef() {
 	return stmt_ref;
 };
 
-shared_ptr<Ref> QueryBuilder::GetNextProcRef() {
-	shared_ptr<Ref> proc_ref;
+shared_ptr<ProcRef> QueryBuilder::GetNextProcRef() {
+	shared_ptr<ProcRef> proc_ref;
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
 		string proc_name = lexer_->MatchIdentity();
@@ -331,7 +386,7 @@ shared_ptr<Ref> QueryBuilder::GetNextProcRef() {
 	}
 	else if (lexer_->HasIdentity()) {
 		string proc_name = lexer_->MatchIdentity();
-		proc_ref = GetDeclaredSyn(proc_name, RefType::kProcRef);
+		proc_ref = std::dynamic_pointer_cast<ProcRef>(GetDeclaredSyn(proc_name, RefType::kProcRef));
 	}
 	else {
 		throw SyntaxError("Incorrect Reference Type: Not a Proc type");
@@ -339,8 +394,8 @@ shared_ptr<Ref> QueryBuilder::GetNextProcRef() {
 	return proc_ref;
 }
 
-shared_ptr<Ref> QueryBuilder::GetNextVarRef() {
-	shared_ptr<Ref> var_ref;
+shared_ptr<VarRef> QueryBuilder::GetNextVarRef() {
+	shared_ptr<VarRef> var_ref;
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
 		string var_name = lexer_->MatchIdentity();
@@ -353,17 +408,13 @@ shared_ptr<Ref> QueryBuilder::GetNextVarRef() {
 	}
 	else if (lexer_->HasIdentity()) {
 		string var_name = lexer_->MatchIdentity();
-		var_ref = GetDeclaredSyn(var_name, RefType::kVarRef);
+		var_ref = std::dynamic_pointer_cast<VarRef>(GetDeclaredSyn(var_name, RefType::kVarRef));
 	}
 	else {
 		throw SyntaxError("Incorrect Reference Type: Not a Var type");
 	}
 	return var_ref;
 }
-//shared_ptr<Ref> QueryBuilder::GetNextConstRef() {
-//	
-//}
-
 
 
 shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name) {
@@ -381,7 +432,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
 			if (synonym->GetRefType() == ref_type) {
 				return synonym;
 			}
-			else if (synonym->GetRefType() == RefType::kStmtRef && stmt_ref_types.count(synonym->GetRefType())) {
+			else if (ref_type == RefType::kStmtRef && stmt_ref_types.count(synonym->GetRefType())) {
 				return synonym;
 			}
 			else {
