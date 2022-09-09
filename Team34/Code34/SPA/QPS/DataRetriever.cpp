@@ -27,6 +27,7 @@ using std::pair;
 using std::shared_ptr;
 using std::make_shared;
 
+
 bool DataRetriever::CheckSVRel(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -88,7 +89,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
     RefType lhs_stmt_type = rel.LhsRefType();
-    std::shared_ptr<vector<pair<StmtNum, Variable>>> table;
+    shared_ptr<vector<pair<StmtNum, Variable>>> table;
     if (type == RelType::kUsesSRel) {
         // table = pkb_ptr_->GetAllSVUses(lhs_stmt_type);
     }
@@ -355,7 +356,25 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
 {
-    return std::shared_ptr<ResWrapper>();
+    ValType lhs_type = pat.LhsValType();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
+
+    shared_ptr<ResWrapper> res;
+    if (lhs_type == ValType::kSynonym) {
+        // shared_ptr<vector<pair<int, string>>> assign_var_table = pkb_ptr_->GetAllPattern(expr_spec_ptr);
+        // auto table = IntStrToStrStrTable(assign_var_table);
+        // unordered_map<string, int> syn_to_col = { {pat.AssignStmtSyn(), 0}, {pat.LhsValue(), 1} };
+        // res = make_shared<ResWrapper>(syn_to_col, table);
+    }
+    else {
+        // lhs type is kLineNum or kWildcard
+        string var_name = pat.LhsValue();
+        // shared_ptr<unordered_set<int>> assign_set = pkb_ptr_->GetPatternAssignByVar(var_name, expr_spec_ptr)
+        // auto set = IntSetToStrSet(assign_set);
+        // res = make_shared<ResWrapper>(var_name, set);
+    }
+
+    return res;
 }
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)

@@ -11,6 +11,7 @@
 //#include "../DataRetriever.h"
 class DataRetriever;
 
+
 class Pattern
 	: public Clause
 {
@@ -22,15 +23,17 @@ protected:
 public:
 	Pattern(AssignRef& a, VarRef& lhs, ExprSpec& rhs) : assign_{ a }, lhs_{ lhs }, rhs_{ rhs } {};
 
-	string AssignStmtSyn() { return assign_.GetName(); };
+	std::string AssignStmtSyn() { return assign_.GetName(); };
 
 	std::optional<int> AssignStmtValueAsInt() { return assign_.ValueAsInt(); };
 
-	string LhsValue() { return lhs_.GetName(); };
+	std::string LhsValue() { return lhs_.GetName(); };
 
 	ValType AssignStmtValType() { return assign_.GetValType(); };
 
 	ValType LhsValType() { return lhs_.GetValType(); };
+
+	std::shared_ptr<ExprSpec> RhsExprSpec();
 
 	std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 };

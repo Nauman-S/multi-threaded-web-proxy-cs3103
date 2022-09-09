@@ -7,14 +7,6 @@
 
 #include "reference/Ref.h"
 #include "reference/ValType.h"
-//#include "relation/StmtVarRel.h"
-//#include "relation/ProcVarRel.h"
-//#include "relation/StmtStmtRel.h"
-// Use forward declaration to avoid cyclic include of Visitor pattern
-class StmtVarRel;
-class ProcVarRel;
-class StmtStmtRel;
-class Pattern;
 #include "relation/UsesSRel.h"
 #include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
@@ -24,6 +16,16 @@ class Pattern;
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
+// #include "relation/StmtVarRel.h"
+// #include "relation/ProcVarRel.h"
+// #include "relation/StmtStmtRel.h"
+// #include "pattern/Pattern.h"
+// Use forward declaration to avoid cyclic include of Visitor pattern
+class StmtVarRel;
+class ProcVarRel;
+class StmtStmtRel;
+class Pattern;
+
 
 class DataRetriever
 {
