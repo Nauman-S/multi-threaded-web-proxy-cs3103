@@ -43,17 +43,23 @@ private:
 
 	bool HasSuchThatClause();
 
-	shared_ptr<Ref> GetNextStmtRef();
-	shared_ptr<Ref> GetNextProcRef();
-	shared_ptr<Ref> GetNextVarRef();
-	//shared_ptr<Ref> GetNextConstRef();
-
+	shared_ptr<StmtRef> GetNextStmtRef();
+	shared_ptr<ProcRef> GetNextProcRef();
+	shared_ptr<VarRef> GetNextVarRef();
+	
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);
 	shared_ptr<Rel> ParseUsesRel();
 	shared_ptr<Rel> ParseModifiesRel();
+	shared_ptr<Rel> ParseFollowsRel();
+	shared_ptr<Rel> ParseFollowsTRel();
+	shared_ptr<Rel> ParseParentRel();
+	shared_ptr<Rel> ParseParentTRel();
 	
+
+	std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> GetModifiesOrUsesSyns();
+	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetParentOrFollowsSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
 
