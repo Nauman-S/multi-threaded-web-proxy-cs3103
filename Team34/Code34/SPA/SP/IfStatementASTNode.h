@@ -8,17 +8,17 @@
 
 class IfStatementASTNode : public StatementASTNode {
 public:
-	void SetIfChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+	void setIfChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetIfChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getIfChildren();
 
-	void SetElseChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+	void setElseChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetElseChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getElseChildren();
 
-	void SetConditionExpression(std::shared_ptr<ConditionExpression>);
+	void setConditionExpression(std::shared_ptr<ConditionExpression>);
 
-	std::shared_ptr<ConditionExpression> GetCondition();
+	std::shared_ptr<ConditionExpression> getCondition();
 
 	virtual void Extract(NodeExtractor&) override;
 

@@ -3,23 +3,6 @@ procedure proc1 {
     read y;
     x = 2;
     y = 3 + x;
-    if (x > 3) then {
-        while (y < x) {
-            y = y + 1;
-        }
-    } else {
-        print x;
-        print y;
-        call proc2;
-    }
+    print x;
+    print y;
 }
-
-procedure proc2 {
-    read a;
-    if (a > 1) then {
-        print a;
-    } else {
-        a = a + 1;
-    }
-}
-

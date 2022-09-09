@@ -2,9 +2,9 @@
 
 class LineIndex {
 public:
-	void SetLineNum(int);
+	void setLineNum(int);
 
-	int GetLineNum();
+	int getLineNum();
 
 	bool operator < (const LineIndex& c) const
 	{

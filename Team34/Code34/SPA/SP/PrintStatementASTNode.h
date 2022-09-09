@@ -5,9 +5,9 @@
 
 class PrintStatementASTNode : public StatementASTNode {
 public:
-	void SetVariable(VariableIndex&);
+	void setVariable(VariableIndex&);
 
-	VariableIndex GetVariable();
+	VariableIndex getVariable();
 
 	virtual void Extract(NodeExtractor&) override;
 

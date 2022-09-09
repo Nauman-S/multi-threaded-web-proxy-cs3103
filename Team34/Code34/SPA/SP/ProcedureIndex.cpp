@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void ProcedureIndex::SetName(std::string n) {
+void ProcedureIndex::setName(std::string n) {
 	procName = n;
 }
 
-std::string ProcedureIndex::GetName() {
+std::string ProcedureIndex::getName() {
 	return procName;
 }

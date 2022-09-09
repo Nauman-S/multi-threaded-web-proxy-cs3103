@@ -5,9 +5,9 @@
 
 class ReadStatementASTNode : public StatementASTNode {
 public:
-	void SetVariable(VariableIndex&);
+	void setVariable(VariableIndex&);
 
-	virtual VariableIndex GetReadVariable();
+	virtual VariableIndex getReadVariable();
 
 	virtual void Extract(NodeExtractor&) override;
 

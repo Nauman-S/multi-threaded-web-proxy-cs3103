@@ -8,17 +8,18 @@
 
 class WhileStatementASTNode : public StatementASTNode {
 public:
-	void SetChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+	void setChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetChildren();
+	std::vector<std::shared_ptr<StatementASTNode>> getChildren();
 
-	void SetConditionExpression(std::shared_ptr<ConditionExpression>);
+	void setConditionExpression(std::shared_ptr<ConditionExpression>);
 
-	std::shared_ptr<ConditionExpression> GetCondition();
+	std::shared_ptr<ConditionExpression> getCondition();
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
 	std::shared_ptr<ConditionExpression> condition;
 	std::vector<std::shared_ptr<StatementASTNode>> children;
+
 };
