@@ -25,25 +25,25 @@
 
 class SourceParser {
 public:
-	std::shared_ptr<ProgramNode> Parse(std::string&);
+	ProgramNode parse(std::string& source_filename);
 
-	std::shared_ptr<ProcedureASTNode> ParseProcedure(std::vector<SourceToken>, int&, int&);
+	ProcedureASTNode parseProcedure(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<StatementASTNode> ParseStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<StatementASTNode> parseStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<CallStatementASTNode> ParseCallStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<CallStatementASTNode> parseCallStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<ReadStatementASTNode> ParseReadStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<ReadStatementASTNode> parseReadStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<PrintStatementASTNode> ParsePrintStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<PrintStatementASTNode> parsePrintStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<IfStatementASTNode> ParseIfStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<IfStatementASTNode> parseIfStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<WhileStatementASTNode> ParseWhileStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<WhileStatementASTNode> parseWhileStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<AssignStatementASTNode> ParseAssignStatement(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<AssignStatementASTNode> parseAssignStatement(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
-	std::shared_ptr<ConditionExpression> ParseConditionExpression(std::vector<SourceToken>, int&, int&, ProcedureIndex&);
+	std::shared_ptr<ConditionExpression> parseConditionExpression(std::vector<SourceToken>, int& token_idx, int& line_idx);
 
 	std::map<std::shared_ptr<StatementASTNode>, LineIndex> si_mapping;
 	std::map<LineIndex, std::shared_ptr<StatementASTNode>> is_mapping;

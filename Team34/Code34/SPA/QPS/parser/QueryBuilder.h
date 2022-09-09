@@ -10,6 +10,7 @@
 #include "..\reference\VarRef.h"
 #include "..\pattern\Pattern.h"
 #include "..\Query.h"
+#include "..\reference\RefFactory.h"
 
 
 
@@ -35,31 +36,24 @@ private:
 	std::vector<shared_ptr<Ref>> ParseDeclarationStatements();
 	shared_ptr<Query> ParseSelectStatement();
 
-	shared_ptr<Ref> ParseDeclarationStatement();
-	shared_ptr<Ref> CreateReference(std::string design_entity_, std::string synonym_);//This method should ideally be inside Ref Class based on factory method
+	shared_ptr<Ref> ParseDeclarationStatement(std::shared_ptr<RefFactory> ref_factory_);
 
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
 	//shared_ptr<Ref> ParseNextRef();
 
 	bool HasSuchThatClause();
 
-	shared_ptr<StmtRef> GetNextStmtRef();
-	shared_ptr<ProcRef> GetNextProcRef();
-	shared_ptr<VarRef> GetNextVarRef();
-	
+	shared_ptr<Ref> GetNextStmtRef();
+	shared_ptr<Ref> GetNextProcRef();
+	shared_ptr<Ref> GetNextVarRef();
+	//shared_ptr<Ref> GetNextConstRef();
+
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);
 	shared_ptr<Rel> ParseUsesRel();
 	shared_ptr<Rel> ParseModifiesRel();
-	shared_ptr<Rel> ParseFollowsRel();
-	shared_ptr<Rel> ParseFollowsTRel();
-	shared_ptr<Rel> ParseParentRel();
-	shared_ptr<Rel> ParseParentTRel();
 	
-
-	std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> GetModifiesOrUsesSyns();
-	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetParentOrFollowsSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
 

@@ -4,9 +4,9 @@
 #include <unordered_set>
 #include <unordered_map>
 
-#include "../store/EntityStore.h"
+#include "EntityManager.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ConstantManager : public EntityStore<Constant>
+class ConstantManager : public EntityManager<Constant>
 {
 };

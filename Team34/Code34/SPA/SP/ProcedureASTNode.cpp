@@ -2,19 +2,19 @@
 
 using namespace std;
 
-ProcedureIndex ProcedureASTNode::GetProc() {
+ProcedureIndex ProcedureASTNode::getProc() {
 	return proc;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::GetChildren() {
+std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::getChildren() {
 	return children;
 }
 
-void ProcedureASTNode::SetProc(ProcedureIndex& p) {
+void ProcedureASTNode::setProc(ProcedureIndex& p) {
 	proc = p;
 }
 
-void ProcedureASTNode::SetChildren(std::vector<std::shared_ptr<StatementASTNode>>& chd) {
+void ProcedureASTNode::setChildren(std::vector<std::shared_ptr<StatementASTNode>>& chd) {
 	children = chd;
 }
 

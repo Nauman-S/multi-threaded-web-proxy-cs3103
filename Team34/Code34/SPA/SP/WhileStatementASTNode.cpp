@@ -2,22 +2,23 @@
 
 using namespace std;
 
-void WhileStatementASTNode::SetChildren(std::vector<shared_ptr<StatementASTNode>>& c) {
+void WhileStatementASTNode::setChildren(std::vector<shared_ptr<StatementASTNode>>& c) {
 	children = c;
 }
 
-std::vector<shared_ptr<StatementASTNode>> WhileStatementASTNode::GetChildren() {
+std::vector<shared_ptr<StatementASTNode>> WhileStatementASTNode::getChildren() {
 	return children;
 }
 
-void WhileStatementASTNode::SetConditionExpression(std::shared_ptr<ConditionExpression> cond) {
+void WhileStatementASTNode::setConditionExpression(std::shared_ptr<ConditionExpression> cond) {
 	condition = cond;
 }
 
-shared_ptr<ConditionExpression> WhileStatementASTNode::GetCondition() {
+shared_ptr<ConditionExpression> WhileStatementASTNode::getCondition() {
 	return condition;
 }
 
 void WhileStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractWhileNode(*this);
 }
+

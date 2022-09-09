@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PKB\manager\ConstantManager.h" />
+    <ClInclude Include="PKB\manager\EntityManager.h" />
+    <ClInclude Include="PKB\manager\ProcedureManager.h" />
+    <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
@@ -20,6 +24,8 @@
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />
     <ClInclude Include="QPS\query_result\TableRes.h" />
+    <ClInclude Include="QPS\reference\EntityRef.h" />
+    <ClInclude Include="QPS\reference\RefFactory.h" />
     <ClInclude Include="QPS\relation\FollowsRel.h" />
     <ClInclude Include="QPS\relation\FollowsTRel.h" />
     <ClInclude Include="QPS\relation\ModifiesPRel.h" />
@@ -38,8 +44,8 @@
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
-    <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
-    <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
+    <ClInclude Include="SP\DesignExtractor.h" />
+    <ClInclude Include="SP\design_extractor\ConstantExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
@@ -72,11 +78,7 @@
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
-	<ClInclude Include="PKB\store\EntityStore.h" />
-	<ClInclude Include="PKB\store\RelationStore.h" />
-	<ClInclude Include="PKB\manager\ConstantManager.h" />
-	<ClInclude Include="PKB\manager\ProcedureManager.h" />
-	<ClInclude Include="PKB\manager\VariableManager.h" />
+    <ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\StatementManager.h" />
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
@@ -103,6 +105,7 @@
     <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
@@ -112,6 +115,7 @@
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
+    <ClCompile Include="QPS\reference\RefFactory.cpp" />
     <ClCompile Include="QPS\relation\FollowsRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
@@ -129,8 +133,8 @@
     <ClCompile Include="SP\ASTNode.cpp" />
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ConditionExpression.cpp" />
-    <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
-    <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
+    <ClCompile Include="SP\DesignExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />
     <ClCompile Include="SP\LineIndex.cpp" />
@@ -158,7 +162,6 @@
     <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
-	<ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />

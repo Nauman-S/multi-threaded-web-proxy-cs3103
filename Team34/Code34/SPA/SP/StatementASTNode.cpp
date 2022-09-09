@@ -4,40 +4,23 @@ using namespace std;
 
 
 
-LineIndex StatementASTNode::GetLineIndex() {
+LineIndex StatementASTNode::getLineIndex() {
 	return lineIndex;
 }
 
-void StatementASTNode::SetLineIndex(LineIndex& idx) {
+void StatementASTNode::setLineIndex(LineIndex& idx) {
 	lineIndex = idx;
-}	
+}
 
-StatementType StatementASTNode::GetStatementType() {
+StatementType StatementASTNode::getStatementType() {
 	return statement_type;
 }
 
-std::string StatementASTNode::GetTypeVal() {
+std::string StatementASTNode::getTypeVal() {
 	return type_val;
 }
 
-void StatementASTNode::SetStatementType(StatementType tp, string val) {
+void StatementASTNode::setStatementType(StatementType tp, string val) {
 	statement_type = tp;
 	type_val = val;
-}
-
-
-void StatementASTNode::SetParentSatementLineIndex(LineIndex& l) {
-	parent_stmt = l;
-}
-
-LineIndex StatementASTNode::GetParentSatementLineIndex() {
-	return parent_stmt;
-}
-
-void StatementASTNode::SetParentProcIndex(ProcedureIndex& p) {
-	parent_proc = p;
-}
-
-ProcedureIndex StatementASTNode::GetParentProcIndex() {
-	return parent_proc;
 }
