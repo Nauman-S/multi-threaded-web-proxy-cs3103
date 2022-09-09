@@ -32,6 +32,18 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 
+	// APIs related to Parent relation
+	bool CheckParent(StmtNum child, StmtNum parent);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetChild(StmtNum parent);
+	StmtNum GetParent(StmtNum child);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
+
+	// APIs related to Parent* relation
+	bool CheckParentS(StmtNum child, StmtNum parent);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(StmtNum stmt);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentSRelations();
+
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var);
 	bool CheckUses(Procedure proc_name, Variable var);
