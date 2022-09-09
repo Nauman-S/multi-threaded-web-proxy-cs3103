@@ -4,7 +4,7 @@
 void ParentManager::SetParent(StmtNum parent, StmtNum child)
 {
 	// defensive checks
-	assert(parent >= child);
+	assert(parent < child);
 	if (child_to_parent_map_.find(child) != child_to_parent_map_.end())
 	{
 		// throw some error as relationship already exists
