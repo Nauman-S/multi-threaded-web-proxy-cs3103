@@ -5,9 +5,9 @@
 
 class CallStatementASTNode : public StatementASTNode {
 public:
-	void setProcedure(ProcedureIndex& p);
+	void SetProcedure(ProcedureIndex& p);
 
-	ProcedureIndex getProcedure();
+	ProcedureIndex GetProcedure();
 
 	virtual void Extract(NodeExtractor&) override;
 

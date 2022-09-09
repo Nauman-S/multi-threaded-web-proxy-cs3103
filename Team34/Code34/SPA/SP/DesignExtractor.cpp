@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector<int> DesignExtractor::getConstants(std::string &sourcefile) {
+vector<int> DesignExtractor::GetConstants(std::string &sourcefile) {
 	vector<int> consts;
 	SourceLexer lexer = SourceLexer(sourcefile);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
@@ -18,18 +18,18 @@ vector<int> DesignExtractor::getConstants(std::string &sourcefile) {
 	return consts;
 }
 
-vector<VariableIndex> DesignExtractor::getVariables(std::string& sourcefile) {
+vector<VariableIndex> DesignExtractor::GetVariables(std::string& sourcefile) {
 	vector<VariableIndex> vars;
 	SourceLexer lexer = SourceLexer(sourcefile);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	int idx = 0;
-	while (idx < tokens.size()) {
+	while (idx < (int) tokens.size()) {
 		if (tokens.at(idx).GetType() == SourceTokenType::kProcedure) {
 			idx += 2;
 		}
 		else if (tokens.at(idx).GetType() == SourceTokenType::kName) {
 			VariableIndex v = VariableIndex();
-			v.setName(tokens.at(idx).GetStringVal());
+			v.SetName(tokens.at(idx).GetStringVal());
 			vars.push_back(v);
 			idx += 1;
 		}
@@ -40,11 +40,11 @@ vector<VariableIndex> DesignExtractor::getVariables(std::string& sourcefile) {
 	return vars;
 }
 
-vector<ProcedureIndex> DesignExtractor::getProcedures(ProgramNode node) {
+vector<ProcedureIndex> DesignExtractor::GetProcedures(std::shared_ptr<ProgramNode> node) {
 	vector<ProcedureIndex> procs;
-	vector<ProcedureASTNode> children = node.getChildren();
-	for (ProcedureASTNode proc : children) {
-		procs.push_back(proc.getProc());
+	vector<shared_ptr<ProcedureASTNode>> children = node->GetChildren();
+	for (shared_ptr<ProcedureASTNode> proc : children) {
+		procs.push_back(proc->GetProc());
 	}
 	return procs;
 }

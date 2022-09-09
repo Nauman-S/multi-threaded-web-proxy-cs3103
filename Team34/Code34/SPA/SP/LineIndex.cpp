@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void LineIndex::setLineNum(int n) {
+void LineIndex::SetLineNum(int n) {
 	lineNum = n;
 }
 
-int LineIndex::getLineNum() {
+int LineIndex::GetLineNum() {
 	return lineNum;
 }

@@ -1,18 +1,19 @@
 #pragma once
 
+# include <vector>
 # include "StatementASTNode.h"
 # include "VariableIndex.h"
-# include <vector>
+
 
 class AssignStatementASTNode : public StatementASTNode {
 public:
-	void setLeft(VariableIndex&);
+	void SetLeft(VariableIndex&);
 
-	void setRight(std::vector<VariableIndex>&);
+	void SetRight(std::vector<VariableIndex>&);
 
-	VariableIndex getLeft();
+	VariableIndex GetLeft();
 
-	std::vector<VariableIndex> getRight();
+	std::vector<VariableIndex> GetRight();
 
 	virtual void Extract(NodeExtractor&) override;
 

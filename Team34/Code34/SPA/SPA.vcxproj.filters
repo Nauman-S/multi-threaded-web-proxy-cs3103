@@ -21,7 +21,6 @@
     <ClCompile Include="SP\ASTNode.cpp" />
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ConditionExpression.cpp" />
-    <ClCompile Include="SP\design_extractor\ConstantExtractor.cpp" />
     <ClCompile Include="SP\LineIndex.cpp" />
     <ClCompile Include="SP\ProcedureASTNode.cpp" />
     <ClCompile Include="SP\ProcedureIndex.cpp" />
@@ -72,7 +71,6 @@
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
     <ClCompile Include="QPS\parser\SemanticError.cpp" />
-    <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
@@ -80,6 +78,8 @@
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="QPS\reference\RefFactory.cpp" />
+    <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -103,7 +103,6 @@
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
-    <ClInclude Include="SP\design_extractor\ConstantExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\LineIndex.h" />
@@ -134,6 +133,8 @@
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
+	<ClInclude Include="PKB\store\EntityStore.h" />
+	<ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
@@ -168,7 +169,6 @@
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
     <ClInclude Include="QPS\parser\SemanticError.h" />
-    <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
@@ -178,5 +178,7 @@
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="QPS\reference\RefFactory.h" />
     <ClInclude Include="QPS\reference\EntityRef.h" />
+    <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
+    <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
   </ItemGroup>
 </Project>

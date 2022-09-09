@@ -6,6 +6,7 @@
 #include "ASTNode.h"
 #include "LineIndex.h"
 #include "VariableIndex.h"
+#include "ProcedureIndex.h"
 
 enum class StatementType {
 	sassign,
@@ -19,20 +20,28 @@ enum class StatementType {
 
 class StatementASTNode : public ASTNode {
 public:
-	LineIndex getLineIndex();
+	LineIndex GetLineIndex();
 
-	void setLineIndex(LineIndex&);
+	void SetLineIndex(LineIndex&);
 
-	StatementType getStatementType();
+	StatementType GetStatementType();
 
-	std::string getTypeVal();
+	std::string GetTypeVal();
 
-	void setStatementType(StatementType, std::string);
+	void SetStatementType(StatementType, std::string);
 
 	bool operator < (const StatementASTNode& c) const
 	{
 		return lineIndex < c.lineIndex;
 	}
+
+	void SetParentSatementLineIndex(LineIndex&);
+
+	LineIndex GetParentSatementLineIndex();
+
+	void SetParentProcIndex(ProcedureIndex&);
+
+	ProcedureIndex GetParentProcIndex();
 
 	virtual void Extract(NodeExtractor&) = 0;
 	// virtual vector<VariableIndex> getModifies() = 0;
@@ -41,4 +50,6 @@ protected:
 	LineIndex lineIndex;
 	StatementType statement_type;
 	std::string type_val;
+	LineIndex parent_stmt;
+	ProcedureIndex parent_proc;
 };

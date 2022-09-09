@@ -9,17 +9,18 @@
 #include "../reference/ValType.h"
 #include "../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
+
 class DataRetriever;  // forward declaration to avoid cyclic include of Visitor pattern
 
 class StmtVarRel :
     public Rel
 {
 protected:
-    StmtRef& lhs_ref_;
-    VarRef& rhs_ref_;
+    std::shared_ptr<StmtRef> lhs_ref_;
+    std::shared_ptr <VarRef> rhs_ref_;
 
 public:
-    StmtVarRel(StmtRef& lhs, VarRef& rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    StmtVarRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr <VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
 
     std::string LhsValue() override;
 
