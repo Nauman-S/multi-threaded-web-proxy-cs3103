@@ -4,26 +4,15 @@
 class EntityRef
 {
 public:
-	static const std::string kStmt;
-	static const std::string kRead;
-	static const std::string kPrint;
-	static const std::string kCall;
-	static const std::string kWhile;
-	static const std::string kIf;
-	static const std::string kAssign;
-	static const std::string kVariable;
-	static const std::string kConstant;
-	static const std::string kProcedure;
+	inline static const std::string kStmt = "STMT";
+	inline static const std::string kRead = "READ" ;
+	inline static const std::string kPrint = "PRINT";
+	inline static const std::string kCall = "CALL";
+	inline static const std::string kWhile = "WHILE";
+	inline static const std::string kIf = "IF";
+	inline static const std::string kAssign = "ASSIGN";
+	inline static const std::string kVariable = "VARIABLE";
+	inline static const std::string kConstant = "CONSTANT";
+	inline static const std::string kProcedure = "PROCEDURE";
 private:
 };
-
-const std::string kStmt = "STMT";
-const std::string kRead = "READ";
-const std::string kPrint = "PRINT";
-const std::string kCall = "CALL";
-const std::string kWhile = "WHILE";
-const std::string kIf = "IF";
-const std::string kAssign = "ASSIGN";
-const std::string kVariable = "VARIABLE";
-const std::string kConstant = "CONSTANT";
-const std::string kProcedure = "PROCEDURE";
