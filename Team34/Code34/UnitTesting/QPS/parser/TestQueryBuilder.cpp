@@ -15,11 +15,24 @@ namespace UnitTesting
 		shared_ptr<QueryBuilder> query_builder_ = shared_ptr<QueryBuilder>(new QueryBuilder());
 	public:
 
-		TEST_METHOD(TestSelectAllVariableQuery)
+		TEST_METHOD(TestValidSelectAllVariableQuery)
 		{
-			const std::string valid_select_all_query_ = "variable v; Select v";
+			const std::string valid_select_all_query_ = "variable V; Select V";
+			const std::string var = "V";
+
 			shared_ptr<Query> query = query_builder_->GetQuery(valid_select_all_query_);
+
+			//Check if entity references are correct
 			Assert::AreEqual((int)query->GetSelectTuple()->size(), 1);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetRefType(), RefType::kVarRef);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetValType(),  ValType::kVarName);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), var);
+
+			//Check if such that clauses are correct
+			Assert::AreEqual((int)query->GetRelations()->size(), 0);
+
+			//Check if all pattern clauses are correct
+			Assert::AreEqual((int)query->GetPatterns()->size(), 0);
 		}
 
 	};
