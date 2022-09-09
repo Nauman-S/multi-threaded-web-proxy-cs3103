@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
+#include "../SPA/QPS/query_result/ResType.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -23,16 +24,16 @@ namespace UnitTesting
 			shared_ptr<Query> query = query_builder_->GetQuery(valid_select_all_query_);
 
 			//Check if entity references are correct
-			Assert::AreEqual((int)query->GetSelectTuple()->size(), 1);
-			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetRefType(), RefType::kVarRef);
-			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetValType(),  ValType::kVarName);
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() ==  ValType::kVarName);
 			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), var);
 
 			//Check if such that clauses are correct
-			Assert::AreEqual((int)query->GetRelations()->size(), 0);
+			Assert::IsTrue(query->GetRelations()->size() == 0);
 
 			//Check if all pattern clauses are correct
-			Assert::AreEqual((int)query->GetPatterns()->size(), 0);
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		}
 
 	};
