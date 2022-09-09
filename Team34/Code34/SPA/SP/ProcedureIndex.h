@@ -3,9 +3,9 @@
 
 class ProcedureIndex {
 public:
-	void SetName(std::string);
+	void setName(std::string);
 
-	std::string GetName();
+	std::string getName();
 
 protected:
 	std::string procName;

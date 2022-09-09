@@ -3,6 +3,7 @@
 #include "manager/VariableManager.h"
 #include "manager/ConstantManager.h"
 #include "manager/ProcedureManager.h"
+#include "manager/EntityManager.h"
 #include "manager/StatementManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"

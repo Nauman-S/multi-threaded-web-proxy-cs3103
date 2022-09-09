@@ -2,11 +2,11 @@
 
 using namespace std;
 
-void PrintStatementASTNode::SetVariable(VariableIndex& v) {
+void PrintStatementASTNode::setVariable(VariableIndex& v) {
 	var = v;
 }
 
-VariableIndex PrintStatementASTNode::GetVariable() {
+VariableIndex PrintStatementASTNode::getVariable() {
 	return var;
 }
 

@@ -1,9 +1,11 @@
 #include "QueryLexer.h"
+#include "../reference/EntityRef.h"
 #include <algorithm>
 
 void QueryLexer::InitializeKeywords() {
 	this->relation_keywords_.insert({ "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*", "USES", "MODIFIES" });
-	this->design_entities_.insert({ "STMT", "READ", "PRINT", "CALL", "WHILE", "IF", "ASSIGN", "VARIABLE", "CONSTANT", "PROCEDURE" });
+	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
+		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
 	this->keywords_.insert({ "SELECT", "SUCH", "THAT" });
 	this->delimiters_.insert({ ';',',','(',')','\"' });
 }

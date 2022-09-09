@@ -10,6 +10,4 @@ class VarRef :
 
 public:
     const RefType GetRefType() override { return RefType::kVarRef;  }
-
-    inline std::string TestString() { return "This is a VarRef"; }
 };

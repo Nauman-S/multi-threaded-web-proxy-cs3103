@@ -1,7 +1,6 @@
 #pragma once
 # include <vector>
 # include <map>
-#include <memory>
 # include <string>
 # include "StatementASTNode.h"
 # include "LineIndex.h"
@@ -10,8 +9,8 @@
 class DesignExtractor
 {
 public:
-	std::vector<VariableIndex> GetVariables(std::string& sourcefile);
-	std::vector<int> GetConstants(std::string& sourcefile);
-	std::vector<ProcedureIndex> GetProcedures(shared_ptr<ProgramNode>);
+	std::vector<VariableIndex> getVariables(std::string& sourcefile);
+	std::vector<int> getConstants(std::string& sourcefile);
+	std::vector<ProcedureIndex> getProcedures(ProgramNode);
 };
 

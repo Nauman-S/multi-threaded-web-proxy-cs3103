@@ -14,11 +14,11 @@ class StmtStmtRel :
     public Rel
 {
 protected:
-    std::shared_ptr<StmtRef> lhs_ref_;
-    std::shared_ptr<StmtRef> rhs_ref_;
+    StmtRef& lhs_ref_;
+    StmtRef& rhs_ref_;
 
 public:
-    StmtStmtRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr<StmtRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    StmtStmtRel(StmtRef& lhs, StmtRef& rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
 
     std::string LhsValue() override;
 

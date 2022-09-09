@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void VariableIndex::SetName(std::string n) {
+void VariableIndex::setName(std::string n) {
 	varName = n;
 }
 
-std::string VariableIndex::GetName() {
+std::string VariableIndex::getName() {
 	return varName;
 }

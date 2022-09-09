@@ -2,30 +2,31 @@
 
 using namespace std;
 
-void IfStatementASTNode::SetIfChildren(std::vector<std::shared_ptr<StatementASTNode>>& if_c) {
+void IfStatementASTNode::setIfChildren(std::vector<std::shared_ptr<StatementASTNode>>& if_c) {
 	ifChildren = if_c;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>>IfStatementASTNode::GetIfChildren() {
+std::vector<std::shared_ptr<StatementASTNode>>IfStatementASTNode::getIfChildren() {
 	return ifChildren;
 }
 
-void IfStatementASTNode::SetElseChildren(std::vector<std::shared_ptr<StatementASTNode>>& else_c) {
+void IfStatementASTNode::setElseChildren(std::vector<std::shared_ptr<StatementASTNode>>& else_c) {
 	elseChildren = else_c;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>> IfStatementASTNode::GetElseChildren() {
+std::vector<std::shared_ptr<StatementASTNode>> IfStatementASTNode::getElseChildren() {
 	return elseChildren;
 }
 
-void IfStatementASTNode::SetConditionExpression(shared_ptr<ConditionExpression> cond) {
+void IfStatementASTNode::setConditionExpression(shared_ptr<ConditionExpression> cond) {
 	condition = cond;
 }
 
-shared_ptr<ConditionExpression> IfStatementASTNode::GetCondition() {
+shared_ptr<ConditionExpression> IfStatementASTNode::getCondition() {
 	return condition;
 }
 
 void IfStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractIfNode(*this);
 }
+

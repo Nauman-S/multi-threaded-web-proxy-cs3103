@@ -2,19 +2,19 @@
 
 using namespace std;
 
-void AssignStatementASTNode::SetLeft(VariableIndex& l) {
+void AssignStatementASTNode::setLeft(VariableIndex& l) {
 	left = l;
 }
 
-void AssignStatementASTNode::SetRight(std::vector<VariableIndex>& r) {
+void AssignStatementASTNode::setRight(std::vector<VariableIndex>& r) {
 	right = r;
 }
 
-VariableIndex AssignStatementASTNode::GetLeft() {
+VariableIndex AssignStatementASTNode::getLeft() {
 	return left;
 }
 
-std::vector<VariableIndex> AssignStatementASTNode::GetRight() {
+std::vector<VariableIndex> AssignStatementASTNode::getRight() {
 	return right;
 }
 
