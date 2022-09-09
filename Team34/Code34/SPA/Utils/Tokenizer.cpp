@@ -42,20 +42,32 @@ std::optional<int> Tokenizer::getTokenIval() {
 }
 
 
-void Tokenizer::nextToken() {
-	skipIgnoredChars();
-	if (this->current_index >= this->last_index) {
+Token Tokenizer::PeekNextToken(int number_tokens_) {
+	Token current_token_store_ = this->current_token;
+	int current_index_copy_ = this->current_index;
+	for (int i = 0; i < number_tokens_; i++) {
+		MoveToNextToken(&current_index_copy_);
+	}
+	Token peeked_token_ = this->current_token;
+	this->current_token = current_token_store_;
+	return peeked_token_;
+}
+
+void Tokenizer::MoveToNextToken(int* current_index_) {
+
+	skipIgnoredChars(current_index_);
+	if (*current_index_ >= this->last_index) {
 		consumeEndOfParsingToken();
 		return;
 	}
-	this->current_index++;
+	(*current_index_)++;
 
-	char current_char = this->query_pointer[current_index];
+	char current_char = this->query_pointer[*current_index_];
 	if (isdigit(current_char)) {
-		consumeIntegerToken();
+		consumeIntegerToken(current_index_);
 	}
 	else if (isalpha(current_char)) {
-		consumeAlphanumericToken();
+		consumeAlphanumericToken(current_index_);
 
 	}
 	else if (Token::IsValidToken(current_char)) {
@@ -66,27 +78,31 @@ void Tokenizer::nextToken() {
 	}
 }
 
-void Tokenizer::consumeAlphanumericToken() {
+void Tokenizer::nextToken() {
+	MoveToNextToken(&this->current_index);
+}
+
+void Tokenizer::consumeAlphanumericToken(int* current_index_) {
 	std::string tokenized_string = "";
-	while (this->current_index < this->last_index && isalnum(this->query_pointer[current_index + 1])) {
-		tokenized_string.push_back(this->query_pointer[current_index]);
-		this->current_index++;
+	while (*current_index_ < this->last_index && isalnum(this->query_pointer[*current_index_ + 1])) {
+		tokenized_string.push_back(this->query_pointer[*current_index_]);
+		(*current_index_)++;
 	}
-	tokenized_string.push_back(this->query_pointer[current_index]);
+	tokenized_string.push_back(this->query_pointer[*current_index_]);
 	this->current_token = Token(tokenized_string, TokenType::kName);
 	this->sval = tokenized_string;
 	this->ival = {};
 }
 
-void Tokenizer::consumeIntegerToken() {
+void Tokenizer::consumeIntegerToken(int* current_index_) {
 	std::string int_string = "";
-	int val = this->query_pointer[current_index], power = 10;
-	int_string.push_back(this->query_pointer[current_index]);
-	while (this->current_index < this->last_index && isdigit(this->query_pointer[current_index + 1])) {
-		this->current_index++;
-		val += power * (int)this->query_pointer[current_index];
+	int val = this->query_pointer[*current_index_], power = 10;
+	int_string.push_back(this->query_pointer[*current_index_]);
+	while (*current_index_ < this->last_index && isdigit(this->query_pointer[*current_index_ + 1])) {
+		(*current_index_)++;
+		val += power * (int)this->query_pointer[*current_index_];
 		power *= 10;
-		int_string.push_back(this->query_pointer[current_index]);
+		int_string.push_back(this->query_pointer[*current_index_]);
 	}
 	this->current_token = Token(int_string, TokenType::kInteger);
 	this->sval = {};
@@ -94,10 +110,10 @@ void Tokenizer::consumeIntegerToken() {
 
 }
 
-void Tokenizer::skipIgnoredChars() {
+void Tokenizer::skipIgnoredChars(int* current_index_) {
 
-	while (this->current_index < this->last_index && isIgnoredChar(this->query_pointer[current_index + 1])) {
-		this->current_index++;
+	while (*current_index_ < this->last_index && isIgnoredChar(this->query_pointer[*current_index_ + 1])) {
+		(*current_index_)++;
 	}
 
 }
