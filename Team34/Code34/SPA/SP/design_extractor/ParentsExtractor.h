@@ -21,9 +21,6 @@
 class ParentsExtractor : public NodeExtractor {
 public:
 
-	std::vector<std::pair<int, int>> parents_star;
-	std::vector<std::pair<int, int>> parents;
-
 	ParentsExtractor();
 
 	virtual void ExtractProgramNode(ProgramNode&) override;

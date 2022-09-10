@@ -90,6 +90,6 @@ void ParentsExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
 
 void ParentsExtractor::AddIndirectParents(StmtNum current) {
 	for (StmtNum parent : this->previous_parents_) {
-		this->write_manager_->SetParentS(parent, current);
+		this->write_manager_->SetParentT(parent, current);
 	}
 }
