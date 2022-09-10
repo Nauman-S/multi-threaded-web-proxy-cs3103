@@ -4,7 +4,7 @@
 void ParentManager::SetParent(StmtNum parent, StmtNum child)
 {
 	// defensive checks
-	assert(parent >= child);
+	assert(parent < child);
 	if (child_to_parent_map_.find(child) != child_to_parent_map_.end())
 	{
 		// throw some error as relationship already exists
@@ -60,8 +60,17 @@ void ParentManager::SetParentS(StmtNum parent, StmtNum child)
 
 bool ParentManager::CheckParentS(StmtNum parent, StmtNum child)
 {
-	std::pair<StmtNum, StmtNum> pair = std::make_pair(parent, child);
-	return std::find(all_parent_s_relations_.begin(), all_parent_s_relations_.end(), pair) != all_parent_s_relations_.end();
+	auto iter = child_to_parent_map_.find(child);
+	while (iter != child_to_parent_map_.end())
+	{
+		StmtNum next = child_to_parent_map_[child];
+		if (next == parent)
+		{
+			return true;
+		}
+		iter = child_to_parent_map_.find(next);
+	}
+	return false;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllChildren(StmtNum stmt)

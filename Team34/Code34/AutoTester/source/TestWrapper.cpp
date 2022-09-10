@@ -13,7 +13,6 @@
 #include "../SPA/QPS/parser/SemanticError.h"
 #include "../SPA/QPS/Query.h"
 #include "../SPA/QPS/QueryEvaluator.h"
-#include "../SPA/Utils/type/TypeDef.h"
 
 using namespace std;
 
