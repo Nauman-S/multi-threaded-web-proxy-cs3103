@@ -34,7 +34,7 @@ public:
 	void SetFollows(StmtNum left, StmtNum right);
 
 	// APIs related to Follows* relation
-	void SetFollowsS(StmtNum left, StmtNum right);
+	void SetFollowsT(StmtNum left, StmtNum right);
 
 	// APIs related to Uses relation
 	void SetUses(StmtNum stmt_num, Variable var);

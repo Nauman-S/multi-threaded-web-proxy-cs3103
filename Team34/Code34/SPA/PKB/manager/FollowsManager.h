@@ -18,11 +18,11 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 
 	// Follows* Relation methods
-	void SetFollowsS(StmtNum left, StmtNum right);
-	bool CheckFollowsS(StmtNum left, StmtNum right);
+	void SetFollowsT(StmtNum left, StmtNum right);
+	bool CheckFollowsT(StmtNum left, StmtNum right);
 	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsSRelations();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 
 private:
 	OneToOneRelationStore<StmtNum> follows_store_;

@@ -119,9 +119,9 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
 }
 
 // APIs related to Follows* relation
-bool ReadPKBManager::CheckFollowsS(StmtNum left, StmtNum right)
+bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
 {
-	return pkb.follows_manager_.CheckFollowsS(left, right);
+	return pkb.follows_manager_.CheckFollowsT(left, right);
 }
 
 std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllSuccessorStmt(StmtNum stmt)
@@ -134,9 +134,9 @@ std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllPredecessorStmt(Stmt
 	return pkb.follows_manager_.GetAllPredecessorStmt(stmt);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsSRelations()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsTRelations()
 {
-	return pkb.follows_manager_.GetAllFollowsSRelations();
+	return pkb.follows_manager_.GetAllFollowsTRelations();
 }
 
 // APIs related to Uses relation

@@ -41,9 +41,9 @@ void WritePKBManager::SetFollows(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.SetFollows(left, right);
 }
 
-void WritePKBManager::SetFollowsS(StmtNum left, StmtNum right)
+void WritePKBManager::SetFollowsT(StmtNum left, StmtNum right)
 {
-	return pkb.follows_manager_.SetFollowsS(left, right);
+	return pkb.follows_manager_.SetFollowsT(left, right);
 }
 
 // APIs related to Uses relation

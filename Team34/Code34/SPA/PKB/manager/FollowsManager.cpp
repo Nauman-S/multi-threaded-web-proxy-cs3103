@@ -27,12 +27,12 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAll
 }
 
 // Follows* Relation methods
-void FollowsManager::SetFollowsS(StmtNum left, StmtNum right)
+void FollowsManager::SetFollowsT(StmtNum left, StmtNum right)
 {
     follows_store_.SetTransitiveRelation(left, right);
 }
 
-bool FollowsManager::CheckFollowsS(StmtNum left, StmtNum right)
+bool FollowsManager::CheckFollowsT(StmtNum left, StmtNum right)
 {
     return follows_store_.CheckTransistiveRelation(left, right);
 }
@@ -47,7 +47,7 @@ std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllPredecessorStmt(Stmt
     return follows_store_.GetAllLHSByRHS(stmt);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAllFollowsSRelations()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAllFollowsTRelations()
 {
     return follows_store_.GetAllTransitiveRelations();
 }

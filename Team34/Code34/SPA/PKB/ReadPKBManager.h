@@ -51,10 +51,10 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 
 	// APIs relation to Follows* relation
-	bool CheckFollowsS(StmtNum left, StmtNum right);
+	bool CheckFollowsT(StmtNum left, StmtNum right);
 	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsSRelations();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var);
