@@ -31,9 +31,19 @@ void WritePKBManager::SetParent(StmtNum parent, StmtNum child)
 }
 
 // APIs related to Parent* relation
-void WritePKBManager::SetParentS(StmtNum parent, StmtNum child)
+void WritePKBManager::SetParentT(StmtNum parent, StmtNum child)
 {
-	return pkb.parent_manager_.SetParentS(parent, child);
+	return pkb.parent_manager_.SetParentT(parent, child);
+}
+
+void WritePKBManager::SetFollows(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.SetFollows(left, right);
+}
+
+void WritePKBManager::SetFollowsT(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.SetFollowsT(left, right);
 }
 
 // APIs related to Uses relation
