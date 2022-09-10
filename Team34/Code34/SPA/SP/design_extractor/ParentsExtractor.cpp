@@ -31,79 +31,55 @@ void ParentsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 }
 
 void ParentsExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
-	for (int parent_s : this->previous_parents_) {
-		//
-		this->parents_star.push_back(std::make_pair(parent_s, assign.GetLineIndex().GetLineNum()));
-		//
-	}
+	this->AddIndirectParents(assign.GetLineIndex().GetLineNum());
 }
 
 void ParentsExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	// TODO: Traversing procedure within procedure
+	this->AddIndirectParents(call.GetLineIndex().GetLineNum());
 }
 
 void ParentsExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
-	for (int parent_s : this->previous_parents_) {
-		//
-		this->parents_star.push_back(std::make_pair(parent_s, print.GetLineIndex().GetLineNum()));
-		//
-	}
+	this->AddIndirectParents(print.GetLineIndex().GetLineNum());
 }
 
 void ParentsExtractor::ExtractReadNode(ReadStatementASTNode& read) {
-	for (int parent_s : this->previous_parents_) {
-		//
-		this->parents_star.push_back(std::make_pair(parent_s, read.GetLineIndex().GetLineNum()));
-		//
-	}
+	this->AddIndirectParents(read.GetLineIndex().GetLineNum());
 }
 
 void ParentsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
-	for (int parent_s : this->previous_parents_) {
-		//
-		this->parents_star.push_back(std::make_pair(parent_s, if_stmt.GetLineIndex().GetLineNum()));
-		//
-	}
+	this->AddIndirectParents(if_stmt.GetLineIndex().GetLineNum());
 
-	int parent_line = if_stmt.GetLineIndex().GetLineNum();
-
+	StmtNum parent_line = if_stmt.GetLineIndex().GetLineNum();
+	// Store statement num of container statement, for indirect child to refer
 	this->previous_parents_.push_back(parent_line);
+
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
 	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
-		int child_line = then_child->GetLineIndex().GetLineNum();
-		//
-		this->parents.push_back(std::make_pair(parent_line, child_line));
-		//
+		StmtNum child_line = then_child->GetLineIndex().GetLineNum();
+		this->write_manager_->SetParent(parent_line, child_line);
 		then_child->Extract(*this);
 	}
 
 	std::vector<std::shared_ptr<StatementASTNode>> else_children = if_stmt.GetElseChildren();
 	for (std::shared_ptr<StatementASTNode> else_child : else_children) {
-		int child_line = else_child->GetLineIndex().GetLineNum();
-		//
-		this->parents.push_back(std::make_pair(parent_line, child_line));
-		//
+		StmtNum child_line = else_child->GetLineIndex().GetLineNum();
+		this->write_manager_->SetParent(parent_line, child_line);
 		else_child->Extract(*this);
 	}
+	// On backtrack, remove container statement
 	this->previous_parents_.pop_back();
 }
 
 void ParentsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
-	for (int parent_s : this->previous_parents_) {
-		//
-		this->parents_star.push_back(std::make_pair(parent_s, while_stmt.GetLineIndex().GetLineNum()));
-		//
-	}
+	this->AddIndirectParents(while_stmt.GetLineIndex().GetLineNum());
 
 	int parent_line = while_stmt.GetLineIndex().GetLineNum();
 	this->previous_parents_.push_back(parent_line);
 
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
-		int child_line = child->GetLineIndex().GetLineNum();
-		//
-		this->parents.push_back(std::make_pair(parent_line, child_line));
-		//
+		StmtNum child_line = child->GetLineIndex().GetLineNum();
+		this->write_manager_->SetParent(parent_line, child_line);
 		child->Extract(*this);
 	}
 
@@ -111,3 +87,9 @@ void ParentsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 }
 
 void ParentsExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
+
+void ParentsExtractor::AddIndirectParents(StmtNum current) {
+	for (StmtNum parent : this->previous_parents_) {
+		this->write_manager_->SetParentS(parent, current);
+	}
+}

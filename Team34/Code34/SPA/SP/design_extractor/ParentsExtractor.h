@@ -4,24 +4,22 @@
 #include <vector>
 
 #include "NodeExtractor.h"
+
 #include "../../PKB/WritePKBManager.h"
+#include "../../Utils/type/TypeDef.h"
 
 #include "../ProgramNode.h"
 #include "../ProcedureASTNode.h"
-
 #include "../AssignStatementASTNode.h"
 #include "../CallStatementASTNode.h"
 #include "../PrintStatementASTNode.h"
 #include "../ReadStatementASTNode.h"
-
 #include "../IfStatementASTNode.h"
 #include "../WhileStatementASTNode.h"
 #include "../ConditionExpression.h"
 
 class ParentsExtractor : public NodeExtractor {
 public:
-	std::unique_ptr<WritePKBManager> write_manager_;
-	std::vector<int> previous_parents_;
 
 	std::vector<std::pair<int, int>> parents_star;
 	std::vector<std::pair<int, int>> parents;
@@ -39,4 +37,12 @@ public:
 	virtual void ExtractIfNode(IfStatementASTNode&) override;
 	virtual void ExtractWhileNode(WhileStatementASTNode&) override;
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
+
+private:
+	std::unique_ptr<WritePKBManager> write_manager_;
+	// Keeps track of parent statements in previous level as we go down
+	// in nesting level
+	std::vector<StmtNum> previous_parents_;
+
+	void AddIndirectParents(StmtNum);
 };

@@ -3,24 +3,22 @@
 #include <memory>
 
 #include "NodeExtractor.h"
+
 #include "../../PKB/WritePKBManager.h"
+#include "../../Utils/type/TypeDef.h"
 
 #include "../ProgramNode.h"
 #include "../ProcedureASTNode.h"
-
 #include "../AssignStatementASTNode.h"
 #include "../CallStatementASTNode.h"
 #include "../PrintStatementASTNode.h"
 #include "../ReadStatementASTNode.h"
-
 #include "../IfStatementASTNode.h"
 #include "../WhileStatementASTNode.h"
 #include "../ConditionExpression.h"
 
 class UsesModifiesExtractor : public NodeExtractor {
 public:
-	std::unique_ptr<WritePKBManager> write_manager_;
-
 	UsesModifiesExtractor();
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
@@ -34,5 +32,8 @@ public:
 	virtual void ExtractIfNode(IfStatementASTNode&) override;
 	virtual void ExtractWhileNode(WhileStatementASTNode&) override;
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
+
+private:
+	std::unique_ptr<WritePKBManager> write_manager_;
 };
 

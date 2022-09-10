@@ -50,7 +50,7 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 }
 
 void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	//TODO: Implement after Parent is set in AST Node
+	//TODO: Procedure call
 }
 
 // Uses: variable used by print
