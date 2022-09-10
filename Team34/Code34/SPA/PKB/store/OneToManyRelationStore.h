@@ -44,7 +44,7 @@ inline void OneToManyRelationStore<T>::SetRelation(T left, T right)
 	assert(left < right);
 	assert(many_to_one_map_.find(right) == many_to_one_map_.end());
 
-	all_relations_.push_back(std::make_pair(parent, child));
+	all_relations_.push_back(std::make_pair(left, right));
 	one_to_many_map_[left].insert(right);
 	many_to_one_map_[right] = left;
 }
@@ -52,7 +52,7 @@ inline void OneToManyRelationStore<T>::SetRelation(T left, T right)
 template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetMany(T t)
 {
-	if(one_to_many_map_.find(t) == many_to_one_map_.end())
+	if(one_to_many_map_.find(t) == one_to_many_map_.end())
 	{
 		return std::make_shared<std::unordered_set<T>>();
 	}
@@ -84,14 +84,14 @@ inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyRelationStore<T>::
 template<typename T>
 inline bool OneToManyRelationStore<T>::CheckTransitiveRelation(T left, T right)
 {
-	std::pair<T, T> pair = std::make_pair(parent, child);
+	std::pair<T, T> pair = std::make_pair(left, right);
 	return std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) != all_transitive_relations_.end();
 }
 
 template<typename T>
 inline void OneToManyRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
-	std::pair<T, T> pair = std::make_pair(parent, child);
+	std::pair<T, T> pair = std::make_pair(left, right);
 	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
 	{
 		all_transitive_relations_.push_back(pair);
@@ -133,10 +133,10 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllT
 	{
 		T one = many_to_one_map_[next];
 		next = one;
-		all_parents->insert(next);
+		all_one->insert(next);
 		iter = many_to_one_map_.find(next);
 	}
-	return all_parents;
+	return all_one;
 }
 
 template<typename T>

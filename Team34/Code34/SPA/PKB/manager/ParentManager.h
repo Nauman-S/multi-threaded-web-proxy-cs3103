@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "../store/OneToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class ParentManager
@@ -20,15 +21,12 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	
 	// Parent* Relation methods
-	void SetParentS(StmtNum parent, StmtNum child);
-	bool CheckParentS(StmtNum parent, StmtNum child);
+	void SetParentT(StmtNum parent, StmtNum child);
+	bool CheckParentT(StmtNum parent, StmtNum child);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentSRelations();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 
 private:
-	std::vector<std::pair<StmtNum, StmtNum>> all_parent_relations_;
-	std::vector<std::pair<StmtNum, StmtNum>> all_parent_s_relations_;
-	std::unordered_map<StmtNum, std::unordered_set<StmtNum>> parent_to_child_map_;
-	std::unordered_map<StmtNum, StmtNum> child_to_parent_map_;
+	OneToManyRelationStore<StmtNum> parent_store_;
 };
