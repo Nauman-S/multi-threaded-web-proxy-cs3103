@@ -97,6 +97,47 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
 	return pkb.parent_manager_.GetAllParentSRelations();
 }
 
+// APIs related to Follows relation
+bool ReadPKBManager::CheckFollows(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.CheckFollows(left, right);
+}
+
+StmtNum ReadPKBManager::GetSuccessorStmt(StmtNum stmt)
+{
+	return pkb.follows_manager_.GetSuccessorStmt(stmt);
+}
+
+StmtNum ReadPKBManager::GetPredecessorStmt(StmtNum stmt)
+{
+	return pkb.follows_manager_.GetPredecessorStmt(stmt);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
+{
+	return pkb.follows_manager_.GetAllFollowsRelations();
+}
+
+// APIs related to Follows* relation
+bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.CheckFollowsT(left, right);
+}
+
+std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllSuccessorStmt(StmtNum stmt)
+{
+	return pkb.follows_manager_.GetAllSuccessorStmt(stmt);
+}
+
+std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllPredecessorStmt(StmtNum stmt)
+{
+	return pkb.follows_manager_.GetAllPredecessorStmt(stmt);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsTRelations()
+{
+	return pkb.follows_manager_.GetAllFollowsTRelations();
+}
 
 // APIs related to Uses relation
 bool ReadPKBManager::CheckUses(StmtNum stmt_num, Variable var)
