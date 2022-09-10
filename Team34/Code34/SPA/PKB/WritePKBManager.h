@@ -28,7 +28,7 @@ public:
 	void SetParent(StmtNum parent, StmtNum child);
 
 	// APIs related to Parent* relation
-	void SetParentS(StmtNum parent, StmtNum child);
+	void SetParentT(StmtNum parent, StmtNum child);
 
 	// APIs related to Follows relation
 	void SetFollows(StmtNum left, StmtNum right);
