@@ -30,7 +30,11 @@ private:
 template<typename T>
 inline bool OneToOneRelationStore<T>::CheckRelation(T left, T right)
 {
-	return left_to_right_map_.find(left) != right_to_left_map_.end();
+	if (left_to_right_map_.find(left) != left_to_right_map_.end())
+	{
+		return left_to_right_map_[left] == right;
+	}
+	return false;
 }
 
 template<typename T>
@@ -101,29 +105,28 @@ inline void OneToOneRelationStore<T>::SetTransitiveRelation(T left, T right)
 template<typename T>
 inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllRHSByLHS(T left)
 {
-	std::shared_ptr<std::vector<T>> all_rhs = std::make_shared<std::vector<T>>();
-	auto iter = left_to_right_map_.find(left);
-	while (iter != left_to_right_map_.end())
-	{
-		T right = left_to_right_map_[left];
-		all_rhs->push_back(right);
-		iter = left_to_right_map_.find(right);
-	}
-	return all_rhs;
+	return GetAllHelper(left, left_to_right_map_);
 }
 
 template<typename T>
 inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllLHSByRHS(T right)
 {
-	std::shared_ptr<std::vector<T>> all_lhs = std::make_shared<std::vector<T>>();
-	auto iter = right_to_left_map_.find(right);
-	while (iter != right_to_left_map_.end())
+	return GetAllHelper(right, right_to_left_map_);
+}
+
+template<typename T>
+inline std::shared_ptr<std::vector<T>> GetAllHelper(T start, std::unordered_map<T, T>& map)
+{
+	std::shared_ptr<std::vector<T>> all = std::make_shared<std::vector<T>>();
+	auto iter = map.find(start);
+	T next = start;
+	while (iter != map.end())
 	{
-		S left = right_to_left_map[right];
-		all_lhs->push_back(left);
-		iter = right_to_left_map_.find(left);
+		next = map[next];
+		all->push_back(next);
+		iter = map.find(next);
 	}
-	return all_lhs;
+	return all;
 }
 
 template<typename T>

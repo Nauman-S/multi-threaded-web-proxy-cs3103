@@ -44,7 +44,7 @@ std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllSuccessorStmt(StmtNu
 
 std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllPredecessorStmt(StmtNum stmt)
 {
-    return follows_store_.GetAllRHSByLHS(stmt);
+    return follows_store_.GetAllLHSByRHS(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAllFollowsSRelations()
