@@ -16,7 +16,7 @@ public:
 	// Parent Relation methods
 	void SetParent(StmtNum parent, StmtNum child);
 	bool CheckParent(StmtNum parent, StmtNum child);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetChild(StmtNum parent);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetChildren(StmtNum parent);
 	StmtNum GetParent(StmtNum child);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	

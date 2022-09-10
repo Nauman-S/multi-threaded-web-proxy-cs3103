@@ -84,8 +84,19 @@ inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyRelationStore<T>::
 template<typename T>
 inline bool OneToManyRelationStore<T>::CheckTransitiveRelation(T left, T right)
 {
-	std::pair<T, T> pair = std::make_pair(left, right);
-	return std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) != all_transitive_relations_.end();
+	T next = right;
+	auto iter = many_to_one_map_.find(next);
+	while (iter != many_to_one_map_.end())
+	{
+		T one = many_to_one_map_[next];
+		if (one == left)
+		{
+			return true;
+		}
+		next = one;
+		iter = many_to_one_map_.find(next);
+	}
+	return false;
 }
 
 template<typename T>

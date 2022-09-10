@@ -11,7 +11,7 @@ bool ParentManager::CheckParent(StmtNum parent, StmtNum child)
 	return parent_store_.CheckRelation(parent, child);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetChild(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetChildren(StmtNum parent)
 {
 	return parent_store_.GetMany(parent);
 }
