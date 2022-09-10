@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "NodeExtractor.h"
 
@@ -17,9 +18,10 @@
 #include "../WhileStatementASTNode.h"
 #include "../ConditionExpression.h"
 
-class UsesModifiesExtractor : public NodeExtractor {
+class ParentsExtractor : public NodeExtractor {
 public:
-	UsesModifiesExtractor();
+
+	ParentsExtractor();
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -35,5 +37,9 @@ public:
 
 private:
 	std::unique_ptr<WritePKBManager> write_manager_;
-};
+	// Keeps track of parent statements in previous level as we go down
+	// in nesting level
+	std::vector<StmtNum> previous_parents_;
 
+	void AddIndirectParents(StmtNum);
+};

@@ -81,6 +81,7 @@
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -181,5 +182,6 @@
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
+    <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
   </ItemGroup>
 </Project>
