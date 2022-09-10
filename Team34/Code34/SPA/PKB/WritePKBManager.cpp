@@ -36,6 +36,16 @@ void WritePKBManager::SetParentS(StmtNum parent, StmtNum child)
 	return pkb.parent_manager_.SetParentS(parent, child);
 }
 
+void WritePKBManager::SetFollows(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.SetFollows(left, right);
+}
+
+void WritePKBManager::SetFollowsS(StmtNum left, StmtNum right)
+{
+	return pkb.follows_manager_.SetFollowsS(left, right);
+}
+
 // APIs related to Uses relation
 void WritePKBManager::SetUses(StmtNum stmt_num, Variable var)
 {

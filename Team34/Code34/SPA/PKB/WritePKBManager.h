@@ -30,6 +30,12 @@ public:
 	// APIs related to Parent* relation
 	void SetParentS(StmtNum parent, StmtNum child);
 
+	// APIs related to Follows relation
+	void SetFollows(StmtNum left, StmtNum right);
+
+	// APIs related to Follows* relation
+	void SetFollowsS(StmtNum left, StmtNum right);
+
 	// APIs related to Uses relation
 	void SetUses(StmtNum stmt_num, Variable var);
 	void SetUses(Procedure proc_name, Variable var);

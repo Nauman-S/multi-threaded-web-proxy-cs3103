@@ -5,36 +5,36 @@
 #include <unordered_map>
 #include <vector>
 
-template <typename S>
+template <typename T>
 class OneToOneRelationStore
 {
 public:
-	bool CheckRelation(S left, S right);
-	void SetRelation(S left, S right);
-	S GetRHSByLHS(S left);
-	S GetLHSByRHS(S right);
-	std::shared_ptr<std::vector<std::pair<S, S>>> GetAllRelations();
+	bool CheckRelation(T left, T right);
+	void SetRelation(T left, T right);
+	T GetRHSByLHS(T left);
+	T GetLHSByRHS(T right);
+	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllRelations();
 	// Transitive one to one relations
-	bool CheckTransistiveRelation(S left, S right);
-	void SetTransitiveRelation(S left, S right);
-	std::shared_ptr<std::vector<S>> GetAllRHSByLHS(S left);
-	std::shared_ptr<std::vector<S>> GetAllLHSByRHS(S right);
-	std::shared_ptr<std::vector<std::pair<S, S>>> GetAllTransitiveRelations();
+	bool CheckTransistiveRelation(T left, T right);
+	void SetTransitiveRelation(T left, T right);
+	std::shared_ptr<std::vector<T>> GetAllRHSByLHS(T left);
+	std::shared_ptr<std::vector<T>> GetAllLHSByRHS(T right);
+	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
 private:
-	std::unordered_map<S, S> left_to_right_map_;
-	std::unordered_map<S, S> right_to_left_map_;
-	std::vector<std::pair<S, S>> all_left_right_pairs_;
-	std::vector<std::pair<S, S>> all_left_right_transitive_pairs_;
+	std::unordered_map<T, T> left_to_right_map_;
+	std::unordered_map<T, T> right_to_left_map_;
+	std::vector<std::pair<T, T>> all_left_right_pairs_;
+	std::vector<std::pair<T, T>> all_left_right_transitive_pairs_;
 };
 
-template<typename S>
-inline bool OneToOneRelationStore<S>::CheckRelation(S left, S right)
+template<typename T>
+inline bool OneToOneRelationStore<T>::CheckRelation(T left, T right)
 {
 	return left_to_right_map_.find(left) != right_to_left_map_.end();
 }
 
-template<typename S>
-inline void OneToOneRelationStore<S>::SetRelation(S left, S right)
+template<typename T>
+inline void OneToOneRelationStore<T>::SetRelation(T left, T right)
 {
 	assert(left_to_right_map_.find(left) == left_to_right_map_.end());
 	assert(right_to_left_map_.find(right) == right_to_left_map_.end());
@@ -43,8 +43,8 @@ inline void OneToOneRelationStore<S>::SetRelation(S left, S right)
 	all_left_right_pairs_.push_back(std::make_pair(left, right));
 }
 
-template<typename S>
-inline S OneToOneRelationStore<S>::GetRHSByLHS(S left)
+template<typename T>
+inline T OneToOneRelationStore<T>::GetRHSByLHS(T left)
 {
 	if (left_to_right_map_.find(left) == left_to_right_map_.end())
 	{
@@ -56,8 +56,8 @@ inline S OneToOneRelationStore<S>::GetRHSByLHS(S left)
 	}
 }
 
-template<typename S>
-inline S OneToOneRelationStore<S>::GetLHSByRHS(S right)
+template<typename T>
+inline T OneToOneRelationStore<T>::GetLHSByRHS(T right)
 {
 	if (right_to_left_map_.find(right) == right_to_left_map_.end())
 	{
@@ -69,21 +69,20 @@ inline S OneToOneRelationStore<S>::GetLHSByRHS(S right)
 	}
 }
 
-template<typename S>
-inline std::shared_ptr<std::vector<std::pair<S, S>>> OneToOneRelationStore<S>::GetAllRelations()
+template<typename T>
+inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToOneRelationStore<T>::GetAllRelations()
 {
-	return std::make_shared<std::vector<std::pair<S, S>>>(all_left_right_pairs_);
+	return std::make_shared<std::vector<std::pair<T, T>>>(all_left_right_pairs_);
 }
 
-template<typename S>
-inline bool OneToOneRelationStore<S>::CheckTransistiveRelation(S left, S right)
+template<typename T>
+inline bool OneToOneRelationStore<T>::CheckTransistiveRelation(T left, T right)
 {
 	auto iter = left_to_right_map_.find(left);
-	S next = left;
+	T next = left;
 	while (iter != left_to_right_map_.end())
 	{
 		next = left_to_right_map_[next];
-		std::cout << next << std::endl;
 		if (next == right)
 		{
 			return true;
@@ -93,30 +92,30 @@ inline bool OneToOneRelationStore<S>::CheckTransistiveRelation(S left, S right)
 	return false;
 }
 
-template<typename S>
-inline void OneToOneRelationStore<S>::SetTransitiveRelation(S left, S right)
+template<typename T>
+inline void OneToOneRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
 	all_left_right_transitive_pairs_.push_back(std::make_pair(left, right));
 }
 
-template<typename S>
-inline std::shared_ptr<std::vector<S>> OneToOneRelationStore<S>::GetAllRHSByLHS(S left)
+template<typename T>
+inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllRHSByLHS(T left)
 {
-	std::shared_ptr<std::vector<S>> all_rhs = std::make_shared<std::vector<S>>();
+	std::shared_ptr<std::vector<T>> all_rhs = std::make_shared<std::vector<T>>();
 	auto iter = left_to_right_map_.find(left);
 	while (iter != left_to_right_map_.end())
 	{
-		S right = left_to_right_map_[left];
+		T right = left_to_right_map_[left];
 		all_rhs->push_back(right);
 		iter = left_to_right_map_.find(right);
 	}
 	return all_rhs;
 }
 
-template<typename S>
-inline std::shared_ptr<std::vector<S>> OneToOneRelationStore<S>::GetAllLHSByRHS(S right)
+template<typename T>
+inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllLHSByRHS(T right)
 {
-	std::shared_ptr<std::vector<S>> all_lhs = std::make_shared<std::vector<S>>();
+	std::shared_ptr<std::vector<T>> all_lhs = std::make_shared<std::vector<T>>();
 	auto iter = right_to_left_map_.find(right);
 	while (iter != right_to_left_map_.end())
 	{
@@ -127,8 +126,8 @@ inline std::shared_ptr<std::vector<S>> OneToOneRelationStore<S>::GetAllLHSByRHS(
 	return all_lhs;
 }
 
-template<typename S>
-inline std::shared_ptr<std::vector<std::pair<S, S>>> OneToOneRelationStore<S>::GetAllTransitiveRelations()
+template<typename T>
+inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToOneRelationStore<T>::GetAllTransitiveRelations()
 {
-	return std::make_shared<std::vector<std::pair<S, S>>>(all_left_right_transitive_pairs_);
+	return std::make_shared<std::vector<std::pair<T, T>>>(all_left_right_transitive_pairs_);
 }

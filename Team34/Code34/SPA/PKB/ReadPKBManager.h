@@ -44,6 +44,18 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentSRelations();
 
+	// APIs related to Follows relation
+	bool CheckFollows(StmtNum left, StmtNum right);
+	StmtNum GetSuccessorStmt(StmtNum stmt);
+	StmtNum GetPredecessorStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
+
+	// APIs relation to Follows* relation
+	bool CheckFollowsS(StmtNum left, StmtNum right);
+	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsSRelations();
+
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var);
 	bool CheckUses(Procedure proc_name, Variable var);

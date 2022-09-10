@@ -163,7 +163,7 @@
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
 	<ClCompile Include="PKB\manager\StatementManager.cpp" />
-	<ClInclude Include="PKB\manager\FollowsManager.cpp" />
+	<ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
