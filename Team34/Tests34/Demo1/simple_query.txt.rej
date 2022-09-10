@@ -1,0 +1,10 @@
+diff a/Team34/Tests34/Demo1/simple_query.txt b/Team34/Tests34/Demo1/simple_query.txt	(rejected hunks)
+@@ -1,8 +0,3 @@
+-1 - test follows
+-variable v;
+-Select v such that Follows(3, v)
+-4
+-5000
+ 10 - test UsesS
+ stmt s;
+ Select s such that Uses(s, "x")
