@@ -10,6 +10,9 @@
 #include "SemanticError.h"
 #include "..\..\Utils\InvalidTokenException.h"
 #include "..\..\Utils\expression\ExprSpec.h"
+#include "..\..\Utils\expression\PartialExprSpec.h"
+#include "..\..\Utils\expression\WildcardExprSpec.h"
+#include "..\..\Utils\expression\ExactExprSpec.h"
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
 #include "..\reference\StmtRef.h"
@@ -509,89 +512,95 @@ std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 	lexer_->MatchOpeningBrace();
 	shared_ptr<VarRef> var_ref = GetNextVarRef();
 	lexer_->MatchCommaDelimeter();
-	//shared_ptr<ExprSpec> express = GetExpression();
 
-	//if (HasPatternClause()) {
-	//	this->lexer_->MatchPatternKeyword();
-	//	if (this->lexer_->HasIdentity()) {
-	//		std::string syn_assign = this->lexer_->MatchIdentity();
-	//		if (this->lexer_->HasOpeningBrace()) {
-	//			this->lexer_->MatchOpeningBrace();
-	//			if (this->lexer_->HasQuotation()) {
-	//				this->lexer_->MatchQuotation();
-	//				if (this->lexer_->HasIdentity()) {
-	//					std::string identity_ = this->lexer_->MatchIdentity();
-	//					if (this->lexer_->HasQuotation()) {
-	//						this->lexer_->MatchQuotation();
-
-	//						if (this->lexer_->HasCommaDelimeter()) {
-	//							this->lexer_->MatchCommaDelimeter();
-	//							if (this->lexer_->HasExpressionSpec()) {
-	//								std::string expression_spec = this->lexer_->MatchExpressionSpec();
-	//								if (this->lexer_->HasClosingBrace()) {
-	//									this->lexer_->MatchClosingBrace();
-	//									//return expression clause
-	//								}
-	//								else {
-	//									//throw invalid syntax exception - missing closing brace 
-	//								}
-	//							}
-	//							else {
-	//								//Throw missing expressions spec
-	//							}
-	//						}
-	//						else {
-	//							//Syntax exception - Invalid pattern caluse missing comma delimeter
-	//						}
-	//					}
-	//				}
-	//				else {
-	//					//Invalid entref
-	//				}
-	//			}
-	//			else if (this->lexer_->HasIdentity()) {
-	//				std::string identity_ =  this->lexer_->MatchIdentity();
-	//				if (this->lexer_->HasCommaDelimeter()) {
-	//					this->lexer_->MatchCommaDelimeter();
-	//					if (this->lexer_->HasExpressionSpec()) {
-	//						std::string expression_spec = this->lexer_->MatchExpressionSpec();
-	//						if (this->lexer_->HasClosingBrace()) {
-	//							this->lexer_->MatchClosingBrace();
-	//							//return the parsed expression clause
-	//						}
-	//						else {
-	//							//Invalid Syntax - missing closing brace
-	//						}
-	//					}
-	//					else {
-	//						//throw exception Missing Expression Spec
-	//					}
-
-	//				}
-	//				else {
-	//					//Syntax exception - Invalid pattern caluse missing comma delimeter
-	//				}
-	//			}
-	//			else {
-	//				//Invalid entRef 
-	//			}
-
-	//		}
-	//		else {
-	//			//throw an invalid syntax exception - Missing Opening Brace
-
-	//		}
-	//		 
-	//	}
-	//	else {
-	//		//throw an invalid syntax exception - syn-assign not found
-	//	}
-
-	//} 
 
 	return patterns_;
 }
 
+shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
+	bool is_partial_expr = false;
+	if (lexer_->HasUnderScore()) {
+		lexer_->MatchUnderScore();
+		is_partial_expr = true;
 
+		if (lexer_->HasClosingBrace()) {
+			return shared_ptr<ExprSpec>(new WildcardExprSpec());
+		}
+		
+	}
+	
+	
+	lexer_->MatchQuotationMarks();
+	
+	string expr_str = GetExpression();
+
+
+	if (is_partial_expr) {
+		lexer_->MatchUnderScore();
+
+	}
+	lexer_->MatchQuotationMarks();
+	
+	if (is_partial_expr) {
+		return shared_ptr<PartialExprSpec>(new PartialExprSpec(expr_str));
+	}
+	else {
+		return shared_ptr<ExactExprSpec>(new ExactExprSpec(expr_str));
+	}
+
+}
+
+
+string QueryBuilder::GetExpression() {
+	string expr_str = "";
+	int expected_closing_brace_num = 0;
+
+	// make sure the expression is not empty;
+	
+	bool isExpectingToken = true;
+
+	while (isExpectingToken) {
+		while (lexer_->HasOpeningBrace()) {
+			lexer_->MatchOpeningBrace();
+			expr_str += "(";
+			expected_closing_brace_num++;
+		}
+
+		if (lexer_->HasInteger()) {
+			int integer = lexer_->MatchInteger();
+			expr_str += integer;
+		}
+		else if (lexer_->HasIdentity()) {
+			string identity = lexer_->MatchIdentity();
+			expr_str += identity;
+		}
+		else {
+			throw SyntaxError("A number or variable is expected in Assign clause");
+		}
+
+		while (lexer_->HasClosingBrace()) {
+			lexer_->MatchClosingBrace();
+			expr_str += ")";
+			expected_closing_brace_num--;
+			if (expected_closing_brace_num < 0) {
+				throw SyntaxError("The opening and closing braces do not match");
+			}
+		}
+
+		if (lexer_->HasOperator()) {
+			string operator_str = lexer_->MatchOperator();
+			expr_str += operator_str;
+		}
+		else {
+			isExpectingToken = false;
+		}
+
+	}
+	if (expected_closing_brace_num != 0) {
+		throw SyntaxError("The opening and closing braces do not match");
+	}
+
+	return expr_str;
+}
 
 
