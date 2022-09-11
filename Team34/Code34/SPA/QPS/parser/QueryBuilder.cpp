@@ -292,6 +292,13 @@ shared_ptr<Rel> QueryBuilder::ParseParentTRel() {
 std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSyns() {
 	shared_ptr<Ref> lhs_syn;
 	shared_ptr<VarRef> rhs_syn;
+	
+	if (lexer_->HasUnderScore()) {
+		throw SemanticError("The first EntRef in Modifies and Uses relation cannot be WildCard");
+	}
+
+
+
 	if (lexer_->HasIdentity()) {
 		lhs_syn = GetNextStmtRef();
 	}
