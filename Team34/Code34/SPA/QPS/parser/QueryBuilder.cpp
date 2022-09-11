@@ -300,7 +300,8 @@ std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSy
 
 	if (lexer_->HasIdentity()) {
 		string ref_name = lexer_->MatchIdentity();
-		lhs_syn = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
+		//lhs_syn = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
+		lhs_syn = GetDeclaredSyn(ref_name);
 	} 
 	else if (lexer_->HasInteger()) {
 		lhs_syn = GetNextStmtRef();
