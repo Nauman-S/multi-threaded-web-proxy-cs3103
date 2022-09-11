@@ -46,7 +46,9 @@ private:
 	shared_ptr<StmtRef> GetNextStmtRef();
 	shared_ptr<ProcRef> GetNextProcRef();
 	shared_ptr<VarRef> GetNextVarRef();
-	
+	shared_ptr<ExprSpec> GetNextExpression();
+
+	string GetExpression();
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);

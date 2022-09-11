@@ -6,6 +6,8 @@ class PartialExprSpec :
     public ExprSpec
 {
 public:
+    PartialExprSpec(std::string infix_expr) : ExprSpec{ infix_expr } {};
+
     bool IsMatch(Expr expr) override;
 };
 
