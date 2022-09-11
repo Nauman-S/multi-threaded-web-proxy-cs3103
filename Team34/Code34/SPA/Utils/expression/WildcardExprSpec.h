@@ -7,6 +7,8 @@ class WildcardExprSpec :
     public ExprSpec
 {
 public:
+    WildcardExprSpec() : ExprSpec{ "" } {};
+
     bool IsMatch(Expr expr) override { return true; };
 };
 
