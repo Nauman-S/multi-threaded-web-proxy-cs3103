@@ -9,6 +9,7 @@
 #include "SyntaxError.h"
 #include "SemanticError.h"
 #include "..\..\Utils\InvalidTokenException.h"
+#include "..\..\Utils\expression\ExprSpec.h"
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
 #include "..\reference\StmtRef.h"
@@ -485,6 +486,21 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synon
 
 std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 	std::vector<shared_ptr<Pattern>> patterns_;
+
+	lexer_->MatchPatternKeyword();
+	string syn_name = lexer_->MatchIdentity();
+
+	shared_ptr<Ref> synonym = GetDeclaredSyn(syn_name);
+
+	if (synonym->GetRefType() != RefType::kAssignRef) {
+		throw SemanticError("The synonym in Pattern must be an assign synonym");
+	}
+
+	lexer_->MatchOpeningBrace();
+	shared_ptr<VarRef> var_ref = GetNextVarRef();
+	lexer_->MatchCommaDelimeter();
+	//shared_ptr<ExprSpec> express = GetExpression();
+
 	//if (HasPatternClause()) {
 	//	this->lexer_->MatchPatternKeyword();
 	//	if (this->lexer_->HasIdentity()) {
