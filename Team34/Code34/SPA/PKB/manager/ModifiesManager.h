@@ -3,7 +3,6 @@
 #include <vector>
 #include <unordered_set>
 
-#include "../store/RelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class ModifiesManager
@@ -20,6 +19,6 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetStmtNumByVar(Variable var);
 	std::shared_ptr<std::unordered_set<Procedure>> GetProcNameByVar(Variable var);
 private:
-	RelationStore<Procedure, Variable> modifies_pv_store_;
-	RelationStore<StmtNum, Variable> modifies_sv_store_;
+	ManyToManyRelationStore<Procedure, Variable> modifies_pv_store_;
+	ManyToManyRelationStore<StmtNum, Variable> modifies_sv_store_;
 };
