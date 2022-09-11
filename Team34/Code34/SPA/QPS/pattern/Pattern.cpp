@@ -3,7 +3,7 @@
 
 std::shared_ptr<ExprSpec> Pattern::RhsExprSpec()
 {
-    return std::shared_ptr<ExprSpec>(&rhs_);
+    return rhs_;
 }
 
 std::shared_ptr<ResWrapper> Pattern::GetMatch(DataRetriever& retriever)

@@ -6,6 +6,8 @@ class ExactExprSpec :
     public ExprSpec
 {
 public:
+    ExactExprSpec(string infix_expr) : ExprSpec{ infix_expr } {};
+
     bool IsMatch(Expr expr) override;
 };
 

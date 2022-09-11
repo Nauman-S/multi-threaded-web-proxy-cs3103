@@ -210,7 +210,6 @@ bool QueryLexer::HasMoreTokens() {
 }
 
 
-
 string QueryLexer::GenerateErrorMessage(string expected, string actual) {
 	return "Expected Token: " + expected + " ; Actual Token: " + actual;
 };
