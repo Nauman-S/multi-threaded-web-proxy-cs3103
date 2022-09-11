@@ -17,6 +17,7 @@ private:
 	std::unordered_set<std::string> relation_keywords_;
 	std::unordered_set<std::string> keywords_;
 	std::unordered_set <char> delimiters_;
+	std::unordered_set <TokenType> operators_;
 
 	void InitializeKeywords();
 
@@ -66,7 +67,12 @@ public:
 	bool HasQuotationMarks();
 	void MatchQuotationMarks();
 
+	bool HasOperator();
+	std::string MatchOperator();
+
 	string GenerateErrorMessage(string expected, string actual);
+
+	Token PeekNextToken(int number_tokens_);
 };
 #endif
 

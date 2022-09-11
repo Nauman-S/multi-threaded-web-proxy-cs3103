@@ -33,7 +33,7 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
-		}
+		};
 
 		TEST_METHOD(TestValidBasicSuchThat) {
 
@@ -54,10 +54,10 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetRelations()->size() == 1);
 			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kUsesSRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
-			Assert::AreEqual(query->GetRelations()->at(0)->LhsValue() , lhs_value_);
+			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kConst);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kVarRef);
-			Assert::AreEqual(query->GetRelations()->at(0)->RhsValue(), rhs_value_);
+			Assert::AreEqual(rhs_value_, query->GetRelations()->at(0)->RhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().second == ValType::kSynonym);
 
 			//Check if all pattern clauses are correct
