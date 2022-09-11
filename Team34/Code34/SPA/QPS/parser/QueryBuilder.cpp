@@ -130,7 +130,11 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 		this->lexer_->MatchKeyword("SELECT");
 		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
 		std::vector<shared_ptr<Rel>> relations_ = ParseRelations();
-		std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		std::vector<shared_ptr<Pattern>> patterns_;
+		if (lexer_->HasPatternKeyword()) {
+			std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		}
+		
 
 		if (this->lexer_->HasMoreTokens()) {
 			throw SyntaxError("Unexpected token at end of query");
