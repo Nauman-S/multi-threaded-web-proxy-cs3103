@@ -33,7 +33,7 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
-		}
+		};
 
 		TEST_METHOD(TestValidBasicSuchThat) {
 

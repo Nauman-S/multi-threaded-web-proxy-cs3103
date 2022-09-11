@@ -100,17 +100,14 @@ void Tokenizer::consumeAlphanumericToken(int* current_index_) {
 
 void Tokenizer::consumeIntegerToken(int* current_index_) {
 	std::string int_string = "";
-	int val = this->query_pointer[*current_index_], power = 10;
 	int_string.push_back(this->query_pointer[*current_index_]);
 	while (*current_index_ < this->last_index && isdigit(this->query_pointer[*current_index_ + 1])) {
 		(*current_index_)++;
-		val += power * (int)this->query_pointer[*current_index_];
-		power *= 10;
 		int_string.push_back(this->query_pointer[*current_index_]);
 	}
 	this->current_token = Token(int_string, TokenType::kInteger);
 	this->sval = {};
-	this->ival = val;
+	this->ival = stoi(int_string);
 
 }
 
