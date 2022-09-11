@@ -7,7 +7,8 @@
 
 #include "../SPA/SP/SourceParser.h"
 #include "../SPA/SP/design_extractor/DesignExtractor.h"
-
+#include "../SPA/SP/SourceLexer.h"
+#include "../SPA/SP/SourceValidator.h"
 #include "../SPA/QPS/parser/QueryBuilder.h"
 #include "../SPA/QPS/parser/SyntaxError.h"
 #include "../SPA/QPS/parser/SemanticError.h"
@@ -35,6 +36,11 @@ TestWrapper::TestWrapper() {
 void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
     // ...rest of your code...
+	SourceLexer lexer = SourceLexer(filename);
+	vector<SourceToken> tokens = lexer.GetAllTokens();
+	SourceValidator validator = SourceValidator();
+	cout << (int)validator.Validate(tokens) << endl;
+	exit(1);
 	SourceParser parser = SourceParser();
 	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
 

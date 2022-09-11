@@ -1,25 +1,12 @@
-procedure proc1 {
+procedure test {
     read x;
     read y;
-    x = 2;
-    y = 3 + x;
-    if (x > 3) then {
-        while (y < x) {
-            y = y + 1;
-        }
+    if (y > x) then {
+        y = x;
     } else {
-        print x;
-        print y;
-        call proc2;
+        call test1;
     }
 }
-
-procedure proc2 {
-    read a;
-    if (a > 1) then {
-        print a;
-    } else {
-        a = a + 1;
-    }
+procedure test1 {
+    c = 1;
 }
-
