@@ -44,9 +44,9 @@
     <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
-	  <ClCompile Include="PKB\manager\ParentManager.cpp" />
+    <ClCompile Include="PKB\manager\ParentManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
-	  <ClCompile Include="PKB\manager\FollowsManager.cpp" />
+    <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
@@ -82,6 +82,7 @@
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -133,16 +134,16 @@
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
-  	<ClInclude Include="PKB\store\EntityStore.h" />
-  	<ClInclude Include="PKB\store\RelationStore.h" />
-  	<ClInclude Include="PKB\store\OneToOneRelationStore.h" />
-  	<ClInclude Include="PKB\store\OneToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\EntityStore.h" />
+    <ClInclude Include="PKB\store\RelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
-  	<ClInclude Include="PKB\manager\ParentManager.h" />
+    <ClInclude Include="PKB\manager\ParentManager.h" />
     <ClInclude Include="PKB\manager\StatementManager.h" />
-	  <ClInclude Include="PKB\manager\FollowsManager.h" />
+    <ClInclude Include="PKB\manager\FollowsManager.h" />
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
@@ -183,5 +184,6 @@
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
   </ItemGroup>
 </Project>

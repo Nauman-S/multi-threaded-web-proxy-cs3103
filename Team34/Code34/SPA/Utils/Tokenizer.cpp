@@ -44,12 +44,16 @@ std::optional<int> Tokenizer::getTokenIval() {
 
 Token Tokenizer::PeekNextToken(int number_tokens_) {
 	Token current_token_store_ = this->current_token;
+	std::optional<int> current_ival_store_ = this->ival;
+	std::optional<std::string> current_sval_store_ = this->sval;
 	int current_index_copy_ = this->current_index;
 	for (int i = 0; i < number_tokens_; i++) {
 		MoveToNextToken(&current_index_copy_);
 	}
 	Token peeked_token_ = this->current_token;
 	this->current_token = current_token_store_;
+	this->ival = current_ival_store_;
+	this->sval = current_sval_store_;
 	return peeked_token_;
 }
 
@@ -96,17 +100,14 @@ void Tokenizer::consumeAlphanumericToken(int* current_index_) {
 
 void Tokenizer::consumeIntegerToken(int* current_index_) {
 	std::string int_string = "";
-	int val = this->query_pointer[*current_index_], power = 10;
 	int_string.push_back(this->query_pointer[*current_index_]);
 	while (*current_index_ < this->last_index && isdigit(this->query_pointer[*current_index_ + 1])) {
 		(*current_index_)++;
-		val += power * (int)this->query_pointer[*current_index_];
-		power *= 10;
 		int_string.push_back(this->query_pointer[*current_index_]);
 	}
 	this->current_token = Token(int_string, TokenType::kInteger);
 	this->sval = {};
-	this->ival = val;
+	this->ival = stoi(int_string);
 
 }
 

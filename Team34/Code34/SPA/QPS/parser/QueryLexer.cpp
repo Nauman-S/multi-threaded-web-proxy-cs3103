@@ -6,12 +6,14 @@ void QueryLexer::InitializeKeywords() {
 	this->design_entities_.insert({ "STMT", "READ", "PRINT", "CALL", "WHILE", "IF", "ASSIGN", "VARIABLE", "CONSTANT", "PROCEDURE" });
 	this->keywords_.insert({ "SELECT", "SUCH", "THAT" });
 	this->delimiters_.insert({ ';',',','(',')','\"' });
+	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
 
 QueryLexer::QueryLexer() {
 	InitializeKeywords();
 	this->tokenizer_ = new Tokenizer();
 }
+
 QueryLexer::~QueryLexer() {
 	delete this->tokenizer_;
 }
@@ -155,6 +157,31 @@ bool QueryLexer::HasInteger() {
 	return this->tokenizer_->getToken().type_ == TokenType::kInteger;
 }
 
+bool QueryLexer::HasOperator() {
+	return this->operators_.find(this->tokenizer_->getToken().type_) != this->operators_.end();
+}
+
+std::string QueryLexer::MatchOperator() {
+	std::string operator_string_;
+		if (this->tokenizer_->getToken().type_ == TokenType::kAdd) {
+			operator_string_ = "+";
+		}
+		else if (this->tokenizer_->getToken().type_ == TokenType::kMinus) {
+			operator_string_ = "-";
+		}
+		else if (this->tokenizer_->getToken().type_ == TokenType::kkDivide) {
+			operator_string_ = "/";
+		}
+		else if (this->tokenizer_->getToken().type_ == TokenType::kMultiply) {
+			operator_string_ = "*";
+		}
+		else if (this->tokenizer_->getToken().type_ == TokenType::kModulo) {
+			operator_string_ = "%";
+		}
+
+		this->tokenizer_->nextToken();
+		return operator_string_;
+}
 int QueryLexer::MatchInteger() {
 	if (!HasInteger()) throw SyntaxError(GenerateErrorMessage("INTEGER", tokenizer_->getTokenSval().value_or("INTEGER")));
 	int i = this->tokenizer_->getTokenIval().value();
@@ -187,3 +214,8 @@ bool QueryLexer::HasMoreTokens() {
 string QueryLexer::GenerateErrorMessage(string expected, string actual) {
 	return "Expected Token: " + expected + " ; Actual Token: " + actual;
 };
+
+Token QueryLexer::PeekNextToken(int number_tokens_) {
+	return this->tokenizer_->PeekNextToken(number_tokens_);
+}
+

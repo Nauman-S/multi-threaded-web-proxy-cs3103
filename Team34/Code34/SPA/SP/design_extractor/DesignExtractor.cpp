@@ -9,6 +9,7 @@
 #include "EntityExtractor.h"
 #include "UsesModifiesExtractor.h"
 #include "ParentsExtractor.h"
+#include "FollowsExtractor.h"
 
 #include "../../PKB/WritePKBManager.h"
 
@@ -18,10 +19,12 @@ void DesignExtractor::PopulatePKB(std::shared_ptr<ProgramNode> root) {
 	EntityExtractor entity_extractor;
 	UsesModifiesExtractor uses_modifies_extractor;
 	ParentsExtractor parents_extractor;
+	FollowsExtractor follows_extractor;
 
 	root->Extract(entity_extractor);
 	root->Extract(uses_modifies_extractor);
 	root->Extract(parents_extractor);
+	root->Extract(follows_extractor);
 }
 
 void DesignExtractor::AddConstants(const std::string& source_filename) {
