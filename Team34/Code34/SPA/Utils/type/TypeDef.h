@@ -2,8 +2,9 @@
 
 #include <string>
 
-typedef std::string Variable;
 typedef int Constant;
-typedef std::string Procedure;
 typedef int StmtNum;
+typedef std::string Variable;
+typedef std::string Procedure;
+
 using StrPair = std::pair<std::string, std::string>;
