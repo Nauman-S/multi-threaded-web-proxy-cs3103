@@ -24,21 +24,17 @@ bool QueryResult::MergeSetResult(shared_ptr<SetRes> other_set)
 
 
 	if (set_results_.count(sym) == 0) {
-		set_results_.insert({ sym, set_res });
+		set_results_.insert({ sym, other_set });
 		return true;
 	}
 
-	set_results_.at(sym)->Merge(set_res);
+	set_results_.at(sym)->Merge(other_set);
 	return true;
 }
 
 bool QueryResult::MergeTableResult(shared_ptr<TableRes> other_table)
 {
-	return false;
-}
-
-bool QueryResult::MergeResult(shared_ptr<ResWrapper> res_wrapper)
-{
+	// TODO: Implement this
 	return false;
 }
 
@@ -64,32 +60,32 @@ bool QueryResult::MergeResult(shared_ptr<ResWrapper> res_wrapper) {
 }
 
 
-bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
-	std::shared_ptr<SetRes> set_res = res_wrapper.GetSet();
-
-
-	string sym = set_res->GetSyn();
-	shared_ptr<unordered_set<string>> res_domain = set_res->GetDomain();
-
-	// check whether the domain is empty
-	assert(res_domain != nullptr && "The result domain cannot be a nullptr");
-
-	if (res_domain->size() == 0) {
-		return false;
-	}
-
-	
-	if (set_results_.count(sym) == 0) {
-		set_results_.insert({ sym, set_res });
-		return true;
-	} 
-
-	set_results_.at(sym)->Merge(set_res);
-	return true;
-
-}
-
-bool QueryResult::MergeTableResult(ResWrapper& res_wrapper) {
-	table_results_.push_back(res_wrapper.GetTable());
-	return true;
-}
+//bool QueryResult::MergeSetResult(ResWrapper& res_wrapper) {
+//	std::shared_ptr<SetRes> set_res = res_wrapper.GetSet();
+//
+//
+//	string sym = set_res->GetSyn();
+//	shared_ptr<unordered_set<string>> res_domain = set_res->GetDomain();
+//
+//	// check whether the domain is empty
+//	assert(res_domain != nullptr && "The result domain cannot be a nullptr");
+//
+//	if (res_domain->size() == 0) {
+//		return false;
+//	}
+//
+//	
+//	if (set_results_.count(sym) == 0) {
+//		set_results_.insert({ sym, set_res });
+//		return true;
+//	} 
+//
+//	set_results_.at(sym)->Merge(set_res);
+//	return true;
+//
+//}
+//
+//bool QueryResult::MergeTableResult(ResWrapper& res_wrapper) {
+//	table_results_.push_back(res_wrapper.GetTable());
+//	return true;
+//}
