@@ -7,6 +7,8 @@
 #include <memory>
 
 #include "../Utils/Token.h"
+#include "../Utils/type/TypeDef.h"
+
 #include "SourceToken.h"
 #include "ASTNode.h"
 #include "ProgramNode.h"
@@ -47,4 +49,6 @@ public:
 
 	std::map<std::shared_ptr<StatementASTNode>, LineIndex> si_mapping;
 	std::map<LineIndex, std::shared_ptr<StatementASTNode>> is_mapping;
+
+	static inline std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_name_to_node_;
 };

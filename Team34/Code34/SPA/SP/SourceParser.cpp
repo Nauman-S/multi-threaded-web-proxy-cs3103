@@ -40,6 +40,8 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 	procedure->SetChildren(children);
 	cout << children.size() << endl;
 	procedure->SetProc(p);
+
+	this->proc_name_to_node_.insert(std::make_pair(p.GetName(), procedure));
 	return procedure;
 }
 
