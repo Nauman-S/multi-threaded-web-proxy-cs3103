@@ -39,8 +39,9 @@ void TestWrapper::parse(std::string filename) {
 	SourceLexer lexer = SourceLexer(filename);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	SourceValidator validator = SourceValidator();
-	cout << (int)validator.Validate(tokens) << endl;
-	exit(1);
+	if (!validator.Validate(tokens)) {
+	    cout << "Errors found in Source Code" << endl;
+	}
 	SourceParser parser = SourceParser();
 	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
 
