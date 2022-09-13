@@ -15,7 +15,7 @@ public:
 
 	static std::shared_ptr<SetRes> HashJoinSets(std::shared_ptr<SetRes> set1, std::shared_ptr<SetRes> set2);
 
-	static std::shared_ptr<TableRes> HashJoinSetWithTable(std::shared_ptr<SetRes> set, std::shared_ptr<TableRes> table);
+	static std::pair<std::shared_ptr<SetRes>, std::shared_ptr<TableRes>> HashJoinSetWithTable(std::shared_ptr<SetRes> set, std::shared_ptr<TableRes> table);
 
 	// static std::shared_ptr<TableRes> HashJoinTables(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
 

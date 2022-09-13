@@ -18,6 +18,7 @@ using std::unordered_set;
 using std::unordered_map;
 using std::vector;
 using std::stack;
+using std::pair;
 using std::shared_ptr;
 using std::make_shared;
 
@@ -84,7 +85,7 @@ std::shared_ptr<SetRes> SpaAlgo::HashJoinSets(std::shared_ptr<SetRes> set_res_1,
 	return make_shared<SetRes>(syn, intersect);
 }
 
-std::shared_ptr<TableRes> SpaAlgo::HashJoinSetWithTable(std::shared_ptr<SetRes> set_res, std::shared_ptr<TableRes> table_res)
+pair<shared_ptr<SetRes>, shared_ptr<TableRes>> SpaAlgo::HashJoinSetWithTable(std::shared_ptr<SetRes> set_res, std::shared_ptr<TableRes> table_res)
 {
 	string syn = set_res->GetSyn();
 	assert(table_res->Contains(syn));
@@ -93,20 +94,24 @@ std::shared_ptr<TableRes> SpaAlgo::HashJoinSetWithTable(std::shared_ptr<SetRes> 
 	shared_ptr<const vector<StrPair>> table = table_res->GetRows();
 	int col_index = table_res->GetColumnIndex(syn);
 
-	shared_ptr<vector<StrPair>> joined;
-	string key_on;
+	shared_ptr<unordered_set<string>> joined_set;
+	shared_ptr<vector<StrPair>> joined_table;
+	string join_val;
 	for (auto iter=table->begin(); iter != table->end(); ++iter) {
 		if (col_index == 0) {
-			key_on = iter->first;
+			join_val = iter->first;
 		}
 		else {
-			key_on = iter->second;
+			join_val = iter->second;
 		}
 		
-		if (set->find(key_on) != set->end()) {
-			joined->push_back(*iter);
+		if (set->find(join_val) != set->end()) {
+			joined_set->insert(join_val);
+			joined_table->push_back(*iter);
 		}
 	}
 
-	return make_shared<TableRes>(table_res->GetSynMap(), joined);
+	shared_ptr<SetRes> set_res = make_shared<SetRes>(syn, joined_set);
+	shared_ptr<TableRes> table_res = make_shared<TableRes>(table_res->GetSynMap(), joined_table);
+	return pair<shared_ptr<SetRes>, shared_ptr<TableRes>>(set_res, table_res);
 }
