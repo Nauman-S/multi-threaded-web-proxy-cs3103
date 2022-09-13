@@ -217,7 +217,7 @@ string QueryLexer::GenerateErrorMessage(string expected, string actual) {
 	return "Expected Token: " + expected + " ; Actual Token: " + actual;
 };
 
-Token QueryLexer::PeekNextToken(int number_tokens_) {
+std::string QueryLexer::PeekNextToken(int number_tokens_) {
 	return this->tokenizer_->PeekNextToken(number_tokens_);
 }
 
