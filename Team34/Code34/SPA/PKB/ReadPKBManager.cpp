@@ -113,14 +113,14 @@ bool ReadPKBManager::CheckFollows(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollows(left, right);
 }
 
-StmtNum ReadPKBManager::GetSuccessorStmt(StmtNum stmt)
+StmtNum ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 {
-	return pkb.follows_manager_.GetSuccessorStmt(stmt);
+	return pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
 }
 
-StmtNum ReadPKBManager::GetPredecessorStmt(StmtNum stmt)
+StmtNum ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt)
 {
-	return pkb.follows_manager_.GetPredecessorStmt(stmt);
+	return pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
@@ -144,14 +144,14 @@ bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollowsT(left, right);
 }
 
-std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllSuccessorStmt(StmtNum stmt)
+std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
 {
-	return pkb.follows_manager_.GetAllSuccessorStmt(stmt);
+	return pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllPredecessorStmt(StmtNum stmt)
+std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
 {
-	return pkb.follows_manager_.GetAllPredecessorStmt(stmt);
+	return pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsTRelations()

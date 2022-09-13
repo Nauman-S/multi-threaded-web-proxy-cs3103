@@ -11,12 +11,12 @@ bool FollowsManager::CheckFollows(StmtNum left, StmtNum right)
     return follows_store_.CheckRelation(left, right);
 }
 
-StmtNum FollowsManager::GetSuccessorStmt(StmtNum stmt)
+StmtNum FollowsManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetRHSByLHS(stmt);
 }
 
-StmtNum FollowsManager::GetPredecessorStmt(StmtNum stmt)
+StmtNum FollowsManager::GetPredecessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetLHSByRHS(stmt);
 }
@@ -47,12 +47,12 @@ bool FollowsManager::CheckFollowsT(StmtNum left, StmtNum right)
     return follows_store_.CheckTransistiveRelation(left, right);
 }
 
-std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllSuccessorStmt(StmtNum stmt)
+std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
 {
     return follows_store_.GetAllRHSByLHS(stmt);
 }
 
-std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllPredecessorStmt(StmtNum stmt)
+std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
 {
     return follows_store_.GetAllLHSByRHS(stmt);
 }

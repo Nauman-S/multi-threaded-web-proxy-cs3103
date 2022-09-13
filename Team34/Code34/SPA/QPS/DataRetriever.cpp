@@ -208,11 +208,11 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmt(lhs_stmt_num);
+        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
         int_set->insert(rhs_stmt_num);
     }
     else if (type == RelType::kFollowsTRel) {
-        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
         int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
         // TODO: Ask PKB to change return to ptr of set
         // int_set = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
@@ -239,11 +239,11 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
         int_set = FilterStmtSetByType(int_set, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmt(rhs_stmt_num);
+        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
         int_set->insert(lhs_stmt_num);
     }
     else if (type == RelType::kFollowsTRel) {
-        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
         int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
         // TODO: Ask PKB to change return to ptr of set
         // int_set = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);

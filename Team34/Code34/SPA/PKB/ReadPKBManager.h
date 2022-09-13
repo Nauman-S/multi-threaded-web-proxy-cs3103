@@ -48,16 +48,16 @@ public:
 
 	// APIs related to Follows relation
 	bool CheckFollows(StmtNum left, StmtNum right);
-	StmtNum GetSuccessorStmt(StmtNum stmt);
-	StmtNum GetPredecessorStmt(StmtNum stmt);
+	StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
+	StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
 
 	// APIs relation to Follows* relation
 	bool CheckFollowsT(StmtNum left, StmtNum right);
-	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 
 	// APIs related to Uses relation
