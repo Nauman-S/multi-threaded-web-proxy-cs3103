@@ -72,7 +72,7 @@ public:
 
 	string GenerateErrorMessage(string expected, string actual);
 
-	Token PeekNextToken(int number_tokens_);
+	std::string PeekNextToken(int number_tokens_);
 };
 #endif
 

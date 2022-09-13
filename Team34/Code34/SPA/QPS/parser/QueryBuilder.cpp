@@ -15,17 +15,7 @@
 #include "..\..\Utils\expression\ExactExprSpec.h"
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
-#include "..\reference\StmtRef.h"
-#include "..\reference\ReadRef.h"
-#include "..\reference\PrintRef.h"
-#include "..\reference\CallRef.h"
-#include "..\reference\WhileRef.h"
-#include "..\reference\IfRef.h"
-#include "..\reference\AssignRef.h"
-#include "..\reference\VarRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ProcRef.h"
+#include "..\reference\EntityRef.h"
 #include "..\relation\Rel.h"
 #include "..\relation\FollowsRel.h"
 #include "..\relation\FollowsTRel.h"
@@ -73,7 +63,7 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			shared_ptr<Ref> ref_ = CreateReference(design_entity_, synonym_);
+			shared_ptr<Ref> ref_ = EntityRef::CreateReference(design_entity_, synonym_);
 			return ref_;
 		}
 		else {
@@ -86,48 +76,11 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 }
 
-// this should be inside Create Ref class based on factory pattern. for now its here
-shared_ptr<Ref> QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
-	if (design_entity_.compare("STMT") == 0) {
-		return shared_ptr<StmtRef>(new StmtRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("READ") == 0) {
-		return shared_ptr<ReadRef>(new ReadRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PRINT") == 0) {
-		return shared_ptr<PrintRef>(new PrintRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CALL") == 0) {
-		return shared_ptr<CallRef>(new CallRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("WHILE") == 0) {
-		return shared_ptr<WhileRef>(new WhileRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("IF") == 0) {
-		return shared_ptr<IfRef>(new IfRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("ASSIGN") == 0) {
-		return shared_ptr<AssignRef>(new AssignRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("VARIABLE") == 0) {
-		return shared_ptr<VarRef>(new VarRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CONSTANT") == 0) {
-		return shared_ptr<ConstRef>(new ConstRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PROCEDURE") == 0) {
-		return shared_ptr<ProcRef>(new ProcRef(ValType::kSynonym, synonym_));
-	}
-	else {
-		throw new SyntaxError("This error should never be called - Iconsistent Naming OF design_entities");
-	}
-
-}
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 
-	if (this->lexer_->HasKeyword("SELECT")) {
-		this->lexer_->MatchKeyword("SELECT");
+	if (this->lexer_->HasKeyword("Select")) {
+		this->lexer_->MatchKeyword("Select");
 		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
 		std::vector<shared_ptr<Rel>> relations_ = ParseRelations();
 		std::vector<shared_ptr<Pattern>> patterns_;
@@ -193,10 +146,10 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 
 bool QueryBuilder::HasSuchThatClause() {
 
-	if (this->lexer_->HasKeyword("SUCH")) {
-		this->lexer_->MatchKeyword("SUCH");
-		if (this->lexer_->HasKeyword("THAT")) {
-			this->lexer_->MatchKeyword("THAT");
+	if (this->lexer_->HasKeyword("such")) {
+		this->lexer_->MatchKeyword("such");
+		if (this->lexer_->HasKeyword("that")) {
+			this->lexer_->MatchKeyword("that");
 			return true;
 		}
 	}
@@ -230,22 +183,22 @@ std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
-	if (relation_name == "FOLLOWS") {
+	if (relation_name == "Follows") {
 		return ParseFollowsRel();
 	} 
-	else if (relation_name == "FOLLOWS*") {
+	else if (relation_name == "Follows*") {
 		return ParseFollowsTRel();
 	}
-	else if (relation_name == "PARENT") {
+	else if (relation_name == "Parent") {
 		return ParseParentRel();
 	}
-	else if (relation_name == "PARENT*") {
+	else if (relation_name == "Parent*") {
 		return ParseParentTRel();
 	}
-	else if (relation_name == "USES") {
+	else if (relation_name == "Uses") {
 		return ParseUsesRel();
 	}
-	else if (relation_name == "MODIFIES") {
+	else if (relation_name == "Modifies") {
 		return ParseModifiesRel();
 	}
 	else {

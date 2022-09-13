@@ -30,6 +30,7 @@ Token Tokenizer::getToken() {
 }
 
 bool Tokenizer::hasNextToken() {
+	this->skipIgnoredChars(&this->current_index);
 	return this->current_index < this->last_index;
 }
 
@@ -42,7 +43,7 @@ std::optional<int> Tokenizer::getTokenIval() {
 }
 
 
-Token Tokenizer::PeekNextToken(int number_tokens_) {
+std::string Tokenizer::PeekNextToken(int number_tokens_) {
 	Token current_token_store_ = this->current_token;
 	std::optional<int> current_ival_store_ = this->ival;
 	std::optional<std::string> current_sval_store_ = this->sval;
@@ -50,7 +51,7 @@ Token Tokenizer::PeekNextToken(int number_tokens_) {
 	for (int i = 0; i < number_tokens_; i++) {
 		MoveToNextToken(&current_index_copy_);
 	}
-	Token peeked_token_ = this->current_token;
+	std::string peeked_token_ = this->getTokenSval().value_or("");
 	this->current_token = current_token_store_;
 	this->ival = current_ival_store_;
 	this->sval = current_sval_store_;
