@@ -38,10 +38,9 @@ public:
 private:
 	std::unique_ptr<WritePKBManager> write_manager_;
 
-	std::set<Procedure> extracted_proc_;
 	std::vector<Procedure> proc_call_stack_;
+	std::vector<StmtNum> parent_smts_;
 
-	bool IsExtractedProcedure(Procedure);
 	void SetIndirectUses(Variable);
 	void SetIndirectModifies(Variable);
 };
