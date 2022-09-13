@@ -14,7 +14,9 @@ public:
 	void SetModifies(StmtNum stmt_num, Variable var);
 	void SetModifies(Procedure proc_name, Variable var);
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 	std::shared_ptr<std::unordered_set<Variable>> GetVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetStmtNumByVar(Variable var);
