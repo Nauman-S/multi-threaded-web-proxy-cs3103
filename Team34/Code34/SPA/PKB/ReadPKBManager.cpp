@@ -61,19 +61,29 @@ bool ReadPKBManager::CheckParent(StmtNum parent, StmtNum child)
 	return pkb.parent_manager_.CheckParent(parent, child);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildren(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildrenFromStmt(StmtNum parent)
 {
-	return pkb.parent_manager_.GetChildren(parent);
+	return pkb.parent_manager_.GetChildrenFromStmt(parent);
 }
 
-StmtNum ReadPKBManager::GetParent(StmtNum child)
+StmtNum ReadPKBManager::GetParentFromStmt(StmtNum child)
 {
-	return pkb.parent_manager_.GetParent(child);
+	return pkb.parent_manager_.GetParentFromStmt(child);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
 {
 	return pkb.parent_manager_.GetAllParentRelations();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents()
+{
+	return pkb.parent_manager_.GetAllParents();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
+{
+	return pkb.parent_manager_.GetAllChildren();
 }
 
 // APIs related to Parent* relation
@@ -82,14 +92,14 @@ bool ReadPKBManager::CheckParentT(StmtNum parent, StmtNum child)
 	return pkb.parent_manager_.CheckParentT(parent, child);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildrenFromStmt(StmtNum stmt)
 {
-	return pkb.parent_manager_.GetAllChildren(stmt);
+	return pkb.parent_manager_.GetAllChildrenFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParentsFromStmt(StmtNum stmt)
 {
-	return pkb.parent_manager_.GetAllParents(stmt);
+	return pkb.parent_manager_.GetAllParentsFromStmt(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentTRelations()
@@ -116,6 +126,16 @@ StmtNum ReadPKBManager::GetPredecessorStmt(StmtNum stmt)
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
 {
 	return pkb.follows_manager_.GetAllFollowsRelations();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts()
+{
+	return pkb.follows_manager_.GetAllPredecessorStmts();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
+{
+	return pkb.follows_manager_.GetAllSuccessorStmts();
 }
 
 // APIs related to Follows* relation

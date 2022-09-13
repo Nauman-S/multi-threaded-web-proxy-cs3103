@@ -26,6 +26,16 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAll
     return follows_store_.GetAllRelations();
 }
 
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllPredecessorStmts()
+{
+    return follows_store_.GetAllLHS();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllSuccessorStmts()
+{
+    return follows_store_.GetAllRHS();
+}
+
 // Follows* Relation methods
 void FollowsManager::SetFollowsT(StmtNum left, StmtNum right)
 {
