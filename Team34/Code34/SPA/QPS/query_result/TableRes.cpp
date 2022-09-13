@@ -45,3 +45,8 @@ shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {
     return result_set;
 
 }
+
+std::shared_ptr<const std::vector<StrPair>> TableRes::GetRows()
+{
+    return rows_ptr_;
+}

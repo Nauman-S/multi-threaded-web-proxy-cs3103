@@ -12,11 +12,11 @@ protected:
 	std::unordered_map<std::string, std::shared_ptr<SetRes>> set_results_;
 	std::vector<std::shared_ptr<TableRes>> table_results_;
 
-	bool MergeSetResult(ResWrapper& res_wrapper);
-	bool MergeTableResult(ResWrapper& res_wrapper);
+	bool MergeSetResult(std::shared_ptr<SetRes> other_set);
+	bool MergeTableResult(std::shared_ptr<TableRes> other_table);
 
 public:
-	bool MergeResult(ResWrapper& res_wrapper);
+	bool MergeResult(std::shared_ptr<ResWrapper> res_wrapper);
 	
 	/*shared_ptr<unordered_map<string, shared_ptr<SetRes>>> GetSetResults() {
 		return shared_ptr < unordered_map<string, shared_ptr<SetRes>>>(&set_results_);
