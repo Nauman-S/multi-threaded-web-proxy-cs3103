@@ -83,6 +83,7 @@
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="QPS\reference\EntityRef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
