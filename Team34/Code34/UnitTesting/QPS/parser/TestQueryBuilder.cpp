@@ -305,6 +305,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
+			std::string expr_str = "";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -322,7 +323,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
 			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
 			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
-			//Assert::IsTrue(query->GetPatterns()->at(0)->RhsExprSpec()->IsMatch());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
 
 		};
 
@@ -332,6 +333,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
+			std::string expr_str = "x+3";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -349,7 +351,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
 			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
 			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
-			//Assert::IsTrue(query->GetPatterns()->at(0)->RhsExprSpec()->IsMatch());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
 
 		};
 	};
