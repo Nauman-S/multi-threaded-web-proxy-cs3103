@@ -23,7 +23,7 @@ namespace IntegrationTesting
 	TEST_CLASS(TestProgramNodeExtraction)
 	{
 	private:
-		string base_dir = "../../Tests34/integration/SP_PKB/";
+		string base_dir = "../../Tests34/integration_tests/SP_PKB/";
 		SourceParser parser = SourceParser();
 
 		shared_ptr<ReadPKBManager> read = ReadPKBManager::GetInstance();

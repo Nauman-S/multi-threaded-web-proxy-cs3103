@@ -8,6 +8,7 @@ procedure proc1 {
         var1 = var3;
     }
 }
+
 procedure proc2 {
     var4 = 2;
 }
