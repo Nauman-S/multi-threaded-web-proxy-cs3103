@@ -295,21 +295,22 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     RefType rhs_stmt_type = rel.RhsRefType();
     shared_ptr<unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
-        int_set = pkb_ptr_->GetChildren(lhs_stmt_num);  // set of immediate children
+        int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllChildren(lhs_stmt_num);  // set of immediate and indirect children
+        int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num);  // set of immediate and indirect children
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
         // What if no successor stmt num???
         // Discuss with PKB to return a set instead
-        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmt(lhs_stmt_num);
+
+        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
         int_set->insert(rhs_stmt_num);
     }
     else if (type == RelType::kFollowsTRel) {
-        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
         int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
         // TODO: Ask PKB to change return to ptr of set
         // int_set = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
@@ -334,19 +335,19 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     RefType lhs_stmt_type = rel.LhsRefType();
     shared_ptr <unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
-        int lhs_stmt_num = pkb_ptr_->GetParent(rhs_stmt_num);
+        int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
         int_set->insert(lhs_stmt_num);
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllParents(rhs_stmt_num);
+        int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num);
         int_set = FilterStmtSetByType(int_set, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmt(rhs_stmt_num);
+        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
         int_set->insert(lhs_stmt_num);
     }
     else if (type == RelType::kFollowsTRel) {
-        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
         int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
         // TODO: Ask PKB to change return to ptr of set
         // int_set = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
