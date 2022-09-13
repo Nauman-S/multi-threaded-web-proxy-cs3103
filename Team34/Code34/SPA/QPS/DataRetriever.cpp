@@ -45,6 +45,16 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+
+    shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
+
+    return !set->empty();
+}
+
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -83,6 +93,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     return res;
 }
 
+shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(StmtVarRel& rel)
+{
+    // TODO: plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
+}
+
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -117,6 +133,16 @@ bool DataRetriever::CheckPVRel(ProcVarRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckPVRelExistenceByProc(ProcVarRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+
+    shared_ptr<unordered_set<string>> set = GetVarByProc(rel);
+
+    return !set->empty();
+}
+
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -149,6 +175,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
     }
  
     return res;
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetProcByWildcard(ProcVarRel& rel)
+{
+    // TODO: plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& rel)
@@ -191,6 +223,69 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
+{
+    // TODO: plug in PKB API here
+    return false;
+}
+
+bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+
+    int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    shared_ptr <unordered_set<int>> int_set;
+    if (type == RelType::kParentRel) {
+        int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
+        int_set->insert(lhs_stmt_num);
+    }
+    else if (type == RelType::kParentTRel) {
+        int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsRel) {
+        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
+        int_set->insert(lhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsTRel) {
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
+        int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
+        // TODO: Ask PKB to change return to ptr of set
+        // int_set = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
+    }
+
+    return !int_set->empty();
+}
+
+bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+
+    int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    shared_ptr<unordered_set<int>> int_set;
+    if (type == RelType::kParentRel) {
+        int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
+    }
+    else if (type == RelType::kParentTRel) {
+        int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num);  // set of immediate and indirect children
+    }
+    else if (type == RelType::kFollowsRel) {
+        // What if no successor stmt num???
+        // Discuss with PKB to return a set instead
+        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
+        int_set->insert(rhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsTRel) {
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
+        int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
+        // TODO: Ask PKB to change return to ptr of set
+        // int_set = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
+    }
+
+    return !int_set->empty();
+}
+
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -208,6 +303,9 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
+        // What if no successor stmt num???
+        // Discuss with PKB to return a set instead
+
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
         int_set->insert(rhs_stmt_num);
     }
@@ -220,6 +318,12 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     }
 
     return IntSetToStrSet(int_set);
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRel& rel)
+{
+    // TODO: Plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtStmtRel& rel)
@@ -251,6 +355,12 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     }
 
     return IntSetToStrSet(int_set);
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRel& rel)
+{
+    // TODO: Plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel)
@@ -354,62 +464,93 @@ shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByType(shared_p
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
 {
+    /*
+        There are in total 9 combinations of LHS and RHS value types.
+        LHS type cannot be wildcard, otherwise semantic error is thrown (covers 3 cases);
+        if LHS is concrete ref, RHS is concrete ref OR wildcard, boolean result is expected (covers 2 cases);
+        else if RHS is synonym, then set result is expected (covers 1 case);
+        else if LHS is synonym, then set result is expected (covers 2 case);
+        else the both sides are synonym, table result is expected (covers 1 case).
+    */
     auto [lhs_type, rhs_type] = rel.ValTypes();
+    assert(lhs_type != ValType::kWildcard && rel.LhsValue() != "_");
     
     std::shared_ptr<ResWrapper> res;
     if (lhs_type == ValType::kLineNum && rhs_type == ValType::kVarName) {
         bool ok = CheckSVRel(rel);
         res = std::make_shared<ResWrapper>(ok);
     }
-    else if (lhs_type == ValType::kLineNum) {
-        // rhs_type is kSynonym or kWildcard
+    else if (lhs_type == ValType::kLineNum && rhs_type == ValType::kSynonym) {
         shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (rhs_type == ValType::kVarName) {
-        // lhs_type is kSynonym or kWildcard
+    else if (rhs_type == ValType::kSynonym || rhs_type == ValType::kVarName) {
         shared_ptr<unordered_set<string>> set = GetStmtByVar(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else {
-        // Both are kSynonym or kWildcard
+    else if (rhs_type == ValType::kSynonym || rhs_type == ValType::kSynonym) {
         shared_ptr<vector<pair<string, string>>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
 
         res = std::make_shared<ResWrapper>(table_res);
     }
+    // Wildcard handling cases below
+    else if (lhs_type == ValType::kLineNum && rhs_type == ValType::kWildcard) {
+        bool ok = CheckSVRelExistenceByStmt(rel);
+        res = std::make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kWildcard) {
+        shared_ptr<unordered_set<string>> set = GetStmtByWildcard(rel);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
+        res = std::make_shared<ResWrapper>(set_res);
+    }
+
     return res;
 }
 
 shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 {
+    /*
+        The retrieving logic of ProcVarRel is similar to StmtVarRel.
+    */
     auto [lhs_type, rhs_type] = rel.ValTypes();
+    assert(lhs_type != ValType::kWildcard && rel.LhsValue() != "_");
 
     std::shared_ptr<ResWrapper> res;
     if (lhs_type == ValType::kProcName && rhs_type == ValType::kVarName) {
         bool ok = CheckPVRel(rel);
         res = std::make_shared<ResWrapper>(ok);
     }
-    else if (lhs_type == ValType::kProcName) {
+    else if (lhs_type == ValType::kProcName && rhs_type == ValType::kSynonym) {
         shared_ptr<unordered_set<string>> set = GetVarByProc(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (rhs_type == ValType::kVarName) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kVarName) {
         shared_ptr<unordered_set<string>> set = GetProcByVar(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else {
-        // Both are kSynonym or kWildcard
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
         shared_ptr<vector<pair<string, string>>> table = GetAllPVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
         res = std::make_shared<ResWrapper>(table_res);
     }
+    // Wildcard handling cases below
+    else if (lhs_type == ValType::kProcName && rhs_type == ValType::kWildcard) {
+        bool ok = CheckPVRelExistenceByProc(rel);
+        res = std::make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kWildcard) {
+        shared_ptr<unordered_set<string>> set = GetProcByWildcard(rel);
+        shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
+        res = std::make_shared<ResWrapper>(set_res);
+    }
+
     return res;
 }
 
@@ -438,29 +579,71 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
 {
+    /*
+        Classify LHS x RHS value type combinations by return result type
+        table result:
+            stmt_syn, stmt_syn -> get table of all pairs
+
+        set result:
+            stmt_syn, wildcard -> get all lhs stmt -> PENDING PKB API
+            stmt_syn, stmt_num -> get all lhs stmt by rhs stmt_num
+            wildcard, stmt_syn -> get all rhs stmt -> PENDING PKB API
+            stmt_num, stmt_syn -> get all rhs stmt by lhs stmt_num
+
+        bool result:
+            wildcard, wildcard -> check if any relation exists -> PENDING PKB API
+            wildcard, stmt_num -> get all lhs stmt by rhs stmt_num, and check set emptiness
+            stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and check set emptiness
+            stmt_num, stmt_num -> check relation existence
+    */
     auto [lhs_type, rhs_type] = rel.ValTypes();
 
     shared_ptr<ResWrapper> res;
+    
     if (lhs_type == ValType::kLineNum && rhs_type == ValType::kLineNum) {
         bool ok = CheckSSRel(rel);
         res = make_shared<ResWrapper>(ok);
     }
-    else if (lhs_type == ValType::kLineNum) {
-        shared_ptr<unordered_set<string>> set = GetRhsStmtByLhsStmt(rel);
-        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
-        res = make_shared<ResWrapper>(set_res);
-    }
-    else if (rhs_type == ValType::kLineNum) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kLineNum) {
         shared_ptr<unordered_set<string>> set = GetLhsStmtByRhsStmt(rel);
         shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.LhsValue(), set);
         res = make_shared<ResWrapper>(set_res);
     }
-    else {
+    else if (lhs_type == ValType::kLineNum && rhs_type == ValType::kSynonym) {
+        shared_ptr<unordered_set<string>> set = GetRhsStmtByLhsStmt(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
         shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
         shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
         res = make_shared<ResWrapper>(table_res);
     }
+    // Handle wildcard cases below
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kLineNum) {
+        bool ok = CheckSSRelExistenceByRhsStmt(rel);
+        res = make_shared<ResWrapper>(ok);
+    } 
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kSynonym) {
+        shared_ptr<unordered_set<string>> set = GetRhsStmtByWildcard(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    } 
+    else if (lhs_type == ValType::kLineNum && rhs_type == ValType::kWildcard) {
+        bool ok = CheckSSRelExistenceByLhsStmt(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kWildcard) {
+        shared_ptr<unordered_set<string>> set = GetLhsStmtByWildcard(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.LhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kWildcard) {
+        bool ok = CheckSSRelExistence(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+
     return res;
 }
 
