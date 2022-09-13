@@ -16,22 +16,22 @@ class Pattern
 	: public Clause
 {
 protected:
-	AssignRef& assign_;
-	VarRef& lhs_;
-	ExprSpec& rhs_;
+	std::shared_ptr<AssignRef> assign_;
+	std::shared_ptr<VarRef> lhs_;
+	std::shared_ptr <ExprSpec> rhs_;
 
 public:
-	Pattern(AssignRef& a, VarRef& lhs, ExprSpec& rhs) : assign_{ a }, lhs_{ lhs }, rhs_{ rhs } {};
+	Pattern(std::shared_ptr<AssignRef> a, std::shared_ptr<VarRef> lhs, std::shared_ptr <ExprSpec> rhs) : assign_{ a }, lhs_{ lhs }, rhs_{ rhs } {};
 
-	std::string AssignStmtSyn() { return assign_.GetName(); };
+	std::string AssignStmtSyn() { return assign_->GetName(); };
 
-	std::optional<int> AssignStmtValueAsInt() { return assign_.ValueAsInt(); };
+	std::optional<int> AssignStmtValueAsInt() { return assign_->ValueAsInt(); };
 
-	std::string LhsValue() { return lhs_.GetName(); };
+	std::string LhsValue() { return lhs_->GetName(); };
 
-	ValType AssignStmtValType() { return assign_.GetValType(); };
+	ValType AssignStmtValType() { return assign_->GetValType(); };
 
-	ValType LhsValType() { return lhs_.GetValType(); };
+	ValType LhsValType() { return lhs_->GetValType(); };
 
 	std::shared_ptr<ExprSpec> RhsExprSpec();
 

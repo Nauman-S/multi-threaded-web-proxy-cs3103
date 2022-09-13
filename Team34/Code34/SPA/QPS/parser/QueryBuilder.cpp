@@ -9,19 +9,13 @@
 #include "SyntaxError.h"
 #include "SemanticError.h"
 #include "..\..\Utils\InvalidTokenException.h"
+#include "..\..\Utils\expression\ExprSpec.h"
+#include "..\..\Utils\expression\PartialExprSpec.h"
+#include "..\..\Utils\expression\WildcardExprSpec.h"
+#include "..\..\Utils\expression\ExactExprSpec.h"
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
-#include "..\reference\StmtRef.h"
-#include "..\reference\ReadRef.h"
-#include "..\reference\PrintRef.h"
-#include "..\reference\CallRef.h"
-#include "..\reference\WhileRef.h"
-#include "..\reference\IfRef.h"
-#include "..\reference\AssignRef.h"
-#include "..\reference\VarRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ProcRef.h"
+#include "..\reference\EntityRef.h"
 #include "..\relation\Rel.h"
 #include "..\relation\FollowsRel.h"
 #include "..\relation\FollowsTRel.h"
@@ -69,7 +63,7 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			shared_ptr<Ref> ref_ = CreateReference(design_entity_, synonym_);
+			shared_ptr<Ref> ref_ = EntityRef::CreateReference(design_entity_, synonym_);
 			return ref_;
 		}
 		else {
@@ -82,51 +76,18 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 }
 
-// this should be inside Create Ref class based on factory pattern. for now its here
-shared_ptr<Ref> QueryBuilder::CreateReference(std::string design_entity_, std::string synonym_) {
-	if (design_entity_.compare("STMT") == 0) {
-		return shared_ptr<StmtRef>(new StmtRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("READ") == 0) {
-		return shared_ptr<ReadRef>(new ReadRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PRINT") == 0) {
-		return shared_ptr<PrintRef>(new PrintRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CALL") == 0) {
-		return shared_ptr<CallRef>(new CallRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("WHILE") == 0) {
-		return shared_ptr<WhileRef>(new WhileRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("IF") == 0) {
-		return shared_ptr<IfRef>(new IfRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("ASSIGN") == 0) {
-		return shared_ptr<AssignRef>(new AssignRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("VARIABLE") == 0) {
-		return shared_ptr<VarRef>(new VarRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("CONSTANT") == 0) {
-		return shared_ptr<ConstRef>(new ConstRef(ValType::kSynonym, synonym_));
-	}
-	else if (design_entity_.compare("PROCEDURE") == 0) {
-		return shared_ptr<ProcRef>(new ProcRef(ValType::kSynonym, synonym_));
-	}
-	else {
-		throw new SyntaxError("This error should never be called - Iconsistent Naming OF design_entities");
-	}
-
-}
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 
-	if (this->lexer_->HasKeyword("SELECT")) {
-		this->lexer_->MatchKeyword("SELECT");
+	if (this->lexer_->HasKeyword("Select")) {
+		this->lexer_->MatchKeyword("Select");
 		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
 		std::vector<shared_ptr<Rel>> relations_ = ParseRelations();
-		std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		std::vector<shared_ptr<Pattern>> patterns_;
+		if (lexer_->HasPatternKeyword()) {
+			std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		}
+		
 
 		if (this->lexer_->HasMoreTokens()) {
 			throw SyntaxError("Unexpected token at end of query");
@@ -185,10 +146,10 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 
 bool QueryBuilder::HasSuchThatClause() {
 
-	if (this->lexer_->HasKeyword("SUCH")) {
-		this->lexer_->MatchKeyword("SUCH");
-		if (this->lexer_->HasKeyword("THAT")) {
-			this->lexer_->MatchKeyword("THAT");
+	if (this->lexer_->HasKeyword("such")) {
+		this->lexer_->MatchKeyword("such");
+		if (this->lexer_->HasKeyword("that")) {
+			this->lexer_->MatchKeyword("that");
 			return true;
 		}
 	}
@@ -222,22 +183,22 @@ std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
-	if (relation_name == "FOLLOWS") {
+	if (relation_name == "Follows") {
 		return ParseFollowsRel();
 	} 
-	else if (relation_name == "FOLLOWS*") {
+	else if (relation_name == "Follows*") {
 		return ParseFollowsTRel();
 	}
-	else if (relation_name == "PARENT") {
+	else if (relation_name == "Parent") {
 		return ParseParentRel();
 	}
-	else if (relation_name == "PARENT*") {
+	else if (relation_name == "Parent*") {
 		return ParseParentTRel();
 	}
-	else if (relation_name == "USES") {
+	else if (relation_name == "Uses") {
 		return ParseUsesRel();
 	}
-	else if (relation_name == "MODIFIES") {
+	else if (relation_name == "Modifies") {
 		return ParseModifiesRel();
 	}
 	else {
@@ -292,7 +253,17 @@ shared_ptr<Rel> QueryBuilder::ParseParentTRel() {
 std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSyns() {
 	shared_ptr<Ref> lhs_syn;
 	shared_ptr<VarRef> rhs_syn;
+	
+	if (lexer_->HasUnderScore()) {
+		throw SemanticError("The first EntRef in Modifies and Uses relation cannot be WildCard");
+	}
+
 	if (lexer_->HasIdentity()) {
+		string ref_name = lexer_->MatchIdentity();
+		//lhs_syn = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
+		lhs_syn = GetDeclaredSyn(ref_name);
+	} 
+	else if (lexer_->HasInteger()) {
 		lhs_syn = GetNextStmtRef();
 	}
 	else {
@@ -485,87 +456,108 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synon
 
 std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 	std::vector<shared_ptr<Pattern>> patterns_;
-	//if (HasPatternClause()) {
-	//	this->lexer_->MatchPatternKeyword();
-	//	if (this->lexer_->HasIdentity()) {
-	//		std::string syn_assign = this->lexer_->MatchIdentity();
-	//		if (this->lexer_->HasOpeningBrace()) {
-	//			this->lexer_->MatchOpeningBrace();
-	//			if (this->lexer_->HasQuotation()) {
-	//				this->lexer_->MatchQuotation();
-	//				if (this->lexer_->HasIdentity()) {
-	//					std::string identity_ = this->lexer_->MatchIdentity();
-	//					if (this->lexer_->HasQuotation()) {
-	//						this->lexer_->MatchQuotation();
 
-	//						if (this->lexer_->HasCommaDelimeter()) {
-	//							this->lexer_->MatchCommaDelimeter();
-	//							if (this->lexer_->HasExpressionSpec()) {
-	//								std::string expression_spec = this->lexer_->MatchExpressionSpec();
-	//								if (this->lexer_->HasClosingBrace()) {
-	//									this->lexer_->MatchClosingBrace();
-	//									//return expression clause
-	//								}
-	//								else {
-	//									//throw invalid syntax exception - missing closing brace 
-	//								}
-	//							}
-	//							else {
-	//								//Throw missing expressions spec
-	//							}
-	//						}
-	//						else {
-	//							//Syntax exception - Invalid pattern caluse missing comma delimeter
-	//						}
-	//					}
-	//				}
-	//				else {
-	//					//Invalid entref
-	//				}
-	//			}
-	//			else if (this->lexer_->HasIdentity()) {
-	//				std::string identity_ =  this->lexer_->MatchIdentity();
-	//				if (this->lexer_->HasCommaDelimeter()) {
-	//					this->lexer_->MatchCommaDelimeter();
-	//					if (this->lexer_->HasExpressionSpec()) {
-	//						std::string expression_spec = this->lexer_->MatchExpressionSpec();
-	//						if (this->lexer_->HasClosingBrace()) {
-	//							this->lexer_->MatchClosingBrace();
-	//							//return the parsed expression clause
-	//						}
-	//						else {
-	//							//Invalid Syntax - missing closing brace
-	//						}
-	//					}
-	//					else {
-	//						//throw exception Missing Expression Spec
-	//					}
+	lexer_->MatchPatternKeyword();
+	string syn_name = lexer_->MatchIdentity();
 
-	//				}
-	//				else {
-	//					//Syntax exception - Invalid pattern caluse missing comma delimeter
-	//				}
-	//			}
-	//			else {
-	//				//Invalid entRef 
-	//			}
+	shared_ptr<Ref> synonym = GetDeclaredSyn(syn_name);
 
-	//		}
-	//		else {
-	//			//throw an invalid syntax exception - Missing Opening Brace
+	if (synonym->GetRefType() != RefType::kAssignRef) {
+		throw SemanticError("The synonym in Pattern must be an assign synonym");
+	}
 
-	//		}
-	//		 
-	//	}
-	//	else {
-	//		//throw an invalid syntax exception - syn-assign not found
-	//	}
+	lexer_->MatchOpeningBrace();
+	shared_ptr<VarRef> var_ref = GetNextVarRef();
+	lexer_->MatchCommaDelimeter();
 
-	//} 
 
 	return patterns_;
 }
 
+shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
+	bool is_partial_expr = false;
+	if (lexer_->HasUnderScore()) {
+		lexer_->MatchUnderScore();
+		is_partial_expr = true;
 
+		if (lexer_->HasClosingBrace()) {
+			return shared_ptr<ExprSpec>(new WildcardExprSpec());
+		}
+		
+	}
+	
+	
+	lexer_->MatchQuotationMarks();
+	
+	string expr_str = GetExpression();
+
+
+	if (is_partial_expr) {
+		lexer_->MatchUnderScore();
+
+	}
+	lexer_->MatchQuotationMarks();
+	
+	if (is_partial_expr) {
+		return shared_ptr<PartialExprSpec>(new PartialExprSpec(expr_str));
+	}
+	else {
+		return shared_ptr<ExactExprSpec>(new ExactExprSpec(expr_str));
+	}
+
+}
+
+
+string QueryBuilder::GetExpression() {
+	string expr_str = "";
+	int expected_closing_brace_num = 0;
+
+	// make sure the expression is not empty;
+	
+	bool isExpectingToken = true;
+
+	while (isExpectingToken) {
+		while (lexer_->HasOpeningBrace()) {
+			lexer_->MatchOpeningBrace();
+			expr_str += "(";
+			expected_closing_brace_num++;
+		}
+
+		if (lexer_->HasInteger()) {
+			int integer = lexer_->MatchInteger();
+			expr_str += integer;
+		}
+		else if (lexer_->HasIdentity()) {
+			string identity = lexer_->MatchIdentity();
+			expr_str += identity;
+		}
+		else {
+			throw SyntaxError("A number or variable is expected in Assign clause");
+		}
+
+		while (lexer_->HasClosingBrace()) {
+			lexer_->MatchClosingBrace();
+			expr_str += ")";
+			expected_closing_brace_num--;
+			if (expected_closing_brace_num < 0) {
+				throw SyntaxError("The opening and closing braces do not match");
+			}
+		}
+
+		if (lexer_->HasOperator()) {
+			string operator_str = lexer_->MatchOperator();
+			expr_str += operator_str;
+		}
+		else {
+			isExpectingToken = false;
+		}
+
+	}
+	if (expected_closing_brace_num != 0) {
+		throw SyntaxError("The opening and closing braces do not match");
+	}
+
+	return expr_str;
+}
 
 

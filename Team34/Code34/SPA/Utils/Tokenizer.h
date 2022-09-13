@@ -34,7 +34,7 @@ public:
 	void nextToken();
 	void MoveToNextToken(int* current_index_);
 	bool hasNextToken();
-	Token PeekNextToken(int number_tokens_);
+	std::string PeekNextToken(int number_tokens_);
 
 	Token getToken();
 

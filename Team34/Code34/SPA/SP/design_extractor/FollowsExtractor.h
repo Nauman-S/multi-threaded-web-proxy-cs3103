@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <set>
 #include <vector>
 
 #include "NodeExtractor.h"
@@ -19,9 +18,10 @@
 #include "../WhileStatementASTNode.h"
 #include "../ConditionExpression.h"
 
-class UsesModifiesExtractor : public NodeExtractor {
+class FollowsExtractor : public NodeExtractor {
 public:
-	UsesModifiesExtractor();
+
+	FollowsExtractor();
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -37,12 +37,6 @@ public:
 
 private:
 	std::unique_ptr<WritePKBManager> write_manager_;
-
-	std::set<Procedure> extracted_proc_;
-	std::vector<Procedure> proc_call_stack_;
-
-	bool IsExtractedProcedure(Procedure);
-	void SetIndirectUses(Variable);
-	void SetIndirectModifies(Variable);
+	
+	void AddFollowsRelation(const std::vector<std::shared_ptr<StatementASTNode>>);
 };
-

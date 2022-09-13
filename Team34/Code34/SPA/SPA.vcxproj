@@ -41,6 +41,8 @@
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
+    <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
     <ClInclude Include="SP\IfStatementASTNode.h" />
@@ -76,6 +78,9 @@
     <ClInclude Include="PKB\store\EntityStore.h" />
     <ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
@@ -116,6 +121,7 @@
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
+    <ClCompile Include="QPS\reference\EntityRef.cpp" />
     <ClCompile Include="QPS\relation\FollowsRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
@@ -135,6 +141,8 @@
     <ClCompile Include="SP\ConditionExpression.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />
     <ClCompile Include="SP\LineIndex.cpp" />

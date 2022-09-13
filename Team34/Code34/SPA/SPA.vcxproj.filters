@@ -82,6 +82,9 @@
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
+    <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="QPS\reference\EntityRef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -136,6 +139,9 @@
     <ClInclude Include="PKB\store\EntityStore.h" />
     <ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
@@ -182,5 +188,7 @@
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="SP\SourceValidator.h" />
+    <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
   </ItemGroup>
 </Project>

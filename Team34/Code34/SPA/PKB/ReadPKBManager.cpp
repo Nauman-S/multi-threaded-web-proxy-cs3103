@@ -56,14 +56,14 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllStatements()
 }
 
 // APIs related to Parent relation
-bool ReadPKBManager::CheckParent(StmtNum child, StmtNum parent)
+bool ReadPKBManager::CheckParent(StmtNum parent, StmtNum child)
 {
-	return pkb.parent_manager_.CheckParent(child, parent);
+	return pkb.parent_manager_.CheckParent(parent, child);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChild(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildren(StmtNum parent)
 {
-	return pkb.parent_manager_.GetChild(parent);
+	return pkb.parent_manager_.GetChildren(parent);
 }
 
 StmtNum ReadPKBManager::GetParent(StmtNum child)
@@ -77,9 +77,9 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
 }
 
 // APIs related to Parent* relation
-bool ReadPKBManager::CheckParentS(StmtNum child, StmtNum parent)
+bool ReadPKBManager::CheckParentT(StmtNum parent, StmtNum child)
 {
-	return pkb.parent_manager_.CheckParentS(child, parent);
+	return pkb.parent_manager_.CheckParentT(parent, child);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(StmtNum stmt)
@@ -92,9 +92,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents(StmtN
 	return pkb.parent_manager_.GetAllParents(stmt);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentSRelations()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentTRelations()
 {
-	return pkb.parent_manager_.GetAllParentSRelations();
+	return pkb.parent_manager_.GetAllParentTRelations();
 }
 
 // APIs related to Follows relation
