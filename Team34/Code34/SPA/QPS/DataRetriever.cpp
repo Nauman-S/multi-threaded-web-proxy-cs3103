@@ -45,6 +45,16 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+
+    shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
+
+    return !set->empty();
+}
+
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -83,6 +93,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     return res;
 }
 
+shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(StmtVarRel& rel)
+{
+    // TODO: plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
+}
+
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -117,6 +133,16 @@ bool DataRetriever::CheckPVRel(ProcVarRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckPVRelExistenceByProc(ProcVarRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+
+    shared_ptr<unordered_set<string>> set = GetVarByProc(rel);
+
+    return !set->empty();
+}
+
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -149,6 +175,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
     }
  
     return res;
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetProcByWildcard(ProcVarRel& rel)
+{
+    // TODO: plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& rel)
@@ -191,6 +223,69 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
     return res;
 }
 
+bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
+{
+    // TODO: plug in PKB API here
+    return false;
+}
+
+bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+
+    int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    shared_ptr <unordered_set<int>> int_set;
+    if (type == RelType::kParentRel) {
+        int lhs_stmt_num = pkb_ptr_->GetParent(rhs_stmt_num);
+        int_set->insert(lhs_stmt_num);
+    }
+    else if (type == RelType::kParentTRel) {
+        int_set = pkb_ptr_->GetAllParents(rhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsRel) {
+        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmt(rhs_stmt_num);
+        int_set->insert(lhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsTRel) {
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
+        int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
+        // TODO: Ask PKB to change return to ptr of set
+        // int_set = pkb_ptr_->GetAllPredecessorStmt(rhs_stmt_num);
+    }
+
+    return !int_set->empty();
+}
+
+bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+
+    int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    shared_ptr<unordered_set<int>> int_set;
+    if (type == RelType::kParentRel) {
+        int_set = pkb_ptr_->GetChildren(lhs_stmt_num);  // set of immediate children
+    }
+    else if (type == RelType::kParentTRel) {
+        int_set = pkb_ptr_->GetAllChildren(lhs_stmt_num);  // set of immediate and indirect children
+    }
+    else if (type == RelType::kFollowsRel) {
+        // What if no successor stmt num???
+        // Discuss with PKB to return a set instead
+        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmt(lhs_stmt_num);
+        int_set->insert(rhs_stmt_num);
+    }
+    else if (type == RelType::kFollowsTRel) {
+        shared_ptr<vector<StmtNum>> stmt_vec = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
+        int_set = shared_ptr<unordered_set<StmtNum>>(new unordered_set<StmtNum>(stmt_vec->begin(), stmt_vec->end()));
+        // TODO: Ask PKB to change return to ptr of set
+        // int_set = pkb_ptr_->GetAllSuccessorStmt(lhs_stmt_num);
+    }
+
+    return !int_set->empty();
+}
+
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -208,6 +303,8 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
+        // What if no successor stmt num???
+        // Discuss with PKB to return a set instead
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmt(lhs_stmt_num);
         int_set->insert(rhs_stmt_num);
     }
@@ -220,6 +317,12 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     }
 
     return IntSetToStrSet(int_set);
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRel& rel)
+{
+    // TODO: Plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtStmtRel& rel)
@@ -251,6 +354,12 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     }
 
     return IntSetToStrSet(int_set);
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRel& rel)
+{
+    // TODO: Plug in PKB API here
+    return shared_ptr<unordered_set<string>>();
 }
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel)
