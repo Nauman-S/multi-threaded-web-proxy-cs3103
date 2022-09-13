@@ -38,12 +38,12 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 	}
 	token_idx += 1;
 	procedure->SetChildren(children);
-	cout << children.size() << endl;
 	procedure->SetProc(p);
 	return procedure;
 }
 
 shared_ptr<StatementASTNode> SourceParser::ParseStatement(vector<SourceToken> tokens, int& token_idx, int& line_idx, ProcedureIndex& proc) {
+	
 	std::shared_ptr<StatementASTNode> s_node;
 	if (tokens.at(token_idx).GetType() == SourceTokenType::kIf) {
 		// cout << "if" << line_idx << endl;
@@ -86,7 +86,7 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(vector<SourceToken
 	if_node->SetLineIndex(line_index);
 	token_idx += 2;
 	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, token_idx, line_idx, proc);
-	token_idx += 2;
+	token_idx += 1;
 	vector<std::shared_ptr<StatementASTNode>> if_children = {};
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
 		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, token_idx, line_idx, proc);
@@ -139,7 +139,8 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	}
 	cond->SetVariables(vars);
 	cond->SetPostfix(SpaAlgo::InfixToPostfix(expr));
-	token_idx += 1;
+	token_idx += 2;   // ) { x || ) then {
+	cout << tokens.at(token_idx).GetStringVal() << endl;
 	return cond;
 }
 

@@ -1,12 +1,11 @@
 procedure test {
     read x;
     read y;
-    if (y > x) then {
-        y = x;
-    } else {
-        call test1;
+    while (x > 0) {
+        if (x + y > 0) then {
+            print x;
+        } else {
+            x = x + 2;
+        }
     }
-}
-procedure test1 {
-    c = 1;
 }

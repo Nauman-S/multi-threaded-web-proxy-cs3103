@@ -40,10 +40,9 @@ void TestWrapper::parse(std::string filename) {
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	SourceValidator validator = SourceValidator();
 	cout << (int)validator.Validate(tokens) << endl;
-	exit(1);
 	SourceParser parser = SourceParser();
 	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
-
+	
 	DesignExtractor extractor;
 	extractor.PopulatePKB(root);
 	extractor.AddConstants(filename);

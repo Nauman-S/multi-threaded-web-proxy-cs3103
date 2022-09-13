@@ -52,36 +52,34 @@ bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, ve
 
 bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
 	while (tokens.at(idx).GetType() != SourceTokenType::kRightCurly) {
-		if (tokens.at(idx).GetType() != SourceTokenType::kRightCurly) {
-			if (tokens.at(idx).GetType() == SourceTokenType::kRead) {
-				if (!ValidateRead(tokens, ++idx, procedure_names, variable_names)) {
-					return false;
-				}
+		if (tokens.at(idx).GetType() == SourceTokenType::kRead) {
+			if (!ValidateRead(tokens, ++idx, procedure_names, variable_names)) {
+				return false;
 			}
-			else if (tokens.at(idx).GetType() == SourceTokenType::kPrint) {
-				if (!ValidatePrint(tokens, ++idx, variable_names)) {
-					return false;
-				}
+		}
+		else if (tokens.at(idx).GetType() == SourceTokenType::kPrint) {
+			if (!ValidatePrint(tokens, ++idx, variable_names)) {
+				return false;
 			}
-			else if (tokens.at(idx).GetType() == SourceTokenType::kCall) {
-				if (!ValidateCall(tokens, ++idx, procedure_names, calls)) {
-					return false;
-				}
+		}
+		else if (tokens.at(idx).GetType() == SourceTokenType::kCall) {
+			if (!ValidateCall(tokens, ++idx, procedure_names, calls)) {
+				return false;
 			}
-			else if (tokens.at(idx).GetType() == SourceTokenType::kIf) {
-				if (!ValidateIf(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
-					return false;
-				}
+		}
+		else if (tokens.at(idx).GetType() == SourceTokenType::kIf) {
+			if (!ValidateIf(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
+				return false;
 			}
-			else if (tokens.at(idx).GetType() == SourceTokenType::kWhile) {
-				if (!ValidateWhile(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
-					return false;
-				}
+		}
+		else if (tokens.at(idx).GetType() == SourceTokenType::kWhile) {
+			if (!ValidateWhile(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
+				return false;
 			}
-			else {
-				if (!ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
-					return false;
-				}
+		}
+		else {
+			if (!ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
+				return false;
 			}
 		}
 	}
@@ -95,9 +93,6 @@ bool SourceValidator::ValidateRead(vector<SourceToken> tokens, int& idx, vector<
 	if (count(procedure_names.begin(), procedure_names.end(), tokens.at(idx).GetStringVal())) {
 		return false;
 	} 
-	else if (count(variable_names.begin(), variable_names.end(), tokens.at(idx).GetStringVal())) {
-		return false;
-	}
 	else {
 		variable_names.push_back(tokens.at(idx++).GetStringVal());
 	}
