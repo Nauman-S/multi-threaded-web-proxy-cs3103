@@ -1,6 +1,10 @@
 #pragma once
 
+#include "..\reference\Ref.h"
+
 #include<string>
+#include <memory>
+
 class EntityRef
 {
 public:
@@ -14,5 +18,7 @@ public:
 	inline static const std::string kVariable = "VARIABLE";
 	inline static const std::string kConstant = "CONSTANT";
 	inline static const std::string kProcedure = "PROCEDURE";
+
+	std::shared_ptr<Ref> static EntityRef::CreateReference(std::string design_entity_, std::string synonym_);
 private:
 };
