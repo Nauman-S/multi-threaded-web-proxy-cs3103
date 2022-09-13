@@ -79,8 +79,8 @@ shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 
-	if (this->lexer_->HasKeyword("SELECT")) {
-		this->lexer_->MatchKeyword("SELECT");
+	if (this->lexer_->HasKeyword("Select")) {
+		this->lexer_->MatchKeyword("Select");
 		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
 		std::vector<shared_ptr<Rel>> relations_ = ParseRelations();
 		std::vector<shared_ptr<Pattern>> patterns_;
@@ -146,10 +146,10 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 
 bool QueryBuilder::HasSuchThatClause() {
 
-	if (this->lexer_->HasKeyword("SUCH")) {
-		this->lexer_->MatchKeyword("SUCH");
-		if (this->lexer_->HasKeyword("THAT")) {
-			this->lexer_->MatchKeyword("THAT");
+	if (this->lexer_->HasKeyword("such")) {
+		this->lexer_->MatchKeyword("such");
+		if (this->lexer_->HasKeyword("that")) {
+			this->lexer_->MatchKeyword("that");
 			return true;
 		}
 	}
@@ -183,22 +183,22 @@ std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
-	if (relation_name == "FOLLOWS") {
+	if (relation_name == "Follows") {
 		return ParseFollowsRel();
 	} 
-	else if (relation_name == "FOLLOWS*") {
+	else if (relation_name == "Follows*") {
 		return ParseFollowsTRel();
 	}
-	else if (relation_name == "PARENT") {
+	else if (relation_name == "Parent") {
 		return ParseParentRel();
 	}
-	else if (relation_name == "PARENT*") {
+	else if (relation_name == "Parent*") {
 		return ParseParentTRel();
 	}
-	else if (relation_name == "USES") {
+	else if (relation_name == "Uses") {
 		return ParseUsesRel();
 	}
-	else if (relation_name == "MODIFIES") {
+	else if (relation_name == "Modifies") {
 		return ParseModifiesRel();
 	}
 	else {

@@ -4,10 +4,10 @@
 #include "../reference/EntityRef.h"
 
 void QueryLexer::InitializeKeywords() {
-	this->relation_keywords_.insert({ "FOLLOWS", "FOLLOWS*", "PARENT", "PARENT*", "USES", "MODIFIES" });
+	this->relation_keywords_.insert({ "Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies" });
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
-	this->keywords_.insert({ "SELECT", "SUCH", "THAT" });
+	this->keywords_.insert({ "Select", "such", "that" });
 	this->delimiters_.insert({ ';',',','(',')','\"' });
 	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
@@ -29,7 +29,6 @@ void QueryLexer::FeedQuery(const std::string& query_string) {
 bool QueryLexer::HasDesignEntity() {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
-		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 		if (this->design_entities_.find(sval_) != this->design_entities_.end()) {
 			return true;
 		}
@@ -40,7 +39,6 @@ bool QueryLexer::HasDesignEntity() {
 std::string QueryLexer::MatchDesignEntityKeyword() {
 	if (!HasDesignEntity()) throw SyntaxError(GenerateErrorMessage("design entity keyword", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
-	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 	this->tokenizer_->nextToken();
 	return sval_;
 }
@@ -52,7 +50,6 @@ bool QueryLexer::HasIdentity() {
 std::string QueryLexer::MatchIdentity() {
 	if (!HasIdentity()) throw SyntaxError(GenerateErrorMessage("IDENTITY", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
-	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 	this->tokenizer_->nextToken();
 	return sval_;
 }
@@ -70,7 +67,6 @@ std::string QueryLexer::MatchEndOfDeclarationStatement() {
 bool QueryLexer::HasKeyword(std::string keyword_) {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
-		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 		return this->keywords_.find(sval_) != this->keywords_.end() && sval_.compare(keyword_) == 0;
 	}
 	return false;
@@ -85,7 +81,6 @@ void QueryLexer::MatchKeyword(std::string keyword_) {
 bool QueryLexer::HasReferenceKeyword() {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
-		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 		if (this->relation_keywords_.find(sval_) != this->relation_keywords_.end()) {
 			return true;
 		}
@@ -97,7 +92,6 @@ std::string QueryLexer::MatchReferenceKeyword() {
 	if (!HasReferenceKeyword()) throw SyntaxError(GenerateErrorMessage("ReferenceKeyword", tokenizer_->getTokenSval().value_or("INTEGER")));
 	std::string sval_ = this->tokenizer_->getTokenSval().value();
 	this->tokenizer_->nextToken();
-	transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
 	if (this->tokenizer_->getToken().type_ == TokenType::kMultiply) {
 		sval_.push_back('*');
 		this->tokenizer_->nextToken();
@@ -195,8 +189,7 @@ int QueryLexer::MatchInteger() {
 bool QueryLexer::HasPatternKeyword() {
 	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
 		std::string sval_ = this->tokenizer_->getTokenSval().value();
-		transform(sval_.begin(), sval_.end(), sval_.begin(), ::toupper);
-		return sval_.compare("PATTERN") == 0;
+		return sval_.compare("pattern") == 0;
 	}
 	return false;
 }
@@ -205,7 +198,7 @@ std::string QueryLexer::MatchPatternKeyword() {
 	if (!HasPatternKeyword()) throw SyntaxError(GenerateErrorMessage("Pattern", tokenizer_->getTokenSval().value_or("INTEGER")));
 
 	this->tokenizer_->nextToken();
-	return "PATTERN";
+	return "pattern";
 }
 
 bool QueryLexer::HasMoreTokens() {
