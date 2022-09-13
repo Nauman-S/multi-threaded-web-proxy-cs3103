@@ -36,6 +36,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllSuccessorStmt
     return follows_store_.GetAllRHS();
 }
 
+bool FollowsManager::IsEmpty()
+{
+    return follows_store_.IsEmpty();
+}
+
 // Follows* Relation methods
 void FollowsManager::SetFollowsT(StmtNum left, StmtNum right)
 {

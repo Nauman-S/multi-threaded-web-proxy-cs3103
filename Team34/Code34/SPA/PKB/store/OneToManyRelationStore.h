@@ -19,6 +19,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllRelations();
 	std::shared_ptr<std::unordered_set<T>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
+	bool IsEmpty();
 
 	// Transitive Relation methods
 	bool CheckTransitiveRelation(T left, T right);
@@ -103,6 +104,12 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllR
 		all_rhs->insert(iter->second);
 	}
 	return all_rhs;
+}
+
+template<typename T>
+inline bool OneToManyRelationStore<T>::IsEmpty()
+{
+	return all_relations_.empty();
 }
 
 template<typename T>

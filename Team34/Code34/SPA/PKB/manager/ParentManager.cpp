@@ -36,6 +36,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllChildren()
 	return parent_store_.GetAllRHS();
 }
 
+bool ParentManager::IsEmpty()
+{
+	return parent_store_.IsEmpty();
+}
+
 // Parent* Relation methods
 void ParentManager::SetParentT(StmtNum parent, StmtNum child)
 {

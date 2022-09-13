@@ -39,6 +39,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
+	bool IsParentStoreEmpty();
 
 	// APIs related to Parent* relation
 	bool CheckParentT(StmtNum parent, StmtNum child);
@@ -53,6 +54,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
+	bool IsFollowsStoreEmpty();
 
 	// APIs relation to Follows* relation
 	bool CheckFollowsT(StmtNum left, StmtNum right);

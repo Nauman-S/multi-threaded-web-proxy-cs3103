@@ -19,6 +19,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
+	bool IsEmpty();
 
 	// Follows* Relation methods
 	void SetFollowsT(StmtNum left, StmtNum right);

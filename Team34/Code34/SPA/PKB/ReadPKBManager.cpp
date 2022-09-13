@@ -86,6 +86,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
 	return pkb.parent_manager_.GetAllChildren();
 }
 
+bool ReadPKBManager::IsParentStoreEmpty()
+{
+	return pkb.parent_manager_.IsEmpty();
+}
+
 // APIs related to Parent* relation
 bool ReadPKBManager::CheckParentT(StmtNum parent, StmtNum child)
 {
@@ -136,6 +141,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorSt
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
 {
 	return pkb.follows_manager_.GetAllSuccessorStmts();
+}
+
+bool ReadPKBManager::IsFollowsStoreEmpty()
+{
+	return pkb.follows_manager_.IsEmpty();
 }
 
 // APIs related to Follows* relation

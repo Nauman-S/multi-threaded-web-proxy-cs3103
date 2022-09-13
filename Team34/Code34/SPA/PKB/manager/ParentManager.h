@@ -21,6 +21,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
+	bool IsEmpty();
 	
 	// Parent* Relation methods
 	void SetParentT(StmtNum parent, StmtNum child);
