@@ -155,9 +155,19 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAl
 	return pkb.uses_manager_.GetAllSVUses();
 }
 
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements()
+{
+	return pkb.uses_manager_.GetAllStatements();
+}
+
 std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVUses()
 {
 	return pkb.uses_manager_.GetAllPVUses();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllUsesProcedures()
+{
+	return pkb.uses_manager_.GetAllProcedures();
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByStmtNum(StmtNum stmt_num)
@@ -197,9 +207,19 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAl
 	return pkb.modifies_manager_.GetAllSVModifies();
 }
 
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
+{
+	return pkb.modifies_manager_.GetAllStatements();
+}
+
 std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVModifies()
 {
 	return pkb.modifies_manager_.GetAllPVModifies();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesProcedures()
+{
+	return pkb.modifies_manager_.GetAllProcedures();
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)

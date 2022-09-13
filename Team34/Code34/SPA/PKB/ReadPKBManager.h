@@ -60,7 +60,9 @@ public:
 	bool CheckUses(StmtNum stmt_num, Variable var);
 	bool CheckUses(Procedure proc_name, Variable var);
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
@@ -70,7 +72,9 @@ public:
 	bool CheckModifies(StmtNum stmt_num, Variable var);
 	bool CheckModifies(Procedure proc_name, Variable var);
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
