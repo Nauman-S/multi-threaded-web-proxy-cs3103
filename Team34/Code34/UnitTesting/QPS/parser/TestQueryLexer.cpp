@@ -17,7 +17,7 @@ namespace UnitTesting
 
 			const std::string query_ = "variable V; Select V such that Uses(357,V)";
 			const std::string identity_ = "V";
-			const std::string reference_keyword_ = "USES";
+			const std::string reference_keyword_ = "Uses";
 			this->query_lexer_->FeedQuery(query_);
 
 			Assert::IsTrue(this->query_lexer_->HasDesignEntity());
@@ -26,14 +26,14 @@ namespace UnitTesting
 			Assert::AreEqual(identity_, this->query_lexer_->MatchIdentity());
 			Assert::IsTrue(this->query_lexer_->HasEndOfDeclarationStatement());
 			this->query_lexer_->MatchEndOfDeclarationStatement();
-			Assert::IsTrue(this->query_lexer_->HasKeyword("SELECT"));
-			this->query_lexer_->MatchKeyword("SELECT");
+			Assert::IsTrue(this->query_lexer_->HasKeyword("Select"));
+			this->query_lexer_->MatchKeyword("Select");
 			Assert::IsTrue(this->query_lexer_->HasIdentity());
 			Assert::AreEqual(identity_, this->query_lexer_->MatchIdentity());
-			Assert::IsTrue(this->query_lexer_->HasKeyword("SUCH"));
-			this->query_lexer_->MatchKeyword("SUCH");
-			Assert::IsTrue(this->query_lexer_->HasKeyword("THAT"));
-			this->query_lexer_->MatchKeyword("THAT");
+			Assert::IsTrue(this->query_lexer_->HasKeyword("such"));
+			this->query_lexer_->MatchKeyword("such");
+			Assert::IsTrue(this->query_lexer_->HasKeyword("that"));
+			this->query_lexer_->MatchKeyword("that");
 			Assert::IsTrue(this->query_lexer_->HasReferenceKeyword());
 			Assert::AreEqual( reference_keyword_, this->query_lexer_->MatchReferenceKeyword());
 			Assert::IsTrue(this->query_lexer_->HasOpeningBrace());

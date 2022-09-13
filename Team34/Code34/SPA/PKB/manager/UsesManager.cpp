@@ -24,9 +24,19 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> UsesManager::GetAllSV
 	return uses_sv_store_.GetAllRelations();
 }
 
+std::shared_ptr<std::unordered_set<StmtNum>> UsesManager::GetAllStatements()
+{
+	return uses_sv_store_.GetAllLHS();
+}
+
 std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> UsesManager::GetAllPVUses()
 {
 	return uses_pv_store_.GetAllRelations();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> UsesManager::GetAllProcedures()
+{
+	return uses_pv_store_.GetAllLHS();
 }
 
 std::shared_ptr <std::unordered_set<Variable>> UsesManager::GetVarByStmtNum(StmtNum stmt_num)

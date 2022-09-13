@@ -100,9 +100,11 @@ bool SourceLexer::HasNextToken() {
     }
 
     string line;
-    if (getline(this->file_stream_, line)) {
+    while (getline(this->file_stream_, line)) {
         this->tokenizer_.feedLine(line);
-        return this->tokenizer_.hasNextToken();
+        if (this->tokenizer_.hasNextToken()) {
+            return true;
+        };
     }
 
     // Finished consumption of both tokenizer stream and file stream
