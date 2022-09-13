@@ -82,12 +82,28 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	if (this->lexer_->HasKeyword("Select")) {
 		this->lexer_->MatchKeyword("Select");
 		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
-		std::vector<shared_ptr<Rel>> relations_ = ParseRelations();
+
+		std::vector<shared_ptr<Rel>> relations_;
 		std::vector<shared_ptr<Pattern>> patterns_;
-		if (lexer_->HasPatternKeyword()) {
-			std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		while (lexer_->HasPatternKeyword() || HasSuchThatClause()) {
+			
+			if (lexer_->HasPatternKeyword()) {
+				std::vector<shared_ptr<Pattern>> patterns = ParsePatterns();
+				patterns_.insert(patterns_.end(), patterns.begin(), patterns.end());
+
+			}
+			else if (HasSuchThatClause()) {
+				std::vector<shared_ptr<Rel>> relations = ParseRelations();
+				// append new relations to the end of all relations
+				relations_.insert(relations_.end(), relations.begin(), relations.end());
+			}
 		}
 		
+		//
+		//if (lexer_->HasPatternKeyword()) {
+		//	std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
+		//}
+		//
 
 		if (this->lexer_->HasMoreTokens()) {
 			throw SyntaxError("Unexpected token at end of query");
@@ -145,16 +161,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 }
 
 bool QueryBuilder::HasSuchThatClause() {
-
-	if (this->lexer_->HasKeyword("such")) {
-		this->lexer_->MatchKeyword("such");
-		if (this->lexer_->HasKeyword("that")) {
-			this->lexer_->MatchKeyword("that");
-			return true;
-		}
-	}
-
-	return false;
+	return lexer_->HasKeyword("such") && (lexer_->PeekNextToken(1) == "that");
 }
 
 
@@ -164,6 +171,9 @@ std::vector <shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 	if (!HasSuchThatClause()) {
 		return relations_;
 	}
+	lexer_->MatchKeyword("such");
+	lexer_->MatchKeyword("that");
+
 	std::string relation_name;
 
 	relation_name = lexer_->MatchReferenceKeyword();
@@ -455,7 +465,7 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synon
 //Continue working on parsing pattern clause
 
 std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
-	std::vector<shared_ptr<Pattern>> patterns_;
+	std::vector<shared_ptr<Pattern>> patterns;
 
 	lexer_->MatchPatternKeyword();
 	string syn_name = lexer_->MatchIdentity();
@@ -469,9 +479,13 @@ std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 	lexer_->MatchOpeningBrace();
 	shared_ptr<VarRef> var_ref = GetNextVarRef();
 	lexer_->MatchCommaDelimeter();
+	shared_ptr<ExprSpec> expression = GetNextExpression();
+	lexer_->MatchClosingBrace();
 
+	shared_ptr<Pattern> pattern = shared_ptr<Pattern>(new Pattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
+	patterns.push_back(pattern);
 
-	return patterns_;
+	return patterns;
 }
 
 shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
@@ -491,12 +505,13 @@ shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
 	
 	string expr_str = GetExpression();
 
+	lexer_->MatchQuotationMarks();
 
 	if (is_partial_expr) {
 		lexer_->MatchUnderScore();
 
 	}
-	lexer_->MatchQuotationMarks();
+	
 	
 	if (is_partial_expr) {
 		return shared_ptr<PartialExprSpec>(new PartialExprSpec(expr_str));

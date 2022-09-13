@@ -297,5 +297,60 @@ namespace UnitTesting
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
+
+
+		TEST_METHOD(TestValidBasicPatternClause) {
+
+			const std::string query_ = "assign a; Select a pattern a(\"v\", _)  ";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), select_variable);
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
+			//Assert::IsTrue(query->GetPatterns()->at(0)->RhsExprSpec()->IsMatch());
+
+		};
+
+		TEST_METHOD(TestValidPatternClauseWithPartialExpr) {
+
+			const std::string query_ = "assign a; Select a pattern a(\"v\", _ \" x + 3 \"_)  ";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), select_variable);
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
+			//Assert::IsTrue(query->GetPatterns()->at(0)->RhsExprSpec()->IsMatch());
+
+		};
 	};
 }
