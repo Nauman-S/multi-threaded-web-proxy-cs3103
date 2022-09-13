@@ -34,30 +34,30 @@ protected:
 
 	// Stmt-Var relations
 	bool CheckSVRel(StmtVarRel& rel);																// (stmt_num, var_name)
-	bool CheckRelExistenceByStmt(StmtVarRel& rel);													// (stmt_num, wildcard)
+	bool CheckSVRelExistenceByStmt(StmtVarRel& rel);												// (stmt_num, wildcard)
 	std::shared_ptr<std::unordered_set<std::string>> GetVarByStmt(StmtVarRel& rel);					// (stmt_num, synonym)
 	std::shared_ptr<std::unordered_set<std::string>> GetStmtByVar(StmtVarRel& rel);					// (synonym, var_name)
-	std::shared_ptr<std::unordered_set<std::string>> GetStmt(StmtVarRel& rel);						// (synonym, wildcard)
+	std::shared_ptr<std::unordered_set<std::string>> GetStmtByWildcard(StmtVarRel& rel);			// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSVRel(StmtVarRel& rel);	// (synonym, synonym)
 	
 
 	// Proc-Var relations
 	bool CheckPVRel(ProcVarRel& rel);																// (proc_name, var_name)
-	bool CheckRelExistenceByProc(ProcVarRel& rel);													// (proc_name, wildcard)
+	bool CheckPVRelExistenceByProc(ProcVarRel& rel);												// (proc_name, wildcard)
 	std::shared_ptr<std::unordered_set<std::string>> GetVarByProc(ProcVarRel& rel);					// (proc_name, synonym)
 	std::shared_ptr<std::unordered_set<std::string>> GetProcByVar(ProcVarRel& rel);					// (synonym, var_name)
-	std::shared_ptr<std::unordered_set<std::string>> GetProc(ProcVarRel& rel);						// (synonym, wildcard)
+	std::shared_ptr<std::unordered_set<std::string>> GetProcByWildcard(ProcVarRel& rel);			// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPVRel(ProcVarRel& rel);	// (synonym, synonym)
 
 	// Stmt-Stmt relations
 	bool CheckSSRel(StmtStmtRel& rel);															      // (stmt_num, stmt_num)
-	bool CheckRelExistence(StmtStmtRel& rel);                                                         // (wildcard, wildcard)
-	bool CheckRelExistenceByRhsStmt(StmtStmtRel& rel);                                                // (wildcard, stmt_num)
-	bool CheckRelExistenceByLhsStmt(StmtStmtRel& rel);                                                // (stmt_num, wildcard)
+	bool CheckSSRelExistence(StmtStmtRel& rel);                                                       // (wildcard, wildcard)
+	bool CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel);                                              // (wildcard, stmt_num)
+	bool CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel);                                              // (stmt_num, wildcard)
 	std::shared_ptr<std::unordered_set<std::string>> GetRhsStmtByLhsStmt(StmtStmtRel& rel);           // (stmt_num, synonym)
-	std::shared_ptr<std::unordered_set<std::string>> GetRhsStmt(StmtStmtRel& rel);                    // (wildcard, synonym)
+	std::shared_ptr<std::unordered_set<std::string>> GetRhsStmtByWildcard(StmtStmtRel& rel);          // (wildcard, synonym)
 	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByRhsStmt(StmtStmtRel& rel);           // (synonym, stmt_num)
-	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmt(StmtStmtRel& rel);                    // (synonym, wildcard)
+	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByWildcard(StmtStmtRel& rel);          // (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(StmtStmtRel& rel);  // (synonym, synonym)
 
 	// type conversion helpers
