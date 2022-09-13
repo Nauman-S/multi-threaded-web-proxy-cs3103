@@ -30,6 +30,7 @@ Token Tokenizer::getToken() {
 }
 
 bool Tokenizer::hasNextToken() {
+	this->skipIgnoredChars(&this->current_index);
 	return this->current_index < this->last_index;
 }
 
