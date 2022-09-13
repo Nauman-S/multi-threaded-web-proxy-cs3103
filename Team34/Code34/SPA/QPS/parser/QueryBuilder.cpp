@@ -15,17 +15,7 @@
 #include "..\..\Utils\expression\ExactExprSpec.h"
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
-#include "..\reference\StmtRef.h"
-#include "..\reference\ReadRef.h"
-#include "..\reference\PrintRef.h"
-#include "..\reference\CallRef.h"
-#include "..\reference\WhileRef.h"
-#include "..\reference\IfRef.h"
-#include "..\reference\AssignRef.h"
-#include "..\reference\VarRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ConstRef.h"
-#include "..\reference\ProcRef.h"
+#include "..\reference\EntityRef.h"
 #include "..\relation\Rel.h"
 #include "..\relation\FollowsRel.h"
 #include "..\relation\FollowsTRel.h"
@@ -33,7 +23,6 @@
 #include "..\relation\ParentTRel.h"
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
-#include "..\reference\EntityRef.h"
 
 using std::shared_ptr;
 
