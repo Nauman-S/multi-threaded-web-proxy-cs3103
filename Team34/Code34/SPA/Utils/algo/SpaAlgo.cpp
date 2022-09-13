@@ -111,7 +111,7 @@ pair<shared_ptr<SetRes>, shared_ptr<TableRes>> SpaAlgo::HashJoinSetWithTable(std
 		}
 	}
 
-	shared_ptr<SetRes> set_res = make_shared<SetRes>(syn, joined_set);
-	shared_ptr<TableRes> table_res = make_shared<TableRes>(table_res->GetSynMap(), joined_table);
-	return pair<shared_ptr<SetRes>, shared_ptr<TableRes>>(set_res, table_res);
+	shared_ptr<SetRes> new_set_res = make_shared<SetRes>(syn, joined_set);
+	shared_ptr<TableRes> new_table_res = make_shared<TableRes>(table_res->GetSynMap(), joined_table);
+	return pair<shared_ptr<SetRes>, shared_ptr<TableRes>>(new_set_res, new_table_res);
 }
