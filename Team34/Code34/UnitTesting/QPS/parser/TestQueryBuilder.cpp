@@ -297,5 +297,234 @@ namespace UnitTesting
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
+
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_WildcardExpression ) {
+
+			const std::string query_ = "assign a; Select a pattern a(\"v\", _)  ";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), select_variable);
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+
+		};
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_PartialExpression) {
+
+			const std::string query_ = "assign a; Select a pattern a(\"v\", _ \" x + 3 \"_)  ";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "x+3";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), select_variable);
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpression) {
+			const std::string query_ = "assign a; Select a pattern a(\"v\", \" x + 3 \")";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "x+3";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), select_variable);
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithBracket) {
+			const std::string query_ = "assign a; Select a pattern a(\"v\", \" (x + y) * z + p \")";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "(x+y)*z+p";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetSelectTuple()->at(0)->GetName());
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithMultipleBracket) {
+			const std::string query_ = "assign a; Select a pattern a(\"v\", \" ((1 + 2) * (3 + 4)) \")";
+			const std::string select_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "((1+2)*(3+4))";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetSelectTuple()->at(0)->GetName());
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithBracket_DifferentSelectAndAssignRef) {
+			const std::string query_ = "assign a; variable v; Select v pattern a(\"v\", \" (x + y) * z + p \")";
+			const std::string select_variable = "v";
+			const std::string assign_variable = "a";
+			std::string lhs_value_ = "v";
+			std::string rhs_value_ = "";
+			std::string expr_str = "(x+y)*z+p";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetSelectTuple()->at(0)->GetName());
+
+			////Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_PatternClause_And_SelectThatClause) {
+			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")        " ;
+			const std::string select_variable = "haha";
+			const std::string assign_variable = "a";
+			std::string lhs_value_ = "";
+			std::string rhs_value_ = "";
+			std::string expr_str = "(x+y)*z+p";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetSelectTuple()->at(0)->GetName());
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(rhs_value_, query->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().second == ValType::kWildcard);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
+
+		TEST_METHOD(Valid_SelectThatClause_And_PatternClause) {
+			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")        ";
+			const std::string select_variable = "haha";
+			const std::string assign_variable = "a";
+			std::string lhs_value_ = "";
+			std::string rhs_value_ = "";
+			std::string expr_str = "(x+y)*z+p";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetSelectTuple()->at(0)->GetName());
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(rhs_value_, query->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().second == ValType::kWildcard);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+		};
 	};
 }
