@@ -74,10 +74,7 @@ SourceToken SourceLexer::ConstructSourceToken() {
     }
 
     SourceTokenType type;
-    if (IsKeyword(token)) {
-        type = GetKeywordType(token.literal_value_);
-    }
-    else if (token.type_ == TokenType::kName) {
+    if (token.type_ == TokenType::kName) {
         type = SourceTokenType::kName;
     }
     else if (token.type_ == TokenType::kInteger) {
