@@ -54,6 +54,7 @@
     <ClInclude Include="SP\ReadStatementASTNode.h" />
     <ClInclude Include="SP\SourceLexer.h" />
     <ClInclude Include="SP\SourceToken.h" />
+    <ClInclude Include="SP\SourceValidator.h" />
     <ClInclude Include="SP\StatementASTNode.h" />
     <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="SP\WhileStatementASTNode.h" />
@@ -75,6 +76,8 @@
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="PKB\store\EntityStore.h" />
+    <ClInclude Include="PKB\store\RelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
     <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
     <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
@@ -150,6 +153,7 @@
     <ClCompile Include="SP\ReadStatementASTNode.cpp" />
     <ClCompile Include="SP\SourceLexer.cpp" />
     <ClCompile Include="SP\SourceToken.cpp" />
+    <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\StatementASTNode.cpp" />
     <ClCompile Include="SP\VariableIndex.cpp" />
     <ClCompile Include="SP\WhileStatementASTNode.cpp" />
