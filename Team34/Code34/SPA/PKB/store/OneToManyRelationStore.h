@@ -7,41 +7,33 @@
 #include <unordered_set>
 #include <vector>
 
-template <typename T>
+template <typename S, typename T>
 class OneToManyRelationStore
 {
 public:
 	// Direct Relation methods
-	bool CheckRelation(T left, T right);
-	void SetRelation(T left, T right);
-	std::shared_ptr<std::unordered_set<T>> GetMany(T t);
+	bool CheckRelation(S left, T right);
+	void SetRelation(S left, T right);
+	std::shared_ptr<std::unordered_set<T>> GetMany(S s);
 	T GetOne(T t);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllRelations();
-	std::shared_ptr<std::unordered_set<T>> GetAllLHS();
+	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
+	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	bool IsEmpty();
-
-	// Transitive Relation methods
-	bool CheckTransitiveRelation(T left, T right);
-	void SetTransitiveRelation(T left, T right);
-	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveMany(T t);
-	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveOne(T t);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
-private:
-	std::vector<std::pair<T, T>> all_relations_;
-	std::vector<std::pair<T, T>> all_transitive_relations_;
-	std::unordered_map<T, std::unordered_set<T>> one_to_many_map_;
-	std::unordered_map<T, T> many_to_one_map_;
+protected:
+	std::vector<std::pair<S, T>> all_relations_;
+	std::unordered_map<S, std::unordered_set<T>> one_to_many_map_;
+	std::unordered_map<T, S> many_to_one_map_;
 };
 
-template<typename T>
-inline bool OneToManyRelationStore<T>::CheckRelation(T left, T right)
+template<typename S, typename T>
+inline bool OneToManyRelationStore<S, T>::CheckRelation(S left, T right)
 {
 	return many_to_one_map_[right] == left;
 }
 
-template<typename T>
-inline void OneToManyRelationStore<T>::SetRelation(T left, T right)
+template<typename S, typename T>
+inline void OneToManyRelationStore<S, T>::SetRelation(S left, T right)
 {
 	// defensive checks
 	assert(left < right);
@@ -52,21 +44,21 @@ inline void OneToManyRelationStore<T>::SetRelation(T left, T right)
 	many_to_one_map_[right] = left;
 }
 
-template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetMany(T t)
+template<typename S, typename T>
+inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<S, T>::GetMany(S s)
 {
-	if(one_to_many_map_.find(t) == one_to_many_map_.end())
+	if(one_to_many_map_.find(s) == one_to_many_map_.end())
 	{
 		return std::make_shared<std::unordered_set<T>>();
 	}
 	else
 	{
-		return std::make_shared<std::unordered_set<T>>(one_to_many_map_[t]);
+		return std::make_shared<std::unordered_set<T>>(one_to_many_map_[s]);
 	}
 }
 
-template<typename T>
-inline T OneToManyRelationStore<T>::GetOne(T t)
+template<typename S, typename T>
+inline T OneToManyRelationStore<S, T>::GetOne(T t)
 {
 	if (many_to_one_map_.find(t) == many_to_one_map_.end())
 	{
@@ -78,16 +70,16 @@ inline T OneToManyRelationStore<T>::GetOne(T t)
 	}
 }
 
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyRelationStore<T>::GetAllRelations()
+template<typename S, typename T>
+inline std::shared_ptr<std::vector<std::pair<S, T>>> OneToManyRelationStore<S, T>::GetAllRelations()
 {
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_relations_);
+	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
 }
 
-template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllLHS()
+template<typename S, typename T>
+inline std::shared_ptr<std::unordered_set<S>> OneToManyRelationStore<S, T>::GetAllLHS()
 {
-	std::shared_ptr<std::unordered_set<T>> all_lhs = std::make_shared<std::unordered_set<T>>();
+	std::shared_ptr<std::unordered_set<S>> all_lhs = std::make_shared<std::unordered_set<S>>();
 	for (auto iter = all_relations_.begin(); iter != all_relations_.end(); ++iter)
 	{
 		all_lhs->insert(iter->first);
@@ -95,8 +87,8 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllL
 	return all_lhs;
 }
 
-template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllRHS()
+template<typename S, typename T>
+inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<S, T>::GetAllRHS()
 {
 	std::shared_ptr<std::unordered_set<T>> all_rhs = std::make_shared<std::unordered_set<T>>();
 	for (auto iter = all_relations_.begin(); iter != all_relations_.end(); ++iter)
@@ -106,83 +98,8 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllR
 	return all_rhs;
 }
 
-template<typename T>
-inline bool OneToManyRelationStore<T>::IsEmpty()
+template<typename S, typename T>
+inline bool OneToManyRelationStore<S, T>::IsEmpty()
 {
 	return all_relations_.empty();
-}
-
-template<typename T>
-inline bool OneToManyRelationStore<T>::CheckTransitiveRelation(T left, T right)
-{
-	T next = right;
-	auto iter = many_to_one_map_.find(next);
-	while (iter != many_to_one_map_.end())
-	{
-		T one = many_to_one_map_[next];
-		if (one == left)
-		{
-			return true;
-		}
-		next = one;
-		iter = many_to_one_map_.find(next);
-	}
-	return false;
-}
-
-template<typename T>
-inline void OneToManyRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	std::pair<T, T> pair = std::make_pair(left, right);
-	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
-	{
-		all_transitive_relations_.push_back(pair);
-	}
-}
-
-template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllTransitiveMany(T t)
-{
-	std::shared_ptr<std::unordered_set<T>> all_many = std::make_shared<std::unordered_set<T>>();
-	std::queue<T> queue;
-	queue.push(t);
-	while (!queue.empty())
-	{
-		T one = queue.front();
-		queue.pop();
-		auto iter = one_to_many_map_.find(one);
-		if (iter == one_to_many_map_.end())
-		{
-			continue;
-		}
-		std::unordered_set<T>& many = one_to_many_map_[one];
-		for (auto iter = many.begin(); iter != many.end(); ++iter)
-		{
-			all_many->insert(*iter);
-			queue.push(*iter);
-		}
-	}
-	return all_many;
-}
-
-template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<T>::GetAllTransitiveOne(T t)
-{
-	std::shared_ptr<std::unordered_set<T>> all_one = std::make_shared<std::unordered_set<T>>();
-	T next = t;
-	auto iter = many_to_one_map_.find(next);
-	while (iter != many_to_one_map_.end())
-	{
-		T one = many_to_one_map_[next];
-		next = one;
-		all_one->insert(next);
-		iter = many_to_one_map_.find(next);
-	}
-	return all_one;
-}
-
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
 }
