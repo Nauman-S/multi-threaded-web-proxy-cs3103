@@ -154,12 +154,12 @@ bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollowsT(left, right);
 }
 
-std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
 {
 	return pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::vector<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
 {
 	return pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
 }

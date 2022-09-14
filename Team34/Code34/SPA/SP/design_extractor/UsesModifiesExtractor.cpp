@@ -26,17 +26,10 @@ void UsesModifiesExtractor::ExtractProgramNode(ProgramNode& program) {
 }
 
 void UsesModifiesExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
-	Procedure proc_name = proc.GetProc().GetName();
-	if (this->IsExtractedProcedure(proc_name)) {
-		// Skip extracted procedures from previous call statements
-		return;
-	}
-
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
 	}
-	this->extracted_proc_.insert(proc_name);
 }
 
 /*
@@ -61,8 +54,8 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 }
 
 void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	Procedure proc_name = call.GetProcedure().GetName();
 	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> name_to_node_map = SourceParser::proc_name_to_node_;
+	Procedure proc_name = call.GetProcedure().GetName();
 	if (name_to_node_map.find(proc_name) == name_to_node_map.end()) {
 		// Consider if should return error when calling undefined procedure
 		return;
@@ -71,7 +64,9 @@ void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
 	Procedure parent_procedure = call.GetParentProcIndex().GetName();
 	std::shared_ptr<ProcedureASTNode> called_proc_node = name_to_node_map.at(proc_name);
 	this->proc_call_stack_.push_back(parent_procedure);
+	this->parent_smts_.push_back(call.GetLineIndex().GetLineNum());
 	called_proc_node->Extract(*this);
+	this->parent_smts_.pop_back();
 	this->proc_call_stack_.pop_back();
 }
 
@@ -101,6 +96,9 @@ void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
 	cond->Extract(*this);
 
+	// Remember parent container statement, and all UsesModifies for children
+	// will also apply for this container statement
+	this->parent_smts_.push_back(if_stmt.GetLineIndex().GetLineNum());
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
 	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
 		then_child->Extract(*this);
@@ -110,16 +108,19 @@ void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	for (std::shared_ptr<StatementASTNode> else_child : else_children) {
 		else_child->Extract(*this);
 	}
+	this->parent_smts_.pop_back();
 }
 
 void UsesModifiesExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
 	cond->Extract(*this);
 
+	this->parent_smts_.push_back(while_stmt.GetLineIndex().GetLineNum());
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
 	}
+	this->parent_smts_.pop_back();
 }
 
 // Uses: all variables involved in a conditional expression
@@ -135,20 +136,22 @@ void UsesModifiesExtractor::ExtractConditionExpression(ConditionExpression& cond
 	}
 }
 
-bool UsesModifiesExtractor::IsExtractedProcedure(Procedure p) {
-	return this->extracted_proc_.find(p) != this->extracted_proc_.end();
-}
-
-// Sets uses on the variable for parent procedure calls
+// Sets uses on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectUses(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
 		this->write_manager_->SetUses(p, var);
 	}
+	for (StmtNum l : this->parent_smts_) {
+		this->write_manager_->SetUses(l, var);
+	}
 }
 
-// Sets modifies on the variable for parent procedure calls
+// Sets modifies on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectModifies(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
 		this->write_manager_->SetModifies(p, var);
+	}
+	for (StmtNum l : this->parent_smts_) {
+		this->write_manager_->SetModifies(l, var);
 	}
 }

@@ -23,7 +23,7 @@ bool QueryEvaluator::evaluate() {
 	for (shared_ptr<Ref> ref : *select_tuple) {
 		//shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(std::make_shared<Ref>(ref));
 		shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
-		bool success = query_result_.MergeResult(*res_wrapper);
+		bool success = query_result_.MergeResult(res_wrapper);
 		if (!success) {
 			return false;
 		}
@@ -37,7 +37,7 @@ bool QueryEvaluator::evaluate() {
 
 		shared_ptr<ResWrapper> res_wrapper = relation->GetMatch(data_retriever_);
 
-		bool success = query_result_.MergeResult(*res_wrapper);
+		bool success = query_result_.MergeResult(res_wrapper);
 		if (!success) {
 			return false;
 		}
