@@ -79,7 +79,6 @@
     <ClInclude Include="PKB\store\RelationStore.h" />
     <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
     <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
-    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />

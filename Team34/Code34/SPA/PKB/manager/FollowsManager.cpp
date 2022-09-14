@@ -52,12 +52,12 @@ bool FollowsManager::CheckFollowsT(StmtNum left, StmtNum right)
     return follows_store_.CheckTransistiveRelation(left, right);
 }
 
-std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
 {
     return follows_store_.GetAllRHSByLHS(stmt);
 }
 
-std::shared_ptr<std::vector<StmtNum>> FollowsManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
 {
     return follows_store_.GetAllLHSByRHS(stmt);
 }

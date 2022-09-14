@@ -3,6 +3,7 @@
 #include <cassert>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 template <typename T>
@@ -22,8 +23,8 @@ public:
 	// Transitive relation methods
 	bool CheckTransistiveRelation(T left, T right);
 	void SetTransitiveRelation(T left, T right);
-	std::shared_ptr<std::vector<T>> GetAllRHSByLHS(T left);
-	std::shared_ptr<std::vector<T>> GetAllLHSByRHS(T right);
+	std::shared_ptr<std::unordered_set<T>> GetAllRHSByLHS(T left);
+	std::shared_ptr<std::unordered_set<T>> GetAllLHSByRHS(T right);
 	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
 private:
 	std::unordered_map<T, T> left_to_right_map_;
@@ -136,27 +137,27 @@ inline void OneToOneRelationStore<T>::SetTransitiveRelation(T left, T right)
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllRHSByLHS(T left)
+inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<T>::GetAllRHSByLHS(T left)
 {
 	return GetAllHelper(left, left_to_right_map_);
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<T>> OneToOneRelationStore<T>::GetAllLHSByRHS(T right)
+inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<T>::GetAllLHSByRHS(T right)
 {
 	return GetAllHelper(right, right_to_left_map_);
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<T>> GetAllHelper(T start, std::unordered_map<T, T>& map)
+inline std::shared_ptr<std::unordered_set<T>> GetAllHelper(T start, std::unordered_map<T, T>& map)
 {
-	std::shared_ptr<std::vector<T>> all = std::make_shared<std::vector<T>>();
+	std::shared_ptr<std::unordered_set<T>> all = std::make_shared<std::unordered_set<T>>();
 	auto iter = map.find(start);
 	T next = start;
 	while (iter != map.end())
 	{
 		next = map[next];
-		all->push_back(next);
+		all->insert(next);
 		iter = map.find(next);
 	}
 	return all;

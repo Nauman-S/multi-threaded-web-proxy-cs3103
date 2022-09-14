@@ -24,8 +24,8 @@ public:
 	// Follows* Relation methods
 	void SetFollowsT(StmtNum left, StmtNum right);
 	bool CheckFollowsT(StmtNum left, StmtNum right);
-	std::shared_ptr<std::vector<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 private:
 	OneToOneRelationStore<StmtNum> follows_store_;
