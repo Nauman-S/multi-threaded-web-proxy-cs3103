@@ -46,32 +46,34 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 shared_ptr<StatementASTNode> SourceParser::ParseStatement(vector<SourceToken> tokens, int& token_idx, int& line_idx, ProcedureIndex& proc) {
 	
 	std::shared_ptr<StatementASTNode> s_node;
-	if (tokens.at(token_idx).GetType() == SourceTokenType::kIf) {
+	if (tokens.at(token_idx).GetType() == SourceTokenType::kName && tokens.at(token_idx + 1).GetType() == SourceTokenType::kEqual) {
+		// Variable followed by equal sign to be parsed as assign
+		s_node = ParseAssignStatement(tokens, token_idx, line_idx, proc);
+		s_node->SetStatementType(StatementType::sassign, "sassign");
+	}
+	else if (tokens.at(token_idx).IsIf()) {
 		// cout << "if" << line_idx << endl;
 		s_node = ParseIfStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sif, "sif");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kWhile) {
+	else if (tokens.at(token_idx).IsWhile()) {
 		// cout << "while" << line_idx << endl;
 		s_node = ParseWhileStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::swhile, "swhile");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kRead) {
+	else if (tokens.at(token_idx).IsRead()) {
 		// cout << "read" << line_idx << endl;
 		s_node = ParseReadStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sread, "sread");
-	} else if (tokens.at(token_idx).GetType() == SourceTokenType::kPrint) {
+	} else if (tokens.at(token_idx).IsPrint()) {
 		// cout << "print" << line_idx << endl;
 		s_node = ParsePrintStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sprint, "sprint");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kCall) {
+	else if (tokens.at(token_idx).IsCall()) {
 		s_node = ParseCallStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::scall, "scall");
 	} else {
-		// cout << "assign" << line_idx << endl;
-		s_node = ParseAssignStatement(tokens, token_idx, line_idx, proc);
-		s_node->SetStatementType(StatementType::sassign, "sassign");
 	}
 	s_node->SetParentProcIndex(proc);
 	is_mapping.insert(pair<LineIndex, std::shared_ptr<StatementASTNode>>(s_node->GetLineIndex(), s_node));

@@ -268,14 +268,18 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
     shared_ptr <unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
-        int_set->insert(lhs_stmt_num);
+        if (lhs_stmt_num != 0) {
+            int_set->insert(lhs_stmt_num);
+        }
     }
     else if (type == RelType::kParentTRel) {
         int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num);
     }
     else if (type == RelType::kFollowsRel) {
         int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
-        int_set->insert(lhs_stmt_num);
+        if (lhs_stmt_num != 0) {
+            int_set->insert(lhs_stmt_num);
+        } 
     }
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
@@ -301,7 +305,9 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
         // What if no successor stmt num???
         // Discuss with PKB to return a set instead
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
-        int_set->insert(rhs_stmt_num);
+        if (rhs_stmt_num != 0) {
+            int_set->insert(rhs_stmt_num);
+        }
     }
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
@@ -330,7 +336,9 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         // What if no successor stmt num???
         // rhs_stmt_num will evaluate to 0
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
-        int_set->insert(rhs_stmt_num);
+        if (rhs_stmt_num != 0) {
+            int_set->insert(rhs_stmt_num);
+        }
     }
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
@@ -367,7 +375,9 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     shared_ptr <unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
-        int_set->insert(lhs_stmt_num);
+        if (lhs_stmt_num != 0) {
+            int_set->insert(lhs_stmt_num);
+        }
     }
     else if (type == RelType::kParentTRel) {
         int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num);
@@ -375,7 +385,9 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     }
     else if (type == RelType::kFollowsRel) {
         int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
-        int_set->insert(lhs_stmt_num);
+        if (lhs_stmt_num != 0) {
+            int_set->insert(lhs_stmt_num);
+        }
     }
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
