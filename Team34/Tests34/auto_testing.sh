@@ -1,5 +1,4 @@
 #! /bin/sh
-
 echo "AutoTester Script has begun"
 AUTOTESTER_FILE=../Code34/Debug/AutoTester.exe
 
