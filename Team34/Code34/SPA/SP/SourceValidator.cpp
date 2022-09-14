@@ -32,7 +32,7 @@ bool SourceValidator::Validate(vector<SourceToken> tokens) {
 }
 
 bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
-	if (tokens.at(idx++).GetType() != SourceTokenType::kProcedure) {
+	if (!tokens.at(idx++).IsProcedure()) {
 		return false;
 	}
 	if (tokens.at(idx).GetType() != SourceTokenType::kName) {
@@ -56,27 +56,27 @@ bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, ve
 
 bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
 	while (tokens.at(idx).GetType() != SourceTokenType::kRightCurly) {
-		if (tokens.at(idx).GetType() == SourceTokenType::kRead) {
+		if (tokens.at(idx).IsRead()) {
 			if (!ValidateRead(tokens, ++idx, procedure_names, variable_names)) {
 				return false;
 			}
 		}
-		else if (tokens.at(idx).GetType() == SourceTokenType::kPrint) {
+		else if (tokens.at(idx).IsPrint()) {
 			if (!ValidatePrint(tokens, ++idx, variable_names)) {
 				return false;
 			}
 		}
-		else if (tokens.at(idx).GetType() == SourceTokenType::kCall) {
+		else if (tokens.at(idx).IsCall()) {
 			if (!ValidateCall(tokens, ++idx, procedure_names, calls)) {
 				return false;
 			}
 		}
-		else if (tokens.at(idx).GetType() == SourceTokenType::kIf) {
+		else if (tokens.at(idx).IsIf()) {
 			if (!ValidateIf(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
 				return false;
 			}
 		}
-		else if (tokens.at(idx).GetType() == SourceTokenType::kWhile) {
+		else if (tokens.at(idx).IsWhile()) {
 			if (!ValidateWhile(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
 				return false;
 			}
@@ -142,7 +142,7 @@ bool SourceValidator::ValidateIf(vector<SourceToken> tokens, int& idx, vector<st
 	if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
 		return false;
 	}
-	if (tokens.at(idx++).GetType() != SourceTokenType::kThen) {
+	if (!tokens.at(idx++).IsThen()) {
 		return false;
 	}
 	if (tokens.at(idx++).GetType() != SourceTokenType::kLeftCurly) {
@@ -151,11 +151,10 @@ bool SourceValidator::ValidateIf(vector<SourceToken> tokens, int& idx, vector<st
 	if (!ValidateStatement(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
 		return false;
 	}
-
 	if (tokens.at(idx++).GetType() != SourceTokenType::kRightCurly) {
 		return false;
 	}
-	if (tokens.at(idx++).GetType() != SourceTokenType::kElse) {
+	if (!tokens.at(idx++).IsElse()) {
 		return false;
 	}
 	if (tokens.at(idx++).GetType() != SourceTokenType::kLeftCurly) {
@@ -227,27 +226,35 @@ bool SourceValidator::ValidateExpression(vector<SourceToken> tokens, int& idx, v
 		return true;
 	}
 	else if (tokens.at(idx).GetType() == SourceTokenType::kLeftRound) {
+		int temp = idx;
 		idx += 1;
-		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
-			return false;
+		bool flag = true;
+		if (flag && !ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			flag = false;
 		}
-		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
-			return false;
+		if (flag && tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
+			flag = false;
 		}
-		if (tokens.at(idx).GetType() != SourceTokenType::kLogicalAnd && tokens.at(idx).GetType() != SourceTokenType::kLogicalOr) {
-			return false;
+		if (flag && tokens.at(idx).GetType() != SourceTokenType::kLogicalAnd && tokens.at(idx).GetType() != SourceTokenType::kLogicalOr) {
+			flag = false;
 		}
 		idx += 1;
-		if (tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
-			return false;
+		if (flag && tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
+			flag = false;
 		}
-		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
-			return false;
+		if (flag && !ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			flag = false;
 		}
-		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
-			return false;
+		if (flag && tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
+			flag = false;
 		}
-		return true;
+		if (flag) {
+			return true;
+		}
+		else {
+			idx = temp;
+			return ValidateRelation(tokens, idx, variable_names, variable_map);
+		}
 	}
 	else {
 		return ValidateRelation(tokens, idx, variable_names, variable_map);
