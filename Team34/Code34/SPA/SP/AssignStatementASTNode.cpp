@@ -21,3 +21,11 @@ std::vector<VariableIndex> AssignStatementASTNode::GetRight() {
 void AssignStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractAssignmentNode(*this);
 }
+
+void AssignStatementASTNode::SetInfix(string& s) {
+	infix = s;
+}
+
+string AssignStatementASTNode::GetInfix() {
+	return infix;
+}

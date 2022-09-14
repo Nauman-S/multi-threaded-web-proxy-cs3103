@@ -59,6 +59,7 @@
     <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="SP\WhileStatementASTNode.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
+    <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\type\TupleType.h" />
     <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResTable.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="SP\VariableIndex.cpp" />
     <ClCompile Include="SP\WhileStatementASTNode.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
+    <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />

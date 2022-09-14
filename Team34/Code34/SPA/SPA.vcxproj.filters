@@ -85,6 +85,7 @@
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
     <ClCompile Include="QPS\reference\EntityRef.cpp" />
+    <ClCompile Include="Utils\algo\TopoCycle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -190,5 +191,6 @@
     <ClInclude Include="SP\SourceValidator.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
     <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
+    <ClInclude Include="Utils\algo\TopoCycle.h" />
   </ItemGroup>
 </Project>

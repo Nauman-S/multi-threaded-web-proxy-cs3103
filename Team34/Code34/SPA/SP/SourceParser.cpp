@@ -5,7 +5,6 @@
 
 #include "SourceLexer.h"
 #include "IfStatementASTNode.h"
-#include "../Utils/algo/SpaAlgo.h"
 
 using namespace std;
 
@@ -119,8 +118,6 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	cond->SetLineIndex(line_index);
 	line_idx += 1;
 	int round_count = 1;
-	string postfix = "";
-	string expr = "";
 	while (!(tokens.at(token_idx).GetType() == SourceTokenType::kRightRound && round_count == 1)) {	
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			VariableIndex v = VariableIndex();
@@ -136,11 +133,9 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 		else {
 
 		}
-		expr += tokens.at(token_idx).GetStringVal();
 		token_idx += 1;
 	}
 	cond->SetVariables(vars);
-	cond->SetPostfix(SpaAlgo::InfixToPostfix(expr));
 	token_idx += 2;   // ) { x || ) then {
 	cout << tokens.at(token_idx).GetStringVal() << endl;
 	return cond;
@@ -158,7 +153,9 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	token_idx += 2;
 	a_node->SetLeft(l_var);
 	vector<VariableIndex> r_vars = {};
+	string infix = "";
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kSemiColon) {
+		infix += tokens.at(token_idx).GetStringVal();
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			VariableIndex r_var = VariableIndex();
 			r_var.SetName(tokens.at(token_idx).GetStringVal());

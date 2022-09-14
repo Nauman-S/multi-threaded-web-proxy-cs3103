@@ -4,7 +4,7 @@
 #include <map>
 #include <algorithm>
 #include <iostream>
-
+#include "../Utils/algo/TopoCycle.h"
 using namespace std;
 
 bool SourceValidator::Validate(vector<SourceToken> tokens) {
@@ -23,6 +23,10 @@ bool SourceValidator::Validate(vector<SourceToken> tokens) {
 		if (!count(procedure_names.begin(), procedure_names.end(), x.first) || !count(procedure_names.begin(), procedure_names.end(), x.second)) {
 			return false;
 		}
+	}
+	TopoCycle checker = TopoCycle();
+	if (checker.CheckCycle(calls, procedure_names)) {
+		return false;
 	}
 	return true;
 }
@@ -199,7 +203,7 @@ bool SourceValidator::ValidateAssign(vector<SourceToken> tokens, int& idx, vecto
 	if (tokens.at(idx++).GetType() != SourceTokenType::kEqual) {
 		return false;
 	}
-	if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
 		return false;
 	}
 	if (tokens.at(idx++).GetType() != SourceTokenType::kSemiColon) {
@@ -209,15 +213,105 @@ bool SourceValidator::ValidateAssign(vector<SourceToken> tokens, int& idx, vecto
 }
 
 bool SourceValidator::ValidateExpression(vector<SourceToken> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
-	while (tokens.at(idx).GetType() != SourceTokenType::kSemiColon && tokens.at(idx).GetType() != SourceTokenType::kRightRound) {
-		if (tokens.at(idx).GetType() == SourceTokenType::kName) {
+	if (tokens.at(idx).GetType() == SourceTokenType::kNegate) {
+		idx += 1;
+		if (tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
+			return false;
+		}
+		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			return false;
+		}
+		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
+			return false;
+		}
+		return true;
+	}
+	else if (tokens.at(idx).GetType() == SourceTokenType::kLeftRound) {
+		idx += 1;
+		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			return false;
+		}
+		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
+			return false;
+		}
+		if (tokens.at(idx).GetType() != SourceTokenType::kLogicalAnd && tokens.at(idx).GetType() != SourceTokenType::kLogicalOr) {
+			return false;
+		}
+		idx += 1;
+		if (tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
+			return false;
+		}
+		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			return false;
+		}
+		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {
+			return false;
+		}
+		return true;
+	}
+	else {
+		return ValidateRelation(tokens, idx, variable_names, variable_map);
+	}
+}
+
+bool SourceValidator::ValidateArithmeticExpression(vector<SourceToken> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
+	int cnt = 0;
+	string expected = "var";
+	while (tokens.at(idx).GetType() == SourceTokenType::kName || tokens.at(idx).GetType() == SourceTokenType::kInteger || tokens.at(idx).GetType() == SourceTokenType::kLeftRound || tokens.at(idx).GetType() == SourceTokenType::kRightRound || tokens.at(idx).GetType()== SourceTokenType::kAdd || tokens.at(idx).GetType() == SourceTokenType::kMinus || tokens.at(idx).GetType() == SourceTokenType::kMultiply || tokens.at(idx).GetType() == SourceTokenType::kDivide || tokens.at(idx).GetType() == SourceTokenType::kModulo) {
+		if (expected == "var" && tokens.at(idx).GetType() == SourceTokenType::kName) {
 			if (!count(variable_names.begin(), variable_names.end(), tokens.at(idx).GetStringVal())) {
 				return false;
 			}
+			expected = "sign";
+		}
+		else if (expected == "var" && tokens.at(idx).GetType() == SourceTokenType::kInteger) {
+			expected = "sign";
+		}
+		else if (expected == "var" && tokens.at(idx).GetType() == SourceTokenType::kLeftRound) {
+			cnt += 1;
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kRightRound && cnt > 0) {
+			cnt -= 1;
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kRightRound && cnt == 0) {
+			return true;
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kAdd) {
+			expected = "var";
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kDivide) {
+			expected = "var";
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kMinus) {
+			expected = "var";
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kModulo) {
+			expected = "var";
+		}
+		else if (expected == "sign" && tokens.at(idx).GetType() == SourceTokenType::kMultiply) {
+			expected = "var";
 		}
 		else {
+			return false;
 		}
 		idx += 1;
+	}
+	if (cnt != 0) {
+		return false;
+	}
+	return true;
+}
+
+bool SourceValidator::ValidateRelation(vector<SourceToken> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
+	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
+		return false;
+	}
+	if (tokens.at(idx).GetType() != SourceTokenType::kLesser && tokens.at(idx).GetType() != SourceTokenType::kLesserEqual && tokens.at(idx).GetType() != SourceTokenType::kGreater && tokens.at(idx).GetType() != SourceTokenType::kGreaterEqual && tokens.at(idx).GetType() != SourceTokenType::kNotEqual && tokens.at(idx).GetType() != SourceTokenType::kDoubleEqual) {
+		return false;
+	}
+	idx += 1;
+	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
+		return false;
 	}
 	return true;
 }

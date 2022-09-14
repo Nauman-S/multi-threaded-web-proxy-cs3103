@@ -42,6 +42,7 @@ void TestWrapper::parse(std::string filename) {
 	if (!validator.Validate(tokens)) {
 	    cout << "Errors found in Source Code" << endl;
 	}
+	exit(0);
 	SourceParser parser = SourceParser();
 	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
 
