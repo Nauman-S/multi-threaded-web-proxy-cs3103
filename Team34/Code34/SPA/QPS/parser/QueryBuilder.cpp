@@ -540,7 +540,7 @@ string QueryBuilder::GetExpression() {
 
 		if (lexer_->HasInteger()) {
 			int integer = lexer_->MatchInteger();
-			expr_str += integer;
+			expr_str += std::to_string(integer);
 		}
 		else if (lexer_->HasIdentity()) {
 			string identity = lexer_->MatchIdentity();
