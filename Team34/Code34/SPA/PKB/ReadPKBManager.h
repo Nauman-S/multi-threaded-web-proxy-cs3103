@@ -5,6 +5,7 @@
 
 #include "PKB.h"
 #include "../Utils/type/TypeDef.h"
+#include "../Utils/expression/ExprSpec.h"
 
 class ReadPKBManager
 {
@@ -87,7 +88,7 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
 
 	// APIs related to Pattern relation
-	bool IsAssignPatternMatch(StmtNum stmt_num, std::string expr, bool is_exact_match);
-	bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::string expr, bool is_exact_match);
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::string expr, bool is_exact_match);
+	bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
+	bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
 };

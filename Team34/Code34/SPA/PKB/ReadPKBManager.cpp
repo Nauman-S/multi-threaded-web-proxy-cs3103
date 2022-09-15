@@ -272,17 +272,17 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNa
 }
 
 // APIs related to Pattern relation
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::string expr, bool is_exact_match)
+bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr, is_exact_match);
+	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr);
 }
 
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::string expr, bool is_exact_match)
+bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr, is_exact_match);
+	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::string expr, bool is_exact_match)
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.GetAssignPatternMatch(expr, is_exact_match);
+	return pkb.pattern_manager_.GetAssignPatternMatch(expr);
 }

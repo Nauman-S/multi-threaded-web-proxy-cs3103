@@ -3,6 +3,7 @@
 
 #include "PKB.h"
 #include "../Utils/type/TypeDef.h"
+#include "../Utils/expression/Expr.h"
 
 class WritePKBManager
 {
@@ -45,5 +46,5 @@ public:
 	void SetModifies(Procedure proc_name, Variable var);
 
 	// APIs related to Pattern relation
-	void AddAssignPattern(StmtNum stmt_num, Variable var, std::string expr);
+	void AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr);
 };
