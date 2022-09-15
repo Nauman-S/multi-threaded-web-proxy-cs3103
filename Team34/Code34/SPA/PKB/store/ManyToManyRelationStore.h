@@ -54,8 +54,8 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::Get
 template<typename S, typename T>
 inline void ManyToManyRelationStore<S, T>::SetRelation(S s, T t)
 {
-	assert(s_to_t_map_[s].find(t) == s_to_t_map_[s].end());
-	assert(t_to_s_map_[t].find(s) == t_to_s_map_[t].end());
+	//assert(s_to_t_map_[s].find(t) == s_to_t_map_[s].end());
+	//assert(t_to_s_map_[t].find(s) == t_to_s_map_[t].end());
 	s_to_t_map_[s].insert(t);
 	t_to_s_map_[t].insert(s);
 	all_relations_.push_back(std::make_pair(s, t));

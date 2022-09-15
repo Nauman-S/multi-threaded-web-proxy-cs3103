@@ -36,7 +36,7 @@ template<typename S, typename T>
 inline void ManyToOneRelationStore<S, T>::SetRelation(S left, T right)
 {
 	// defensive checks
-	assert(many_to_one_map_.find(left) == many_to_one_map_.end());
+	//assert(many_to_one_map_.find(left) == many_to_one_map_.end());
 
 	all_relations_.push_back(std::make_pair(left, right));
 	many_to_one_map_[left] = right;

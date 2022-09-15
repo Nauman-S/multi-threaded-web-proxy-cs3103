@@ -20,7 +20,7 @@ procedure proc2 {
         read = camelCase;
         call = 3 + 5;
         if (call == 0) then {
-             x = 3;
+             y = 3;
         } else {
              call procedure;
         }
@@ -31,9 +31,9 @@ procedure procedure {
     if (x != 0) then {
         print = 3;
         while (x > 2) {
-            x = x - 1;
+            x = x - 1 + var2;
         }
     } else {
-        x = 5;
+        x = read;
     }
 }
