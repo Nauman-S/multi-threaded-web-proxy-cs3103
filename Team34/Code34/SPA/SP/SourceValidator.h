@@ -18,4 +18,6 @@ public:
 	bool ValidateWhile(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&, map<string, string>&);
 	bool ValidateAssign(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&);
 	bool ValidateExpression(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
+	bool ValidateArithmeticExpression(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
+	bool ValidateRelation(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
 };

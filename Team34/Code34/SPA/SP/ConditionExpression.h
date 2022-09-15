@@ -12,9 +12,6 @@ public:
 
 	virtual void Extract(NodeExtractor&) override;
 
-	void SetPostfix(std::string);
-
 protected:
 	std::vector<VariableIndex> vars;
-	std::string postfix;
 };

@@ -1,11 +1,11 @@
 procedure test {
     read x;
     read y;
-    while (x > 0) {
-        if (x + y > 0) then {
+    while ((x > 0) || ((y > 0) && (x + y == 3))) {
+        if ((x + y) > (3 * y)) then {
             print x;
         } else {
-            x = x + 2;
+            x = (x % y) * (x - y) + 3;
         }
     }
 }
