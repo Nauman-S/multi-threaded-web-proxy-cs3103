@@ -220,7 +220,6 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameBy
 	return pkb.uses_manager_.GetProcNameByVar(var);
 }
 
-
 // APIs related to Modifies relation
 bool ReadPKBManager::CheckModifies(StmtNum stmt_num, Variable var)
 {
@@ -270,4 +269,20 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumB
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNameByVar(Variable var)
 {
 	return pkb.modifies_manager_.GetProcNameByVar(var);
+}
+
+// APIs related to Pattern relation
+bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::string expr, bool is_exact_match)
+{
+	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr, is_exact_match);
+}
+
+bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::string expr, bool is_exact_match)
+{
+	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr, is_exact_match);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::string expr, bool is_exact_match)
+{
+	return pkb.pattern_manager_.GetAssignPatternMatch(expr, is_exact_match);
 }

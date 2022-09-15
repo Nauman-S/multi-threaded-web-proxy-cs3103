@@ -67,3 +67,8 @@ void WritePKBManager::SetModifies(Procedure proc_name, Variable var)
 {
 	pkb.modifies_manager_.SetModifies(proc_name, var);
 }
+
+void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Variable var, std::string expr)
+{
+	pkb.pattern_manager_.AddAssignPattern(stmt_num, var, expr);
+}

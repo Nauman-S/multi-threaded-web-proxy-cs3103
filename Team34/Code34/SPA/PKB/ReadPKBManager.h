@@ -85,4 +85,9 @@ public:
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
+
+	// APIs related to Pattern relation
+	bool IsAssignPatternMatch(StmtNum stmt_num, std::string expr, bool is_exact_match);
+	bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::string expr, bool is_exact_match);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::string expr, bool is_exact_match);
 };
