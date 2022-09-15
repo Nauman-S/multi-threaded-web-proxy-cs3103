@@ -38,9 +38,11 @@ bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, ve
 	if (tokens.at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
+	/*
 	if (count(procedure_names.begin(), procedure_names.end(), tokens.at(idx).GetStringVal()) || count(variable_names.begin(), variable_names.end(), tokens.at(idx).GetStringVal())) {
 		return false;
 	}
+	*/
 	procedure_names.push_back(tokens.at(idx++).GetStringVal());
 	if (tokens.at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
@@ -94,12 +96,12 @@ bool SourceValidator::ValidateRead(vector<SourceToken> tokens, int& idx, vector<
 	if (tokens.at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
+	/*
 	if (count(procedure_names.begin(), procedure_names.end(), tokens.at(idx).GetStringVal())) {
 		return false;
-	} 
-	else {
-		variable_names.push_back(tokens.at(idx++).GetStringVal());
 	}
+	*/
+	variable_names.push_back(tokens.at(idx++).GetStringVal());
 	if (tokens.at(idx++).GetType() != SourceTokenType::kSemiColon) {
 		return false;
 	}
@@ -107,9 +109,11 @@ bool SourceValidator::ValidateRead(vector<SourceToken> tokens, int& idx, vector<
 }
 
 bool SourceValidator::ValidatePrint(vector<SourceToken> tokens, int& idx, vector<string>& variable_names) {
+	/*
 	if (!count(variable_names.begin(), variable_names.end(), tokens.at(idx).GetStringVal())) {
 		return false;
 	}
+	*/
 	if (tokens.at(idx++).GetType() != SourceTokenType::kName) {
 		return false;
 	}
@@ -195,9 +199,11 @@ bool SourceValidator::ValidateAssign(vector<SourceToken> tokens, int& idx, vecto
 	if (tokens.at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
+	/*
 	if (count(procedure_names.begin(), procedure_names.end(), tokens.at(idx).GetStringVal())) {
 		return false;
 	}
+	*/
 	variable_names.push_back(tokens.at(idx++).GetStringVal());
 	if (tokens.at(idx++).GetType() != SourceTokenType::kEqual) {
 		return false;
@@ -266,9 +272,11 @@ bool SourceValidator::ValidateArithmeticExpression(vector<SourceToken> tokens, i
 	string expected = "var";
 	while (tokens.at(idx).GetType() == SourceTokenType::kName || tokens.at(idx).GetType() == SourceTokenType::kInteger || tokens.at(idx).GetType() == SourceTokenType::kLeftRound || tokens.at(idx).GetType() == SourceTokenType::kRightRound || tokens.at(idx).GetType()== SourceTokenType::kAdd || tokens.at(idx).GetType() == SourceTokenType::kMinus || tokens.at(idx).GetType() == SourceTokenType::kMultiply || tokens.at(idx).GetType() == SourceTokenType::kDivide || tokens.at(idx).GetType() == SourceTokenType::kModulo) {
 		if (expected == "var" && tokens.at(idx).GetType() == SourceTokenType::kName) {
+			/*
 			if (!count(variable_names.begin(), variable_names.end(), tokens.at(idx).GetStringVal())) {
 				return false;
 			}
+			*/
 			expected = "sign";
 		}
 		else if (expected == "var" && tokens.at(idx).GetType() == SourceTokenType::kInteger) {
