@@ -252,7 +252,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesPro
 	return pkb.modifies_manager_.GetAllProcedures();
 }
 
-std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<Variable> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
 	return pkb.modifies_manager_.GetVarByStmtNum(stmt_num);
 }
