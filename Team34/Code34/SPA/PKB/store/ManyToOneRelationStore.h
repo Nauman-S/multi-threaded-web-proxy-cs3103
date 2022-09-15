@@ -15,7 +15,7 @@ public:
 	bool CheckRelation(S left, T right);
 	void SetRelation(S left, T right);
 	std::shared_ptr<std::unordered_set<S>> GetMany(T t);
-	T GetOne(S s);
+	std::shared_ptr<T> GetOne(S s);
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
@@ -57,15 +57,15 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToOneRelationStore<S, T>::GetM
 }
 
 template<typename S, typename T>
-inline T ManyToOneRelationStore<S, T>::GetOne(S s)
+inline std::shared_ptr<T> ManyToOneRelationStore<S, T>::GetOne(S s)
 {
 	if (many_to_one_map_.find(s) == many_to_one_map_.end())
 	{
-		return NULL;
+		return std::make_shared<T>();
 	}
 	else
 	{
-		return many_to_one_map_[s];
+		return std::make_shared<T>(many_to_one_map_[s]);
 	}
 }
 

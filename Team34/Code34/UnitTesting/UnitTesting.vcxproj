@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="QPS\parser\TestQueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp" />
+    <ClCompile Include="TestModifiesManager.cpp" />
     <ClCompile Include="TestUsesManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

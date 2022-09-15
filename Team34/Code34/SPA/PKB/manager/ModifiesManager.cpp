@@ -39,7 +39,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ModifiesManager::GetAllProcedures
 	return modifies_pv_store_.GetAllLHS();
 }
 
-Variable ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<Variable> ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
 {
 	return modifies_sv_store_.GetOne(stmt_num);
 }

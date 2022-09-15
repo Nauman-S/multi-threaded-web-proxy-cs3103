@@ -81,7 +81,7 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
-	Variable GetModifiesVarByStmtNum(StmtNum stmt_num);
+	std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
