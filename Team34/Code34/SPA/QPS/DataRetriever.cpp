@@ -452,9 +452,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Patte
     else {
         shared_ptr<unordered_set<StmtNum>> temp_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
         for (auto stmt_num : *temp_set) {
-            /*if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
+            if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
                 stmt_set->insert(stmt_num);
-            }*/
+            }
         }
     }
 
@@ -471,9 +471,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
     else {
         shared_ptr<unordered_set<StmtNum>> temp_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
         for (auto stmt_num : *temp_set) {
-            /*if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
+            if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
                 stmt_set->insert(stmt_num);
-            }*/
+            }
         }
     }
 
@@ -482,9 +482,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(Pattern& pat)
 {
-    /*shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table = pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
-    return IntIntToStrStrTable(stmt_var_table);*/
-    return nullptr;
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
+    shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table = pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
+
+    return IntStrToStrStrTable(stmt_var_table);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(shared_ptr<unordered_set<int>> set)
