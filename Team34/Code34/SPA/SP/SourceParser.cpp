@@ -5,7 +5,6 @@
 
 #include "SourceLexer.h"
 #include "IfStatementASTNode.h"
-#include "../Utils/algo/SpaAlgo.h"
 
 using namespace std;
 
@@ -38,7 +37,6 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 	}
 	token_idx += 1;
 	procedure->SetChildren(children);
-	cout << children.size() << endl;
 	procedure->SetProc(p);
 
 	this->proc_name_to_node_.insert(std::make_pair(p.GetName(), procedure));
@@ -46,33 +44,36 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 }
 
 shared_ptr<StatementASTNode> SourceParser::ParseStatement(vector<SourceToken> tokens, int& token_idx, int& line_idx, ProcedureIndex& proc) {
+	
 	std::shared_ptr<StatementASTNode> s_node;
-	if (tokens.at(token_idx).GetType() == SourceTokenType::kIf) {
+	if (tokens.at(token_idx).GetType() == SourceTokenType::kName && tokens.at(token_idx + 1).GetType() == SourceTokenType::kEqual) {
+		// Variable followed by equal sign to be parsed as assign
+		s_node = ParseAssignStatement(tokens, token_idx, line_idx, proc);
+		s_node->SetStatementType(StatementType::sassign, "sassign");
+	}
+	else if (tokens.at(token_idx).IsIf()) {
 		// cout << "if" << line_idx << endl;
 		s_node = ParseIfStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sif, "sif");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kWhile) {
+	else if (tokens.at(token_idx).IsWhile()) {
 		// cout << "while" << line_idx << endl;
 		s_node = ParseWhileStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::swhile, "swhile");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kRead) {
+	else if (tokens.at(token_idx).IsRead()) {
 		// cout << "read" << line_idx << endl;
 		s_node = ParseReadStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sread, "sread");
-	} else if (tokens.at(token_idx).GetType() == SourceTokenType::kPrint) {
+	} else if (tokens.at(token_idx).IsPrint()) {
 		// cout << "print" << line_idx << endl;
 		s_node = ParsePrintStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::sprint, "sprint");
 	}
-	else if (tokens.at(token_idx).GetType() == SourceTokenType::kCall) {
+	else if (tokens.at(token_idx).IsCall()) {
 		s_node = ParseCallStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetStatementType(StatementType::scall, "scall");
 	} else {
-		// cout << "assign" << line_idx << endl;
-		s_node = ParseAssignStatement(tokens, token_idx, line_idx, proc);
-		s_node->SetStatementType(StatementType::sassign, "sassign");
 	}
 	s_node->SetParentProcIndex(proc);
 	is_mapping.insert(pair<LineIndex, std::shared_ptr<StatementASTNode>>(s_node->GetLineIndex(), s_node));
@@ -88,7 +89,7 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(vector<SourceToken
 	if_node->SetLineIndex(line_index);
 	token_idx += 2;
 	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, token_idx, line_idx, proc);
-	token_idx += 2;
+	token_idx += 1;
 	vector<std::shared_ptr<StatementASTNode>> if_children = {};
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
 		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, token_idx, line_idx, proc);
@@ -119,8 +120,6 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	cond->SetLineIndex(line_index);
 	line_idx += 1;
 	int round_count = 1;
-	string postfix = "";
-	string expr = "";
 	while (!(tokens.at(token_idx).GetType() == SourceTokenType::kRightRound && round_count == 1)) {	
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			VariableIndex v = VariableIndex();
@@ -136,12 +135,11 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 		else {
 
 		}
-		expr += tokens.at(token_idx).GetStringVal();
 		token_idx += 1;
 	}
 	cond->SetVariables(vars);
-	cond->SetPostfix(SpaAlgo::InfixToPostfix(expr));
-	token_idx += 1;
+	token_idx += 2;   // ) { x || ) then {
+	cout << tokens.at(token_idx).GetStringVal() << endl;
 	return cond;
 }
 
@@ -157,7 +155,9 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	token_idx += 2;
 	a_node->SetLeft(l_var);
 	vector<VariableIndex> r_vars = {};
+	string infix = "";
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kSemiColon) {
+		infix += tokens.at(token_idx).GetStringVal();
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			VariableIndex r_var = VariableIndex();
 			r_var.SetName(tokens.at(token_idx).GetStringVal());

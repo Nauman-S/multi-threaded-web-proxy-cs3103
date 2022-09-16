@@ -55,5 +55,15 @@ public:
 
     SourceTokenType GetType();
     std::string GetStringVal();
+
+    // Keyword matchers
+    bool IsProcedure();
+    bool IsRead();
+    bool IsPrint();
+    bool IsCall();
+    bool IsWhile();
+    bool IsIf();
+    bool IsThen();
+    bool IsElse();
 };
 

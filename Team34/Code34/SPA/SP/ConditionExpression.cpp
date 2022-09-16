@@ -15,7 +15,3 @@ std::vector<VariableIndex> ConditionExpression::GetVariables() {
 void ConditionExpression::Extract(NodeExtractor& extractor) {
 	extractor.ExtractConditionExpression(*this);
 }
-
-void ConditionExpression::SetPostfix(std::string p) {
-	postfix = p;
-}
