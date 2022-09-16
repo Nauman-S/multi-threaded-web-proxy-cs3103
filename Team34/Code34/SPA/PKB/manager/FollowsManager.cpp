@@ -11,6 +11,11 @@ bool FollowsManager::CheckFollows(StmtNum left, StmtNum right)
     return follows_store_.CheckRelation(left, right);
 }
 
+bool FollowsManager::IsEmpty()
+{
+    return follows_store_.IsEmpty();
+}
+
 StmtNum FollowsManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetRHSByLHS(stmt);
@@ -19,11 +24,6 @@ StmtNum FollowsManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 StmtNum FollowsManager::GetPredecessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetLHSByRHS(stmt);
-}
-
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAllFollowsRelations()
-{
-    return follows_store_.GetAllRelations();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllPredecessorStmts()
@@ -36,9 +36,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllSuccessorStmt
     return follows_store_.GetAllRHS();
 }
 
-bool FollowsManager::IsEmpty()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAllFollowsRelations()
 {
-    return follows_store_.IsEmpty();
+    return follows_store_.GetAllRelations();
 }
 
 // Follows* Relation methods
