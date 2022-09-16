@@ -29,7 +29,6 @@ foreach($folder in $directories) {
         Write-Output "Query file not found int folder $($folder), skipping folder"
     } else {
         $output_folder = "$($folder.FullName)\out.xml"
-        Write-Output $output_folder
-       & $autotester_file $source_file $query_file $output_folder
+        & $autotester_file $source_file $query_file $output_folder
     }
 }
