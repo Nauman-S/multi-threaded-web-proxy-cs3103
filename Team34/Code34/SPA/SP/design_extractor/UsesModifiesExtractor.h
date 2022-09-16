@@ -41,6 +41,18 @@ private:
 	std::vector<Procedure> proc_call_stack_;
 	std::vector<StmtNum> parent_smts_;
 
+	std::set<std::pair<StmtNum, Variable>> stmt_uses_cache_;
+	std::set<std::pair<Procedure, Variable>> procedure_uses_cache_;
+
+	std::set<std::pair<StmtNum, Variable>> stmt_modifies_cache_;
+	std::set<std::pair<Procedure, Variable>> procedure_modifies_cache_;
+
+	void SetUses(StmtNum, Variable);
+	void SetUses(Procedure, Variable);
+
+	void SetModifies(StmtNum, Variable);
+	void SetModifies(Procedure, Variable);
+
 	void SetIndirectUses(Variable);
 	void SetIndirectModifies(Variable);
 };
