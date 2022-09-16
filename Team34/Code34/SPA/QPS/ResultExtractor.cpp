@@ -78,9 +78,13 @@ string ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_se
 
 	string final_result = "";
 	for (string value : result_vector) {
-		final_result += (value + " ");
+		final_result += (value + ",");
+	}
+	if (final_result.size() == 0) {
+		return "none";
 	}
 	final_result.pop_back();
+	//final_result.pop_back();
 	return final_result;
 }
 
