@@ -35,5 +35,11 @@
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestUsesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestModifiesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
