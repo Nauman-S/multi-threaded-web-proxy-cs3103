@@ -14,6 +14,8 @@
 #include "../SPA/SP/design_extractor/EntityExtractor.h"
 #include "../SPA/SP/design_extractor/DesignExtractor.h"
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
+#include "../SPA/SP/design_extractor/ParentsExtractor.h"
+#include "../SPA/SP/design_extractor/FollowsExtractor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -36,6 +38,7 @@ namespace IntegrationTesting
 			this->read = ReadPKBManager::GetInstance();
 			this->write = WritePKBManager::GetInstance();
 		}
+
 		TEST_METHOD(TestEntityPopulation)
 		{
 			DesignExtractor extractor;
@@ -83,6 +86,122 @@ namespace IntegrationTesting
 			shared_ptr<unordered_set<StmtNum>> while_stmts = read->GetStatementsByType(RefType::kWhileRef);
 			unordered_set<StmtNum> expected_while = { 3, 12, 20 };
 			Assert::IsTrue(*while_stmts == expected_while);
+		}
+
+		TEST_METHOD(TestUsesRelationPopulation) {
+			UsesModifiesExtractor extractor;
+			this->root->Extract(extractor);
+
+			// Uses in procedure
+			Assert::IsTrue(this->read->CheckUses("proc1", "var2"));
+			//Assert::IsTrue(this->read->CheckUses("proc1", "y"));
+
+			// Uses on RHS of assignment
+			Assert::IsTrue(this->read->CheckUses(1, "var2"));
+			Assert::IsTrue(this->read->CheckUses(1, "var3"));
+			Assert::IsFalse(this->read->CheckUses(1, "var"));
+
+			// Uses on condition expression and children of while statement
+			Assert::IsTrue(this->read->CheckUses(3, "x"));
+			Assert::IsTrue(this->read->CheckUses(3, "var2"));
+
+			// Uses on print statement
+			Assert::IsTrue(this->read->CheckUses(5, "var3"));
+
+			// Uses on procedure of call statement
+			Assert::IsTrue(this->read->CheckUses(6, "CAPSVAR"));
+
+			// Uses on condition expression of if stmt
+			Assert::IsTrue(this->read->CheckUses(7, "y"));
+			
+			// Uses on indirect procedure call for statements and procedures
+			Assert::IsTrue(this->read->CheckUses("proc2", "var2"));
+			Assert::IsTrue(this->read->CheckUses(15, "var2"));
+
+			// Uses on container statement for child statements
+			Assert::IsTrue(this->read->CheckUses(18, "read"));
+		}
+
+		TEST_METHOD(TestModifiesRelationPopulation) {
+			UsesModifiesExtractor extractor;
+			this->root->Extract(extractor);
+
+			// Modifies in procedure
+			Assert::IsTrue(this->read->CheckModifies("proc1", "var"));
+
+			// Modifies on LHS of assignment
+			Assert::IsTrue(this->read->CheckModifies(1, "var"));
+			Assert::IsFalse(this->read->CheckModifies(1, "var2"));
+
+			// Modifies on children of if statement
+			Assert::IsTrue(this->read->CheckModifies(7, "x"));
+
+			// Modifies on read statement
+			Assert::IsTrue(this->read->CheckModifies(9, "y"));
+
+			// Modifies on procedure of call statement
+			//Assert::IsTrue(this->read->CheckModifies(6, "camelCase"));
+
+			// Modifies on child statements of if stmt
+			Assert::IsTrue(this->read->CheckModifies(7, "x"));
+			
+			// Modifies on indirect procedure call for statements and procedures
+			Assert::IsTrue(this->read->CheckModifies("proc2", "print"));
+			//Assert::IsTrue(this->read->CheckModifies(15, "print"));
+		}
+
+		TEST_METHOD(TestParentsRelationPopulation) {
+			ParentsExtractor extractor;
+			this->root->Extract(extractor);
+
+			// Parent and parent* relation for direct children of while stmts
+			Assert::IsTrue(this->read->CheckParent(3, 4));
+			Assert::IsTrue(this->read->CheckParent(3, 5));
+			Assert::IsFalse(this->read->CheckParent(4, 3));
+
+			Assert::IsTrue(this->read->CheckParentT(3, 4));
+			Assert::IsTrue(this->read->CheckParentT(3, 5));
+
+			// Parent relation for direct children of if stmts
+			Assert::IsTrue(this->read->CheckParent(7, 8));
+			Assert::IsTrue(this->read->CheckParent(7, 9));
+			Assert::IsTrue(this->read->CheckParent(7, 10));
+
+			Assert::IsTrue(this->read->CheckParentT(7, 8));
+			Assert::IsTrue(this->read->CheckParentT(7, 9));
+			Assert::IsTrue(this->read->CheckParentT(7, 10));
+			
+			// Parent relation for if nested in while
+			Assert::IsTrue(this->read->CheckParent(12, 15));
+			Assert::IsFalse(this->read->CheckParent(12, 16));
+			Assert::IsTrue(this->read->CheckParentT(12, 16));
+			Assert::IsTrue(this->read->CheckParentT(12, 17));
+
+			// Parent relation for while nested in if
+			Assert::IsTrue(this->read->CheckParent(18, 20));
+			Assert::IsTrue(this->read->CheckParentT(18, 21));
+		}
+
+		TEST_METHOD(TestFollowsRelationPopulation) {
+			FollowsExtractor extractor;
+			this->root->Extract(extractor);
+
+			// Follows relation for stmts in single procedure
+			Assert::IsTrue(this->read->CheckFollows(1, 2));
+			Assert::IsTrue(this->read->CheckFollows(2, 3));
+			Assert::IsFalse(this->read->CheckFollows(3, 4));
+
+			Assert::IsTrue(this->read->CheckFollowsT(1, 3));
+			Assert::IsFalse(this->read->CheckFollowsT(1, 5));
+			Assert::IsTrue(this->read->CheckFollowsT(2, 7));
+
+			// Follows relation within while loop
+			Assert::IsTrue(this->read->CheckFollows(4, 5));
+			Assert::IsFalse(this->read->CheckFollows(5, 6));
+
+			// Follows relation within if loop
+			Assert::IsTrue(this->read->CheckFollows(8, 9));
+			Assert::IsFalse(this->read->CheckFollows(9, 10));
 		}
 	};
 }

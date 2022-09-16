@@ -42,14 +42,14 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 
 	std::vector<VariableIndex> rhs = assign.GetRight();
 	for (VariableIndex var : rhs) {
-		this->write_manager_->SetUses(proc_name, var.GetName());
-		this->write_manager_->SetUses(line_no, var.GetName());
+		this->SetUses(proc_name, var.GetName());
+		this->SetUses(line_no, var.GetName());
 		this->SetIndirectUses(var.GetName());
 	}
 
 	VariableIndex lhs = assign.GetLeft();
-	this->write_manager_->SetModifies(proc_name, lhs.GetName());
-	this->write_manager_->SetModifies(line_no, lhs.GetName());
+	this->SetModifies(proc_name, lhs.GetName());
+	this->SetModifies(line_no, lhs.GetName());
 	this->SetIndirectModifies(lhs.GetName());
 }
 
@@ -76,8 +76,8 @@ void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
 	std::string proc_name = print.GetParentProcIndex().GetName();
 	int line_no = print.GetLineIndex().GetLineNum();
 
-	this->write_manager_->SetUses(proc_name, var.GetName());
-	this->write_manager_->SetUses(line_no, var.GetName());
+	this->SetUses(proc_name, var.GetName());
+	this->SetUses(line_no, var.GetName());
 	this->SetIndirectUses(var.GetName());
 }
 
@@ -87,8 +87,8 @@ void UsesModifiesExtractor::ExtractReadNode(ReadStatementASTNode& read) {
 	std::string proc_name = read.GetParentProcIndex().GetName();
 	int line_no = read.GetLineIndex().GetLineNum();
 
-	this->write_manager_->SetModifies(proc_name, var.GetName());
-	this->write_manager_->SetModifies(line_no, var.GetName());
+	this->SetModifies(proc_name, var.GetName());
+	this->SetModifies(line_no, var.GetName());
 	this->SetIndirectModifies(var.GetName());
 }
 
@@ -130,28 +130,60 @@ void UsesModifiesExtractor::ExtractConditionExpression(ConditionExpression& cond
 
 	std::vector<VariableIndex> vars = cond.GetVariables();
 	for (VariableIndex var : vars) {
-		this->write_manager_->SetUses(line_no, var.GetName());
-		this->write_manager_->SetUses(proc_name, var.GetName());
+		this->SetUses(line_no, var.GetName());
+		this->SetUses(proc_name, var.GetName());
 		this->SetIndirectUses(var.GetName());
+	}
+}
+
+void UsesModifiesExtractor::SetUses(StmtNum line, Variable var) {
+	std::pair<StmtNum, Variable> uses = std::make_pair(line, var);
+	if (this->stmt_uses_cache_.find(uses) == this->stmt_uses_cache_.end()) {
+		this->write_manager_->SetUses(line, var);
+		this->stmt_uses_cache_.insert(uses);
+	}
+}
+
+void UsesModifiesExtractor::SetUses(Procedure proc, Variable var) {
+	std::pair<Procedure, Variable> uses = std::make_pair(proc, var);
+	if (this->procedure_uses_cache_.find(uses) == this->procedure_uses_cache_.end()) {
+		this->write_manager_->SetUses(proc, var);
+		this->procedure_uses_cache_.insert(uses);
+	}
+}
+
+void UsesModifiesExtractor::SetModifies(StmtNum line, Variable var) {
+	std::pair<StmtNum, Variable> modifies = std::make_pair(line, var);
+	if (this->stmt_modifies_cache_.find(modifies) == this->stmt_modifies_cache_.end()) {
+		this->write_manager_->SetModifies(line, var);
+		this->stmt_modifies_cache_.insert(modifies);
+	}
+}
+
+void UsesModifiesExtractor::SetModifies(Procedure proc, Variable var) {
+	std::pair<Procedure, Variable> modifies = std::make_pair(proc, var);
+	if (this->procedure_modifies_cache_.find(modifies) == this->procedure_modifies_cache_.end()) {
+		this->write_manager_->SetModifies(proc, var);
+		this->procedure_modifies_cache_.insert(modifies);
 	}
 }
 
 // Sets uses on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectUses(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
-		this->write_manager_->SetUses(p, var);
+		this->SetUses(p, var);
 	}
 	for (StmtNum l : this->parent_smts_) {
-		this->write_manager_->SetUses(l, var);
+		this->SetUses(l, var);
 	}
 }
 
 // Sets modifies on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectModifies(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
-		this->write_manager_->SetModifies(p, var);
+		this->SetModifies(p, var);
 	}
 	for (StmtNum l : this->parent_smts_) {
-		this->write_manager_->SetModifies(l, var);
+		this->SetModifies(l, var);
 	}
 }

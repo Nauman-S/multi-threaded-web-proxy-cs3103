@@ -16,8 +16,7 @@ private:
 	std::vector<std::pair<T, T>> all_transitive_relations_;
 };
 
-
-template<typename T>
+template <typename T>
 inline bool OneToOneTransitiveRelationStore<T>::CheckTransistiveRelation(T left, T right)
 {
 	auto iter = left_to_right_map_.find(left);
@@ -34,25 +33,25 @@ inline bool OneToOneTransitiveRelationStore<T>::CheckTransistiveRelation(T left,
 	return false;
 }
 
-template<typename T>
+template <typename T>
 inline void OneToOneTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
 	all_transitive_relations_.push_back(std::make_pair(left, right));
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToOneTransitiveRelationStore<T>::GetAllRHSByLHS(T left)
 {
 	return GetAllHelper(left, left_to_right_map_);
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToOneTransitiveRelationStore<T>::GetAllLHSByRHS(T right)
 {
 	return GetAllHelper(right, right_to_left_map_);
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::unordered_set<T>> GetAllHelper(T start, std::unordered_map<T, T>& map)
 {
 	std::shared_ptr<std::unordered_set<T>> all = std::make_shared<std::unordered_set<T>>();
@@ -67,7 +66,7 @@ inline std::shared_ptr<std::unordered_set<T>> GetAllHelper(T start, std::unorder
 	return all;
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToOneTransitiveRelationStore<T>::GetAllTransitiveRelations()
 {
 	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
