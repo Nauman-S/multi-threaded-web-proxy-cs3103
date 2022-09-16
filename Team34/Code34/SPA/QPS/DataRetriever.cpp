@@ -463,7 +463,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Patte
 
 shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(Pattern& pat)
 {
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec(); 
     shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (expr_spec_ptr->IsWildcard()) {
         stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
