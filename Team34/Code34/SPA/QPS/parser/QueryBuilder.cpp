@@ -151,7 +151,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 			return select_tuple_;
 		}
 		else {
-			throw SyntaxError("Select Statement - Synonym " + identity_ + " used without declaration first");
+			throw SemanticError("Select Statement - Synonym " + identity_ + " used without declaration first");
 		}
 
 	}

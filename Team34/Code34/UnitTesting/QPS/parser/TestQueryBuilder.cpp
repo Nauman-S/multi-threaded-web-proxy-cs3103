@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
+#include "../SPA/QPS/parser/SyntaxError.h"
+#include "../SPA/QPS/parser/SemanticError.h"
 #include "../SPA/QPS/query_result/ResType.h"
 
 
@@ -65,6 +67,47 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
+		TEST_METHOD(SyntaxError_UncapitalizedSelect) {
+			const std::string query_ = "assign a; variable haha; select haha)";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
+
+		TEST_METHOD(SyntaxError_ExtraSemicolonInTheEnd) {
+			const std::string query_ = "Assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \");";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
+
+		TEST_METHOD(SyntaxError_CapitalizedDeclaration) {
+			const std::string query_ = "Assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
 		TEST_METHOD(TestValidBasicVariableProcedureNameSuchThatUses) {
 
 			const std::string query_ = "variable VAR12; Select VAR12 such that Uses(\"MAIN\", VAR12)";
@@ -298,7 +341,19 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-
+		TEST_METHOD(SyntaxError_WrongRelationshipName) {
+			const std::string query_ = "assign a; variable haha; select a such that ParentT (_,_) pattern a(\"v\", \" (x + y) * z + p \")";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
 		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_WildcardExpression ) {
 
 			const std::string query_ = "assign a; Select a pattern a(\"v\", _)  ";
@@ -459,6 +514,34 @@ namespace UnitTesting
 			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
 		};
 
+		TEST_METHOD(SyntaxError_PatternClause_RedundantClosingBrace) {
+			const std::string query_ = "assign a; variable haha; Select a such that Parent* (_, _) pattern a(\"v\", \" (x + y)) * z + p \")    ";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
+
+		TEST_METHOD(SyntaxError_PatternClause_RedundantOpeningBrace) {
+			const std::string query_ = "assign a; variable haha; Select a such that Parent* (_, _) pattern a(\"v\", \" ((x + y) * z + p \")    ";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
+
 		TEST_METHOD(Valid_PatternClause_And_SelectThatClause) {
 			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")        " ;
 			const std::string select_variable = "haha";
@@ -493,6 +576,7 @@ namespace UnitTesting
 			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
 		};
 
+
 		TEST_METHOD(Valid_SelectThatClause_And_PatternClause) {
 			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")        ";
 			const std::string select_variable = "haha";
@@ -526,5 +610,37 @@ namespace UnitTesting
 			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
 			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
 		};
+
+
+		
+
+		TEST_METHOD(SyntaxError_IncompleteQueryWithoutSelectIdentity) {
+			const std::string query_ = "assign a; variable haha; select such that Parent* (_,_) pattern a(\"v\", \" (x + y) * z + p \")";
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
+
+		TEST_METHOD(SemanticError_UndeclaredVariableUsedInSelect) {
+			const std::string query_ = "assign a; variable haha; Select qd such that Parent* (_, _) pattern a(\"v\", \" (x + y) * z + p \")    ";
+			bool semantic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SemanticError&) {
+				semantic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(semantic_error_thrown);
+		};
+
 	};
 }
