@@ -60,6 +60,11 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByWildcard(StmtStmtRel& rel);			// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(StmtStmtRel& rel);	// (synonym, synonym)
 
+	// Assign Pattern
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByVar(Pattern& pat);					// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByWildcard(Pattern& pat);				// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllAssignPattern(Pattern& pat);// assign_syn(var_syn, ExprSpec)
+
 	// type conversion helpers
 	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntStrToStrStrTable(std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
