@@ -24,7 +24,7 @@ std::shared_ptr<ProgramNode> SourceParser::Parse(std::string& source_filename) {
 }
 
 std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToken> tokens, int& token_idx, int& line_idx) {
-// Procedure name {
+	// Procedure name {
 	std::shared_ptr<ProcedureASTNode> procedure (new ProcedureASTNode());
 	vector<std::shared_ptr<StatementASTNode>> children = {};
 	ProcedureIndex p = ProcedureIndex();
