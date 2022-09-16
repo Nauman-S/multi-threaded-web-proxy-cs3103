@@ -11,6 +11,11 @@ bool ParentManager::CheckParent(StmtNum parent, StmtNum child)
 	return parent_store_.CheckRelation(parent, child);
 }
 
+bool ParentManager::IsEmpty()
+{
+	return parent_store_.IsEmpty();
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetChildrenFromStmt(StmtNum parent)
 {
 	return parent_store_.GetMany(parent);
@@ -19,11 +24,6 @@ std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetChildrenFromStmt(
 StmtNum ParentManager::GetParentFromStmt(StmtNum child)
 {
 	return parent_store_.GetOne(child);
-}
-
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentManager::GetAllParentRelations()
-{
-	return parent_store_.GetAllRelations();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllParents()
@@ -36,9 +36,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllChildren()
 	return parent_store_.GetAllRHS();
 }
 
-bool ParentManager::IsEmpty()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentManager::GetAllParentRelations()
 {
-	return parent_store_.IsEmpty();
+	return parent_store_.GetAllRelations();
 }
 
 // Parent* Relation methods

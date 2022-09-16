@@ -7,14 +7,20 @@ class OneToOneTransitiveRelationStore : public OneToOneRelationStore<T, T>
 {
 public:
 	// Transitive Relation methods
-	bool CheckTransistiveRelation(T left, T right);
 	void SetTransitiveRelation(T left, T right);
+	bool CheckTransistiveRelation(T left, T right);
 	std::shared_ptr<std::unordered_set<T>> GetAllRHSByLHS(T left);
 	std::shared_ptr<std::unordered_set<T>> GetAllLHSByRHS(T right);
 	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
 private:
 	std::vector<std::pair<T, T>> all_transitive_relations_;
 };
+
+template <typename T>
+inline void OneToOneTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
+{
+	all_transitive_relations_.push_back(std::make_pair(left, right));
+}
 
 template <typename T>
 inline bool OneToOneTransitiveRelationStore<T>::CheckTransistiveRelation(T left, T right)
@@ -31,12 +37,6 @@ inline bool OneToOneTransitiveRelationStore<T>::CheckTransistiveRelation(T left,
 		iter = left_to_right_map_.find(next);
 	}
 	return false;
-}
-
-template <typename T>
-inline void OneToOneTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	all_transitive_relations_.push_back(std::make_pair(left, right));
 }
 
 template <typename T>
