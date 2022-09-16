@@ -44,6 +44,7 @@
     <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
+    <ClCompile Include="PKB\manager\PatternManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
+    <ClInclude Include="PKB\manager\PatternManager.h" />
     <ClInclude Include="PKB\manager\ParentManager.h" />
     <ClInclude Include="PKB\manager\StatementManager.h" />
     <ClInclude Include="PKB\manager\FollowsManager.h" />
