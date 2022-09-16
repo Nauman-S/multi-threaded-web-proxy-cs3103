@@ -12,25 +12,18 @@ class ManyToOneRelationStore
 {
 public:
 	// Direct Relation methods
-	bool CheckRelation(S left, T right);
 	void SetRelation(S left, T right);
+	bool CheckRelation(S left, T right);
 	std::shared_ptr<std::unordered_set<S>> GetMany(T t);
 	std::shared_ptr<T> GetOne(S s);
-	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
-	bool IsEmpty();
+	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
 protected:
 	std::vector<std::pair<S, T>> all_relations_;
 	std::unordered_map<S, T> many_to_one_map_;
 	std::unordered_map<T, std::unordered_set<S>> one_to_many_map_;
 };
-
-template <typename S, typename T>
-inline bool ManyToOneRelationStore<S, T>::CheckRelation(S left, T right)
-{
-	return many_to_one_map_[left] == right;
-}
 
 template <typename S, typename T>
 inline void ManyToOneRelationStore<S, T>::SetRelation(S left, T right)
@@ -43,6 +36,12 @@ inline void ManyToOneRelationStore<S, T>::SetRelation(S left, T right)
 	all_relations_.push_back(std::make_pair(left, right));
 	many_to_one_map_[left] = right;
 	one_to_many_map_[right].insert(left);
+}
+
+template <typename S, typename T>
+inline bool ManyToOneRelationStore<S, T>::CheckRelation(S left, T right)
+{
+	return many_to_one_map_[left] == right;
 }
 
 template <typename S, typename T>
@@ -72,12 +71,6 @@ inline std::shared_ptr<T> ManyToOneRelationStore<S, T>::GetOne(S s)
 }
 
 template <typename S, typename T>
-inline std::shared_ptr<std::vector<std::pair<S, T>>> ManyToOneRelationStore<S, T>::GetAllRelations()
-{
-	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
-}
-
-template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> ManyToOneRelationStore<S, T>::GetAllLHS()
 {
 	std::shared_ptr<std::unordered_set<S>> all_lhs = std::make_shared<std::unordered_set<S>>();
@@ -100,7 +93,7 @@ inline std::shared_ptr<std::unordered_set<T>> ManyToOneRelationStore<S, T>::GetA
 }
 
 template <typename S, typename T>
-inline bool ManyToOneRelationStore<S, T>::IsEmpty()
+inline std::shared_ptr<std::vector<std::pair<S, T>>> ManyToOneRelationStore<S, T>::GetAllRelations()
 {
-	return all_relations_.empty();
+	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
 }
