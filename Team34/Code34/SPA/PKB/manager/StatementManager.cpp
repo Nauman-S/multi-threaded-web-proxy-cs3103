@@ -2,8 +2,7 @@
 
 void StatementManager::AddStatement(StmtNum stmt_num, RefType type)
 {
-	assert(type != RefType::kConstRef || type != RefType::kVarRef);
-	// add some defensive checks in the future to ensure that statement has not been added
+	assert(type != RefType::kConstRef && type != RefType::kVarRef);
 	type_to_stmt_map_[type].insert(stmt_num);
 	stmt_to_type_map_[stmt_num] = type;
 	statements_.insert(stmt_num);
@@ -16,11 +15,7 @@ bool StatementManager::IsStatement(StmtNum stmt_num)
 
 RefType StatementManager::GetStatementType(StmtNum stmt_num)
 {
-	auto iter = stmt_to_type_map_.find(stmt_num);
-	if (iter == stmt_to_type_map_.end())
-	{
-		// statement number key not found, throw some error
-	}
+	assert(stmt_to_type_map_.find(stmt_num) != stmt_to_type_map_.end());
 	return stmt_to_type_map_[stmt_num];
 }
 

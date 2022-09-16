@@ -8,6 +8,7 @@
 #include "manager/FollowsManager.h"
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
+#include "manager/PatternManager.h"
 
 class PKB
 {
@@ -20,6 +21,7 @@ public:
 	FollowsManager follows_manager_;
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
+	PatternManager pattern_manager_;
 };
 
 extern PKB pkb;
