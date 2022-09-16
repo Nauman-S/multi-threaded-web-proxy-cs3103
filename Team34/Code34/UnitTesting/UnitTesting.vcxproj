@@ -160,12 +160,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\stubs\RelationStubFactory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\parser\TestQueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp" />
+    <ClCompile Include="QPS\stubs\RelationStubFactory.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
     <ClCompile Include="TestUsesManager.cpp" />
     <ClCompile Include="stdafx.cpp">
