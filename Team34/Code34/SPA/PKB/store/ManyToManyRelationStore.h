@@ -22,7 +22,7 @@ private:
 	std::unordered_map<T, std::unordered_set<S>> t_to_s_map_;
 };
 
-template<typename S,typename T>
+template <typename S, typename T>
 inline bool ManyToManyRelationStore<S, T>::CheckRelation(S s, T t)
 {
 	auto iter = t_to_s_map_.find(t);
@@ -34,13 +34,13 @@ inline bool ManyToManyRelationStore<S, T>::CheckRelation(S s, T t)
 	return false;
 }
 
-template<typename S, typename T>
+template <typename S, typename T>
 inline std::shared_ptr<std::vector<std::pair<S, T>>> ManyToManyRelationStore<S, T>::GetAllRelations()
 {
 	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
 }
 
-template<typename S, typename T>
+template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::GetAllLHS()
 {
 	std::shared_ptr<std::unordered_set<S>> all_lhs = std::make_shared<std::unordered_set<S>>();
@@ -51,17 +51,20 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::Get
 	return all_lhs;
 }
 
-template<typename S, typename T>
+template <typename S, typename T>
 inline void ManyToManyRelationStore<S, T>::SetRelation(S s, T t)
 {
-	//assert(s_to_t_map_[s].find(t) == s_to_t_map_[s].end());
-	//assert(t_to_s_map_[t].find(s) == t_to_s_map_[t].end());
+	// defensive check to prevent adding duplicate entries
+	if (s_to_t_map_[s].find(t) != s_to_t_map_[s].end() || t_to_s_map_[t].find(s) != t_to_s_map_[t].end())
+	{
+		return;
+	}
 	s_to_t_map_[s].insert(t);
 	t_to_s_map_[t].insert(s);
 	all_relations_.push_back(std::make_pair(s, t));
 }
 
-template<typename S, typename T>
+template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> ManyToManyRelationStore<S, T>::GetRHSByLHS(S s)
 {
 	auto iter = s_to_t_map_.find(s);
@@ -75,7 +78,7 @@ inline std::shared_ptr<std::unordered_set<T>> ManyToManyRelationStore<S, T>::Get
 	}
 }
 
-template<typename S, typename T>
+template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::GetLHSByRHS(T t)
 {
 	auto iter = t_to_s_map_.find(t);

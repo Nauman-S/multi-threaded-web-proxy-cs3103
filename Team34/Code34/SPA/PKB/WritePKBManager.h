@@ -3,6 +3,7 @@
 
 #include "PKB.h"
 #include "../Utils/type/TypeDef.h"
+#include "../Utils/expression/Expr.h"
 
 class WritePKBManager
 {
@@ -43,4 +44,7 @@ public:
 	//APIs related to Modifies relation
 	void SetModifies(StmtNum stmt_num, Variable var);
 	void SetModifies(Procedure proc_name, Variable var);
+
+	// APIs related to Pattern relation
+	void AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr);
 };

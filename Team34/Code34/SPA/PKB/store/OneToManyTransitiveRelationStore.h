@@ -3,7 +3,7 @@
 #include "OneToManyRelationStore.h"
 
 template <typename T>
-class OneToManyTransitiveRelationStore: public OneToManyRelationStore<T, T>
+class OneToManyTransitiveRelationStore : public OneToManyRelationStore<T, T>
 {
 public:
 	// Transitive Relation methods
@@ -16,8 +16,7 @@ private:
 	std::vector<std::pair<T, T>> all_transitive_relations_;
 };
 
-
-template<typename T>
+template <typename T>
 inline bool OneToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right)
 {
 	T next = right;
@@ -35,7 +34,7 @@ inline bool OneToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left,
 	return false;
 }
 
-template<typename T>
+template <typename T>
 inline void OneToManyTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
 	std::pair<T, T> pair = std::make_pair(left, right);
@@ -45,7 +44,7 @@ inline void OneToManyTransitiveRelationStore<T>::SetTransitiveRelation(T left, T
 	}
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T>::GetAllTransitiveMany(T t)
 {
 	std::shared_ptr<std::unordered_set<T>> all_many = std::make_shared<std::unordered_set<T>>();
@@ -70,7 +69,7 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T
 	return all_many;
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T>::GetAllTransitiveOne(T t)
 {
 	std::shared_ptr<std::unordered_set<T>> all_one = std::make_shared<std::unordered_set<T>>();
@@ -86,7 +85,7 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T
 	return all_one;
 }
 
-template<typename T>
+template <typename T>
 inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyTransitiveRelationStore<T>::GetAllTransitiveRelations()
 {
 	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
