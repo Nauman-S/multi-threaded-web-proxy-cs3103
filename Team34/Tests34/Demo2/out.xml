@@ -9,16 +9,7 @@
 <stuans>x,y</stuans>
 <correct>x,y</correct>
 <time_taken>3.000000</time_taken>
-<failed>
-<missing>x,y</missing>
-<additional>x,y</additional>
-<summary>
-<expected>2</expected>
-<matched>0</matched>
-<missing>2</missing>
-<additional>1</additional>
-</summary>
-</failed>
+<passed/>
 </query>
 </queries>
 </test_results>

@@ -16,7 +16,7 @@ using std::shared_ptr;
 using std::unordered_map;
 using std::vector;
 
-string ResultExtractor::GetFormattedResult() {
+vector<std::string> ResultExtractor::GetFormattedResult() {
 
 	// assert the number of syns in tuple > 0;
 	assert(select_tuple_->size() > 0 && "Size of tuple must be greater than 0");
@@ -29,7 +29,7 @@ string ResultExtractor::GetFormattedResult() {
 	}
 }
 
-string ResultExtractor::GetSingleSynResult() {
+vector<std::string> ResultExtractor::GetSingleSynResult() {
 	shared_ptr<Ref> ref = select_tuple_->at(0);
 
 	// Get the domain in set results;
@@ -55,8 +55,8 @@ string ResultExtractor::GetSingleSynResult() {
 
 }
 
-string ResultExtractor::GetMultiSynResult() {
-	return "GetMultiSynResult() is Not Implemented Yet";
+vector<std::string> ResultExtractor::GetMultiSynResult() {
+	return std::vector<string>();
 }
 
 shared_ptr<unordered_set<string>> ResultExtractor::CombineResult(shared_ptr<unordered_set<string>> result_set1, shared_ptr<unordered_set<string>> result_set2) {
@@ -71,20 +71,20 @@ shared_ptr<unordered_set<string>> ResultExtractor::CombineResult(shared_ptr<unor
 	return combined_result;
 }
 
-string ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_set, RefType ref_type) {
+vector<std::string> ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_set, RefType ref_type) {
 	std::vector<string> result_vector(result_set->begin(), result_set->end());
 
 	std::sort(result_vector.begin(), result_vector.end());
 
-	string final_result = "";
-	for (string value : result_vector) {
-		final_result += (value + ",");
-	}
-	if (final_result.size() == 0) {
-		return "none";
-	}
-	final_result.pop_back();
+	//string final_result = "";
+	//for (string value : result_vector) {
+	//	final_result += (value + ",");
+	//}
+	//if (final_result.size() == 0) {
+	//	return "none";
+	//}
 	//final_result.pop_back();
-	return final_result;
+	//final_result.pop_back();
+	return result_vector;
 }
 

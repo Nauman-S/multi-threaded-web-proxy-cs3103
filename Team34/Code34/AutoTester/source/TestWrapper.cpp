@@ -80,15 +80,15 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 
 	cout << query.GetSelectTuple() << endl;
 	QueryEvaluator evaluator(query);
-	string res;
 	if (evaluator.evaluate()) {
-		res = evaluator.ExtractResult();
+		vector<std::string> res = evaluator.ExtractResult();
+		results.insert(results.end(), res.begin(), res.end());
 	}
 	else {
-		res = "none";
+		results.push_back("none");
 	}
-	std::cout << res << std::endl;
-	results.push_back(res);
+	//std::cout << res << std::endl;
+	//results.push_back(res);
 	return;
     
 }
