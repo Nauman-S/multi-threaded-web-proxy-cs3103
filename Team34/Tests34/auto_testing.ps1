@@ -47,5 +47,5 @@ while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
 
   taskkill /pid $pidNumber /f
 }
-
+Start-Process "http://localhost:8000"
 & python -m http.server $port
