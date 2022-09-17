@@ -48,6 +48,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\TestDataRetriever.cpp">
+	<ClCompile Include="TestFollowsManager.cpp">
+		<Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="TestStatementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
