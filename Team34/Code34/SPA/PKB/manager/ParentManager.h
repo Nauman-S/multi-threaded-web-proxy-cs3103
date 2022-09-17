@@ -16,12 +16,12 @@ public:
 	// Parent Relation methods
 	void SetParent(StmtNum parent, StmtNum child);
 	bool CheckParent(StmtNum parent, StmtNum child);
+	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
 	StmtNum GetParentFromStmt(StmtNum child);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
-	bool IsEmpty();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 	
 	// Parent* Relation methods
 	void SetParentT(StmtNum parent, StmtNum child);

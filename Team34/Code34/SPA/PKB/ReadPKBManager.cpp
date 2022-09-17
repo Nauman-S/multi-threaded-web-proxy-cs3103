@@ -61,6 +61,11 @@ bool ReadPKBManager::CheckParent(StmtNum parent, StmtNum child)
 	return pkb.parent_manager_.CheckParent(parent, child);
 }
 
+bool ReadPKBManager::IsParentStoreEmpty()
+{
+	return pkb.parent_manager_.IsEmpty();
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildrenFromStmt(StmtNum parent)
 {
 	return pkb.parent_manager_.GetChildrenFromStmt(parent);
@@ -71,9 +76,9 @@ StmtNum ReadPKBManager::GetParentFromStmt(StmtNum child)
 	return pkb.parent_manager_.GetParentFromStmt(child);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
 {
-	return pkb.parent_manager_.GetAllParentRelations();
+	return pkb.parent_manager_.GetAllChildren();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents()
@@ -81,14 +86,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents()
 	return pkb.parent_manager_.GetAllParents();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
 {
-	return pkb.parent_manager_.GetAllChildren();
-}
-
-bool ReadPKBManager::IsParentStoreEmpty()
-{
-	return pkb.parent_manager_.IsEmpty();
+	return pkb.parent_manager_.GetAllParentRelations();
 }
 
 // APIs related to Parent* relation
@@ -118,6 +118,11 @@ bool ReadPKBManager::CheckFollows(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollows(left, right);
 }
 
+bool ReadPKBManager::IsFollowsStoreEmpty()
+{
+	return pkb.follows_manager_.IsEmpty();
+}
+
 StmtNum ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 {
 	return pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
@@ -128,9 +133,9 @@ StmtNum ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt)
 	return pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
 {
-	return pkb.follows_manager_.GetAllFollowsRelations();
+	return pkb.follows_manager_.GetAllSuccessorStmts();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts()
@@ -138,14 +143,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorSt
 	return pkb.follows_manager_.GetAllPredecessorStmts();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
 {
-	return pkb.follows_manager_.GetAllSuccessorStmts();
-}
-
-bool ReadPKBManager::IsFollowsStoreEmpty()
-{
-	return pkb.follows_manager_.IsEmpty();
+	return pkb.follows_manager_.GetAllFollowsRelations();
 }
 
 // APIs related to Follows* relation
@@ -180,26 +180,6 @@ bool ReadPKBManager::CheckUses(Procedure proc_name, Variable var)
 	return pkb.uses_manager_.CheckUses(proc_name, var);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVUses()
-{
-	return pkb.uses_manager_.GetAllSVUses();
-}
-
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements()
-{
-	return pkb.uses_manager_.GetAllStatements();
-}
-
-std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVUses()
-{
-	return pkb.uses_manager_.GetAllPVUses();
-}
-
-std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllUsesProcedures()
-{
-	return pkb.uses_manager_.GetAllProcedures();
-}
-
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByStmtNum(StmtNum stmt_num)
 {
 	return pkb.uses_manager_.GetVarByStmtNum(stmt_num);
@@ -220,6 +200,26 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameBy
 	return pkb.uses_manager_.GetProcNameByVar(var);
 }
 
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements()
+{
+	return pkb.uses_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllUsesProcedures()
+{
+	return pkb.uses_manager_.GetAllProcedures();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVUses()
+{
+	return pkb.uses_manager_.GetAllSVUses();
+}
+
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVUses()
+{
+	return pkb.uses_manager_.GetAllPVUses();
+}
+
 // APIs related to Modifies relation
 bool ReadPKBManager::CheckModifies(StmtNum stmt_num, Variable var)
 {
@@ -229,26 +229,6 @@ bool ReadPKBManager::CheckModifies(StmtNum stmt_num, Variable var)
 bool ReadPKBManager::CheckModifies(Procedure proc_name, Variable var)
 {
 	return pkb.modifies_manager_.CheckModifies(proc_name, var);
-}
-
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVModifies()
-{
-	return pkb.modifies_manager_.GetAllSVModifies();
-}
-
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
-{
-	return pkb.modifies_manager_.GetAllStatements();
-}
-
-std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVModifies()
-{
-	return pkb.modifies_manager_.GetAllPVModifies();
-}
-
-std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesProcedures()
-{
-	return pkb.modifies_manager_.GetAllProcedures();
 }
 
 std::shared_ptr<Variable> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
@@ -269,6 +249,26 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumB
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNameByVar(Variable var)
 {
 	return pkb.modifies_manager_.GetProcNameByVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
+{
+	return pkb.modifies_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesProcedures()
+{
+	return pkb.modifies_manager_.GetAllProcedures();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllSVModifies()
+{
+	return pkb.modifies_manager_.GetAllSVModifies();
+}
+
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::GetAllPVModifies()
+{
+	return pkb.modifies_manager_.GetAllPVModifies();
 }
 
 // APIs related to Pattern relation

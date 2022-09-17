@@ -41,5 +41,11 @@
     <ClCompile Include="TestModifiesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestParentManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+	<ClCompile Include="TestFollowsManager.cpp">
+		<Filter>Source Files</Filter>
+	</ClCompile>
   </ItemGroup>
 </Project>

@@ -11,29 +11,20 @@ class OneToOneRelationStore
 {
 public:
 	// Direct relation methods
-	bool CheckRelation(S left, T right);
 	void SetRelation(S left, T right);
+	bool CheckRelation(S left, T right);
+	bool IsEmpty();
 	T GetRHSByLHS(S left);
 	S GetLHSByRHS(T right);
-	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
-	bool IsEmpty();
+	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
+	
 protected:
 	std::unordered_map<S, T> left_to_right_map_;
 	std::unordered_map<T, S> right_to_left_map_;
 	std::vector<std::pair<S, T>> all_relations_;
 };
-
-template <typename S, typename T>
-inline bool OneToOneRelationStore<S, T>::CheckRelation(S left, T right)
-{
-	if (left_to_right_map_.find(left) != left_to_right_map_.end())
-	{
-		return left_to_right_map_[left] == right;
-	}
-	return false;
-}
 
 template <typename S, typename T>
 inline void OneToOneRelationStore<S, T>::SetRelation(S left, T right)
@@ -46,6 +37,22 @@ inline void OneToOneRelationStore<S, T>::SetRelation(S left, T right)
 	left_to_right_map_[left] = right;
 	right_to_left_map_[right] = left;
 	all_relations_.push_back(std::make_pair(left, right));
+}
+
+template <typename S, typename T>
+inline bool OneToOneRelationStore<S, T>::CheckRelation(S left, T right)
+{
+	if (left_to_right_map_.find(left) != left_to_right_map_.end())
+	{
+		return left_to_right_map_[left] == right;
+	}
+	return false;
+}
+
+template <typename S, typename T>
+inline bool OneToOneRelationStore<S, T>::IsEmpty()
+{
+	return all_relations_.empty();
 }
 
 template <typename S, typename T>
@@ -75,12 +82,6 @@ inline S OneToOneRelationStore<S, T>::GetLHSByRHS(T right)
 }
 
 template <typename S, typename T>
-inline std::shared_ptr<std::vector<std::pair<S, T>>> OneToOneRelationStore<S, T>::GetAllRelations()
-{
-	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
-}
-
-template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> OneToOneRelationStore<S, T>::GetAllLHS()
 {
 	std::shared_ptr<std::unordered_set<S>> all_lhs = std::make_shared<std::unordered_set<T>>();
@@ -103,7 +104,7 @@ inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetAl
 }
 
 template <typename S, typename T>
-inline bool OneToOneRelationStore<S, T>::IsEmpty()
+inline std::shared_ptr<std::vector<std::pair<S, T>>> OneToOneRelationStore<S, T>::GetAllRelations()
 {
-	return all_relations_.empty();
+	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
 }
