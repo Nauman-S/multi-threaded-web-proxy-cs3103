@@ -1,0 +1,8 @@
+procedure test {
+    read x;
+    y=x;
+    print y;
+    while (x!=0) {
+        x = x + 1;
+    }
+}

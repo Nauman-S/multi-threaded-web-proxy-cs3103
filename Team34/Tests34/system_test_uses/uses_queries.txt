@@ -1,0 +1,10 @@
+1 - select while
+while w;
+Select w
+2
+5000
+2 - single nesting find parent
+stmt s;
+Select s such that Uses (s,"var1")
+9
+5000
