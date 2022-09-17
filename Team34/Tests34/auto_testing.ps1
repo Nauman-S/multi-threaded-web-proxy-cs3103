@@ -39,7 +39,7 @@ $foundProcesses = netstat -ano | findstr :$port
 $activePortPattern = ":$port\s.+LISTENING\s+\d+$"
 $pidNumberPattern = "\d+$"
 
-IF ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
+while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
   $matchesInfo = $foundProcesses | Select-String -Pattern $activePortPattern
   $firstMatch = $matchesInfo.Matches.Get(0).Value
 
