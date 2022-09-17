@@ -89,6 +89,7 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(vector<SourceToken
 	if_node->SetLineIndex(line_index);
 	token_idx += 2;
 	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, token_idx, line_idx, proc);
+	cond->SetParentProcIndex(proc);
 	token_idx += 1;
 	vector<std::shared_ptr<StatementASTNode>> if_children = {};
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
@@ -179,6 +180,7 @@ shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(vector<Sourc
 	w_node->SetLineIndex(line_index);
 	token_idx += 2;
 	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, token_idx, line_idx, proc);
+	cond->SetParentProcIndex(proc);
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kRightCurly) {
 		shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, token_idx, line_idx, proc);
 		s_node->SetParentSatementLineIndex(line_index);

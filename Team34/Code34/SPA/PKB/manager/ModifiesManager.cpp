@@ -20,9 +20,9 @@ bool ModifiesManager::CheckModifies(Procedure proc_name, Variable var)
 	return modifies_pv_store_.CheckRelation(proc_name, var);
 }
 
-std::shared_ptr<Variable> ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByStmtNum(StmtNum stmt_num)
 {
-	return modifies_sv_store_.GetOne(stmt_num);
+	return modifies_sv_store_.GetRHSByLHS(stmt_num);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByProcName(Procedure proc_name)
@@ -32,7 +32,7 @@ std::shared_ptr<std::unordered_set<Variable>> ModifiesManager::GetVarByProcName(
 
 std::shared_ptr<std::unordered_set<StmtNum>> ModifiesManager::GetStmtNumByVar(Variable var)
 {
-	return modifies_sv_store_.GetMany(var);
+	return modifies_sv_store_.GetLHSByRHS(var);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ModifiesManager::GetProcNameByVar(Variable var)
