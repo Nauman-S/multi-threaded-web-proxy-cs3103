@@ -69,8 +69,8 @@ namespace UnitTesting
 
 		TEST_METHOD(TestGetVarByStmtNum) {
 			modifies_manager_.SetModifies(1, "x");
-			Assert::AreEqual(Variable("x"), *modifies_manager_.GetVarByStmtNum(1));
-			Assert::AreEqual(Variable(""), *modifies_manager_.GetVarByStmtNum(2));
+			Assert::AreEqual(1, int(modifies_manager_.GetVarByStmtNum(1)->size()));
+			Assert::AreEqual(0, int(modifies_manager_.GetVarByStmtNum(2)->size()));
 		};
 
 		TEST_METHOD(TestGetVarByProcName) {
