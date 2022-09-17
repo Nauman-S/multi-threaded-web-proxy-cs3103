@@ -3,21 +3,21 @@
 #include <vector>
 #include <memory>
 
-#include "../../../SPA/QPS/relation/Rel.h"
-#include "../../../SPA/QPS/relation/ModifiesPRel.h"
-#include "../../../SPA/QPS/relation/ModifiesSRel.h"
-#include "../../../SPA/QPS/relation/UsesPRel.h"
-#include "../../../SPA/QPS/relation/UsesSRel.h"
-#include "../../../SPA/QPS/relation/FollowsRel.h"
-#include "../../../SPA/QPS/relation/FollowsTRel.h"
-#include "../../../SPA/QPS/relation/ParentRel.h"
-#include "../../../SPA/QPS/relation/ParentTRel.h"
-#include "../../../SPA/QPS/reference/ProcRef.h"
-#include "../../../SPA/QPS/reference/VarRef.h"
-#include "../../../SPA/QPS/reference/StmtRef.h"
-#include "../../../SPA/QPS/reference/AssignRef.h"
-#include "../../../SPA//QPS/reference/ValType.h"
-#include "../../../SPA/Utils/type/RefType.h"
+#include "../relation/Rel.h"
+#include "../relation/ModifiesPRel.h"
+#include "../relation/ModifiesSRel.h"
+#include "../relation/UsesPRel.h"
+#include "../relation/UsesSRel.h"
+#include "../relation/FollowsRel.h"
+#include "../relation/FollowsTRel.h"
+#include "../relation/ParentRel.h"
+#include "../relation/ParentTRel.h"
+#include "../reference/ProcRef.h"
+#include "../reference/VarRef.h"
+#include "../reference/StmtRef.h"
+#include "../reference/AssignRef.h"
+#include "../reference/ValType.h"
+#include "../../Utils/type/RefType.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -239,7 +239,7 @@ std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_syn_var_syn()
 	// (stmt_syn, var_syn)
 	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
 	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v2");
-	shared_ptr<Rel> stmt_syn_var_syn = make_shared<UsesSRel>(stmt_syn_ref, stmt_syn_var_syn);
+	shared_ptr<Rel> stmt_syn_var_syn = make_shared<UsesSRel>(stmt_syn_ref,var_syn_ref);
 
 	return stmt_syn_var_syn;
 }
