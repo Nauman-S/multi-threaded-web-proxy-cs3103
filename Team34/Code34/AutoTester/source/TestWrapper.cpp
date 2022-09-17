@@ -85,7 +85,7 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 		results.insert(results.end(), res.begin(), res.end());
 	}
 	else {
-		results.push_back("none");
+		results.push_back("");
 	}
 	//std::cout << res << std::endl;
 	//results.push_back(res);
