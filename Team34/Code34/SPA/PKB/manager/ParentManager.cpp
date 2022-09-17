@@ -3,7 +3,10 @@
 // Parent Relation methods
 void ParentManager::SetParent(StmtNum parent, StmtNum child)
 {
-	parent_store_.SetRelation(parent, child);
+	if (parent < child)
+	{
+		parent_store_.SetRelation(parent, child);
+	}
 }
 
 bool ParentManager::CheckParent(StmtNum parent, StmtNum child)
@@ -44,7 +47,10 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentManager::GetAllP
 // Parent* Relation methods
 void ParentManager::SetParentT(StmtNum parent, StmtNum child)
 {
-	parent_store_.SetTransitiveRelation(parent, child);
+	if (parent < child)
+	{
+		parent_store_.SetTransitiveRelation(parent, child);
+	}
 }
 
 bool ParentManager::CheckParentT(StmtNum parent, StmtNum child)

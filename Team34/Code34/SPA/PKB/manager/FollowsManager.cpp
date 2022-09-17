@@ -3,7 +3,10 @@
 // Follows Relation methods
 void FollowsManager::SetFollows(StmtNum left, StmtNum right)
 {
-    follows_store_.SetRelation(left, right);
+    if (left < right)
+    {
+        follows_store_.SetRelation(left, right);
+    }
 }
 
 bool FollowsManager::CheckFollows(StmtNum left, StmtNum right)
@@ -44,7 +47,10 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FollowsManager::GetAll
 // Follows* Relation methods
 void FollowsManager::SetFollowsT(StmtNum left, StmtNum right)
 {
-    follows_store_.SetTransitiveRelation(left, right);
+    if (left < right)
+    {
+        follows_store_.SetTransitiveRelation(left, right);
+    }
 }
 
 bool FollowsManager::CheckFollowsT(StmtNum left, StmtNum right)
