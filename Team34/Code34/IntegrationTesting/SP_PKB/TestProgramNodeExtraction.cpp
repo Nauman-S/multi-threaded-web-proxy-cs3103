@@ -94,7 +94,7 @@ namespace IntegrationTesting
 
 			// Uses in procedure
 			Assert::IsTrue(this->read->CheckUses("proc1", "var2"));
-			//Assert::IsTrue(this->read->CheckUses("proc1", "y"));
+			Assert::IsTrue(this->read->CheckUses("proc1", "y"));
 
 			// Uses on RHS of assignment
 			Assert::IsTrue(this->read->CheckUses(1, "var2"));
@@ -140,14 +140,14 @@ namespace IntegrationTesting
 			Assert::IsTrue(this->read->CheckModifies(9, "y"));
 
 			// Modifies on procedure of call statement
-			//Assert::IsTrue(this->read->CheckModifies(6, "camelCase"));
+			Assert::IsTrue(this->read->CheckModifies(6, "camelCase"));
 
 			// Modifies on child statements of if stmt
 			Assert::IsTrue(this->read->CheckModifies(7, "x"));
 			
 			// Modifies on indirect procedure call for statements and procedures
 			Assert::IsTrue(this->read->CheckModifies("proc2", "print"));
-			//Assert::IsTrue(this->read->CheckModifies(15, "print"));
+			Assert::IsTrue(this->read->CheckModifies(15, "print"));
 		}
 
 		TEST_METHOD(TestParentsRelationPopulation) {
