@@ -1,11 +1,39 @@
-procedure test {
-    read x;
-    read y;
-    while ((a > 0) || ((b > 0) && (d + c == 3))) {
-        if ((x + y) > (3 * y)) then {
-            print x;
+procedure proc1 {
+    var = var2 + var3;
+    x = var2 + 5;
+    while (x == 0) {
+        print var2;
+        print var3;
+    }
+    call proc2;
+    if (y < 0) then {
+        read x;
+        read y;
+    } else {
+        x = 5;
+    }
+}
+
+procedure proc2 {
+    camelCase = CAPSVAR + 5 + 2;
+    while (x > 0) {
+        read = camelCase;
+        call = 3 + 5;
+        if (call == 0) then {
+             y = 3;
         } else {
-            e = (procedure + test) * (read - test) + 3;
+             call procedure;
         }
+    }
+}
+
+procedure procedure {
+    if (x != 0) then {
+        print = 3;
+        while (x > 2) {
+            x = x - 1 + var2;
+        }
+    } else {
+        x = read;
     }
 }

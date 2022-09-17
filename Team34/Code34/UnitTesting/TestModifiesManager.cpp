@@ -13,29 +13,34 @@ namespace UnitTesting
 	private:
 		ModifiesManager modifies_manager_;
 	public:
-		TEST_METHOD(TestCheckSVModifies) {
+		TEST_METHOD(TestCheckSVModifies)
+		{
 			modifies_manager_.SetModifies(1, "x");
 			Assert::IsTrue(modifies_manager_.CheckModifies(1, "x"));
 			Assert::IsFalse(modifies_manager_.CheckModifies(1, "y"));
 		};
 
-		TEST_METHOD(TestCheckPVModifies) {
+		TEST_METHOD(TestCheckPVModifies) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			Assert::IsTrue(modifies_manager_.CheckModifies("proc1", "x"));
 			Assert::IsFalse(modifies_manager_.CheckModifies("proc1", "y"));
 		};
 
-		TEST_METHOD(TestSetSVModifies) {
+		TEST_METHOD(TestSetSVModifies) 
+		{
 			modifies_manager_.SetModifies(1, "x");
 			Assert::IsTrue(!modifies_manager_.GetAllSVModifies()->empty());
 		};
 
-		TEST_METHOD(TestSetPVModifies) {
+		TEST_METHOD(TestSetPVModifies) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			Assert::IsTrue(!modifies_manager_.GetAllPVModifies()->empty());
 		};
 
-		TEST_METHOD(TestGetAllSVModifies) {
+		TEST_METHOD(TestGetAllSVModifies) 
+		{
 			modifies_manager_.SetModifies(1, "x");
 			modifies_manager_.SetModifies(2, "y");
 			modifies_manager_.SetModifies(3, "z");
@@ -43,7 +48,8 @@ namespace UnitTesting
 			Assert::AreEqual(3, int(all_pairs->size()));
 		};
 
-		TEST_METHOD(TestGetAllStatements) {
+		TEST_METHOD(TestGetAllStatements) 
+		{
 			modifies_manager_.SetModifies(1, "x");
 			modifies_manager_.SetModifies(2, "y");
 			modifies_manager_.SetModifies(3, "z");
@@ -51,7 +57,8 @@ namespace UnitTesting
 			Assert::AreEqual(3, int(stmts->size()));
 		}
 
-		TEST_METHOD(TestGetAllPVModifies) {
+		TEST_METHOD(TestGetAllPVModifies) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			modifies_manager_.SetModifies("proc1", "y");
 			modifies_manager_.SetModifies("proc2", "z");
@@ -59,7 +66,8 @@ namespace UnitTesting
 			Assert::AreEqual(3, int(all_pairs->size()));
 		};
 
-		TEST_METHOD(TestGetAllProcedures) {
+		TEST_METHOD(TestGetAllProcedures) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			modifies_manager_.SetModifies("proc1", "y");
 			modifies_manager_.SetModifies("proc2", "z");
@@ -73,7 +81,8 @@ namespace UnitTesting
 			Assert::AreEqual(0, int(modifies_manager_.GetVarByStmtNum(2)->size()));
 		};
 
-		TEST_METHOD(TestGetVarByProcName) {
+		TEST_METHOD(TestGetVarByProcName) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			std::shared_ptr<std::unordered_set<Variable>> vars = modifies_manager_.GetVarByProcName("proc1");
 			Assert::AreEqual(1, int(vars->size()));
@@ -82,7 +91,8 @@ namespace UnitTesting
 			Assert::AreEqual(2, int(vars->size()));
 		};
 
-		TEST_METHOD(TestGetStmtNumByVar) {
+		TEST_METHOD(TestGetStmtNumByVar) 
+		{
 			modifies_manager_.SetModifies(1, "x");
 			std::shared_ptr<std::unordered_set<StmtNum>> stmts = modifies_manager_.GetStmtNumByVar("x");
 			Assert::AreEqual(1, int(stmts->size()));
@@ -91,7 +101,8 @@ namespace UnitTesting
 			Assert::AreEqual(2, int(stmts->size()));
 		};
 
-		TEST_METHOD(TestGetProcNameByVar) {
+		TEST_METHOD(TestGetProcNameByVar) 
+		{
 			modifies_manager_.SetModifies("proc1", "x");
 			std::shared_ptr<std::unordered_set<Procedure>> procs = modifies_manager_.GetProcNameByVar("x");
 			Assert::AreEqual(1, int(procs->size()));
