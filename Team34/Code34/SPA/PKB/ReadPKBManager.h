@@ -10,86 +10,86 @@
 class ReadPKBManager
 {
 public:
-	static std::unique_ptr<ReadPKBManager> GetInstance()
+	static std::shared_ptr<ReadPKBManager> GetInstance()
 	{
-		std::unique_ptr<ReadPKBManager> manager(new ReadPKBManager());
+		std::shared_ptr<ReadPKBManager> manager(new ReadPKBManager());
 		return manager;
 	}
     // APIs related to Variable entity
-    bool IsVariable(Variable var);
-    const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
+    virtual bool IsVariable(Variable var);
+	virtual const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
 
     // APIs related to Constant entity
-    bool IsConstant(Constant constant);
-    const std::shared_ptr<std::unordered_set<Constant>> GetAllConstants();
+	virtual bool IsConstant(Constant constant);
+	virtual const std::shared_ptr<std::unordered_set<Constant>> GetAllConstants();
 
 	// APIs related to Procedure entity
-	bool IsProcedure(Procedure proc);
-	const std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
+	virtual bool IsProcedure(Procedure proc);
+	virtual const std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
 	// APIs related to Statements
-	bool IsStatement(StmtNum stmt_num);
-	RefType GetStatementType(StmtNum stmt_num);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+	virtual bool IsStatement(StmtNum stmt_num);
+	virtual RefType GetStatementType(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 
 	// APIs related to Parent relation
-	bool CheckParent(StmtNum parent, StmtNum child);
-	bool IsParentStoreEmpty();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
-	StmtNum GetParentFromStmt(StmtNum child);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
+	virtual bool CheckParent(StmtNum parent, StmtNum child);
+	virtual bool IsParentStoreEmpty();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
+	virtual StmtNum GetParentFromStmt(StmtNum child);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 
 	// APIs related to Parent* relation
-	bool CheckParentT(StmtNum parent, StmtNum child);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
+	virtual bool CheckParentT(StmtNum parent, StmtNum child);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 
 	// APIs related to Follows relation
-	bool CheckFollows(StmtNum left, StmtNum right);
-	bool IsFollowsStoreEmpty();
-	StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
-	StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
+	virtual bool CheckFollows(StmtNum left, StmtNum right);
+	virtual bool IsFollowsStoreEmpty();
+	virtual StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
+	virtual StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 
 
 	// APIs relation to Follows* relation
-	bool CheckFollowsT(StmtNum left, StmtNum right);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
+	virtual bool CheckFollowsT(StmtNum left, StmtNum right);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 
 	// APIs related to Uses relation
-	bool CheckUses(StmtNum stmt_num, Variable var);
-	bool CheckUses(Procedure proc_name, Variable var);
-	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num);
-	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
-	std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
-	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
-	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
+	virtual bool CheckUses(StmtNum stmt_num, Variable var);
+	virtual bool CheckUses(Procedure proc_name, Variable var);
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
 	
 	// APIs related to Modifies relation
-	bool CheckModifies(StmtNum stmt_num, Variable var);
-	bool CheckModifies(Procedure proc_name, Variable var);
-	std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num);
-	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
-	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
-	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
-	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+	virtual bool CheckModifies(StmtNum stmt_num, Variable var);
+	virtual bool CheckModifies(Procedure proc_name, Variable var);
+	virtual std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
 
 	// APIs related to Pattern relation
-	bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
-	bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr);
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
+	virtual bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
+	virtual bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
 };

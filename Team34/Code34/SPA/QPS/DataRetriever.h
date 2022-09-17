@@ -30,7 +30,7 @@ class Pattern;
 class DataRetriever
 {
 protected:
-	std::unique_ptr<ReadPKBManager> pkb_ptr_;
+	std::shared_ptr<ReadPKBManager> pkb_ptr_;
 
 	// Stmt-Var relations
 	bool CheckSVRel(StmtVarRel& rel);																	// (stmt_num, var_name)
@@ -78,7 +78,7 @@ protected:
 public:
 	DataRetriever() {};
 
-	DataRetriever(std::unique_ptr<ReadPKBManager> pkb) : pkb_ptr_{ std::move(pkb) } {};
+	DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb } {};
 
 	std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
 
