@@ -46,6 +46,7 @@ while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
   $pidNumber = [regex]::match($firstMatch, $pidNumberPattern).Value
 
   taskkill /pid $pidNumber /f
+  $foundProcesses = netstat -ano | findstr :$port
 }
 Start-Process "http://localhost:8000"
 & python -m http.server $port
