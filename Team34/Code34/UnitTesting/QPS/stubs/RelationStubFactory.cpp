@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+#include "../../../SPA/QPS/relation/Rel.h"
 #include "../../../SPA/QPS/relation/ModifiesPRel.h"
 #include "../../../SPA/QPS/relation/ModifiesSRel.h"
 #include "../../../SPA/QPS/relation/UsesPRel.h"
@@ -11,152 +12,254 @@
 #include "../../../SPA/QPS/relation/FollowsTRel.h"
 #include "../../../SPA/QPS/relation/ParentRel.h"
 #include "../../../SPA/QPS/relation/ParentTRel.h"
+#include "../../../SPA/QPS/reference/ProcRef.h"
+#include "../../../SPA/QPS/reference/VarRef.h"
+#include "../../../SPA/QPS/reference/StmtRef.h"
+#include "../../../SPA/QPS/reference/AssignRef.h"
+#include "../../../SPA//QPS/reference/ValType.h"
+#include "../../../SPA/Utils/type/RefType.h"
 
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
 
 
-std::shared_ptr<std::vector<std::shared_ptr<ModifiesPRel>>> RelationStubFactory::GetModifiesPRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_name_var_name()
 {
 	// (proc_name, var_name)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func1");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "x");
+	shared_ptr<Rel> proc_name_var_name = make_shared<ModifiesPRel>(proc_name_ref, var_name_ref);
 
-	// (proc_name, synonym)
-
-	// (synonym, var_name)
-
-	// (synonym, synonym)
-
-	// (proc_name, wildcard)
-
-	// (synonym, wildcard)
+	return proc_name_var_name;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<ModifiesSRel>>> GetModifiesSRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_name_var_syn()
+{
+	// (proc_name, var_syn)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func1");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v1");
+	shared_ptr<Rel> proc_name_var_syn = make_shared<ModifiesPRel>(proc_name_ref, var_syn_ref);
+
+	return proc_name_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_syn_var_name()
+{
+	// (synonym, var_name)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p1");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "x");
+	shared_ptr<Rel> proc_syn_var_name = make_shared<ModifiesPRel>(proc_syn_ref, var_name_ref);
+
+	return proc_syn_var_name;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_syn_var_syn()
+{
+	// (synonym, synonym)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p1");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v1");
+	shared_ptr<Rel> proc_syn_var_syn = make_shared<ModifiesPRel>(proc_syn_ref, var_syn_ref);
+
+	return proc_syn_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_name_var_wildcard()
+{
+	// (proc_name, wildcard)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func1");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> proc_name_var_wildcard = make_shared<ModifiesPRel>(proc_name_ref, var_wildcard_ref);
+
+	return proc_name_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesP_proc_syn_var_wildcard()
+{
+	// (synonym, wildcard)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p1");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> proc_syn_var_wildcard = make_shared<ModifiesPRel>(proc_syn_ref, var_wildcard_ref);
+	
+	return proc_syn_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_num_var_name()
 {
 	// (stmt_num, var_name)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "x");
+	shared_ptr<Rel> stmt_num_var_name = make_shared<ModifiesSRel>(stmt_num_ref, var_name_ref);
 
-	// (stmt_num, synonym)
-
-	// (synonym, var_name)
-
-	// (synonym, synonym)
-
-	// (stmt_num, wildcard)
-
-	// (synonym, wildcard)
+	return stmt_num_var_name;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<UsesPRel>>> GetUsesPRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_num_var_syn()
+{
+	// (stmt_num, synonym)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v1");
+	shared_ptr<Rel> stmt_num_var_syn = make_shared<ModifiesSRel>(stmt_num_ref, var_syn_ref);
+
+	return stmt_num_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_syn_var_name()
+{
+	// (synonym, var_name)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "x");
+	shared_ptr<Rel> stmt_syn_var_name = make_shared<ModifiesSRel>(stmt_syn_ref, var_name_ref);
+
+	return stmt_syn_var_name;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_syn_var_syn()
+{
+	// (synonym, synonym)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v1");
+	shared_ptr<Rel> stmt_syn_var_syn = make_shared<ModifiesSRel>(stmt_syn_ref, var_syn_ref);
+
+	return stmt_syn_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_num_var_wildcard()
+{
+	// (stmt_num, wildcard)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_num_var_wildcard = make_shared<ModifiesSRel>(stmt_num_ref, var_wildcard_ref);
+
+	return stmt_num_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetModifiesS_stmt_syn_var_wildcard()
+{
+	// (synonym, wildcard)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_syn_var_wildcard = make_shared<ModifiesSRel>(stmt_syn_ref, var_wildcard_ref);
+
+	return stmt_syn_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_name_var_name()
 {
 	// (proc_name, var_name)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func2");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "y");
+	shared_ptr<Rel> proc_name_var_name = make_shared<UsesPRel>(proc_name_ref, var_name_ref);
 
-	// (proc_name, synonym)
-
-	// (synonym, var_name)
-
-	// (synonym, synonym)
-
-	// (proc_name, wildcard)
-
-	// (synonym, wildcard)
+	return proc_name_var_name;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<UsesSRel>>> GetUsesSRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_name_var_syn()
+{
+	// (proc_name, synonym)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func2");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v2");
+	shared_ptr<Rel> proc_name_var_syn = make_shared<UsesPRel>(proc_name_ref, var_syn_ref);
+
+	return proc_name_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_syn_var_name()
+{
+	// (synonym, var_name)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p2");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "y");
+	shared_ptr<Rel> proc_syn_var_name = make_shared<UsesPRel>(proc_syn_ref, var_name_ref);
+
+	return proc_syn_var_name;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_syn_var_syn()
+{
+	// (synonym, synonym)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p2");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v2");
+	shared_ptr<Rel> proc_syn_var_syn = make_shared<UsesPRel>(proc_syn_ref, var_syn_ref);
+
+	return proc_syn_var_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_name_var_wildcard()
+{
+	// (proc_name, wildcard)
+	shared_ptr<ProcRef> proc_name_ref = make_shared<ProcRef>(ValType::kProcName, "func2");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> proc_name_var_wildcard = make_shared<UsesPRel>(proc_name_ref, var_wildcard_ref);
+
+	return proc_name_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesP_proc_syn_var_wildcard()
+{
+	// (synonym, wildcard)
+	shared_ptr<ProcRef> proc_syn_ref = make_shared<ProcRef>(ValType::kSynonym, "p2");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> proc_syn_var_wildcard = make_shared<UsesPRel>(proc_syn_ref, var_wildcard_ref);
+
+	return proc_syn_var_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_num_var_name()
 {
 	// (stmt_num, var_name)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "y");
+	shared_ptr<Rel> stmt_num_var_name = make_shared<UsesSRel>(stmt_num_ref, var_name_ref);
 
-	// (stmt_num, synonym)
-
-	// (synonym, var_name)
-
-	// (synonym, synonym)
-
-	// (stmt_num, wildcard)
-
-	// (synonym, wildcard)
+	return stmt_num_var_name;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<FollowsRel>>> GetFollowsRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_num_var_syn()
 {
-	// (stmt_num, stmt_num)
+	// (stmt_num, var_syn)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v2");
+	shared_ptr<Rel> stmt_num_var_syn = make_shared<UsesSRel>(stmt_num_ref, var_syn_ref);
 
-	// (synonym, stmt_num)
-
-	// (stmt_num, synonym)
-
-	// (synonym, synonym)
-
-	// (wildcard, stmt_num)
-
-	// (wildcard, synonym)
-
-	// (stmt_num, wildcard)
-
-	// (stmt_num, synonym)
-
-	// (wildcard, wildcard)
+	return stmt_num_var_syn;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<FollowsTRel>>> GetFollowsTRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_syn_var_name()
 {
-	// (stmt_num, stmt_num)
+	// (stmt_syn, var_name)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_name_ref = make_shared<VarRef>(ValType::kVarName, "y");
+	shared_ptr<Rel> stmt_syn_var_name = make_shared<UsesSRel>(stmt_syn_ref, var_name_ref);
 
-	// (synonym, stmt_num)
-
-	// (stmt_num, synonym)
-
-	// (synonym, synonym)
-
-	// (wildcard, stmt_num)
-
-	// (wildcard, synonym)
-
-	// (stmt_num, wildcard)
-
-	// (stmt_num, synonym)
-
-	// (wildcard, wildcard)
+	return stmt_syn_var_name;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<ParentRel>>> GetParentRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_syn_var_syn()
 {
-	// (stmt_num, stmt_num)
+	// (stmt_syn, var_syn)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_syn_ref = make_shared<VarRef>(ValType::kSynonym, "v2");
+	shared_ptr<Rel> stmt_syn_var_syn = make_shared<UsesSRel>(stmt_syn_ref, stmt_syn_var_syn);
 
-	// (synonym, stmt_num)
-
-	// (stmt_num, synonym)
-
-	// (synonym, synonym)
-
-	// (wildcard, stmt_num)
-
-	// (wildcard, synonym)
-
-	// (stmt_num, wildcard)
-
-	// (stmt_num, synonym)
-
-	// (wildcard, wildcard)
+	return stmt_syn_var_syn;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<ParentTRel>>> GetParentTRelStubs()
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_num_var_wildcard()
 {
-	// (stmt_num, stmt_num)
-
-	// (synonym, stmt_num)
-
-	// (stmt_num, synonym)
-
-	// (synonym, synonym)
-
-	// (wildcard, stmt_num)
-
-	// (wildcard, synonym)
-
 	// (stmt_num, wildcard)
+	shared_ptr<AssignRef> stmt_num_ref = make_shared<AssignRef>(ValType::kLineNum, "5");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_num_var_wildcard = make_shared<UsesSRel>(stmt_num_ref, var_wildcard_ref);
 
-	// (stmt_num, synonym)
+	return stmt_num_var_wildcard;
+}
 
-	// (wildcard, wildcard)
+std::shared_ptr<Rel> RelationStubFactory::GetUsesS_stmt_syn_var_wildcard()
+{
+	// (stmt_syn, var_wildcard)
+	shared_ptr<AssignRef> stmt_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s1");
+	shared_ptr<VarRef> var_wildcard_ref = make_shared<VarRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_syn_var_wildcard = make_shared<UsesSRel>(stmt_syn_ref, var_wildcard_ref);
+
+	return stmt_syn_var_wildcard;
 }
