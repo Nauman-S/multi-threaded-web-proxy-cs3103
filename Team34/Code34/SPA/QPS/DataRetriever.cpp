@@ -66,8 +66,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
         res = pkb_ptr_->GetUsesVarByStmtNum(stmt_num);
     }
     else if (type == RelType::kModifiesSRel) {
-        shared_ptr<string> var = pkb_ptr_->GetModifiesVarByStmtNum(stmt_num);
-        res = std::make_shared<unordered_set<string>>(unordered_set({ *var }));
+        res = pkb_ptr_->GetModifiesVarByStmtNum(stmt_num);
     }
     return res;
 

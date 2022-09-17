@@ -58,6 +58,13 @@ bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, ve
 
 bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
 	while (tokens.at(idx).GetType() != SourceTokenType::kRightCurly) {
+		int tmp = idx;
+		if (ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
+			continue;
+		}
+		else {
+			idx = tmp;
+		}
 		if (tokens.at(idx).IsRead()) {
 			if (!ValidateRead(tokens, ++idx, procedure_names, variable_names)) {
 				return false;
@@ -84,9 +91,7 @@ bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, ve
 			}
 		}
 		else {
-			if (!ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
-				return false;
-			}
+			return false;
 		}
 	}
 	return true;
