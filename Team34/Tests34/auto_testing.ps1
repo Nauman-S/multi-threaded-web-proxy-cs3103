@@ -35,4 +35,17 @@ foreach($folder in $directories) {
     }
 }
 
+$foundProcesses = netstat -ano | findstr :$port
+$activePortPattern = ":$port\s.+LISTENING\s+\d+$"
+$pidNumberPattern = "\d+$"
+
+IF ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
+  $matchesInfo = $foundProcesses | Select-String -Pattern $activePortPattern
+  $firstMatch = $matchesInfo.Matches.Get(0).Value
+
+  $pidNumber = [regex]::match($firstMatch, $pidNumberPattern).Value
+
+  taskkill /pid $pidNumber /f
+}
+
 & python -m http.server $port
