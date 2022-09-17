@@ -36,6 +36,8 @@
     <ClInclude Include="QPS\relation\UsesSRel.h" />
     <ClInclude Include="QPS\ResultExtractor.h" />
     <ClInclude Include="QPS\stubs\RelationStubFactory.h" />
+    <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
+    <ClInclude Include="QPS\stub\RelationStubFactory.h" />
     <ClInclude Include="SP\AssignStatementASTNode.h" />
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
@@ -142,6 +144,8 @@
     <ClCompile Include="QPS\relation\UsesSRel.cpp" />
     <ClCompile Include="QPS\ResultExtractor.cpp" />
     <ClCompile Include="QPS\stubs\RelationStubFactory.cpp" />
+    <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
+    <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
     <ClCompile Include="SP\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\ASTNode.cpp" />
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
