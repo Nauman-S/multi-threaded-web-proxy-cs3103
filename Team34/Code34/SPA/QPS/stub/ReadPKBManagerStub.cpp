@@ -18,7 +18,7 @@ using std::pair;
 	func2 uses y
 	statement 5 uses y
 */
-bool CheckUses(StmtNum stmt_num, Variable var)
+bool ReadPKBManagerStub::CheckUses(StmtNum stmt_num, Variable var)
 {
 	if (stmt_num == 5 && var == "y") {
 		return true;
@@ -27,7 +27,7 @@ bool CheckUses(StmtNum stmt_num, Variable var)
 	return false;
 }
 
-bool CheckUses(Procedure proc_name, Variable var)
+bool ReadPKBManagerStub::CheckUses(Procedure proc_name, Variable var)
 {
 	if (proc_name == "func2" && var == "y") {
 		return true;
@@ -36,7 +36,7 @@ bool CheckUses(Procedure proc_name, Variable var)
 	return false;
 }
 
-std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByStmtNum(StmtNum stmt_num)
 {
 	shared_ptr<unordered_set<Variable>> res;
 	if (stmt_num == 5) {
@@ -46,7 +46,7 @@ std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_n
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByProcName(Procedure proc_name)
 {
 	shared_ptr<unordered_set<Variable>> res;
 	if (proc_name == "func2") {
@@ -56,7 +56,7 @@ std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure pro
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var)
 {
 	shared_ptr<unordered_set<StmtNum>> res;
 	if (var == "y") {
@@ -66,7 +66,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var)
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var)
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetUsesProcNameByVar(Variable var)
 {
 	shared_ptr<unordered_set<Procedure>> res;
 	if (var == "y") {
@@ -76,7 +76,7 @@ std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements()
 {
 	shared_ptr<unordered_set<StmtNum>> res;
 	res->insert(5);
@@ -84,7 +84,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements()
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures()
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllUsesProcedures()
 {
 	shared_ptr<unordered_set<Procedure>> res;
 	res->insert("func2");
@@ -92,7 +92,7 @@ std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures()
 	return res;
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::GetAllSVUses()
 {
 	shared_ptr<vector<pair<StmtNum, Variable>>> res;
 	res->push_back({ 5, "y" });
@@ -100,7 +100,7 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses()
 	return res;
 }
 
-std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses()
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManagerStub::GetAllPVUses()
 {
 	shared_ptr<vector<pair<Procedure, Variable>>> res;
 	res->push_back({ "func2", "y" });
@@ -113,7 +113,7 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses()
 	func1 modifies x
 	statement 5 modifies x
 */
-bool CheckModifies(StmtNum stmt_num, Variable var)
+bool ReadPKBManagerStub::CheckModifies(StmtNum stmt_num, Variable var)
 {
 	if (stmt_num == 5 && var == "x") {
 		return true;
@@ -122,7 +122,7 @@ bool CheckModifies(StmtNum stmt_num, Variable var)
 	return false;
 }
 
-bool CheckModifies(Procedure proc_name, Variable var)
+bool ReadPKBManagerStub::CheckModifies(Procedure proc_name, Variable var)
 {
 	if (proc_name == "func1" && var == "x") {
 		return true;
@@ -131,7 +131,7 @@ bool CheckModifies(Procedure proc_name, Variable var)
 	return false;
 }
 
-std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<Variable> ReadPKBManagerStub::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
 	if (stmt_num == 5) {
 		return make_shared<Variable>("x");
@@ -140,7 +140,7 @@ std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num)
 	return nullptr;
 }
 
-std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByProcName(Procedure proc_name)
 {
 	shared_ptr<unordered_set<Variable>> res;
 	if (proc_name == "func1") {
@@ -150,7 +150,7 @@ std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var)
 {
 	shared_ptr<unordered_set<StmtNum>> res;
 	if (var == "x") {
@@ -160,7 +160,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable va
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var)
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetModifiesProcNameByVar(Variable var)
 {
 	shared_ptr<unordered_set<Procedure>> res;
 	if (var == "x") {
@@ -170,7 +170,7 @@ std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements()
 {
 	shared_ptr<unordered_set<StmtNum>> res;
 	res->insert(5);
@@ -178,7 +178,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements()
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures()
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllModifiesProcedures()
 {
 	shared_ptr<unordered_set<Procedure>> res;
 	res->insert("func1");
@@ -186,7 +186,7 @@ std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures()
 	return res;
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies()
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::GetAllSVModifies()
 {
 	shared_ptr<vector<pair<StmtNum, Variable>>> res;
 	res->push_back({ 5, "x" });
@@ -194,7 +194,7 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies()
 	return res;
 }
 
-std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies()
+std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManagerStub::GetAllPVModifies()
 {
 	shared_ptr<vector<pair<Procedure, Variable>>> res;
 	res->push_back({ "func1", "x"});

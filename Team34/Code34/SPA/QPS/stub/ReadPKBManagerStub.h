@@ -6,7 +6,7 @@
 #include "../../Utils/type/TypeDef.h"
 #include "../../PKB/ReadPKBManager.h"
 
-class ReadPKBMangerStub : ReadPKBManager
+class ReadPKBManagerStub : public ReadPKBManager
 {
 	/*
 		This stub is made with the following SIMPLE source program
