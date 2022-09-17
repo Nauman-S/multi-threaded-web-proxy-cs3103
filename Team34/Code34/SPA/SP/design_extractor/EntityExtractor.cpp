@@ -35,6 +35,8 @@ void EntityExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 }
 
 void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
+	int line_no = assign.GetLineIndex().GetLineNum();
+
 	std::vector<VariableIndex> rhs = assign.GetRight();
 	for (VariableIndex var : rhs) {
 		this->write_manager_->AddVariable(var.GetName());
@@ -42,7 +44,9 @@ void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
 	VariableIndex lhs = assign.GetLeft();
 	this->write_manager_->AddVariable(lhs.GetName());
 
-	int line_no = assign.GetLineIndex().GetLineNum();
+	Expr expr = Expr(assign.GetInfix());
+	this->write_manager_->AddAssignPattern(line_no, lhs.GetName(), expr);
+
 	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 

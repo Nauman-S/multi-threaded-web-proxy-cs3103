@@ -28,6 +28,6 @@ public:
 
 	bool evaluate();
 
-	string ExtractResult();
+	std::vector<std::string> ExtractResult();
 };
 
