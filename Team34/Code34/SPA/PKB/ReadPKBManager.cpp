@@ -33,7 +33,6 @@ const std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProce
 	return pkb.procedure_manager_.GetAllEntities();
 }
 
-
 // APIs related to Statements
 bool ReadPKBManager::IsStatement(StmtNum stmt_num)
 {
@@ -231,7 +230,7 @@ bool ReadPKBManager::CheckModifies(Procedure proc_name, Variable var)
 	return pkb.modifies_manager_.CheckModifies(proc_name, var);
 }
 
-std::shared_ptr<Variable> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
 	return pkb.modifies_manager_.GetVarByStmtNum(stmt_num);
 }

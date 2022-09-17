@@ -76,7 +76,9 @@ protected:
 	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
 
 public:
-	DataRetriever() {};
+	DataRetriever() {
+		pkb_ptr_ = std::move(ReadPKBManager::GetInstance());
+	};
 
 	DataRetriever(std::unique_ptr<ReadPKBManager> pkb) : pkb_ptr_{ std::move(pkb) } {};
 
