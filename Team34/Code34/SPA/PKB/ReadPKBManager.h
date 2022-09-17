@@ -79,7 +79,7 @@ public:
 	// APIs related to Modifies relation
 	virtual bool CheckModifies(StmtNum stmt_num, Variable var);
 	virtual bool CheckModifies(Procedure proc_name, Variable var);
-	virtual std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByStmtNum(StmtNum stmt_num);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);

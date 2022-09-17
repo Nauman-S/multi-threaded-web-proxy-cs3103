@@ -131,13 +131,14 @@ bool ReadPKBManagerStub::CheckModifies(Procedure proc_name, Variable var)
 	return false;
 }
 
-std::shared_ptr<Variable> ReadPKBManagerStub::GetModifiesVarByStmtNum(StmtNum stmt_num)
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
+	shared_ptr<unordered_set<Variable>> res;
 	if (stmt_num == 5) {
-		return make_shared<Variable>("x");
+		res->insert("x");
 	}
 
-	return nullptr;
+	return res;
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByProcName(Procedure proc_name)
