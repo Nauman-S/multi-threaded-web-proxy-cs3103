@@ -14,12 +14,12 @@ public:
 	// Follows Relation methods
 	void SetFollows(StmtNum left, StmtNum right);
 	bool CheckFollows(StmtNum left, StmtNum right);
+	bool IsEmpty();
 	StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
 	StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
-	bool IsEmpty();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 
 	// Follows* Relation methods
 	void SetFollowsT(StmtNum left, StmtNum right);

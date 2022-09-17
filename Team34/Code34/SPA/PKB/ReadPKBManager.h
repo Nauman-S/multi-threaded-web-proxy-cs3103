@@ -35,12 +35,12 @@ public:
 
 	// APIs related to Parent relation
 	bool CheckParent(StmtNum parent, StmtNum child);
+	bool IsParentStoreEmpty();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
 	StmtNum GetParentFromStmt(StmtNum child);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
-	bool IsParentStoreEmpty();
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 
 	// APIs related to Parent* relation
 	bool CheckParentT(StmtNum parent, StmtNum child);
@@ -50,12 +50,13 @@ public:
 
 	// APIs related to Follows relation
 	bool CheckFollows(StmtNum left, StmtNum right);
+	bool IsFollowsStoreEmpty();
 	StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
 	StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
-	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
-	bool IsFollowsStoreEmpty();
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
+
 
 	// APIs relation to Follows* relation
 	bool CheckFollowsT(StmtNum left, StmtNum right);
@@ -66,26 +67,26 @@ public:
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var);
 	bool CheckUses(Procedure proc_name, Variable var);
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
-	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
-	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
 	std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
+	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
 	
 	// APIs related to Modifies relation
 	bool CheckModifies(StmtNum stmt_num, Variable var);
 	bool CheckModifies(Procedure proc_name, Variable var);
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
-	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
-	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
 	std::shared_ptr<Variable> GetModifiesVarByStmtNum(StmtNum stmt_num);
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
+	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
+	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
 
 	// APIs related to Pattern relation
 	bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
