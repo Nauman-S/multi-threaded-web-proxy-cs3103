@@ -1,9 +1,9 @@
-#include "../stdafx.h"
+#include "stdafx.h"
 #include "CppUnitTest.h"
 
 #include <memory>
-#include <unordered_set>;
-#include <vector>;
+#include <unordered_set>
+#include <vector>
 
 #include "../../SPA/PKB/ReadPKBManager.h"
 #include "../../SPA/QPS/stub/RelationStubFactory.h"
@@ -59,15 +59,18 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetModifiesP_proc_name_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"x"}, *(res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"x"}, *(res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"x"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesP_proc_syn_var_name();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"func1"}, *(res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"func1"}, *(res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"func1"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesP_proc_syn_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(vector<StrPair>{ {"func1", "x"}}, *(res->GetTable()->GetRows()));
+			// Assert::AreEqual(vector<StrPair>{ {"func1", "x"}}, *(res->GetTable()->GetRows()));
+			Assert::IsTrue(vector<StrPair>{ {"func1", "x"}} == *(res->GetTable()->GetRows()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesP_proc_name_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
@@ -75,7 +78,8 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetModifiesP_proc_syn_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"func1"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"func1"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"func1"} == *(res->GetSet()->GetDomain()));
 			
 		}
 
@@ -94,15 +98,18 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetModifiesS_stmt_num_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"x"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"x"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"x"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesS_stmt_syn_var_name();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"5"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesS_stmt_syn_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(vector<StrPair>{ {"5", "x"}}, * (res->GetTable()->GetRows()));
+			// Assert::AreEqual(vector<StrPair>{ {"5", "x"}}, * (res->GetTable()->GetRows()));
+			Assert::IsTrue(vector<StrPair>{ {"5", "x"}} == *(res->GetTable()->GetRows()));
 
 			rel_ptr = rel_stub_factory_.GetModifiesS_stmt_num_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
@@ -110,8 +117,8 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetModifiesS_stmt_syn_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
-
+			// Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"5"} == *(res->GetSet()->GetDomain()));
 		}
 
 		TEST_METHOD(TestRetrieveUsesP)
@@ -129,15 +136,18 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetUsesP_proc_name_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"y"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"y"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"y"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetUsesP_proc_syn_var_name();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"func2"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"func2"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"func2"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetUsesP_proc_syn_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(vector<StrPair>{ {"func2", "y"}}, * (res->GetTable()->GetRows()));
+			// Assert::AreEqual(vector<StrPair>{ {"func2", "y"}}, * (res->GetTable()->GetRows()));
+			Assert::IsTrue(vector<StrPair>{ {"func2", "y"}} == *(res->GetTable()->GetRows()));
 
 			rel_ptr = rel_stub_factory_.GetUsesP_proc_name_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
@@ -145,7 +155,8 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetUsesP_proc_syn_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"func2"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"func2"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"func2"} == *(res->GetSet()->GetDomain()));
 		}
 
 		TEST_METHOD(TestRetrieveUsesS)
@@ -163,15 +174,18 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetUsesS_stmt_num_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"y"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"y"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"y"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetUsesS_stmt_syn_var_name();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"5"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetUsesS_stmt_syn_var_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(vector<StrPair>{ {"5", "y"}}, * (res->GetTable()->GetRows()));
+			// Assert::AreEqual(vector<StrPair>{ {"5", "y"}}, * (res->GetTable()->GetRows()));
+			Assert::IsTrue(vector<StrPair>{ {"5", "y"}} == *(res->GetTable()->GetRows()));
 
 			rel_ptr = rel_stub_factory_.GetUsesS_stmt_num_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
@@ -179,7 +193,8 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetUsesS_stmt_syn_var_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			// Assert::AreEqual(unordered_set<string>{"5"}, * (res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"5"} == *(res->GetSet()->GetDomain()));
 		}
 
 	};
