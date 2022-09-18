@@ -48,7 +48,7 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel)
 bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+    assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
     shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
 
@@ -190,13 +190,13 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
 shared_ptr<unordered_set<string>> DataRetriever::GetProcByWildcard(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
     shared_ptr<unordered_set<Procedure>> res;
-    if (type == RelType::kUsesSRel) {
+    if (type == RelType::kUsesPRel) {
         res = pkb_ptr_->GetAllUsesProcedures();
     }
-    else if (type == RelType::kModifiesSRel) {
+    else if (type == RelType::kModifiesPRel) {
         res = pkb_ptr_->GetAllModifiesProcedures();
     }
 
