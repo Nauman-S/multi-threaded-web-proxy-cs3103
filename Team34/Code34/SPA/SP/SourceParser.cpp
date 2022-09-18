@@ -168,6 +168,7 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	}
 	token_idx += 1;
 	a_node->SetRight(r_vars);
+	a_node->SetInfix(infix);
 	return a_node;
 }
 
