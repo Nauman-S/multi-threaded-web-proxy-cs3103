@@ -29,7 +29,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 	
 	*/
 	// APIs related to Statements
-	RefType GetStatementType(StmtNum stmt_num);
+	std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
 
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var) override;

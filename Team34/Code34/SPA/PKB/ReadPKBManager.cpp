@@ -34,12 +34,7 @@ const std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllProce
 }
 
 // APIs related to Statements
-bool ReadPKBManager::IsStatement(StmtNum stmt_num)
-{
-	return pkb.statement_manager_.IsStatement(stmt_num);
-}
-
-RefType ReadPKBManager::GetStatementType(StmtNum stmt_num)
+std::shared_ptr<RefType> ReadPKBManager::GetStatementType(StmtNum stmt_num)
 {
 	return pkb.statement_manager_.GetStatementType(stmt_num);
 }
