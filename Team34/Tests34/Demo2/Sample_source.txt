@@ -1,4 +1,0 @@
-procedure test {
-    read x;
-    read y;
-}
