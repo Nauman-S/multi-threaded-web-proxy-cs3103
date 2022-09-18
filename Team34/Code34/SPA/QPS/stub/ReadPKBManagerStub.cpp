@@ -38,7 +38,7 @@ bool ReadPKBManagerStub::CheckUses(Procedure proc_name, Variable var)
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByStmtNum(StmtNum stmt_num)
 {
-	shared_ptr<unordered_set<Variable>> res;
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
 	if (stmt_num == 5) {
 		res->insert("y");
 	}
@@ -48,7 +48,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarBySt
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByProcName(Procedure proc_name)
 {
-	shared_ptr<unordered_set<Variable>> res;
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
 	if (proc_name == "func2") {
 		res->insert("y");
 	}
@@ -58,7 +58,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByPr
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var)
 {
-	shared_ptr<unordered_set<StmtNum>> res;
+	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "y") {
 		res->insert(5);
 	}
@@ -68,7 +68,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumB
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetUsesProcNameByVar(Variable var)
 {
-	shared_ptr<unordered_set<Procedure>> res;
+	shared_ptr<unordered_set<Procedure>> res = make_shared<unordered_set<Procedure>>();
 	if (var == "y") {
 		res->insert("func2");
 	}
@@ -78,7 +78,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetUsesProcNa
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements()
 {
-	shared_ptr<unordered_set<StmtNum>> res;
+	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
 
 	return res;
@@ -86,7 +86,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesState
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllUsesProcedures()
 {
-	shared_ptr<unordered_set<Procedure>> res;
+	shared_ptr<unordered_set<Procedure>> res = make_shared<unordered_set<Procedure>>();
 	res->insert("func2");
 
 	return res;
@@ -94,7 +94,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllUsesPro
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::GetAllSVUses()
 {
-	shared_ptr<vector<pair<StmtNum, Variable>>> res;
+	shared_ptr<vector<pair<StmtNum, Variable>>> res = make_shared<vector<pair<StmtNum, Variable>>>();
 	res->push_back({ 5, "y" });
 
 	return res;
@@ -102,7 +102,7 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::G
 
 std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManagerStub::GetAllPVUses()
 {
-	shared_ptr<vector<pair<Procedure, Variable>>> res;
+	shared_ptr<vector<pair<Procedure, Variable>>> res = make_shared<vector<pair<Procedure, Variable>>>();
 	res->push_back({ "func2", "y" });
 
 	return res;
@@ -133,7 +133,7 @@ bool ReadPKBManagerStub::CheckModifies(Procedure proc_name, Variable var)
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
-	shared_ptr<unordered_set<Variable>> res;
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
 	if (stmt_num == 5) {
 		res->insert("x");
 	}
@@ -143,7 +143,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVar
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByProcName(Procedure proc_name)
 {
-	shared_ptr<unordered_set<Variable>> res;
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
 	if (proc_name == "func1") {
 		res->insert("x");
 	}
@@ -153,7 +153,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVar
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var)
 {
-	shared_ptr<unordered_set<StmtNum>> res;
+	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "x") {
 		res->insert(5);
 	}
@@ -163,7 +163,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmt
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetModifiesProcNameByVar(Variable var)
 {
-	shared_ptr<unordered_set<Procedure>> res;
+	shared_ptr<unordered_set<Procedure>> res = make_shared<unordered_set<Procedure>>();
 	if (var == "x") {
 		res->insert("func1");
 	}
@@ -173,7 +173,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetModifiesPr
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements()
 {
-	shared_ptr<unordered_set<StmtNum>> res;
+	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
 
 	return res;
@@ -181,7 +181,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesS
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllModifiesProcedures()
 {
-	shared_ptr<unordered_set<Procedure>> res;
+	shared_ptr<unordered_set<Procedure>> res = make_shared<unordered_set<Procedure>>();
 	res->insert("func1");
 
 	return res;
@@ -189,7 +189,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllModifie
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::GetAllSVModifies()
 {
-	shared_ptr<vector<pair<StmtNum, Variable>>> res;
+	shared_ptr<vector<pair<StmtNum, Variable>>> res = make_shared<vector<pair<StmtNum, Variable>>>();
 	res->push_back({ 5, "x" });
 
 	return res;
@@ -197,7 +197,7 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManagerStub::G
 
 std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManagerStub::GetAllPVModifies()
 {
-	shared_ptr<vector<pair<Procedure, Variable>>> res;
+	shared_ptr<vector<pair<Procedure, Variable>>> res = make_shared<vector<pair<Procedure, Variable>>>();
 	res->push_back({ "func1", "x"});
 
 	return res;
