@@ -24,6 +24,8 @@ public:
 
     std::shared_ptr<std::vector<std::string>> Columns();
 
+    std::shared_ptr<std::unordered_set<std::string>> ColumnsSet();
+
     std::shared_ptr<std::unordered_set<std::string>> GetColumn(std::string syn_name);
 
     int GetColumnIndex(std::string syn_name) { return syn_to_col_[syn_name]; };
