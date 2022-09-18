@@ -1,0 +1,25 @@
+1 - test parents for if
+stmt s;
+Select s such that Parent(2, s)
+3, 4, 7
+5000
+2 - test parents* for if in if
+stmt s;
+Select s such that Parent*(2, s)
+3, 4, 5, 6, 7, 8
+5000
+3 - test parents for while in if
+stmt s;
+Select s such that Parent(7, s)
+8
+5000
+4 - test parents for while
+stmt s;
+Select s such that Parent(10, s)
+11, 12
+5000
+4 - test parents* for while
+stmt s;
+Select s such that Parent*(10, s)
+11, 12, 13, 14
+5000

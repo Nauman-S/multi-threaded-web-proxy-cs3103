@@ -1,0 +1,29 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests34</name><parsing_time_taken>13.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="test select procedures">1</id><querystr><![CDATA[procedure p; Select p]]></querystr>
+<stuans>main</stuans>
+<correct>main</correct>
+<time_taken>22.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="test select variables">2</id><querystr><![CDATA[variable v; Select v]]></querystr>
+<stuans>CAPSVAR,var123,x,y,z</stuans>
+<correct>x,CAPSVAR,var123,y,z</correct>
+<time_taken>19.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="test select constants">1</id><querystr><![CDATA[constant c; Select c]]></querystr>
+<stuans>0,123,456,5</stuans>
+<correct>0,5,123,456</correct>
+<time_taken>21.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

@@ -5,6 +5,7 @@
 #include <vector>
 #include <set>
 #include <memory>
+#include <unordered_set>
 
 #include "SyntaxError.h"
 #include "SemanticError.h"
@@ -43,11 +44,22 @@ shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 	std::vector<shared_ptr<Ref>> synonyms;
-	shared_ptr<Ref> synonym_;
+	std::vector<shared_ptr<Ref>> curr_synonyms;
+
+	std::unordered_set<string> used_names;
+
 
 	while (this->lexer_->HasDesignEntity()) {
-		synonym_ = ParseDeclarationStatement();
-		synonyms.push_back(synonym_);
+		curr_synonyms = ParseDeclarationStatement();
+		for (auto syn : curr_synonyms) {
+			if (!used_names.count(syn->GetName())) {
+				used_names.insert(syn->GetName());
+				synonyms.push_back(syn);
+			}
+			else {
+				throw SemanticError("The synonym " + syn->GetName() + " is already declared");
+			}
+		}
 	}
 
 	return synonyms;
@@ -55,20 +67,29 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 
 
-shared_ptr<Ref> QueryBuilder::ParseDeclarationStatement() {
+std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
-	if (this->lexer_->HasIdentity()) {
-		std::string synonym_ = this->lexer_->MatchIdentity();
+	std::vector<shared_ptr<Ref>> curr_synonyms;
+
+	if (lexer_->HasIdentity()) {
+		std::string synonym_ = lexer_->MatchIdentity();
+		curr_synonyms.push_back(EntityRef::CreateReference(design_entity_, synonym_));
+
+		while (lexer_->HasCommaDelimeter()) {
+			lexer_->MatchCommaDelimeter();
+			std::string synonym_ = lexer_->MatchIdentity();
+			curr_synonyms.push_back(EntityRef::CreateReference(design_entity_, synonym_));
+		}
 
 		if (this->lexer_->HasEndOfDeclarationStatement()) {
 			this->lexer_->MatchEndOfDeclarationStatement();
-			shared_ptr<Ref> ref_ = EntityRef::CreateReference(design_entity_, synonym_);
-			return ref_;
 		}
 		else {
 			throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
 		}
+		return curr_synonyms;
+
 	}
 	else {
 		throw SyntaxError("Declaration Statement - Missing Synonym");
