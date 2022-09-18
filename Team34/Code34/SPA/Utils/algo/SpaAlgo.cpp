@@ -138,3 +138,26 @@ pair<shared_ptr<SetRes>, shared_ptr<TableRes>> SpaAlgo::HashJoinSetWithTable(std
 //
 //	return std::shared_ptr<std::vector<std::string>>();
 //}
+
+std::shared_ptr<TableRes> SpaAlgo::JoinTablesOfTwoCommonColumns(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2)
+{
+	auto cols_1 = table1->Columns();
+	auto cols_2 = table2->Columns();
+
+	std::sort(cols_1->begin(), cols_1->end());
+	std::sort(cols_2->begin(), cols_2->end());
+	auto res_table = make_shared<vector<StrPair>>();
+	assert(cols_1 == cols_2);
+
+	for (auto& pair1 : *(table1->GetRows())) {
+		for (auto& pair2 : *(table2->GetRows())) {
+			if (pair1 == pair2) {
+				res_table->push_back(pair1);
+			}
+		}
+	}
+
+	auto res = shared_ptr<TableRes>(new TableRes(table1->GetSynMap(), res_table));
+
+	return res;
+}
