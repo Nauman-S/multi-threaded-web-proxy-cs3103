@@ -44,8 +44,11 @@
     <ClCompile Include="TestParentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="TestFollowsManager.cpp">
-		<Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="TestFollowsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QPS\TestDataRetriever.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
