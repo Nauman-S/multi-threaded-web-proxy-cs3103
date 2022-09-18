@@ -18,6 +18,12 @@ using std::pair;
 	func2 uses y
 	statement 5 uses y
 */
+RefType ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
+{
+	if (stmt_num == 5) {
+		return RefType::kAssignRef;
+	}
+}
 bool ReadPKBManagerStub::CheckUses(StmtNum stmt_num, Variable var)
 {
 	if (stmt_num == 5 && var == "y") {

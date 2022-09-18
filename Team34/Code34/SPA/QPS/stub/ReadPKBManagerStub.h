@@ -28,6 +28,9 @@ class ReadPKBManagerStub : public ReadPKBManager
 		Procedure p1, p2; Variable v1, v2; Assign s1; 
 	
 	*/
+	// APIs related to Statements
+	RefType GetStatementType(StmtNum stmt_num);
+
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var) override;
 	bool CheckUses(Procedure proc_name, Variable var);
