@@ -1,7 +1,7 @@
 1 - test parents for if
 stmt s;
 Select s such that Parent(2, s)
-3, 4
+3, 4, 7
 5000
 2 - test parents* for if in if
 stmt s;
