@@ -1,0 +1,5 @@
+1 - select parent
+stmt s1; 
+Select s1 such that Parent(s1, 4)
+3
+5000
