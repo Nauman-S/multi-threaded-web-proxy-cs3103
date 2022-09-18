@@ -10,7 +10,7 @@ x
 5000
 3 - test modifies in read
 read r; variable v;
-Select read such that Modifies(p, v)
+Select r such that Modifies(r, v)
 2
 5000
 4 - test modifies of child statement in while

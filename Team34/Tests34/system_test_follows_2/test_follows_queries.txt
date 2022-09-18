@@ -6,7 +6,7 @@ Select s such that Follows(1, s)
 2 - test follows* in top level
 stmt s;
 Select s such that Follows*(1, s)
-2, 3, 7
+2, 3, 8
 5000
 3 - test follows in then of if statement
 stmt s;
