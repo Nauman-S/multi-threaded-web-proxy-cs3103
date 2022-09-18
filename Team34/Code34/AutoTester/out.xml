@@ -5,11 +5,20 @@
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="comment">2</id><querystr><![CDATA[if ifs; Select ifs such that Follows(5, ifs)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>5938.000000</time_taken>
-<passed/>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test UsesS">10</id><querystr><![CDATA[stmt s; Select s such that Uses(s, "x")]]></querystr>
+<stuans>12,15,17,18,20,21,3,6</stuans>
+<correct>4,5</correct>
+<time_taken>5.000000</time_taken>
+<failed>
+<missing>4,5</missing>
+<additional>12,15,17,18,20,21,3,6</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>8</additional>
+</summary>
+</failed>
 </query>
 </queries>
 </test_results>
