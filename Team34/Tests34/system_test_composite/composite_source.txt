@@ -1,0 +1,11 @@
+1 - test select procedures
+procedure p;
+Select p
+Example, p, q
+5000
+2 - test select variables
+variable v; assign a; while w;
+Select v pattern a(v , _"x"_ ) such that Uses(w, v)
+
+5000
+

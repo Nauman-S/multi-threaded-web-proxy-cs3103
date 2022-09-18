@@ -1,8 +1,12 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>AutoTester</name><parsing_time_taken>1.000000</parsing_time_taken>
+<name>Tests34</name><parsing_time_taken>1.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" >0</id><querystr><![CDATA[  x = 2;   z = 3;]]></querystr>
+<timeout/>
+</query>
+</queries>
+</test_results>

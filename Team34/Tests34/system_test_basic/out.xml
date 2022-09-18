@@ -22,14 +22,14 @@
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select procedures">3</id><querystr><![CDATA[procedure p; Select p]]></querystr>
 <stuans>test</stuans>
 <correct>test</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select read">4</id><querystr><![CDATA[read rs; Select rs]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -43,14 +43,14 @@
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select while">6</id><querystr><![CDATA[while w; Select w]]></querystr>
 <stuans>4</stuans>
 <correct>4</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select constant">7</id><querystr><![CDATA[constant c; Select c]]></querystr>
 <stuans>0,1</stuans>
 <correct>0,1</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -64,28 +64,28 @@
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select if">9</id><querystr><![CDATA[if ifs; Select ifs]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="select call">10</id><querystr><![CDATA[call call; Select call]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>3.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="SyntaxError">11</id><querystr><![CDATA[call call; Select call hi]]></querystr>
 <stuans>SyntaxError</stuans>
 <correct>SyntaxError</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="SemanticError">12</id><querystr><![CDATA[call call; call call; Select call]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 </queries>
