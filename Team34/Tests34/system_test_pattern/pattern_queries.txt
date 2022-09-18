@@ -1,3 +1,13 @@
+5 - comment
+assign a; variable v;
+Select v pattern a("x", _"  a "_)
+a, b, c, d, x, y
+5000
+4 - comment
+assign a; variable v;
+Select v pattern a(v, _"  a "_)
+x, c, b
+5000
 1 - comment
 variable v;
 Select v such that Uses(v, "x")
@@ -18,13 +28,8 @@ assign a;
 Select a pattern a(_,    _)
 2, 5, 6, 7, 8, 9, 10
 5000
-4 - comment
+6 - comment
 assign a; variable v;
-Select v pattern a(v, _"  a "_)
-x, c, b
-5000
-5 - comment
-assign a; variable v;
-Select v pattern a("x", _"  a "_)
+Select v pattern a("xyz", _"  a "_)
 
 5000

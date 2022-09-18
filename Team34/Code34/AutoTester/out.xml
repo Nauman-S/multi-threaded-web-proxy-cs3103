@@ -5,36 +5,18 @@
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="comment">1</id><querystr><![CDATA[stmt s1;  Select s1 such that Parent(s1, 4)]]></querystr>
-<stuans></stuans>
-<correct>5,6,7,10</correct>
-<time_taken>3.000000</time_taken>
-<failed>
-<missing>10,5,6,7</missing>
-<additional></additional>
-<summary>
-<expected>4</expected>
-<matched>0</matched>
-<missing>4</missing>
-<additional>0</additional>
-</summary>
-</failed>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">5</id><querystr><![CDATA[assign a; variable v; Select v pattern a("x", _"  a "_)]]></querystr>
+<stuans>a,b,c,d,x,y</stuans>
+<correct>a,b,c,d,x,y</correct>
+<time_taken>4.000000</time_taken>
+<passed/>
 </query>
 <query>
-<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="comment">1</id><querystr><![CDATA[variable v; Select v such that Uses(v, "x")]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>5,6,7,10</correct>
-<time_taken>4.000000</time_taken>
-<failed>
-<missing>10,5,6,7</missing>
-<additional>SemanticError</additional>
-<summary>
-<expected>4</expected>
-<matched>0</matched>
-<missing>4</missing>
-<additional>1</additional>
-</summary>
-</failed>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">4</id><querystr><![CDATA[assign a; variable v; Select v pattern a(v, _"  a "_)]]></querystr>
+<stuans>b,c,x</stuans>
+<correct>x,c,b</correct>
+<time_taken>3.000000</time_taken>
+<passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="comment">1</id><querystr><![CDATA[assign a; Select a pattern a(_, _"  1 "_)]]></querystr>
@@ -54,11 +36,11 @@
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">3</id><querystr><![CDATA[assign a; Select a pattern a(_,    _)]]></querystr>
 <stuans>10,2,5,6,7,8,9</stuans>
 <correct>2,5,6,7,8,9,10</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>6.000000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">4</id><querystr><![CDATA[assign a; variable v; Select v pattern a(v, _"  a "_)]]></querystr>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">6</id><querystr><![CDATA[assign a; variable v; Select v pattern a("xyz", _"  a "_)]]></querystr>
 <stuans></stuans>
 <correct>x,c,b</correct>
 <time_taken>6.000000</time_taken>
@@ -73,5 +55,5 @@
 </summary>
 </failed>
 </query>
-<query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="comment">5</id><querystr><![CDATA[assign a; variable v; Select v pattern a("x", _"  a "_)]]></querystr>
+</queries>
+</test_results>
