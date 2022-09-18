@@ -10,6 +10,7 @@ using std::unordered_set;
 using std::vector;
 using std::tuple;
 using std::shared_ptr;
+using std::make_shared;
 using StrPair = std::pair<string, string>;
 
 
@@ -21,6 +22,16 @@ shared_ptr<vector<string>> TableRes::Columns()
     }
 
     return vec;
+}
+
+std::shared_ptr<std::unordered_set<std::string>> TableRes::ColumnsSet()
+{
+    auto set = make_shared<unordered_set<string>>();
+    for (auto& [syn, idx] : syn_to_col_) {
+        set->insert(syn);
+    }
+
+    return set;
 }
 
 shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {

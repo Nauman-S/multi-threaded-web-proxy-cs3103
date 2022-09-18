@@ -17,7 +17,7 @@ public:
 
 	static std::pair<std::shared_ptr<SetRes>, std::shared_ptr<TableRes>> HashJoinSetWithTable(std::shared_ptr<SetRes> set, std::shared_ptr<TableRes> table);
 
-	// static std::shared_ptr<TableRes> HashJoinTables(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
+	static std::shared_ptr<std::vector<std::vector<std::string>>> HashJoinTables(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
 
 protected:
 	static std::unordered_map<char, int> precedence_;
