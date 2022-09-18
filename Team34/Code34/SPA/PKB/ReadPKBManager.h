@@ -28,9 +28,9 @@ public:
 	virtual const std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 
 	// APIs related to Statements
-	std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+	virtual std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
 
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child);
