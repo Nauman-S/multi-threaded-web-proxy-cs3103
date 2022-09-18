@@ -73,6 +73,8 @@ public:
 		Follows(2,3), Follows(3,6), 
 		FollowsT(2,3), FollowsT(3,6), FollowsT(2,6)
 	*/
+
+	// Use Follows(2,3) for all Follows relation stub
 	std::shared_ptr<Rel> GetFollows_stmt_num_stmt_num();
 	std::shared_ptr<Rel> GetFollows_stmt_num_stmt_syn();
 	std::shared_ptr<Rel> GetFollows_stmt_syn_stmt_num();
@@ -83,6 +85,7 @@ public:
 	std::shared_ptr<Rel> GetFollows_stmt_syn_stmt_wildcard();
 	std::shared_ptr<Rel> GetFollows_stmt_wildcard_stmt_wildcard();
 
+	// Use FollowsT(2,6) for all FollowsT relation stub
 	std::shared_ptr<Rel> GetFollowsT_stmt_num_stmt_num();
 	std::shared_ptr<Rel> GetFollowsT_stmt_num_stmt_syn();
 	std::shared_ptr<Rel> GetFollowsT_stmt_syn_stmt_num();
@@ -93,6 +96,7 @@ public:
 	std::shared_ptr<Rel> GetFollowsT_stmt_syn_stmt_wildcard();
 	std::shared_ptr<Rel> GetFollowsT_stmt_wildcard_stmt_wildcard();
 
+	// Use Parent(1,2) for all Parent relation stub
 	std::shared_ptr<Rel> GetParent_stmt_num_stmt_num();
 	std::shared_ptr<Rel> GetParent_stmt_num_stmt_syn();
 	std::shared_ptr<Rel> GetParent_stmt_syn_stmt_num();
@@ -103,6 +107,7 @@ public:
 	std::shared_ptr<Rel> GetParent_stmt_syn_stmt_wildcard();
 	std::shared_ptr<Rel> GetParent_stmt_wildcard_stmt_wildcard();
 
+	// Use ParentT(1,4) for all ParentT relation stub
 	std::shared_ptr<Rel> GetParentT_stmt_num_stmt_num();
 	std::shared_ptr<Rel> GetParentT_stmt_num_stmt_syn();
 	std::shared_ptr<Rel> GetParentT_stmt_syn_stmt_num();

@@ -445,3 +445,93 @@ std::shared_ptr<Rel> RelationStubFactory::GetFollowsT_stmt_wildcard_stmt_wildcar
 
 	return stmt_wildcard_stmt_wildcard;
 }
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_num_stmt_num()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_num_ref = make_shared<WhileRef>(ValType::kLineNum, "1");
+	shared_ptr<AssignRef> stmt2_num_ref = make_shared<AssignRef>(ValType::kLineNum, "2");
+	shared_ptr<Rel> stmt_num_stmt_num = make_shared<FollowsRel>(stmt1_num_ref, stmt2_num_ref);
+
+	return stmt_num_stmt_num;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_num_stmt_syn()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_num_ref = make_shared<WhileRef>(ValType::kLineNum, "1");
+	shared_ptr<AssignRef> stmt2_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s2");
+	shared_ptr<Rel> stmt_num_stmt_syn = make_shared<FollowsRel>(stmt1_num_ref, stmt2_syn_ref);
+
+	return stmt_num_stmt_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_syn_stmt_num()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_syn_ref = make_shared<WhileRef>(ValType::kSynonym, "s1");
+	shared_ptr<AssignRef> stmt2_num_ref = make_shared<AssignRef>(ValType::kLineNum, "2");
+	shared_ptr<Rel> stmt_syn_stmt_num = make_shared<FollowsRel>(stmt1_syn_ref, stmt2_num_ref);
+
+	return stmt_syn_stmt_num;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_syn_stmt_syn()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_syn_ref = make_shared<WhileRef>(ValType::kSynonym, "s1");
+	shared_ptr<AssignRef> stmt2_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s2");
+	shared_ptr<Rel> stmt_syn_stmt_syn = make_shared<FollowsRel>(stmt1_syn_ref, stmt2_syn_ref);
+
+	return stmt_syn_stmt_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_wildcard_stmt_num()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_wildcard_ref = make_shared<WhileRef>(ValType::kWildcard, "_");
+	shared_ptr<AssignRef> stmt2_num_ref = make_shared<AssignRef>(ValType::kLineNum, "2");
+	shared_ptr<Rel> stmt_wildcard_stmt_num = make_shared<FollowsRel>(stmt1_wildcard_ref, stmt2_num_ref);
+
+	return stmt_wildcard_stmt_num;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_wildcard_stmt_syn()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_wildcard_ref = make_shared<WhileRef>(ValType::kWildcard, "_");
+	shared_ptr<AssignRef> stmt2_syn_ref = make_shared<AssignRef>(ValType::kSynonym, "s2");
+	shared_ptr<Rel> stmt_wildcard_stmt_syn = make_shared<FollowsRel>(stmt1_wildcard_ref, stmt2_syn_ref);
+
+	return stmt_wildcard_stmt_syn;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_num_stmt_wildcard()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_num_ref = make_shared<WhileRef>(ValType::kLineNum, "1");
+	shared_ptr<AssignRef> stmt2_wildcard_ref = make_shared<AssignRef>(ValType::kWildcard , "_");
+	shared_ptr<Rel> stmt_num_stmt_wildcard = make_shared<FollowsRel>(stmt1_num_ref, stmt2_wildcard_ref);
+
+	return stmt_num_stmt_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_syn_stmt_wildcard()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_syn_ref = make_shared<WhileRef>(ValType::kSynonym, "s1");
+	shared_ptr<AssignRef> stmt2_wildcard_ref = make_shared<AssignRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_syn_stmt_wildcard = make_shared<FollowsRel>(stmt1_syn_ref, stmt2_wildcard_ref);
+
+	return stmt_syn_stmt_wildcard;
+}
+
+std::shared_ptr<Rel> RelationStubFactory::GetParent_stmt_wildcard_stmt_wildcard()
+{
+	// Parent(1,2)
+	shared_ptr<WhileRef> stmt1_wildcard_ref = make_shared<WhileRef>(ValType::kWildcard, "_");
+	shared_ptr<AssignRef> stmt2_wildcard_ref = make_shared<AssignRef>(ValType::kWildcard, "_");
+	shared_ptr<Rel> stmt_wildcard_stmt_wildcard = make_shared<FollowsRel>(stmt1_wildcard_ref, stmt2_wildcard_ref);
+
+	return stmt_wildcard_stmt_wildcard;
+}
