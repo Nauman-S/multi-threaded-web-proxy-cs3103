@@ -48,3 +48,13 @@ call call;
 Select call
 
 5000
+11 - SyntaxError
+call call;
+Select call hi
+SyntaxError
+5000
+12 - SemanticError
+call call; call call;
+Select call
+SemanticError
+5000
