@@ -9,6 +9,11 @@ Select v pattern a(v, _"  a "_)
 x, c, b
 5000
 1 - comment
+variable v;
+Select v such that Uses(v, "x")
+5, 6, 7, 10
+5000
+1 - comment
 assign a;
 Select a pattern a(_, _"  1 "_)
 5, 6, 7, 10
