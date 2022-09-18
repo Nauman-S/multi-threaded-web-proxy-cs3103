@@ -584,12 +584,12 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (lhs_type == ValType::kSynonym || rhs_type == ValType::kVarName) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kVarName) {
         shared_ptr<unordered_set<string>> set = GetStmtByVar(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (lhs_type == ValType::kSynonym || rhs_type == ValType::kSynonym) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
         shared_ptr<vector<pair<string, string>>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
