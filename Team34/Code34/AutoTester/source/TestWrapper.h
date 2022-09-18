@@ -10,6 +10,8 @@
 
 class TestWrapper : public AbstractWrapper {
  public:
+	 bool is_valid_source_;
+
   // default constructor
   TestWrapper();
   
