@@ -56,4 +56,60 @@ public:
 	std::shared_ptr<Rel> GetUsesS_stmt_syn_var_syn();
 	std::shared_ptr<Rel> GetUsesS_stmt_num_var_wildcard();
 	std::shared_ptr<Rel> GetUsesS_stmt_syn_var_wildcard();
+
+	/*
+		1  while(x < 2) {
+		2    x = y + 2
+		3    if(x < 2) {
+		4	    x = z + 2
+			 } else {
+		5	    x = z - 2
+			 }
+		6	 z = 5
+		   }
+		
+		Parent(1,2), Parent(1,3), Parent(1,6), Parent(3,4), Parent(3,5) 
+		ParentT(1,2), ParentT(1,3), ParentT(1,6), ParentT(3,4), ParentT(3,5), ParentT(1, 4), ParentT(1,5)
+		Follows(2,3), Follows(3,6), 
+		FollowsT(2,3), FollowsT(3,6), FollowsT(2,6)
+	*/
+	std::shared_ptr<Rel> GetFollows_stmt_num_stmt_num();
+	std::shared_ptr<Rel> GetFollows_stmt_num_stmt_syn();
+	std::shared_ptr<Rel> GetFollows_stmt_syn_stmt_num();
+	std::shared_ptr<Rel> GetFollows_stmt_syn_stmt_syn();
+	std::shared_ptr<Rel> GetFollows_stmt_wildcard_stmt_num();
+	std::shared_ptr<Rel> GetFollows_stmt_wildcard_stmt_syn();
+	std::shared_ptr<Rel> GetFollows_stmt_num_stmt_wildcard();
+	std::shared_ptr<Rel> GetFollows_stmt_syn_stmt_wildcard();
+	std::shared_ptr<Rel> GetFollows_stmt_wildcard_stmt_wildcard();
+
+	std::shared_ptr<Rel> GetFollowsT_stmt_num_stmt_num();
+	std::shared_ptr<Rel> GetFollowsT_stmt_num_stmt_syn();
+	std::shared_ptr<Rel> GetFollowsT_stmt_syn_stmt_num();
+	std::shared_ptr<Rel> GetFollowsT_stmt_syn_stmt_syn();
+	std::shared_ptr<Rel> GetFollowsT_stmt_wildcard_stmt_num();
+	std::shared_ptr<Rel> GetFollowsT_stmt_wildcard_stmt_syn();
+	std::shared_ptr<Rel> GetFollowsT_stmt_num_stmt_wildcard();
+	std::shared_ptr<Rel> GetFollowsT_stmt_syn_stmt_wildcard();
+	std::shared_ptr<Rel> GetFollowsT_stmt_wildcard_stmt_wildcard();
+
+	std::shared_ptr<Rel> GetParent_stmt_num_stmt_num();
+	std::shared_ptr<Rel> GetParent_stmt_num_stmt_syn();
+	std::shared_ptr<Rel> GetParent_stmt_syn_stmt_num();
+	std::shared_ptr<Rel> GetParent_stmt_syn_stmt_syn();
+	std::shared_ptr<Rel> GetParent_stmt_wildcard_stmt_num();
+	std::shared_ptr<Rel> GetParent_stmt_wildcard_stmt_syn();
+	std::shared_ptr<Rel> GetParent_stmt_num_stmt_wildcard();
+	std::shared_ptr<Rel> GetParent_stmt_syn_stmt_wildcard();
+	std::shared_ptr<Rel> GetParent_stmt_wildcard_stmt_wildcard();
+
+	std::shared_ptr<Rel> GetParentT_stmt_num_stmt_num();
+	std::shared_ptr<Rel> GetParentT_stmt_num_stmt_syn();
+	std::shared_ptr<Rel> GetParentT_stmt_syn_stmt_num();
+	std::shared_ptr<Rel> GetParentT_stmt_syn_stmt_syn();
+	std::shared_ptr<Rel> GetParentT_stmt_wildcard_stmt_num();
+	std::shared_ptr<Rel> GetParentT_stmt_wildcard_stmt_syn();
+	std::shared_ptr<Rel> GetParentT_stmt_num_stmt_wildcard();
+	std::shared_ptr<Rel> GetParentT_stmt_syn_stmt_wildcard();
+	std::shared_ptr<Rel> GetParentT_stmt_wildcard_stmt_wildcard();
 };
