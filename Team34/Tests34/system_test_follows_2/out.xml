@@ -1,0 +1,43 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests34</name><parsing_time_taken>25.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in top level">1</id><querystr><![CDATA[stmt s; Select s such that Follows(1, s)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>10.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows* in top level">2</id><querystr><![CDATA[stmt s; Select s such that Follows*(1, s)]]></querystr>
+<stuans>2,3,8</stuans>
+<correct>2,3,8</correct>
+<time_taken>26.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in then of if statement">3</id><querystr><![CDATA[stmt s; Select s such that Follows(4, s)]]></querystr>
+<stuans>5</stuans>
+<correct>5</correct>
+<time_taken>12.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in else of if statement">4</id><querystr><![CDATA[stmt s; Select s such that Follows(6, s)]]></querystr>
+<stuans>7</stuans>
+<correct>7</correct>
+<time_taken>21.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows* in then of if statement">5</id><querystr><![CDATA[stmt s; Select s such that Follows*(4, s)]]></querystr>
+<stuans>5</stuans>
+<correct>5</correct>
+<time_taken>23.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

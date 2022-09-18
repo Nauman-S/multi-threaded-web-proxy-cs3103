@@ -19,6 +19,7 @@ using std::unordered_map;
 using std::vector;
 using std::stack;
 using std::pair;
+using std::tuple;
 using std::shared_ptr;
 using std::make_shared;
 
@@ -115,3 +116,25 @@ pair<shared_ptr<SetRes>, shared_ptr<TableRes>> SpaAlgo::HashJoinSetWithTable(std
 	shared_ptr<TableRes> new_table_res = make_shared<TableRes>(table_res->GetSynMap(), joined_table);
 	return pair<shared_ptr<SetRes>, shared_ptr<TableRes>>(new_set_res, new_table_res);
 }
+
+//std::shared_ptr<std::vector<std::vector<std::string>>> SpaAlgo::HashJoinTables(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2)
+//{
+//	auto col_set_1 = table1->ColumnsSet();
+//	auto col_set_2 = table2->ColumnsSet();
+//	auto common_col = make_shared<unordered_set<string>>();
+//	for (auto& col : *col_set_1) {
+//		if (col_set_2->find(col) != col_set_2->end()) {
+//			common_col->insert(col);
+//		}
+//	}
+//
+//	auto res = make_shared<vector<vector<string>>>();
+//	if (common_col->empty()) {
+//		return res;
+//	}
+//
+//	// populate composite key set of table 1
+//	unordered_map<tuple<string>> join_set;
+//
+//	return std::shared_ptr<std::vector<std::string>>();
+//}

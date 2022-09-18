@@ -28,6 +28,7 @@ volatile bool TestWrapper::GlobalStop = false;
 
 // a default constructor
 TestWrapper::TestWrapper() {
+	this->is_valid_source_ = true;
   // create any objects here as instance variables of this class
   // as well as any initialization required for your spa program
 }
@@ -39,14 +40,18 @@ void TestWrapper::parse(std::string filename) {
 	SourceLexer lexer = SourceLexer(filename);
 	vector<SourceToken> tokens = lexer.GetAllTokens();
 	SourceValidator validator = SourceValidator();
-	if (!validator.Validate(tokens)) {
-	    throw "Errors found in Source Code";
+	if (validator.Validate(tokens)) {
+		SourceParser parser = SourceParser();
+		std::shared_ptr<ProgramNode> root = parser.Parse(filename);
+
+		DesignExtractor extractor;
+		extractor.PopulatePKB(root);
+		extractor.AddConstants(filename);
 	}
-	SourceParser parser = SourceParser();
-	std::shared_ptr<ProgramNode> root = parser.Parse(filename);
-	DesignExtractor extractor;
-	extractor.PopulatePKB(root);
-	extractor.AddConstants(filename);
+	else {
+		this->is_valid_source_ = false;
+	    cout << "Errors found in Source Code" << endl;
+	}
 }
 
 // method to evaluating a query
@@ -55,36 +60,37 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
     // ...code to evaluate query...
 	// store the answers to the query in the results list (it is initially empty)
 	// each result must be a string.
-	QueryBuilder q_builder;
-	Query query;
+	if (this->is_valid_source_) {
+		QueryBuilder q_builder;
+		Query query;
 
-	try {
-		std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
-		query = *query_ptr;
-	}
-	catch (SyntaxError e) {
-		std::cout << e.what() << std::endl;
-		std::cout << "SyntaxError" << std::endl;
-		results.push_back("SyntaxError");
+		try {
+			std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
+			query = *query_ptr;
+		}
+		catch (SyntaxError e) {
+			std::cout << e.what() << std::endl;
+			std::cout << "SyntaxError" << std::endl;
+			results.push_back("SyntaxError");
+			return;
+		}
+		catch (SemanticError) {
+			std::cout << "SemanticError" << std::endl;
+			results.push_back("SemanticError");
+			return;
+		}
+		catch (...) {
+			std::cout << "Unknown Exception" << endl;
+		}
+
+		cout << query.GetSelectTuple() << endl;
+		QueryEvaluator evaluator(query);
+		if (evaluator.evaluate()) {
+			vector<std::string> res = evaluator.ExtractResult();
+			results.insert(results.end(), res.begin(), res.end());
+		}
+		//std::cout << res << std::endl;
+		//results.push_back(res);
 		return;
 	}
-	catch (SemanticError) {
-		std::cout << "SemanticError" << std::endl;
-		results.push_back("SemanticError");
-		return;
-	}
-	catch (...) {
-		std::cout << "Unknown Exception" << endl;
-	}
-
-	cout << query.GetSelectTuple() << endl;
-	QueryEvaluator evaluator(query);
-	if (evaluator.evaluate()) {
-		vector<std::string> res = evaluator.ExtractResult();
-		results.insert(results.end(), res.begin(), res.end());
-	}
-	//std::cout << res << std::endl;
-	//results.push_back(res);
-	return;
-    
 }

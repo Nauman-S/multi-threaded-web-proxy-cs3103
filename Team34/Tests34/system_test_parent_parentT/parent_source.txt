@@ -1,12 +1,3 @@
-
-
-procedure main {
-    call parentTest123;
-    call parentTest456;
-}
-
-
-
 procedure parentTest123 {
     read var2;
     read var1;
@@ -20,15 +11,4 @@ procedure parentTest123 {
     }
     print var2;
     print var1;
-}
-
-procedure parentTest456 {
-    read var3;
-    print var3;
-    call parentTest789;
-}
-
-procedure parentTest789 {
-    read var4;
-    print var4;
 }

@@ -32,13 +32,12 @@ private:
 
 
 
-	std::vector<shared_ptr<Ref>> ParseDeclarationStatements();
-	shared_ptr<Query> ParseSelectStatement();
+	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
+	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
 
-	shared_ptr<Ref> ParseDeclarationStatement();
-
+	shared_ptr<Query> ParseSelectStatement();	
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
-	//shared_ptr<Ref> ParseNextRef();
+
 
 	bool HasSuchThatClause();
 
