@@ -6,10 +6,15 @@ Select w
 2 - print uses 
 stmt s;
 Select s such that Uses (s,"var1")
-12
+5, 8, 12
 5000
 3 - procedure Uses
 stmt proc;
 Select proc such that Uses (proc, "var2")
 main, parentTest123
+5000
+4 - Uses stmtNumber
+variable v;
+Select v such that Uses (8,v)
+var1, var2
 5000
