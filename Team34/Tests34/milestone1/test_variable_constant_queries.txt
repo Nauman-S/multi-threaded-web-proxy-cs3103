@@ -1,0 +1,15 @@
+1 - test select procedures
+procedure p;
+Select p
+main
+5000
+2 - test select variables
+variable v;
+Select v
+x, CAPSVAR, var123, y, z
+5000
+1 - test select constants
+constant c;
+Select c
+0, 5, 123, 456
+5000
