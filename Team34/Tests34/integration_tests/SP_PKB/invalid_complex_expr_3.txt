@@ -1,0 +1,7 @@
+procedure proc1 {
+    if ((!(x > 1)) || (x >= 0) && (x + 3 - 6 * (x / 4) % x == 0)) then {
+        print z;
+    } else {
+        x = 1;
+    }
+}

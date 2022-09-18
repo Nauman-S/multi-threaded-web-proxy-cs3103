@@ -1,0 +1,20 @@
+
+
+
+procedure            proc1   {   
+    a    =   x  +  (    x %    1   )     ;   
+    call proc2;
+}
+
+
+
+
+procedure    proc2    {    
+    print c  ;
+}     
+
+
+
+
+
+  

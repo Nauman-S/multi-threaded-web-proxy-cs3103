@@ -66,17 +66,16 @@ bool TopoCycle::HaveCycle(int m, int n)
 	return false;
 }
 
-bool TopoCycle::CheckCycle(map<string, string> edges, vector<string> nodes) {
+bool TopoCycle::CheckCycle(vector<pair<string, string>> edges, vector<string> nodes) {
 	int num_nodes = nodes.size();
 	int num_edges = edges.size();
-	cout << num_nodes << num_edges << endl;
 	Init(num_nodes);
 	map<string, int> mapping;
 	int temp = 0;
 	for (auto p : nodes) {
 		mapping[p] = temp++;
 	}
-	for (auto const& x : edges) {
+	for (auto x : edges) {
 		if (x.first == x.second) {
 			return true;
 		}

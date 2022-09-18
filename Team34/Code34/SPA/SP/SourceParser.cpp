@@ -140,7 +140,6 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	}
 	cond->SetVariables(vars);
 	token_idx += 2;   // ) { x || ) then {
-	cout << tokens.at(token_idx).GetStringVal() << endl;
 	return cond;
 }
 
