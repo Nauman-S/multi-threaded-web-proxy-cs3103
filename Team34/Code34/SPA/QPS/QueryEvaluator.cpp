@@ -63,6 +63,7 @@ bool QueryEvaluator::evaluate() {
 
 vector<std::string> QueryEvaluator::ExtractResult() {
 	ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
+
 	return result_extractor.GetFormattedResult();
 }
 

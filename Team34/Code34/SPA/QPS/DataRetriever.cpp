@@ -446,7 +446,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Patte
     auto var_name = pat.LhsValue();
     shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
 
-    shared_ptr<unordered_set<StmtNum>> stmt_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set = make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
         stmt_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
     }
