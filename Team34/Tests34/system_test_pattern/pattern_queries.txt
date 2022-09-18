@@ -1,9 +1,4 @@
 1 - comment
-stmt s; variable v;
-Select s such that Uses (s,v)
-SemanticError
-5000
-1 - comment
 variable v;
 Select v such that Uses(v, "x")
 SemanticError

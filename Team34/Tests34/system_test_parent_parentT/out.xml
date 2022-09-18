@@ -8,7 +8,7 @@
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="select parent">1</id><querystr><![CDATA[stmt s1;  Select s1 such that Parent(s1, 4)]]></querystr>
 <stuans>3</stuans>
 <correct>3</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 </queries>
