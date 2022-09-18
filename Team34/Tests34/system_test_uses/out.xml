@@ -1,0 +1,24 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests34</name><parsing_time_taken>12.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="select while">1</id><querystr><![CDATA[while w; Select w]]></querystr>
+<stuans>3</stuans>
+<correct>2</correct>
+<time_taken>4.000000</time_taken>
+<failed>
+<missing>2</missing>
+<additional>3</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="single nesting find parent">2</id><querystr><![CDATA[stmt s; Select s such that Uses (s,"var1")]]></querystr>
