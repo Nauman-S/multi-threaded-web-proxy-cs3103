@@ -1,10 +1,15 @@
 1 - select while
 while w;
 Select w
-2
+5
 5000
-2 - single nesting find parent
+2 - print uses 
 stmt s;
 Select s such that Uses (s,"var1")
-9
+12
+5000
+3 - procedure Uses
+stmt proc;
+Select proc such that Uses (proc, "var2")
+main, parentTest123
 5000
