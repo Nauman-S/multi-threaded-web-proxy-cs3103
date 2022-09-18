@@ -44,6 +44,20 @@ bool QueryEvaluator::evaluate() {
 		//data_retriever_.retrieve(*it);
 
 	}
+
+	shared_ptr<std::vector<shared_ptr<Pattern>>> patterns = query_.GetPatterns();
+	for (auto it = patterns->begin(); it != patterns->end(); ++it) {
+		shared_ptr<Pattern> pattern = *it;
+
+		shared_ptr<ResWrapper> res_wrapper = pattern->GetMatch(data_retriever_);
+
+		bool success = query_result_.MergeResult(res_wrapper);
+		if (!success) {
+			return false;
+		}
+		//data_retriever_.retrieve(*it);
+
+	}
 	return true;
 }
 
