@@ -323,7 +323,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     RefType rhs_stmt_type = rel.RhsRefType();
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
