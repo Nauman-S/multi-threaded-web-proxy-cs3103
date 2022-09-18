@@ -81,6 +81,8 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     RefType stmt_type = rel.LhsRefType();
     shared_ptr<unordered_set<int>> set;
     if (type == RelType::kUsesSRel) {
+        //auto temp = pkb_ptr_->GetUsesStmtNumByVar(var_name);
+
         set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
         set = FilterStmtSetByType(set, stmt_type);
     }
@@ -372,7 +374,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
-    shared_ptr <unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = std::make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
         if (lhs_stmt_num != 0) {
@@ -521,6 +523,10 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntIntToStrStrTable
 
 shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<unordered_set<int>> stmts, RefType stmt_type)
 {
+    if (stmt_type == RefType::kStmtRef) {
+        return stmts;
+    }
+
     auto res = make_shared<unordered_set<int>>();
 
     for (auto iter = stmts->begin(); iter != stmts->end(); ++iter) {
