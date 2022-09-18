@@ -3,13 +3,13 @@ while w;
 Select w
 5
 5000
-2 - print uses 
+2 - stmt uses 
 stmt s;
 Select s such that Uses (s,"var1")
-5, 8, 12
+1, 5, 7, 8, 11
 5000
 3 - procedure Uses
-stmt proc;
+procedure proc;
 Select proc such that Uses (proc, "var2")
 main, parentTest123
 5000
@@ -17,4 +17,24 @@ main, parentTest123
 variable v;
 Select v such that Uses (8,v)
 var1, var2
+5000
+5- Call stmt uses
+call c;
+Select c such that Uses(c, "var3")
+2
+5000
+6 - uses procedure
+variable v;
+Select v such that Uses ("main", v)
+var1, var2, var3, var4
+5000
+7 - all uses stmts
+stmt s; variable v;
+Select s such that Uses (s,v)
+1, 10, 11, 12, 13, 14, 2, 4, 5, 6, 7, 8, 9
+5000
+8 - semantically invalid Uses
+variable v;
+Select v such that Uses(v, "var1")
+SemanticError
 5000
