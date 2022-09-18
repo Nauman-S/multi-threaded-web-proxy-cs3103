@@ -1,7 +1,7 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests34</name><parsing_time_taken>8.000000</parsing_time_taken>
+<name>Tests34</name><parsing_time_taken>9.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
@@ -22,7 +22,7 @@
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="test select reads">3</id><querystr><![CDATA[read r; Select r]]></querystr>
 <stuans>3</stuans>
 <correct>3</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -36,7 +36,7 @@
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="test select while">3</id><querystr><![CDATA[while w; Select w]]></querystr>
 <stuans>8</stuans>
 <correct>8</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 </queries>

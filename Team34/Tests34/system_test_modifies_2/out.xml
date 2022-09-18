@@ -22,14 +22,14 @@
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test modifies in read">3</id><querystr><![CDATA[read r; variable v; Select r such that Modifies(r, v)]]></querystr>
 <stuans>2</stuans>
 <correct>2</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="test modifies of child statement in while">4</id><querystr><![CDATA[while w; Select w such that Modifies(w, "y")]]></querystr>
 <stuans>3</stuans>
 <correct>3</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>

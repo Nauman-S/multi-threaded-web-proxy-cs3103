@@ -22,7 +22,7 @@
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for while in if">3</id><querystr><![CDATA[stmt s; Select s such that Parent(7, s)]]></querystr>
 <stuans>8</stuans>
 <correct>8</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 <query>

@@ -50,14 +50,14 @@
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="all uses stmts">7</id><querystr><![CDATA[stmt s; variable v; Select s such that Uses (s,v)]]></querystr>
 <stuans>1,10,11,13,14,16,2,5,6,7,8,9</stuans>
 <correct>1,10,11,13,14,2,5,6,7,8,9,16</correct>
-<time_taken>5.000000</time_taken>
+<time_taken>4.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Syntatically Invalid Uses">8</id><querystr><![CDATA[variable variable; Select variable such that Uses(500.0, "variable")]]></querystr>
 <stuans>SyntaxError</stuans>
 <correct>SyntaxError</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>5.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -71,7 +71,7 @@
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Semantically Invalid Uses">10</id><querystr><![CDATA[variable v; Select v such that Uses(v, "var1")]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 </queries>

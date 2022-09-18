@@ -1,40 +1,29 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>AutoTester</name><parsing_time_taken>49.000000</parsing_time_taken>
+<name>AutoTester</name><parsing_time_taken>51.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test two clauses with same pair of variables">1</id><querystr><![CDATA[variable v; assign a; Select v such that Modifies(a, v) pattern a(v, _" x "_)]]></querystr>
-<stuans>i,x,y,z</stuans>
-<correct>x</correct>
-<time_taken>4.000000</time_taken>
-<failed>
-<missing></missing>
-<additional>i,y,z</additional>
-<summary>
-<expected>1</expected>
-<matched>1</matched>
-<missing>0</missing>
-<additional>3</additional>
-</summary>
-</failed>
+<stuans>a,i,x,y,z</stuans>
+<correct>a,i,x,y,z</correct>
+<time_taken>5.000000</time_taken>
+<passed/>
 </query>
 <query>
-<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test modifies in procedure">2</id><querystr><![CDATA[variable v; assign a; while w; Select v such that Modifies(w, v) pattern a(v, _" x "_)]]></querystr>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test two clauses with same pair of variables">2</id><querystr><![CDATA[variable v; assign a; Select v such that Uses(a, v) pattern a(v, _" x "_)]]></querystr>
 <stuans>i,x,y,z</stuans>
-<correct>x</correct>
+<correct>i,x,y,z</correct>
 <time_taken>6.000000</time_taken>
-<failed>
-<missing></missing>
-<additional>i,y,z</additional>
-<summary>
-<expected>1</expected>
-<matched>1</matched>
-<missing>0</missing>
-<additional>3</additional>
-</summary>
-</failed>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test modifies in procedure">3</id><querystr><![CDATA[variable v; assign a; while w; Select v such that Modifies(w, v) pattern a(v, _" x "_)]]></querystr>
+<stuans>i,x,y,z</stuans>
+<correct>i,x,y,z</correct>
+<time_taken>4.000000</time_taken>
+<passed/>
 </query>
 </queries>
 </test_results>

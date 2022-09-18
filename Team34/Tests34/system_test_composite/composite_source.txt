@@ -2,6 +2,8 @@ procedure Example {
   x = 2;
   z = 3;
   i = 5;
+  a = x;
+  y = b;
   while (i!=0) {
     x = x - 1;
     if (x==1) then {
