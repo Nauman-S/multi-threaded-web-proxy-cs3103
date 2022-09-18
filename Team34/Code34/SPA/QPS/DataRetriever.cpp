@@ -48,7 +48,7 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel)
 bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
+    assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
     shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
 
@@ -81,6 +81,8 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     RefType stmt_type = rel.LhsRefType();
     shared_ptr<unordered_set<int>> set;
     if (type == RelType::kUsesSRel) {
+        //auto temp = pkb_ptr_->GetUsesStmtNumByVar(var_name);
+
         set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
         set = FilterStmtSetByType(set, stmt_type);
     }
@@ -190,13 +192,13 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
 shared_ptr<unordered_set<string>> DataRetriever::GetProcByWildcard(ProcVarRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
+    assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
     shared_ptr<unordered_set<Procedure>> res;
-    if (type == RelType::kUsesSRel) {
+    if (type == RelType::kUsesPRel) {
         res = pkb_ptr_->GetAllUsesProcedures();
     }
-    else if (type == RelType::kModifiesSRel) {
+    else if (type == RelType::kModifiesPRel) {
         res = pkb_ptr_->GetAllModifiesProcedures();
     }
 
@@ -323,7 +325,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     RefType rhs_stmt_type = rel.RhsRefType();
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
@@ -372,7 +374,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
-    shared_ptr <unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = std::make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
         if (lhs_stmt_num != 0) {
@@ -521,7 +523,11 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntIntToStrStrTable
 
 shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<unordered_set<int>> stmts, RefType stmt_type)
 {
-    shared_ptr<unordered_set<int>> res;
+    if (stmt_type == RefType::kStmtRef) {
+        return stmts;
+    }
+
+    auto res = make_shared<unordered_set<int>>();
 
     for (auto iter = stmts->begin(); iter != stmts->end(); ++iter) {
         if (pkb_ptr_->GetStatementType(*iter) == stmt_type) {
@@ -534,7 +540,7 @@ shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<uno
 
 shared_ptr<vector<pair<int, string>>> DataRetriever::FilterStmtTableByType(shared_ptr<vector<pair<int, string>>> table, RefType stmt_type)
 {
-    shared_ptr<vector<pair<int, string>>> res;
+    auto res = make_shared<vector<pair<int, string>>>();
     auto type_predicate = [this, stmt_type] (int stmt) -> bool { return this->pkb_ptr_->GetStatementType(stmt) == stmt_type; };
     
     for (auto iter=table->begin(); iter != table->end(); ++iter) {
@@ -548,7 +554,7 @@ shared_ptr<vector<pair<int, string>>> DataRetriever::FilterStmtTableByType(share
 
 shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByType(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
 {
-    shared_ptr<vector<pair<int, int>>> res;
+    auto res = make_shared<vector<pair<int, int>>>();
     auto lhs_type_predicate = [this, lhs_stmt_type](int stmt) -> bool { return this->pkb_ptr_->GetStatementType(stmt) == lhs_stmt_type; };
     auto rhs_type_predicate = [this, rhs_stmt_type](int stmt) -> bool { return this->pkb_ptr_->GetStatementType(stmt) == rhs_stmt_type; };
 
@@ -584,12 +590,12 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.RhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (lhs_type == ValType::kSynonym || rhs_type == ValType::kVarName) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kVarName) {
         shared_ptr<unordered_set<string>> set = GetStmtByVar(rel);
         shared_ptr<SetRes> set_res = std::make_shared<SetRes>(rel.LhsValue(), set);
         res = std::make_shared<ResWrapper>(set_res);
     }
-    else if (lhs_type == ValType::kSynonym || rhs_type == ValType::kSynonym) {
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
         shared_ptr<vector<pair<string, string>>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(),0}, {rel.RhsValue(),1} };
         shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);

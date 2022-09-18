@@ -1,0 +1,24 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>AutoTester</name><parsing_time_taken>44.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows">1</id><querystr><![CDATA[variable v; Select v such that Follows(3, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>4</correct>
+<time_taken>3.000000</time_taken>
+<failed>
+<missing>4</missing>
+<additional>SemanticError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test UsesS">10</id><querystr><![CDATA[stmt s; Select s such that Uses(s, "x")]]></querystr>
