@@ -3,3 +3,52 @@ stmt s1;
 Select s1 such that Parent(s1, 4)
 3
 5000
+2 - comma seperated declarations
+stmt s1, s2, s3, s4; variable v1, v2, v3; procedure proc;
+Select s1
+1 ,2 ,3 ,4 ,5 ,6 ,7 ,8, 9
+5000
+3 - select parent multiple output
+stmt s;
+Select s such that Parent(3, s)
+4, 5
+5000
+4 - Parent* queries
+stmt s;
+Select s such that Parent* (3,s)
+4, 5, 6, 7
+5000
+5 - Syntatically invalid Parent*
+variable v;
+Select v such that Parent*("var", s2)
+SyntaxError
+5000
+6 - all Parent* statements
+stmt s1; stmt s2;
+Select s1 such that Parent* (s1,s2)
+3, 5
+5000
+7 - wildcard with Parent*
+stmt s1; 
+Select s1 such that Parent*(s1, _)
+3, 5
+5000
+8 - select Parent* parents
+stmt s1;
+Select s1 such that Parent* (s1, 6)
+3, 5
+5000
+9 - select Parent* children
+stmt s1;
+Select s1 such that Parent* (3, s1)
+4, 5, 6, 7
+5000
+10 - select Parent* children with pattern
+assign a1;
+Select a1 such that Parent* (3, a1) pattern a1("var2", "var2 + 1")
+7
+5000
+11 - select while statement Parent* parents
+while w1;
+Select w1 such that Parent* (w1, _)
+3
