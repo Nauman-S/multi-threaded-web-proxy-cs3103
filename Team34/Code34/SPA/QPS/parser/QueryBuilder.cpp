@@ -272,6 +272,11 @@ std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSy
 		string ref_name = lexer_->MatchIdentity();
 		//lhs_syn = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
 		lhs_syn = GetDeclaredSyn(ref_name);
+		if (lhs_syn->GetRefType() != RefType::kProcRef && lhs_syn->GetRefType() != RefType::kStmtRef
+			&& !stmt_ref_types.count(lhs_syn->GetRefType())) {
+			throw SemanticError("Type of synonym " + lhs_syn->GetName() + " is unmatched to declared type");
+		}
+
 	} 
 	else if (lexer_->HasInteger()) {
 		lhs_syn = GetNextStmtRef();

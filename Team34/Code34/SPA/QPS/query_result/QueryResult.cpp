@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "ResType.h"
+#include "../../Utils/algo/SpaAlgo.h"
 
 using std::shared_ptr;
 using std::unordered_map;
@@ -34,8 +35,8 @@ bool QueryResult::MergeSetResult(shared_ptr<SetRes> other_set)
 
 bool QueryResult::MergeTableResult(shared_ptr<TableRes> other_table)
 {
-	// TODO: Implement this
-	return false;
+	table_results_.push_back(other_table);
+	return true;
 }
 
 bool QueryResult::MergeResult(shared_ptr<ResWrapper> res_wrapper) {
