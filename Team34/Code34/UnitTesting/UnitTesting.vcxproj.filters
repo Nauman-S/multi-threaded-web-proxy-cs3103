@@ -60,5 +60,8 @@
 	<ClCompile Include="TestVariableManager.cpp">
 	  <Filter>Source Files</Filter>
 	</ClCompile>
+    <ClCompile Include="TestPatternManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
