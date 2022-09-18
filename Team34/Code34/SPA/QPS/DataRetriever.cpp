@@ -374,7 +374,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
-    shared_ptr <unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = std::make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
         if (lhs_stmt_num != 0) {
