@@ -24,7 +24,7 @@ template<typename T>
 inline bool EntityStore<T>::IsEntity(T entity)
 {
 	auto iter = entities_.find(entity);
-	return iter == entities_.end();
+	return iter != entities_.end();
 }
 
 template<typename T>

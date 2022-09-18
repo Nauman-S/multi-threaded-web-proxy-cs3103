@@ -168,6 +168,7 @@
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp" />
     <ClCompile Include="QPS\TestDataRetriever.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
+    <ClCompile Include="TestStatementManager.cpp" />
     <ClCompile Include="TestUsesManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -178,6 +179,8 @@
     <ClCompile Include="TestAST.cpp" />
     <ClCompile Include="TestParentManager.cpp" />
     <ClCompile Include="TestFollowsManager.cpp" />
+    <ClCompile Include="TestConstantManager.cpp" />
+    <ClCompile Include="TestVariableManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
