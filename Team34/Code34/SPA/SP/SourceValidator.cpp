@@ -13,7 +13,7 @@ bool SourceValidator::Validate(vector<SourceToken> tokens) {
 	vector<string> variable_names;
     // cyclic call have not done
 	map<string, float> variable_map;
-	map<string, string> calls;
+	vector<pair<string, string>> calls;
 	while (idx < (int) tokens.size()) {
 		if (!ValidateProcedure(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
 			return false;
@@ -31,7 +31,7 @@ bool SourceValidator::Validate(vector<SourceToken> tokens) {
 	return true;
 }
 
-bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
+bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
 	if (!tokens.at(idx++).IsProcedure()) {
 		return false;
 	}
@@ -56,7 +56,7 @@ bool SourceValidator::ValidateProcedure(vector<SourceToken> tokens, int& idx, ve
 	return true;
 }
 
-bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
+bool SourceValidator::ValidateStatement(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
 	while (tokens.at(idx).GetType() != SourceTokenType::kRightCurly) {
 		int tmp = idx;
 		if (ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
@@ -129,19 +129,18 @@ bool SourceValidator::ValidatePrint(vector<SourceToken> tokens, int& idx, vector
 	return true;
 }
 
-bool SourceValidator::ValidateCall(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, map<string, string>& calls) {
+bool SourceValidator::ValidateCall(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<pair<string, string>>& calls) {
 	if (tokens.at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
-	calls.insert(pair<string, string>(procedure_names.at(procedure_names.size() - 1), tokens.at(idx++).GetStringVal()));
-	
+	calls.push_back(pair<string, string>(procedure_names.at(procedure_names.size() - 1), tokens.at(idx++).GetStringVal()));
 	if (tokens.at(idx++).GetType() != SourceTokenType::kSemiColon) {
 		return false;
 	}
 	return true;
 }
 
-bool SourceValidator::ValidateIf(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
+bool SourceValidator::ValidateIf(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
 	if (tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
@@ -178,7 +177,7 @@ bool SourceValidator::ValidateIf(vector<SourceToken> tokens, int& idx, vector<st
 	return true;
 }
 
-bool SourceValidator::ValidateWhile(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, map<string, string>& calls) {
+bool SourceValidator::ValidateWhile(vector<SourceToken> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
 	if (tokens.at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
@@ -229,6 +228,7 @@ bool SourceValidator::ValidateExpression(vector<SourceToken> tokens, int& idx, v
 			return false;
 		}
 		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+			cout << "H" << endl;
 			return false;
 		}
 		if (tokens.at(idx++).GetType() != SourceTokenType::kRightRound) {

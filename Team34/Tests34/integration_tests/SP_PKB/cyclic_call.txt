@@ -1,0 +1,13 @@
+procedure proc1 {
+    call proc2;
+}
+procedure proc2 {
+    call proc3;
+    call proc4;
+}
+procedure proc3 {
+    print x;
+}
+procedure proc4 {
+    call proc1;
+}

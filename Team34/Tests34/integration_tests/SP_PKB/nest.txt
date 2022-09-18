@@ -1,0 +1,11 @@
+procedure proc {
+    while (x > 1) {
+        if (x < 1) then {
+            print x;
+        } else {
+            while (x > 0) {
+                x = x * x;
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+procedure parent {
+    procedure child {
+        x = 1;
+    }
+}

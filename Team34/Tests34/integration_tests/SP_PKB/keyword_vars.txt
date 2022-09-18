@@ -1,0 +1,8 @@
+procedure procedure {
+    read while;
+    if (then > else) then {
+        print call;
+    } else {
+        if = read;
+    }
+}
