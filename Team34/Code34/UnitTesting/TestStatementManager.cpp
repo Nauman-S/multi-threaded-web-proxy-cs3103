@@ -17,25 +17,20 @@ namespace UnitTesting
 		TEST_METHOD(TestAddStatement)
 		{
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
+			statement_manager_.AddStatement(1, RefType::kCallRef);
 			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
 			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kCallRef)->size()));
-		};
-
-		TEST_METHOD(TestIsStatement)
-		{
-			statement_manager_.AddStatement(1, RefType::kAssignRef);
-			Assert::IsTrue(statement_manager_.IsStatement(1));
-			Assert::IsFalse(statement_manager_.IsStatement(2));
+			Assert::AreEqual(1, int(statement_manager_.GetAllStatements()->size()));
 		};
 
 		TEST_METHOD(TestGetStatementType)
 		{
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
-			Assert::IsTrue(statement_manager_.GetStatementType(1) == RefType::kAssignRef);
+			Assert::IsTrue(*statement_manager_.GetStatementType(1) == RefType::kAssignRef);
 			statement_manager_.AddStatement(2, RefType::kCallRef);
-			Assert::IsTrue(statement_manager_.GetStatementType(2) == RefType::kCallRef);
+			Assert::IsTrue(*statement_manager_.GetStatementType(2) == RefType::kCallRef);
 			statement_manager_.AddStatement(3, RefType::kPrintRef);
-			Assert::IsTrue(statement_manager_.GetStatementType(3) == RefType::kPrintRef);
+			Assert::IsTrue(*statement_manager_.GetStatementType(3) == RefType::kPrintRef);
 		};
 
 		TEST_METHOD(TestGetStatementsByType)
