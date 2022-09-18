@@ -1,5 +1,0 @@
-1 - select variables
-variable v;
-Select v
-x, y
-5000
