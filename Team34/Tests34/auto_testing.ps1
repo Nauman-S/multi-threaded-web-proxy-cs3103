@@ -1,13 +1,15 @@
 Write-Output "AutoTester Script has begun"
 $autotester_file = "..\Code34\Debug\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
+$port = 8000
 
 if ($condition) {
-    Write-Output "Auto Tester Path is found"
+    Write-Output "AutoTester binary is found"
 } else {
-    Write-Output "Auto Tester Path is not found"
+    Write-Output "AutoTester binary is not found"
     Exit
 }
+
 
 
 $directories = Get-ChildItem -Directory
@@ -32,3 +34,19 @@ foreach($folder in $directories) {
         & $autotester_file $source_file $query_file $output_folder
     }
 }
+
+$foundProcesses = netstat -ano | findstr :$port
+$activePortPattern = ":$port\s.+LISTENING\s+\d+$"
+$pidNumberPattern = "\d+$"
+
+while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
+  $matchesInfo = $foundProcesses | Select-String -Pattern $activePortPattern
+  $firstMatch = $matchesInfo.Matches.Get(0).Value
+
+  $pidNumber = [regex]::match($firstMatch, $pidNumberPattern).Value
+
+  taskkill /pid $pidNumber /f
+  $foundProcesses = netstat -ano | findstr :$port
+}
+Start-Process "http://localhost:8000"
+& python -m http.server $port
