@@ -1,8 +1,40 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>AutoTester</name><parsing_time_taken>1.000000</parsing_time_taken>
+<name>AutoTester</name><parsing_time_taken>49.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" CondNum="1" RelNum="0" >0</id><querystr><![CDATA[  x = 2;   z = 3;]]></querystr>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test two clauses with same pair of variables">1</id><querystr><![CDATA[variable v; assign a; Select v such that Modifies(a, v) pattern a(v, _" x "_)]]></querystr>
+<stuans>i,x,y,z</stuans>
+<correct>x</correct>
+<time_taken>4.000000</time_taken>
+<failed>
+<missing></missing>
+<additional>i,y,z</additional>
+<summary>
+<expected>1</expected>
+<matched>1</matched>
+<missing>0</missing>
+<additional>3</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test modifies in procedure">2</id><querystr><![CDATA[variable v; assign a; while w; Select v such that Modifies(w, v) pattern a(v, _" x "_)]]></querystr>
+<stuans>i,x,y,z</stuans>
+<correct>x</correct>
+<time_taken>6.000000</time_taken>
+<failed>
+<missing></missing>
+<additional>i,y,z</additional>
+<summary>
+<expected>1</expected>
+<matched>1</matched>
+<missing>0</missing>
+<additional>3</additional>
+</summary>
+</failed>
+</query>
+</queries>
+</test_results>
