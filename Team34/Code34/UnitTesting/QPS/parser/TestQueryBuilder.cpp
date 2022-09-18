@@ -38,6 +38,27 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
+		TEST_METHOD(Valid_MultipleDeclaration)
+		{
+			const std::string query_ = "variable V, v1  ,  v2; Select V";
+			const std::string var = "V";
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Assert::IsTrue(query->);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), var);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
 		TEST_METHOD(TestValidBasicLineNumberSuchThatUses) {
 
 			const std::string query_ = "variable V; Select V such that Uses(3,V)";
@@ -226,9 +247,9 @@ namespace UnitTesting
 
 		TEST_METHOD(TestValidBasicCallSynonymSuchThatFollowsT) {
 
-			const std::string query_ = "call c; Select c such that Follows* (c, 13)";
-			const std::string call_ = "c";
-			std::string lhs_value_ = call_;
+			const std::string query_ = "call c, c1; Select c1 such that Follows* (c, 13)";
+			const std::string call_ = "c1";
+			std::string lhs_value_ = "c";
 			std::string rhs_value_ = "13";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
