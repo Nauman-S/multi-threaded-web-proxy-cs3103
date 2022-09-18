@@ -1,0 +1,52 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests34</name><parsing_time_taken>46.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for if">1</id><querystr><![CDATA[stmt s; Select s such that Parent(2, s)]]></querystr>
+<stuans>3,4,7</stuans>
+<correct>3,4</correct>
+<time_taken>26.000000</time_taken>
+<failed>
+<missing></missing>
+<additional>7</additional>
+<summary>
+<expected>2</expected>
+<matched>2</matched>
+<missing>0</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents* for if in if">2</id><querystr><![CDATA[stmt s; Select s such that Parent*(2, s)]]></querystr>
+<stuans>3,4,5,6,7,8</stuans>
+<correct>3,4,5,6,7,8</correct>
+<time_taken>18.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for while in if">3</id><querystr><![CDATA[stmt s; Select s such that Parent(7, s)]]></querystr>
+<stuans>8</stuans>
+<correct>8</correct>
+<time_taken>14.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for while">4</id><querystr><![CDATA[stmt s; Select s such that Parent(10, s)]]></querystr>
+<stuans>11,12</stuans>
+<correct>11,12</correct>
+<time_taken>16.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents* for while">4</id><querystr><![CDATA[stmt s; Select s such that Parent*(10, s)]]></querystr>
+<stuans>11,12,13,14</stuans>
+<correct>11,12,13,14</correct>
+<time_taken>13.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

@@ -1,0 +1,5 @@
+procedure main {
+  x = CAPSVAR + var123;
+  y = 123 + 456;
+  z = 0 + var123 + 5;
+}

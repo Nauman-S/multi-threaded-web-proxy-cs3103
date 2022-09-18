@@ -1,0 +1,13 @@
+procedure first {
+  x = a + b;
+  print x;
+  while (cond > 5) {
+     x = 2;
+     x = child;
+  }
+  call second;
+}
+
+procedure second {
+  x = anotherProc;
+}

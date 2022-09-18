@@ -1,0 +1,25 @@
+1 - test select assignments
+assign a;
+Select a
+1, 6, 7, 9, 10
+5000
+2 - test select prints
+print p;
+Select p
+2
+5000
+3 - test select reads
+read r;
+Select r
+3
+5000
+4 - test select if
+if i;
+Select i
+5
+5000
+3 - test select while
+while w;
+Select w
+8
+5000
