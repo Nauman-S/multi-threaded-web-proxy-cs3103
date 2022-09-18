@@ -9,7 +9,7 @@ using namespace std;
 
 class TopoCycle {
 public:
-	bool CheckCycle(map<string, string>, vector<string>);
+	bool CheckCycle(vector<pair<string, string>>, vector<string>);
 
 	void Dfs(int);
 
