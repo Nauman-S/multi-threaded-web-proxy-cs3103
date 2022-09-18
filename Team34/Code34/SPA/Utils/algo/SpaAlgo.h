@@ -19,6 +19,8 @@ public:
 
 	static std::shared_ptr<std::vector<std::vector<std::string>>> HashJoinTables(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
 
+	static std::shared_ptr<TableRes> JoinTablesOfTwoCommonColumns(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
+
 protected:
 	static std::unordered_map<char, int> precedence_;
 };
