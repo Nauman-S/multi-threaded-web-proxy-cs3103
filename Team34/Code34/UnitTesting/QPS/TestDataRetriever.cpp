@@ -236,9 +236,55 @@ namespace UnitTesting
 
 			rel_ptr = rel_stub_factory_.GetFollows_stmt_wildcard_stmt_syn();
 			res = rel_ptr->GetMatch(*data_retriever_);
-			Assert::IsTrue(unordered_set<string>{"3"} == *(res->GetSet()->GetDomain()));
+			Assert::IsTrue(unordered_set<string>{"3","6"} == *(res->GetSet()->GetDomain()));
 
 			rel_ptr = rel_stub_factory_.GetFollows_stmt_wildcard_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+		}
+
+		TEST_METHOD(TestRetrieveFollowsT)
+		{
+			/*
+				Expected results:
+				FollowsT(2,6)
+			*/
+			shared_ptr<Rel> rel_ptr;
+			shared_ptr<ResWrapper> res;
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_num_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_num_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"6"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_syn_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"2"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_syn_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(vector<StrPair>{ {"2", "6"}} == *(res->GetTable()->GetRows()));
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_wildcard_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_num_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_syn_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"2"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_wildcard_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"3","6"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetFollowsT_stmt_wildcard_stmt_wildcard();
 			res = rel_ptr->GetMatch(*data_retriever_);
 			Assert::IsTrue(res->IsValid());
 		}

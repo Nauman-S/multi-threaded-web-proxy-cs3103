@@ -252,6 +252,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessor
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(3);
+	res->insert(6);
 
 	return res;
 }
@@ -268,6 +269,43 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::Ge
 {
 	auto res = make_shared<vector<pair<int, int>>>();
 	res->push_back({ 2,3 });
+
+	return res;
+}
+
+bool ReadPKBManagerStub::CheckFollowsT(StmtNum left, StmtNum right)
+{
+	if (left == 2 && right == 6) {
+		return true;
+	}
+
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+{
+	auto res = make_shared<unordered_set<int>>();
+	if (stmt == 2) {
+		res->insert(6);
+	}
+
+	return res;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+{
+	auto res = make_shared<unordered_set<int>>();
+	if (stmt == 6) {
+		res->insert(2);
+	}
+
+	return res;
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::GetAllFollowsTRelations()
+{
+	auto res = make_shared<vector<pair<int, int>>>();
+	res->push_back({ 2, 6 });
 
 	return res;
 }
