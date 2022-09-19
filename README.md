@@ -21,3 +21,4 @@ Tan Zhuo Yao | 94575308 | E0406711@u.nus.edu | Windows 10/Visual Studio 2022
 Gao Haochun | 84147310 | E0376955@u.nus.edu | Windows 11/Visual Studio 2022
 Lye Jia Yang | 94216499 | E0543406@u.nus.edu | Windows 10/Visual Studio 2022
 Gao Gui | 80538175 | E0376992@u.nus.edu | Windows 11/Visual Studio 2022
+Nauman Sajid| 82368400 | E0389102@u.nus.edu | Windows 11/Visual Studio 2022
