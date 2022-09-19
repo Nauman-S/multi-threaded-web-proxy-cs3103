@@ -267,7 +267,7 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
     assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
-    shared_ptr <unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
         if (lhs_stmt_num != 0) {
@@ -296,7 +296,7 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
     assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
     if (type == RelType::kParentRel) {
         int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
     }
