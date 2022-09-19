@@ -20,8 +20,14 @@ using std::pair;
 */
 std::shared_ptr<RefType> ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
 {
-	if (stmt_num == 5) {
+	if (stmt_num == 2 || stmt_num == 4 || stmt_num == 5 || stmt_num == 6) {
 		return std::make_shared<RefType>(RefType::kAssignRef);
+	}
+	else if (stmt_num == 1) {
+		return std::make_shared<RefType>(RefType::kWhileRef);
+	}
+	else if (stmt_num == 3) {
+		return std::make_shared<RefType>(RefType::kIfRef);
 	}
 }
 
@@ -206,6 +212,62 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManagerStub:
 {
 	shared_ptr<vector<pair<Procedure, Variable>>> res = make_shared<vector<pair<Procedure, Variable>>>();
 	res->push_back({ "func1", "x"});
+
+	return res;
+}
+
+bool ReadPKBManagerStub::CheckFollows(StmtNum left, StmtNum right)
+{
+	if (left == 2 && right == 3) {
+		return true;
+	}
+
+	return false;
+}
+
+bool ReadPKBManagerStub::IsFollowsStoreEmpty()
+{
+	return false;
+}
+
+StmtNum ReadPKBManagerStub::GetSuccessorStmtFromStmt(StmtNum stmt)
+{
+	if (stmt == 2) {
+		return 3;
+	}
+
+	return 0;
+}
+
+StmtNum ReadPKBManagerStub::GetPredecessorStmtFromStmt(StmtNum stmt)
+{
+	if (stmt == 3) {
+		return 2;
+	}
+
+	return 0;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts()
+{
+	auto res = make_shared<unordered_set<int>>();
+	res->insert(3);
+
+	return res;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmts()
+{
+	auto res = make_shared<unordered_set<int>>();
+	res->insert(2);
+
+	return res;
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::GetAllFollowsRelations()
+{
+	auto res = make_shared<vector<pair<int, int>>>();
+	res->push_back({ 2,3 });
 
 	return res;
 }

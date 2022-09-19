@@ -24,8 +24,24 @@ class ReadPKBManagerStub : public ReadPKBManager
 		For testing UsesS and ModifiesS
 		5  x = y + 1;  
 
-		And the PQL decalration:
-		Procedure p1, p2; Variable v1, v2; Assign s1; 
+		
+
+		For testing Follows(T), Parent(T)
+
+		1  while(x < 2) {
+		2    x = y + 2
+		3    if(x < 2) {
+		4	    x = z + 2
+			 } else {
+		5	    x = z - 2
+			 }
+		6	 z = 5
+		   }
+
+		Parent(1,2), Parent(1,3), Parent(1,6), Parent(3,4), Parent(3,5)
+		ParentT(1,2), ParentT(1,3), ParentT(1,6), ParentT(3,4), ParentT(3,5), ParentT(1, 4), ParentT(1,5)
+		Follows(2,3), Follows(3,6),
+		FollowsT(2,3), FollowsT(3,6), FollowsT(2,6)
 	
 	*/
 	// APIs related to Statements
@@ -54,4 +70,13 @@ class ReadPKBManagerStub : public ReadPKBManager
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+
+	// APIs related to Follows relation
+	virtual bool CheckFollows(StmtNum left, StmtNum right);
+	virtual bool IsFollowsStoreEmpty();
+	virtual StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
+	virtual StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 };
