@@ -290,6 +290,97 @@ namespace UnitTesting
 			Assert::IsTrue(res->IsValid());
 		}
 
+		TEST_METHOD(TestRetrieveParent)
+		{
+			/*
+				Expected results:
+				Parent(1,2)
+			*/
+			shared_ptr<Rel> rel_ptr;
+			shared_ptr<ResWrapper> res;
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_num_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_num_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"2"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_syn_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"1"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_syn_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(vector<StrPair>{ {"1", "2"}} == *(res->GetTable()->GetRows()));
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_wildcard_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_num_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_syn_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"1"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_wildcard_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"2", "4"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParent_stmt_wildcard_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+		}
+
+		TEST_METHOD(TestRetrieveParentT)
+		{
+			/*
+				Expected results:
+				ParentT(1,4)
+			*/
+			shared_ptr<Rel> rel_ptr;
+			shared_ptr<ResWrapper> res;
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_num_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_num_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"4"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_syn_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"1"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_syn_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(vector<StrPair>{ {"1", "4"}} == *(res->GetTable()->GetRows()));
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_wildcard_stmt_num();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_num_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_syn_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"1"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_wildcard_stmt_syn();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(unordered_set<string>{"2", "4"} == *(res->GetSet()->GetDomain()));
+
+			rel_ptr = rel_stub_factory_.GetParentT_stmt_wildcard_stmt_wildcard();
+			res = rel_ptr->GetMatch(*data_retriever_);
+			Assert::IsTrue(res->IsValid());
+		}
 	};
 
 }

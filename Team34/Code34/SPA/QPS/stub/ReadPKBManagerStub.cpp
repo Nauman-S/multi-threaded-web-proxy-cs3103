@@ -309,3 +309,98 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::Ge
 
 	return res;
 }
+
+bool ReadPKBManagerStub::CheckParent(StmtNum parent, StmtNum child)
+{
+	if (parent == 1 && child == 2) {
+		return true;
+	}
+
+	return false;
+}
+
+bool ReadPKBManagerStub::IsParentStoreEmpty()
+{
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetChildrenFromStmt(StmtNum parent)
+{
+	auto res = make_shared<unordered_set<int>>();
+	if (parent == 1) {
+		res->insert(2);
+	}
+
+	return res;
+}
+
+StmtNum ReadPKBManagerStub::GetParentFromStmt(StmtNum child)
+{
+	if (child == 2) {
+		return 1;
+	}
+
+	return 0;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren()
+{
+	auto res = make_shared<unordered_set<int>>();
+	res->insert(2);
+	res->insert(4);
+
+	return res;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParents()
+{
+	auto res = make_shared<unordered_set<int>>();
+	res->insert(1);
+
+	return res;
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::GetAllParentRelations()
+{
+	auto res = make_shared<vector<pair<int, int>>>();
+	res->push_back({ 1,2 });
+
+	return res;
+}
+
+bool ReadPKBManagerStub::CheckParentT(StmtNum parent, StmtNum child)
+{
+	if (parent == 1 && child == 4) {
+		return true;
+	}
+
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildrenFromStmt(StmtNum stmt)
+{
+	auto res = make_shared<unordered_set<int>>();
+	if (stmt == 1) {
+		res->insert(4);
+	}
+
+	return res;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParentsFromStmt(StmtNum stmt)
+{
+	auto res = make_shared<unordered_set<int>>();
+	if (stmt == 4) {
+		res->insert(1);
+	}
+
+	return res;
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::GetAllParentTRelations()
+{
+	auto res = make_shared<vector<pair<int, int>>>();
+	res->push_back({ 1,4 });
+
+	return res;
+}
