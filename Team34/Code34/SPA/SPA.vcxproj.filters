@@ -5,7 +5,6 @@
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
-    <ClCompile Include="QPS\stubs\RelationStubFactory.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
@@ -66,7 +65,6 @@
     <ClCompile Include="SP\ASTNode.cpp" />
     <ClCompile Include="SP\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ConditionExpression.cpp" />
-    <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\IfStatementASTNode.cpp" />
     <ClCompile Include="SP\LineIndex.cpp" />
     <ClCompile Include="SP\PrintStatementASTNode.cpp" />
@@ -92,6 +90,7 @@
     <ClCompile Include="Utils\StringTokenizer.cpp" />
     <ClCompile Include="Utils\Token.cpp" />
     <ClCompile Include="Utils\Tokenizer.cpp" />
+    <ClCompile Include="QPS\relation\ProcProcRel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -102,7 +101,6 @@
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
-    <ClInclude Include="QPS\stubs\RelationStubFactory.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="PKB\manager\FollowsManager.h" />
@@ -180,7 +178,6 @@
     <ClInclude Include="SP\ASTNode.h" />
     <ClInclude Include="SP\CallStatementASTNode.h" />
     <ClInclude Include="SP\ConditionExpression.h" />
-    <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\IfStatementASTNode.h" />
     <ClInclude Include="SP\LineIndex.h" />
     <ClInclude Include="SP\PrintStatementASTNode.h" />
@@ -208,5 +205,12 @@
     <ClInclude Include="Utils\StringTokenizer.h" />
     <ClInclude Include="Utils\Token.h" />
     <ClInclude Include="Utils\Tokenizer.h" />
+    <ClInclude Include="QPS\relation\ProcProcRel.h" />
+    <ClInclude Include="QPS\relation\CallsRel.h" />
+    <ClInclude Include="QPS\relation\CallsTRel.h" />
+    <ClInclude Include="QPS\relation\NextRel.h" />
+    <ClInclude Include="QPS\relation\NextTRel.h" />
+    <ClInclude Include="QPS\relation\AffectsRel.h" />
+    <ClInclude Include="QPS\relation\AffectsTRel.h" />
   </ItemGroup>
 </Project>

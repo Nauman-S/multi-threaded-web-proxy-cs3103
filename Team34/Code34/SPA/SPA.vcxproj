@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\relation\AffectsRel.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="PKB\manager\FollowsManager.h" />
@@ -60,12 +61,18 @@
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
     <ClInclude Include="QPS\reference\WhileRef.h" />
+    <ClInclude Include="QPS\relation\AffectsTRel.h" />
+    <ClInclude Include="QPS\relation\CallsRel.h" />
+    <ClInclude Include="QPS\relation\CallsTRel.h" />
     <ClInclude Include="QPS\relation\FollowsRel.h" />
     <ClInclude Include="QPS\relation\FollowsTRel.h" />
     <ClInclude Include="QPS\relation\ModifiesPRel.h" />
     <ClInclude Include="QPS\relation\ModifiesSRel.h" />
+    <ClInclude Include="QPS\relation\NextRel.h" />
+    <ClInclude Include="QPS\relation\NextTRel.h" />
     <ClInclude Include="QPS\relation\ParentRel.h" />
     <ClInclude Include="QPS\relation\ParentTRel.h" />
+    <ClInclude Include="QPS\relation\ProcProcRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\relation\Rel.h" />
     <ClInclude Include="QPS\relation\RelType.h" />
@@ -162,6 +169,7 @@
     <ClCompile Include="QPS\relation\ModifiesSRel.cpp" />
     <ClCompile Include="QPS\relation\ParentRel.cpp" />
     <ClCompile Include="QPS\relation\ParentTRel.cpp" />
+    <ClCompile Include="QPS\relation\ProcProcRel.cpp" />
     <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
     <ClCompile Include="QPS\relation\Rel.cpp" />
     <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
