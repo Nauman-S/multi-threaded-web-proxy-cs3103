@@ -24,6 +24,7 @@
 class StmtVarRel;
 class ProcVarRel;
 class StmtStmtRel;
+class ProcProcRel;
 class Pattern;
 
 
@@ -87,6 +88,8 @@ public:
 	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
 
 	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(ProcProcRel& rel);
 
 	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
 
