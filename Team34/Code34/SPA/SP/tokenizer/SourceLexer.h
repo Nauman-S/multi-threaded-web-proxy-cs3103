@@ -4,8 +4,8 @@
 #include <set>
 #include <map>
 
-#include "..\Utils\Tokenizer.h"
-#include "..\Utils\Token.h"
+#include "..\..\Utils\Tokenizer.h"
+#include "..\..\Utils\Token.h"
 #include "SourceToken.h"
 
 class SourceLexer {

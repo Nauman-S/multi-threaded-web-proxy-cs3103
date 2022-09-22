@@ -1,50 +1,41 @@
 #include "DesignExtractor.h"
-# include "SourceLexer.h"
-# include <vector>
-# include "SourceToken.h"
 
-using namespace std;
+#include <vector>
+#include <memory>
 
-vector<int> DesignExtractor::GetConstants(std::string &sourcefile) {
-	vector<int> consts;
-	SourceLexer lexer = SourceLexer(sourcefile);
-	vector<SourceToken> tokens = lexer.GetAllTokens();
+#include "./tokenizer/SourceLexer.h"
+#include "./tokenizer/SourceToken.h"
+
+#include "./design_extractor/EntityExtractor.h"
+#include "./design_extractor/UsesModifiesExtractor.h"
+#include "./design_extractor/ParentsExtractor.h"
+#include "./design_extractor/FollowsExtractor.h"
+
+#include "../PKB/WritePKBManager.h"
+
+// Extracts all entities and relations from given root node of
+// AST and stores into the PKB
+void DesignExtractor::PopulatePKB(std::shared_ptr<ProgramNode> root) {
+	EntityExtractor entity_extractor;
+	UsesModifiesExtractor uses_modifies_extractor;
+	ParentsExtractor parents_extractor;
+	FollowsExtractor follows_extractor;
+
+	root->Extract(entity_extractor);
+	root->Extract(uses_modifies_extractor);
+	root->Extract(parents_extractor);
+	root->Extract(follows_extractor);
+}
+
+void DesignExtractor::AddConstants(const std::string& source_filename) {
+	std::shared_ptr<WritePKBManager> manager = WritePKBManager::GetInstance();
+
+	SourceLexer lexer = SourceLexer(source_filename);
+	std::vector<SourceToken> tokens = lexer.GetAllTokens();
 	for (SourceToken t : tokens) {
 		if (t.GetType() == SourceTokenType::kInteger) {
-			int c = stoi(t.GetStringVal());
-			consts.push_back(c);
+			int val = stoi(t.GetStringVal());
+			manager->AddConstant(val);
 		}
 	}
-	return consts;
-}
-
-vector<VariableIndex> DesignExtractor::GetVariables(std::string& sourcefile) {
-	vector<VariableIndex> vars;
-	SourceLexer lexer = SourceLexer(sourcefile);
-	vector<SourceToken> tokens = lexer.GetAllTokens();
-	int idx = 0;
-	while (idx < (int) tokens.size()) {
-		if (tokens.at(idx).GetType() == SourceTokenType::kProcedure) {
-			idx += 2;
-		}
-		else if (tokens.at(idx).GetType() == SourceTokenType::kName) {
-			VariableIndex v = VariableIndex();
-			v.SetName(tokens.at(idx).GetStringVal());
-			vars.push_back(v);
-			idx += 1;
-		}
-		else {
-			idx += 1;
-		}
-	}
-	return vars;
-}
-
-vector<ProcedureIndex> DesignExtractor::GetProcedures(std::shared_ptr<ProgramNode> node) {
-	vector<ProcedureIndex> procs;
-	vector<shared_ptr<ProcedureASTNode>> children = node->GetChildren();
-	for (shared_ptr<ProcedureASTNode> proc : children) {
-		procs.push_back(proc->GetProc());
-	}
-	return procs;
 }

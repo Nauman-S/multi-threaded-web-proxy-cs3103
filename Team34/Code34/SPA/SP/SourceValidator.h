@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <map>
-#include "SourceToken.h"
+#include "./tokenizer/SourceToken.h"
 
 using namespace std;
 

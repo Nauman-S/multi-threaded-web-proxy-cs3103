@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "ASTNode.h"
-#include "LineIndex.h"
-#include "VariableIndex.h"
-#include "ProcedureIndex.h"
+#include "../LineIndex.h"
+#include "../VariableIndex.h"
+#include "../ProcedureIndex.h"
 
 enum class StatementType {
 	sassign,

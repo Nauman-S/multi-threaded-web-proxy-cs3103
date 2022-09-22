@@ -2,17 +2,17 @@
 
 #include "..\SourceParser.h"
 
-#include "../ProgramNode.h"
-#include "../ProcedureASTNode.h"
+#include "../ast/ProgramNode.h"
+#include "../ast/ProcedureASTNode.h"
 
-#include "../AssignStatementASTNode.h"
-#include "../CallStatementASTNode.h"
-#include "../PrintStatementASTNode.h"
-#include "../ReadStatementASTNode.h"
+#include "../ast/AssignStatementASTNode.h"
+#include "../ast/CallStatementASTNode.h"
+#include "../ast/PrintStatementASTNode.h"
+#include "../ast/ReadStatementASTNode.h"
 
-#include "../IfStatementASTNode.h"
-#include "../WhileStatementASTNode.h"
-#include "../ConditionExpression.h"
+#include "../ast/IfStatementASTNode.h"
+#include "../ast/WhileStatementASTNode.h"
+#include "../ast/ConditionExpression.h"
 
 UsesModifiesExtractor::UsesModifiesExtractor() {
 	this->write_manager_ = WritePKBManager::GetInstance();

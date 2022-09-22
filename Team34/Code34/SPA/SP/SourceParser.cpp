@@ -3,8 +3,8 @@
 #include <vector>
 #include <iostream>
 
-#include "SourceLexer.h"
-#include "IfStatementASTNode.h"
+#include "./tokenizer/SourceLexer.h"
+#include "./ast/IfStatementASTNode.h"
 
 using namespace std;
 
