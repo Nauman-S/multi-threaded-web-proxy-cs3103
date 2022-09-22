@@ -8,6 +8,7 @@
 #include "../Clause.h"
 #include "../reference/ValType.h"
 #include "../../Utils/type/RefType.h"
+#include "../../Utils/expression/ExprSpec.h"
 class DataRetriever;
 
 class Pattern
@@ -29,4 +30,6 @@ public:
 	virtual PatternType GetPatternType() = 0;
 
 	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever);  // Implemented in Pattern.cpp
+
+	virtual std::shared_ptr<ExprSpec> GetExprSpec() = 0;
 };

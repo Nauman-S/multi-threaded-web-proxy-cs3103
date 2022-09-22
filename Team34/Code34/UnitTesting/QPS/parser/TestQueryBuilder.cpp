@@ -396,10 +396,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 
 		};
 
@@ -424,10 +424,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpression) {
@@ -450,10 +450,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtSyn() == select_variable);
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtSyn() == select_variable);
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithBracket) {
@@ -476,10 +476,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->StmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithMultipleBracket) {
@@ -502,10 +502,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query->GetPatterns()->at(0)->StmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 		TEST_METHOD(Valid_PatternClause_SelectedAssign_Identity_ExactExpressionWithBracket_DifferentSelectAndAssignRef) {
@@ -529,10 +529,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->StmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 		TEST_METHOD(SyntaxError_PatternClause_RedundantClosingBrace) {
@@ -591,10 +591,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->StmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 
@@ -626,10 +626,10 @@ namespace UnitTesting
 
 			//Check if all pattern clauses are correct
 			Assert::IsTrue(query->GetPatterns()->size() == 1);
-			Assert::IsTrue(query->GetPatterns()->at(0)->LhsValType() == ValType::kVarName);
-			Assert::IsTrue(query->GetPatterns()->at(0)->AssignStmtValType() == ValType::kSynonym);
-			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->AssignStmtSyn());
-			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->RhsExprSpec()->GetInfix());
+			Assert::IsTrue(query->GetPatterns()->at(0)->VarValType() == ValType::kVarName);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(assign_variable, query->GetPatterns()->at(0)->StmtSyn());
+			Assert::AreEqual(expr_str, query->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 		};
 
 

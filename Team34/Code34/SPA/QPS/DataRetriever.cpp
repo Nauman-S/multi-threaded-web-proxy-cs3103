@@ -487,7 +487,7 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
 shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(AssignPattern& pat)
 {
     auto var_name = pat.VarName();
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.ExprSpec();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec();
 
     shared_ptr<unordered_set<StmtNum>> stmt_set = make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
@@ -507,7 +507,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Assig
 
 shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(AssignPattern& pat)
 {
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.ExprSpec(); 
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec(); 
     shared_ptr<unordered_set<StmtNum>> stmt_set = std::make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
         stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
@@ -526,7 +526,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(AssignPattern& pat)
 {
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.ExprSpec();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec();
     shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table = pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
 
     return IntStrToStrStrTable(stmt_var_table);

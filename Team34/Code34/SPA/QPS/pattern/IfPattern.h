@@ -35,4 +35,6 @@ public:
 	ValType VarValType() override { return var_ref_->GetValType(); }
 
 	PatternType GetPatternType() override { return PatternType::kIfPattern; }
+
+	std::shared_ptr<ExprSpec> GetExprSpec() override { return nullptr; }
 };
