@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "..\Utils\Token.h"
+#include "..\..\Utils\Token.h"
 #include "SourceToken.h"
 
 using namespace std;

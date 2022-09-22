@@ -6,7 +6,7 @@
 
 #include "ASTNode.h"
 #include "StatementASTNode.h"
-#include"ProcedureIndex.h"
+#include "../ProcedureIndex.h"
 
 class ProcedureASTNode : public ASTNode {
 public:

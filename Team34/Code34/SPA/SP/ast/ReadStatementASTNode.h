@@ -1,7 +1,7 @@
 #pragma once
 
-# include "StatementASTNode.h"
-# include "VariableIndex.h"
+#include "StatementASTNode.h"
+#include "../VariableIndex.h"
 
 class ReadStatementASTNode : public StatementASTNode {
 public:

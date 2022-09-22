@@ -6,8 +6,8 @@
 #include <map>
 
 #include "../SPA/SP/SourceParser.h"
-#include "../SPA/SP/design_extractor/DesignExtractor.h"
-#include "../SPA/SP/SourceLexer.h"
+#include "../SPA/SP/DesignExtractor.h"
+#include "../SPA/SP/tokenizer/SourceLexer.h"
 #include "../SPA/SP/SourceValidator.h"
 #include "../SPA/QPS/parser/QueryBuilder.h"
 #include "../SPA/QPS/parser/SyntaxError.h"

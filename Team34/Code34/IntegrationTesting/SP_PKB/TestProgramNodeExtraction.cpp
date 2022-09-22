@@ -12,7 +12,7 @@
 #include "../SPA/SP/SourceParser.h"
 
 #include "../SPA/SP/design_extractor/EntityExtractor.h"
-#include "../SPA/SP/design_extractor/DesignExtractor.h"
+#include "../SPA/SP/DesignExtractor.h"
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
 #include "../SPA/SP/design_extractor/ParentsExtractor.h"
 #include "../SPA/SP/design_extractor/FollowsExtractor.h"

@@ -1,17 +1,15 @@
 #pragma once
-# include <vector>
-# include <map>
-#include <memory>
-# include <string>
-# include "StatementASTNode.h"
-# include "LineIndex.h"
-# include "ProgramNode.h"
 
-class DesignExtractor
-{
+#include <string>
+#include <memory>
+
+#include "./ast/ProgramNode.h"
+
+class DesignExtractor {
 public:
-	std::vector<VariableIndex> GetVariables(std::string& sourcefile);
-	std::vector<int> GetConstants(std::string& sourcefile);
-	std::vector<ProcedureIndex> GetProcedures(shared_ptr<ProgramNode>);
+	void PopulatePKB(std::shared_ptr<ProgramNode>);
+
+	// TODO: Combine into populate PKB when parser supports constants
+	void AddConstants(const std::string&);
 };
 

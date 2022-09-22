@@ -1,7 +1,7 @@
 #pragma once
 
 # include "StatementASTNode.h"
-# include "ProcedureIndex.h"
+# include "../ProcedureIndex.h"
 
 class CallStatementASTNode : public StatementASTNode {
 public:
