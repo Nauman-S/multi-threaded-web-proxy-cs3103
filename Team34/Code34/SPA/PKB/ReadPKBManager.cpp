@@ -278,17 +278,17 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::Get
 // APIs related to Pattern relation
 bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr);
+	return pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr);
 }
 
 bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr);
+	return pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, var, expr);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.GetAssignPatternMatch(expr);
+	return pkb.assign_pattern_manager_.GetPatternMatch(expr);
 }
 
 // APIs related to Calls relation
