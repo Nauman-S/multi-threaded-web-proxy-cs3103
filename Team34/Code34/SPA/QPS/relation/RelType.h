@@ -4,6 +4,7 @@ enum class RelType
 	kStmtStmtRel,
 	kStmtVarRel,
 	kProcVarRel,
+	kProcProcRel,
 	kUsesSRel,
 	kUsesPRel,
 	kModifiesSRel,
@@ -11,6 +12,12 @@ enum class RelType
 	kParentRel,
 	kParentTRel,
 	kFollowsRel,
-	kFollowsTRel
+	kFollowsTRel,
+	kCallsRel,
+	kCallsTRel,
+	kNextRel,
+	kNextTRel,
+	kAffectsRel,
+	kAffectsTRel,
 };
 

@@ -10,9 +10,18 @@
 #include "pattern/Pattern.h"
 #include "relation/StmtVarRel.h"
 #include "relation/ProcVarRel.h"
+#include "relation/ProcProcRel.h"
 #include "relation/StmtStmtRel.h"
 #include "relation/UsesSRel.h"
+#include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
+#include "relation/ModifiesPRel.h"
+#include "relation/FollowsRel.h"
+#include "relation/FollowsTRel.h"
+#include "relation/ParentRel.h"
+#include "relation/ParentTRel.h"
+#include "relation/CallsRel.h"
+#include "relation/CallsTRel.h"
 #include "relation/RelType.h"
 #include "reference/ValType.h"
 #include "../PKB/ReadPKBManager.h"
@@ -764,6 +773,11 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
     }
 
     return res;
+}
+
+shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
+    // TODO: Implement retrieving logic
+    return shared_ptr<ResWrapper>(new ResWrapper(false));
 }
 
 shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {    
