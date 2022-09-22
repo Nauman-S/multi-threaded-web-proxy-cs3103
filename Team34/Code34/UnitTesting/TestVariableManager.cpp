@@ -8,12 +8,12 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	TEST_CLASS(TestvariableManager)
+	TEST_CLASS(TestVariableManager)
 	{
 	private:
 		VariableManager variable_manager_;
 	public:
-		TEST_METHOD(TestAddvariable)
+		TEST_METHOD(TestAddVariable)
 		{
 			Assert::AreEqual(0, int(variable_manager_.GetAllEntities()->size()));
 			variable_manager_.AddEntity("a");

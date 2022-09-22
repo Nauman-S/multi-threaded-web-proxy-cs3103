@@ -52,12 +52,12 @@ bool CallsManager::CheckCallsT(Procedure caller, Procedure callee)
 
 std::shared_ptr<std::unordered_set<Procedure>> CallsManager::GetAllCalleeFromCaller(Procedure caller)
 {
-	return calls_store_.GetRHSByLHS(caller);
+	return calls_store_.GetAllTransitiveRHS(caller);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> CallsManager::GetAllCallerFromCallee(Procedure callee)
 {
-	return calls_store_.GetLHSByRHS(callee);
+	return calls_store_.GetAllTransitiveLHS(callee);
 }
 
 std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> CallsManager::GetAllCallsTRelations()

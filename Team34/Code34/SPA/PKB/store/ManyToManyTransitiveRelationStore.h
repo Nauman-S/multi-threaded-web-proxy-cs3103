@@ -60,15 +60,13 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> ManyToManyTransitiveRelationStore<T>::GetAllTransitiveRHS(T t)
 {
-	std::shared_ptr<std::unordered_map<T, std::unordered_set<T>>> map = std::make_shared<std::unordered_map<T, std::unordered_set<T>>>(s_to_t_map_);
-	return GetAllElements(T t, map);
+	return GetAllElements(t, s_to_t_map_);
 }
 
 template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> ManyToManyTransitiveRelationStore<T>::GetAllTransitiveLHS(T t)
 {
-	std::shared_ptr<std::unordered_map<T, std::unordered_set<T>>> map = std::make_shared<std::unordered_map<T, std::unordered_set<T>>>(t_to_s_map_);
-	return GetAllElements(T t, map);
+	return GetAllElements(t, t_to_s_map_);
 }
 
 template<typename T>
@@ -78,7 +76,7 @@ inline std::shared_ptr<std::vector<std::pair<T, T>>> ManyToManyTransitiveRelatio
 }
 
 template<typename T>
-inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::shared_ptr<std::unordered_map<T, std::unordered_set<T>>> map)
+inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered_map<T, std::unordered_set<T>>& map)
 {
 	std::shared_ptr<std::unordered_set<T>> all_elements = std::make_shared<std::unordered_set<T>>();
 	std::queue<T> queue;
@@ -87,12 +85,12 @@ inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::shared_pt
 	{
 		T ptr = queue.front();
 		queue.pop();
-		auto iter = map->find(ptr);
-		if (iter == map->end())
+		auto iter = map.find(ptr);
+		if (iter == map.end())
 		{
 			continue;
 		}
-		std::unordered_set<T>& elements = *map[ptr];
+		std::unordered_set<T>& elements = map[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
 			all_elements->insert(*iter);
