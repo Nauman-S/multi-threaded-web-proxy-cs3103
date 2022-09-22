@@ -280,3 +280,60 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAs
 {
 	return pkb.pattern_manager_.GetAssignPatternMatch(expr);
 }
+
+// APIs related to Calls relation
+bool ReadPKBManager::CheckCalls(Procedure caller, Procedure callee)
+{
+	return pkb.calls_manager_.CheckCalls(caller, callee);
+}
+
+bool ReadPKBManager::IsCallsStoreEmpty()
+{
+	return pkb.calls_manager_.IsEmpty();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetCalleeFromCaller(Procedure caller)
+{
+	return pkb.calls_manager_.GetCalleeFromCaller(caller);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetCallerFromCallee(Procedure callee)
+{
+	return pkb.calls_manager_.GetCallerFromCallee(callee);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallers()
+{
+	return pkb.calls_manager_.GetAllCallers();
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallees()
+{
+	return pkb.calls_manager_.GetAllCallees();
+}
+
+std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManager::GetAllCallsRelations()
+{
+	return pkb.calls_manager_.GetAllCallsRelations();
+}
+
+// APIs related to Calls* relation
+bool ReadPKBManager::CheckCallsT(Procedure caller, Procedure callee)
+{
+	return pkb.calls_manager_.CheckCallsT(caller, callee);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCalleeFromCaller(Procedure caller)
+{
+	return pkb.calls_manager_.GetAllCalleeFromCaller(caller);
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallerFromCallee(Procedure callee)
+{
+	return pkb.calls_manager_.GetAllCallerFromCallee(callee);
+}
+
+std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManager::GetAllCallsTRelations()
+{
+	return pkb.calls_manager_.GetAllCallsTRelations();
+}

@@ -87,6 +87,21 @@ public:
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
 	virtual std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
 
+	// APIs related to Calls relation
+	virtual bool CheckCalls(Procedure caller, Procedure callee);
+	virtual bool IsCallsStoreEmpty();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetCalleeFromCaller(Procedure caller);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetCallerFromCallee(Procedure callee);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallers();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallees();
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsRelations();
+
+	// APIs related to Calls* relation
+	virtual bool CheckCallsT(Procedure caller, Procedure callee);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCalleeFromCaller(Procedure caller);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
+
 	// APIs related to Pattern relation
 	virtual bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
 	virtual bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr);
