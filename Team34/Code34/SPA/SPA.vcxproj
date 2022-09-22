@@ -17,6 +17,7 @@
     <ClInclude Include="PKB\manager\FollowsManager.h" />
     <ClInclude Include="PKB\manager\ModifiesManager.h" />
     <ClInclude Include="PKB\manager\ParentManager.h" />
+    <ClInclude Include="PKB\manager\CallsManager.h" />
     <ClInclude Include="PKB\manager\PatternManager.h" />
     <ClInclude Include="PKB\manager\ProcedureManager.h" />
     <ClInclude Include="PKB\manager\StatementManager.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\store\EntityStore.h" />
     <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyTransitiveRelationStore.h" />
     <ClInclude Include="PKB\store\ManyToOneRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyTransitiveRelationStore.h" />
@@ -131,6 +133,7 @@
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
+    <ClCompile Include="PKB\manager\CallsManager.cpp" />
     <ClCompile Include="PKB\manager\PatternManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />

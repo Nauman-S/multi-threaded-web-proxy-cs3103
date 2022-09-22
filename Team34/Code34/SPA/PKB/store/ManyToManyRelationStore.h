@@ -12,11 +12,13 @@ class ManyToManyRelationStore
 public:
 	void SetRelation(S s, T t);
 	bool CheckRelation(S s, T t);
+	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<T>> GetRHSByLHS(S s);
 	std::shared_ptr<std::unordered_set<S>> GetLHSByRHS(T t);
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
+	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
-private:
+protected:
 	std::vector<std::pair<S, T>> all_relations_;
 	std::unordered_map<S, std::unordered_set<T>> s_to_t_map_;
 	std::unordered_map<T, std::unordered_set<S>> t_to_s_map_;
@@ -45,6 +47,12 @@ inline bool ManyToManyRelationStore<S, T>::CheckRelation(S s, T t)
 		return t_to_s_map_[t].find(s) != t_to_s_map_[t].end();
 	}
 	return false;
+}
+
+template<typename S, typename T>
+inline bool ManyToManyRelationStore<S, T>::IsEmpty()
+{
+	return all_relations_.empty();
 }
 
 template <typename S, typename T>
@@ -84,6 +92,17 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::Get
 		all_lhs->insert(kv.first);
 	}
 	return all_lhs;
+}
+
+template<typename S, typename T>
+inline std::shared_ptr<std::unordered_set<T>> ManyToManyRelationStore<S, T>::GetAllRHS()
+{
+	std::shared_ptr<std::unordered_set<T>> all_rhs = std::make_shared<std::unordered_set<T>>();
+	for (auto kv : t_to_s_map_)
+	{
+		all_rhs->insert(kv.first);
+	}
+	return all_rhs;
 }
 
 template <typename S, typename T>
