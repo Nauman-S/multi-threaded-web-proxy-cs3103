@@ -19,7 +19,7 @@
     <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\SemanticError.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
-    <ClCompile Include="QPS\pattern\Pattern.cpp" />
+    <ClCompile Include="QPS\pattern\AssignPattern.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
@@ -90,6 +90,8 @@
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
     <ClCompile Include="SP\DesignExtractor.cpp" />
+    <ClCompile Include="QPS\pattern\IfPattern.cpp" />
+    <ClCompile Include="QPS\pattern\Pattern.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -125,7 +127,7 @@
     <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\SemanticError.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
-    <ClInclude Include="QPS\pattern\Pattern.h" />
+    <ClInclude Include="QPS\pattern\AssignPattern.h" />
     <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
@@ -210,5 +212,9 @@
     <ClInclude Include="SP\tokenizer\SourceLexer.h" />
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
+    <ClInclude Include="QPS\pattern\Pattern.h" />
+    <ClInclude Include="QPS\pattern\PatternType.h" />
+    <ClInclude Include="QPS\pattern\IfPattern.h" />
+    <ClInclude Include="QPS\pattern\WhilePattern.h" />
   </ItemGroup>
 </Project>
