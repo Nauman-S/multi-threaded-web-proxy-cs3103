@@ -1,40 +1,32 @@
 #pragma once
 
-#include <memory>
+#include <string>
 #include <optional>
+#include <memory>
 
-#include "../reference/AssignRef.h"
-#include "../reference/VarRef.h"
-#include "../reference/ValType.h"
-#include "../../Utils/expression/ExprSpec.h"
+#include "PatternType.h"
 #include "../Clause.h"
-//#include "../DataRetriever.h"
+#include "../reference/ValType.h"
+#include "../../Utils/type/RefType.h"
 class DataRetriever;
 
-
 class Pattern
-	: public Clause
+	:public Clause
 {
-protected:
-	std::shared_ptr<AssignRef> assign_;
-	std::shared_ptr<VarRef> lhs_;
-	std::shared_ptr <ExprSpec> rhs_;
-
+	// General structure of Pattern:
+	// stmt_syn_ref(var_ref, 2nd arg[, 3rd arg])
 public:
-	Pattern(std::shared_ptr<AssignRef> a, std::shared_ptr<VarRef> lhs, std::shared_ptr <ExprSpec> rhs) : assign_{ a }, lhs_{ lhs }, rhs_{ rhs } {};
+	virtual std::string StmtSyn() = 0;
 
-	std::string AssignStmtSyn() { return assign_->GetName(); };
+	virtual RefType StmtRefType() = 0;
 
-	std::optional<int> AssignStmtValueAsInt() { return assign_->ValueAsInt(); };
+	virtual ValType StmtValType() = 0;
 
-	std::string LhsValue() { return lhs_->GetName(); };
+	virtual std::string VarName() = 0;
 
-	ValType AssignStmtValType() { return assign_->GetValType(); };
+	virtual ValType VarValType() = 0;
 
-	ValType LhsValType() { return lhs_->GetValType(); };
+	virtual PatternType GetPatternType() = 0;
 
-	std::shared_ptr<ExprSpec> RhsExprSpec();
-
-	std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever);  // Implemented in Pattern.cpp
 };
-
