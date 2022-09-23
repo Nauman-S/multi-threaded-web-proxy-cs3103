@@ -209,15 +209,23 @@ bool QueryLexer::HasAndKeyword() {
 	return false;
 }
 
-std::string QueryLexer::MatchAndKeyword() {
+void QueryLexer::MatchAndKeyword() {
 	if (!HasAndKeyword()) throw SyntaxError(GenerateErrorMessage("and", tokenizer_->getTokenSval().value_or("INTEGER")));
 
 	this->tokenizer_->nextToken();
-	return "and";
 }
 
 bool QueryLexer::HasMoreTokens() {
 	return this->tokenizer_->getToken().type_ != TokenType::kParseEnd;
+}
+
+bool QueryLexer::HasSuchThatKeywords() {
+	return HasKeyword("such") && (PeekNextToken(1) == "that");
+}
+
+void QueryLexer::MatchSuchThatKeywords() {
+	MatchKeyword("such");
+	MatchKeyword("that");
 }
 
 string QueryLexer::GenerateErrorMessage(string expected, string actual) {

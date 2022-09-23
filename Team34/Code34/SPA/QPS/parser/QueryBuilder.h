@@ -39,8 +39,6 @@ private:
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
 
 
-	bool HasSuchThatClause();
-
 	shared_ptr<StmtRef> GetNextStmtRef();
 	shared_ptr<ProcRef> GetNextProcRef();
 	shared_ptr<VarRef> GetNextVarRef();

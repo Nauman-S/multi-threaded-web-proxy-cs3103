@@ -110,14 +110,14 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 
 		std::vector<shared_ptr<Rel>> relations_;
 		std::vector<shared_ptr<Pattern>> patterns_;
-		while (lexer_->HasPatternKeyword() || HasSuchThatClause()) {
+		while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords()) {
 			
 			if (lexer_->HasPatternKeyword()) {
 				std::vector<shared_ptr<Pattern>> patterns = ParsePatterns();
 				patterns_.insert(patterns_.end(), patterns.begin(), patterns.end());
 
 			}
-			else if (HasSuchThatClause()) {
+			else if (lexer_->HasSuchThatKeywords()) {
 				std::vector<shared_ptr<Rel>> relations = ParseRelations();
 				// append new relations to the end of all relations
 				relations_.insert(relations_.end(), relations.begin(), relations.end());
@@ -185,17 +185,10 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
 	}
 }
 
-bool QueryBuilder::HasSuchThatClause() {
-	return lexer_->HasKeyword("such") && (lexer_->PeekNextToken(1) == "that");
-}
 
 std::vector<shared_ptr<Rel>> QueryBuilder::ParseRelations() {
 	std::vector<shared_ptr<Rel>> relations;
-	if (!HasSuchThatClause()) {
-		return relations;
-	}
-	lexer_->MatchKeyword("such");
-	lexer_->MatchKeyword("that");
+	lexer_->MatchSuchThatKeywords();
 
 	relations.push_back(ParseRelation());
 
@@ -298,7 +291,6 @@ std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSy
 
 	if (lexer_->HasIdentity()) {
 		string ref_name = lexer_->MatchIdentity();
-		//lhs_syn = std::dynamic_pointer_cast<StmtRef>(GetDeclaredSyn(ref_name, RefType::kStmtRef));
 		lhs_syn = GetDeclaredSyn(ref_name);
 		if (lhs_syn->GetRefType() != RefType::kProcRef && lhs_syn->GetRefType() != RefType::kStmtRef
 			&& !stmt_ref_types.count(lhs_syn->GetRefType())) {
@@ -574,5 +566,3 @@ string QueryBuilder::GetExpression() {
 
 	return expr_str;
 }
-
-

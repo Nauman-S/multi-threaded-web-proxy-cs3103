@@ -63,7 +63,7 @@ public:
 	std::string MatchPatternKeyword();
 
 	bool HasAndKeyword();
-	std::string MatchAndKeyword();
+	void MatchAndKeyword();
 
 	bool HasMoreTokens();
 
@@ -72,6 +72,9 @@ public:
 
 	bool HasOperator();
 	std::string MatchOperator();
+
+	bool HasSuchThatKeywords();
+	void MatchSuchThatKeywords();
 
 	string GenerateErrorMessage(string expected, string actual);
 
