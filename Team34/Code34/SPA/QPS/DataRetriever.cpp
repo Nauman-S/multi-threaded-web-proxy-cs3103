@@ -8,6 +8,10 @@
 #include <cassert>
 
 #include "pattern/Pattern.h"
+#include "pattern/AssignPattern.h"
+#include "pattern/IfPattern.h"
+#include "pattern/WhilePattern.h"
+#include "pattern/PatternType.h"
 #include "relation/StmtVarRel.h"
 #include "relation/ProcVarRel.h"
 #include "relation/ProcProcRel.h"
@@ -450,10 +454,40 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
     return IntIntToStrStrTable(table);
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Pattern& pat)
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtByVar(Pattern& pat)
 {
-    auto var_name = pat.LhsValue();
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
+    if (pat.GetPatternType() == PatternType::kAssignPattern) {
+        return GetAssignPatternStmtByVar(static_cast<AssignPattern&>(pat));
+    }
+    // TODO: Add implementation for if and while pattern;
+
+    return std::shared_ptr<std::unordered_set<std::string>>();
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtByWildcard(Pattern& pat)
+{
+    if (pat.GetPatternType() == PatternType::kAssignPattern) {
+        return GetAssignPatternStmtByWildcard(static_cast<AssignPattern&>(pat));
+    }
+    // TODO: Add implementation for if and whild pattern
+
+    return std::shared_ptr<std::unordered_set<std::string>>();
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::GetAllPattern(Pattern& pat)
+{
+    if (pat.GetPatternType() == PatternType::kAssignPattern) {
+        return GetAllAssignPattern(static_cast<AssignPattern&>(pat));
+    }
+
+    // TODO: Add implementation for if and whild pattern
+    return std::shared_ptr<std::vector<std::pair<std::string, std::string>>>();
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(AssignPattern& pat)
+{
+    auto var_name = pat.VarName();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec();
 
     shared_ptr<unordered_set<StmtNum>> stmt_set = make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
@@ -471,9 +505,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Patte
     return IntSetToStrSet(stmt_set);
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(Pattern& pat)
+shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(AssignPattern& pat)
 {
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec(); 
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec(); 
     shared_ptr<unordered_set<StmtNum>> stmt_set = std::make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
         stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
@@ -490,9 +524,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
     return IntSetToStrSet(stmt_set);
 }
 
-shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(Pattern& pat)
+shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(AssignPattern& pat)
 {
-    shared_ptr<ExprSpec> expr_spec_ptr = pat.RhsExprSpec();
+    shared_ptr<ExprSpec> expr_spec_ptr = pat.GetExprSpec();
     shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table = pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
 
     return IntStrToStrStrTable(stmt_var_table);
@@ -675,29 +709,29 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
 {
-    ValType lhs_type = pat.LhsValType();
+    ValType lhs_type = pat.VarValType();
     assert(lhs_type == ValType::kVarName || lhs_type == ValType::kSynonym || lhs_type == ValType::kWildcard);
 
     shared_ptr<unordered_set<string>> set { nullptr };
     shared_ptr<vector<pair<string, string>>> table { nullptr };
     if (lhs_type == ValType::kVarName) {
-        set = GetAssignPatternStmtByVar(pat);
+        set = GetPatternStmtByVar(pat);
     }
     else if(lhs_type == ValType::kSynonym) 
     {
-        table = GetAllAssignPattern(pat);
+        table = GetAllPattern(pat);
     }
     else if (lhs_type == ValType::kWildcard) {
-        set = GetAssignPatternStmtByWildcard(pat);
+        set = GetPatternStmtByWildcard(pat);
     }
 
     shared_ptr<ResWrapper> res;
     if (set != nullptr) {
-        shared_ptr<SetRes> set_res = make_shared<SetRes>(pat.AssignStmtSyn(), set);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(pat.StmtSyn(), set);
         res = make_shared<ResWrapper>(set_res);
     }
     else {
-        unordered_map<string, int> syn_to_col = { {pat.AssignStmtSyn(), 0}, {pat.LhsValue(), 1} };
+        unordered_map<string, int> syn_to_col = { {pat.StmtSyn(), 0}, {pat.VarName(), 1} };
         shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
         res = make_shared<ResWrapper>(table_res);
     }

@@ -2,7 +2,7 @@
 
 # include <vector>
 # include "StatementASTNode.h"
-# include "VariableIndex.h"
+# include "../VariableIndex.h"
 
 
 class AssignStatementASTNode : public StatementASTNode {

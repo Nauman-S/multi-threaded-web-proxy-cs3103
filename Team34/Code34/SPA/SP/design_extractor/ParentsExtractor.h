@@ -8,15 +8,15 @@
 #include "../../PKB/WritePKBManager.h"
 #include "../../Utils/type/TypeDef.h"
 
-#include "../ProgramNode.h"
-#include "../ProcedureASTNode.h"
-#include "../AssignStatementASTNode.h"
-#include "../CallStatementASTNode.h"
-#include "../PrintStatementASTNode.h"
-#include "../ReadStatementASTNode.h"
-#include "../IfStatementASTNode.h"
-#include "../WhileStatementASTNode.h"
-#include "../ConditionExpression.h"
+#include "../ast/ProgramNode.h"
+#include "../ast/ProcedureASTNode.h"
+#include "../ast/AssignStatementASTNode.h"
+#include "../ast/CallStatementASTNode.h"
+#include "../ast/PrintStatementASTNode.h"
+#include "../ast/ReadStatementASTNode.h"
+#include "../ast/IfStatementASTNode.h"
+#include "../ast/WhileStatementASTNode.h"
+#include "../ast/ConditionExpression.h"
 
 class ParentsExtractor : public NodeExtractor {
 public:

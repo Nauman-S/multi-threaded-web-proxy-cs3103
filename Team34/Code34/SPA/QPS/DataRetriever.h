@@ -16,16 +16,15 @@
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
-// #include "relation/StmtVarRel.h"
-// #include "relation/ProcVarRel.h"
-// #include "relation/StmtStmtRel.h"
-// #include "pattern/Pattern.h"
 // Use forward declaration to avoid cyclic include of Visitor pattern
 class StmtVarRel;
 class ProcVarRel;
 class StmtStmtRel;
 class ProcProcRel;
 class Pattern;
+class AssignPattern;
+class IfPattern;
+class WhilePattern;
 
 
 class DataRetriever
@@ -61,10 +60,15 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetLhsStmtByWildcard(StmtStmtRel& rel);			// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(StmtStmtRel& rel);	// (synonym, synonym)
 
+	// Pattern
+	std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByVar(Pattern& pat);					// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByWildcard(Pattern& pat);				// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPattern(Pattern& pat);// assign_syn(var_syn, ExprSpec)
+
 	// Assign Pattern
-	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByVar(Pattern& pat);					// assign_syn(var_name, ExprSpec)
-	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByWildcard(Pattern& pat);				// assign_syn(wildcard, ExprSpec)
-	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllAssignPattern(Pattern& pat);// assign_syn(var_syn, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByVar(AssignPattern& pat);					// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByWildcard(AssignPattern& pat);				// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllAssignPattern(AssignPattern& pat);// assign_syn(var_syn, ExprSpec)
 
 	// type conversion helpers
 	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);

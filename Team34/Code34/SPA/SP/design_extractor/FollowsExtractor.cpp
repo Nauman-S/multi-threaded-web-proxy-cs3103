@@ -1,16 +1,16 @@
 #include "FollowsExtractor.h"
 
-#include "../ProgramNode.h"
-#include "../ProcedureASTNode.h"
+#include "../ast/ProgramNode.h"
+#include "../ast/ProcedureASTNode.h"
 
-#include "../AssignStatementASTNode.h"
-#include "../CallStatementASTNode.h"
-#include "../PrintStatementASTNode.h"
-#include "../ReadStatementASTNode.h"
-#include "../ConditionExpression.h"
+#include "../ast/AssignStatementASTNode.h"
+#include "../ast/CallStatementASTNode.h"
+#include "../ast/PrintStatementASTNode.h"
+#include "../ast/ReadStatementASTNode.h"
+#include "../ast/ConditionExpression.h"
 
-#include "../IfStatementASTNode.h"
-#include "../WhileStatementASTNode.h"
+#include "../ast/IfStatementASTNode.h"
+#include "../ast/WhileStatementASTNode.h"
 
 FollowsExtractor::FollowsExtractor() {
 	this->write_manager_ = WritePKBManager::GetInstance();
