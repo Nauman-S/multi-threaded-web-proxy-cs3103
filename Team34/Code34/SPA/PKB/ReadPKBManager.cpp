@@ -275,7 +275,7 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::Get
 	return pkb.modifies_manager_.GetAllPVModifies();
 }
 
-// APIs related to Pattern relation
+// APIs related to Assign Pattern relation
 bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
 {
 	return pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr);
@@ -289,6 +289,38 @@ bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::s
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
 	return pkb.assign_pattern_manager_.GetPatternMatch(expr);
+}
+
+// APIs related to If Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfStatmentsFromVar(Variable var)
+{
+	return pkb.if_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfStatements()
+{
+	return pkb.if_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllIfPatterns()
+{
+	return pkb.if_pattern_manager_.GetAllPatterns();
+}
+
+// APIs related to While Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhileStatmentsFromVar(Variable var)
+{
+	return pkb.while_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhileStatements()
+{
+	return pkb.while_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllWhilePatterns()
+{
+	return pkb.while_pattern_manager_.GetAllPatterns();
 }
 
 // APIs related to Calls relation

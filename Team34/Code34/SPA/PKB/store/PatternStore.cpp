@@ -22,7 +22,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> PatternStore::GetAllStatmentsFromVa
 	}
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> PatternStore::GetAllStatments()
+std::shared_ptr<std::unordered_set<StmtNum>> PatternStore::GetAllStatements()
 {
 	return std::make_shared<std::unordered_set<StmtNum>>(all_statements_);
 }

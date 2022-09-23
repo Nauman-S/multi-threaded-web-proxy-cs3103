@@ -82,3 +82,13 @@ void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr
 {
 	pkb.assign_pattern_manager_.AddPattern(stmt_num, var, expr);
 }
+
+void WritePKBManager::AddIfPattern(StmtNum stmt_num, Variable var)
+{
+	pkb.if_pattern_manager_.AddPattern(stmt_num, var);
+}
+
+void WritePKBManager::AddWhilePattern(StmtNum stmt_num, Variable var)
+{
+	pkb.while_pattern_manager_.AddPattern(stmt_num, var);
+}
