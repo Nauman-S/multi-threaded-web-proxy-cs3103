@@ -37,15 +37,15 @@ namespace UnitTesting
 			Assert::IsTrue(this->query_lexer_->HasReferenceKeyword());
 			Assert::AreEqual( reference_keyword_, this->query_lexer_->MatchReferenceKeyword());
 			Assert::IsTrue(this->query_lexer_->HasOpeningBrace());
-			this->query_lexer_->MatchOpeningBrace();
+			this->query_lexer_->MatchLeftBrace();
 			Assert::IsTrue(this->query_lexer_->HasInteger());
 			Assert::AreEqual(357,this->query_lexer_->MatchInteger());
 			Assert::IsTrue(this->query_lexer_->HasCommaDelimeter());
 			this->query_lexer_->MatchCommaDelimeter();
 			Assert::IsTrue(this->query_lexer_->HasIdentity());
 			Assert::AreEqual(identity_, this->query_lexer_->MatchIdentity());
-			Assert::IsTrue(this->query_lexer_->HasClosingBrace());
-			this->query_lexer_->MatchClosingBrace();
+			Assert::IsTrue(this->query_lexer_->HasRightBrace());
+			this->query_lexer_->MatchRightBrace();
 			Assert::IsTrue(!this->query_lexer_->HasMoreTokens());
 		};
 	};

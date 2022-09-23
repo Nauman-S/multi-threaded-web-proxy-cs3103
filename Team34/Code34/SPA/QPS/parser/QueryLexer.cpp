@@ -9,7 +9,7 @@ void QueryLexer::InitializeKeywords() {
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
 	this->keywords_.insert({ "Select", "such", "that" });
-	this->delimiters_.insert({ ';',',','(',')','\"' });
+	this->delimiters_.insert({ ';',',','(',')','\"', '<', '>'});
 	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
 
@@ -101,26 +101,41 @@ std::string QueryLexer::MatchReferenceKeyword() {
 	return sval_;
 }
 
-//conintue below here
 
-bool QueryLexer::HasOpeningBrace() {
+bool QueryLexer::HasLeftBrace() {
 	return this->tokenizer_->getToken().type_ == TokenType::kLeftRound;
 }
 
-std::string QueryLexer::MatchOpeningBrace() {
-	if (!HasOpeningBrace()) throw SyntaxError(GenerateErrorMessage("(", tokenizer_->getTokenSval().value_or("INTEGER")));
-	this->tokenizer_->nextToken();
-	return "(";
+void QueryLexer::MatchLeftBrace() {
+	if (!HasLeftBrace()) throw SyntaxError(GenerateErrorMessage("(", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
 }
 
-bool QueryLexer::HasClosingBrace() {
+bool QueryLexer::HasRightBrace() {
 	return this->tokenizer_->getToken().type_ == TokenType::kRightRound;
 }
 
-std::string QueryLexer::MatchClosingBrace() {
-	if (!HasClosingBrace()) throw SyntaxError(GenerateErrorMessage(")", tokenizer_->getTokenSval().value_or("INTEGER")));
-	this->tokenizer_->nextToken();
-	return ")";
+void QueryLexer::MatchRightBrace() {
+	if (!HasRightBrace()) throw SyntaxError(GenerateErrorMessage(")", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
+bool QueryLexer::HasLeftAngle() {
+	return this->tokenizer_->getToken().type_ == TokenType::kLeftAngle;
+}
+
+void QueryLexer::MatchLeftAngle() {
+	if (!HasLeftAngle()) throw SyntaxError(GenerateErrorMessage("<", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
+bool QueryLexer::HasRightAngle() {
+	return this->tokenizer_->getToken().type_ == TokenType::kRightAngle;
+}
+
+void QueryLexer::MatchRightAngle() {
+	if (!HasRightAngle()) throw SyntaxError(GenerateErrorMessage(">", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
 }
 
 bool QueryLexer::HasUnderScore() {

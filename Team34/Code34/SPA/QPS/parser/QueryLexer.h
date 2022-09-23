@@ -44,11 +44,17 @@ public:
 	std::string MatchReferenceKeyword();
 
 
-	bool HasOpeningBrace();
-	std::string MatchOpeningBrace();
+	bool HasLeftBrace();
+	void MatchLeftBrace();
 
-	bool HasClosingBrace();
-	std::string MatchClosingBrace();
+	bool HasRightBrace();
+	void MatchRightBrace();
+
+	bool HasLeftAngle();
+	void MatchLeftAngle();
+
+	bool HasRightAngle();
+	void MatchRightAngle();
 
 	bool HasCommaDelimeter();
 	std::string MatchCommaDelimeter();
