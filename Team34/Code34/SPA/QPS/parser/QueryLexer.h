@@ -71,6 +71,9 @@ public:
 	bool HasAndKeyword();
 	void MatchAndKeyword();
 
+	bool HasBooleanKeyword();
+	void MatchBooleanKeyword();
+
 	bool HasMoreTokens();
 
 	bool HasQuotationMarks();

@@ -78,6 +78,20 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
+		TEST_METHOD(Valid_MultipleDeclaration_SelectBoolean)
+		{
+			const std::string query_ = "variable v, v1  ,  v2; Select BOOLEAN";
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->IsBoolean());
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
 		TEST_METHOD(TestValidBasicLineNumberSuchThatUses) {
 
 			const std::string query_ = "variable V; Select V such that Uses(3,V)";

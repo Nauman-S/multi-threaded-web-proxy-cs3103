@@ -8,7 +8,7 @@ void QueryLexer::InitializeKeywords() {
 		"Next", "Next*", "Calls", "Calls*", "Affects", "Affects*"});
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
-	this->keywords_.insert({ "Select", "such", "that" });
+	this->keywords_.insert({ "Select", "such", "that", "BOOLEAN"});
 	this->delimiters_.insert({ ';',',','(',')','\"', '<', '>'});
 	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
@@ -227,9 +227,23 @@ bool QueryLexer::HasAndKeyword() {
 
 void QueryLexer::MatchAndKeyword() {
 	if (!HasAndKeyword()) throw SyntaxError(GenerateErrorMessage("and", tokenizer_->getTokenSval().value_or("INTEGER")));
-
 	this->tokenizer_->nextToken();
 }
+
+
+bool QueryLexer::HasBooleanKeyword() {
+	if (!this->tokenizer_->getToken().type_ == TokenType::kName) {
+		return false;
+	}
+	std::string sval_ = tokenizer_->getTokenSval().value();
+	return sval_.compare("BOOLEAN") == 0;
+}
+
+void QueryLexer::MatchBooleanKeyword() {
+	if (!HasBooleanKeyword()) throw SyntaxError(GenerateErrorMessage("BOOLEAN", tokenizer_->getTokenSval().value_or("INTEGER")));
+	this->tokenizer_->nextToken();
+}
+
 
 bool QueryLexer::HasMoreTokens() {
 	return this->tokenizer_->getToken().type_ != TokenType::kParseEnd;

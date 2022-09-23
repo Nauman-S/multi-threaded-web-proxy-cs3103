@@ -110,43 +110,48 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	lexer_->MatchKeyword("Select");
-	shared_ptr<vector<shared_ptr<Ref>>> select_tuple_ = ParseReturnValues();
+	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = ParseReturnValues();
 
-	std::vector<shared_ptr<Rel>> relations_;
-	std::vector<shared_ptr<Pattern>> patterns_;
+	shared_ptr<vector<shared_ptr<Rel>>> relations = std::make_shared<vector<shared_ptr<Rel>>>();
+	shared_ptr<vector<shared_ptr<Pattern>>> patterns = std::make_shared<vector<shared_ptr<Pattern>>>();
 	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords()) {
 			
 		if (lexer_->HasPatternKeyword()) {
-			std::vector<shared_ptr<Pattern>> patterns = ParsePatterns();
-			patterns_.insert(patterns_.end(), patterns.begin(), patterns.end());
+			std::vector<shared_ptr<Pattern>> curr_patterns = ParsePatterns();
+			patterns->insert(patterns->end(), curr_patterns.begin(), curr_patterns.end());
 
 		}
 		else if (lexer_->HasSuchThatKeywords()) {
-			std::vector<shared_ptr<Rel>> relations = ParseRelations();
+			std::vector<shared_ptr<Rel>> curr_relations = ParseRelations();
 			// append new relations to the end of all relations
-			relations_.insert(relations_.end(), relations.begin(), relations.end());
+			relations->insert(relations->end(), curr_relations.begin(), curr_relations.end());
 		}
 	}
-		
 
 	if (this->lexer_->HasMoreTokens()) {
 		throw SyntaxError("Unexpected token at end of query");
 	}
 
 
-	std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
-	for (shared_ptr<Rel> rel_ : relations_) {
-		std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
-		relations_s_->push_back(rel_s_);
-	}
+	//std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
+	//for (shared_ptr<Rel> rel_ : relations) {
+	//	std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
+	//	relations_s_->push_back(rel_s_);
+	//}
 
-	std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
-	for (shared_ptr<Pattern> pattern_ : patterns_) {
-		std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
-		patterns_s_->push_back(pattern_s_);
-	}
+	//std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
+	//for (shared_ptr<Pattern> pattern_ : patterns) {
+	//	std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
+	//	patterns_s_->push_back(pattern_s_);
+	//}
 
-	shared_ptr<Query> query = shared_ptr<Query>(new Query(select_tuple_, relations_s_, patterns_s_));
+	shared_ptr<Query> query;
+	if (select_tuple->size() == 0) {
+		query = shared_ptr<Query>(new Query(relations, patterns));
+	}
+	else {
+		query = shared_ptr<Query>(new Query(select_tuple, relations, patterns));
+	}
 	return query;
 
 }
@@ -154,8 +159,11 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = shared_ptr<vector<shared_ptr<Ref>>>(new vector<shared_ptr<Ref>>());
 	std::string syn_name;
-
-	if (lexer_->HasIdentity()) {
+	if (lexer_->HasBooleanKeyword()) {
+		lexer_->MatchBooleanKeyword();
+		return select_tuple;
+	}
+	else if (lexer_->HasIdentity()) {
 		syn_name = lexer_->MatchIdentity();
 		select_tuple->push_back(GetDeclaredSyn(syn_name));
 	}
