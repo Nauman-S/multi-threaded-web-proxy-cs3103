@@ -103,61 +103,51 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
+	lexer_->MatchKeyword("Select");
+	std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
 
-	if (this->lexer_->HasKeyword("Select")) {
-		this->lexer_->MatchKeyword("Select");
-		std::vector<shared_ptr<Ref>> select_tuple_ = ParseReturnValues();
-
-		std::vector<shared_ptr<Rel>> relations_;
-		std::vector<shared_ptr<Pattern>> patterns_;
-		while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords()) {
+	std::vector<shared_ptr<Rel>> relations_;
+	std::vector<shared_ptr<Pattern>> patterns_;
+	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords()) {
 			
-			if (lexer_->HasPatternKeyword()) {
-				std::vector<shared_ptr<Pattern>> patterns = ParsePatterns();
-				patterns_.insert(patterns_.end(), patterns.begin(), patterns.end());
+		if (lexer_->HasPatternKeyword()) {
+			std::vector<shared_ptr<Pattern>> patterns = ParsePatterns();
+			patterns_.insert(patterns_.end(), patterns.begin(), patterns.end());
 
-			}
-			else if (lexer_->HasSuchThatKeywords()) {
-				std::vector<shared_ptr<Rel>> relations = ParseRelations();
-				// append new relations to the end of all relations
-				relations_.insert(relations_.end(), relations.begin(), relations.end());
-			}
 		}
+		else if (lexer_->HasSuchThatKeywords()) {
+			std::vector<shared_ptr<Rel>> relations = ParseRelations();
+			// append new relations to the end of all relations
+			relations_.insert(relations_.end(), relations.begin(), relations.end());
+		}
+	}
 		
-		//
-		//if (lexer_->HasPatternKeyword()) {
-		//	std::vector<shared_ptr<Pattern>> patterns_ = ParsePatterns();
-		//}
-		//
 
-		if (this->lexer_->HasMoreTokens()) {
-			throw SyntaxError("Unexpected token at end of query");
-		}
-
-		std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple_s_ = std::make_shared<std::vector<std::shared_ptr<Ref>>>();
-		for (shared_ptr<Ref> ref_ : select_tuple_) {
-			std::shared_ptr <Ref> ref_s_ = std::shared_ptr<Ref>(ref_);
-			select_tuple_s_->push_back(ref_s_);
-		}
-
-		std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
-		for (shared_ptr<Rel> rel_ : relations_) {
-			std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
-			relations_s_->push_back(rel_s_);
-		}
-
-		std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
-		for (shared_ptr<Pattern> pattern_ : patterns_) {
-			std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
-			patterns_s_->push_back(pattern_s_);
-		}
-
-		shared_ptr<Query> query = shared_ptr<Query>(new Query(select_tuple_s_, relations_s_, patterns_s_));
-		return query;
+	if (this->lexer_->HasMoreTokens()) {
+		throw SyntaxError("Unexpected token at end of query");
 	}
-	else {
-		throw SyntaxError("Select Statment - Missing (select) keyword");
+
+	std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple_s_ = std::make_shared<std::vector<std::shared_ptr<Ref>>>();
+	for (shared_ptr<Ref> ref_ : select_tuple_) {
+		std::shared_ptr <Ref> ref_s_ = std::shared_ptr<Ref>(ref_);
+		select_tuple_s_->push_back(ref_s_);
 	}
+
+	std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
+	for (shared_ptr<Rel> rel_ : relations_) {
+		std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
+		relations_s_->push_back(rel_s_);
+	}
+
+	std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
+	for (shared_ptr<Pattern> pattern_ : patterns_) {
+		std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
+		patterns_s_->push_back(pattern_s_);
+	}
+
+	shared_ptr<Query> query = shared_ptr<Query>(new Query(select_tuple_s_, relations_s_, patterns_s_));
+	return query;
+
 }
 
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseReturnValues() {
@@ -464,20 +454,37 @@ std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 }
 
 shared_ptr<Pattern> QueryBuilder::ParsePattern() {
+	shared_ptr<Pattern> pattern;
+
 	string syn_name = lexer_->MatchIdentity();
 
 	lexer_->MatchOpeningBrace();
+
+	// call GetDeclaredSyn() after MatchOpeningBrace to detect syntax error first
+	shared_ptr<Ref> synonym = GetDeclaredSyn(syn_name);
+	RefType ref_type = synonym->GetRefType();
+
 	shared_ptr<VarRef> var_ref = GetNextVarRef();
 	lexer_->MatchCommaDelimeter();
-	shared_ptr<ExprSpec> expression = GetNextExpression();
-	lexer_->MatchClosingBrace();
-
-	shared_ptr<Ref> synonym = GetDeclaredSyn(syn_name);
-
-	if (synonym->GetRefType() != RefType::kAssignRef) {
-		throw SemanticError("The synonym in Pattern must be an assign synonym");
+	if (ref_type == RefType::kAssignRef) {
+		shared_ptr<ExprSpec> expression = GetNextExpression();
+		pattern = shared_ptr<AssignPattern>(new AssignPattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
 	}
-	shared_ptr<Pattern> pattern = shared_ptr<AssignPattern>(new AssignPattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
+	else if (ref_type == RefType::kIfRef) {
+		lexer_->MatchUnderScore();
+		lexer_->MatchCommaDelimeter();
+		lexer_->MatchUnderScore();
+		pattern = shared_ptr<IfPattern>(new IfPattern(std::dynamic_pointer_cast<IfRef>(synonym), var_ref));
+	}
+	else if (ref_type == RefType::kWhileRef) {
+		lexer_->MatchUnderScore();
+		pattern = shared_ptr<WhilePattern>(new WhilePattern(std::dynamic_pointer_cast<WhileRef>(synonym), var_ref));
+	}
+	else {
+		throw SemanticError("The synonym in Pattern must be an assign or if or while synonym");
+	}
+
+	lexer_->MatchClosingBrace();
 
 	return pattern;
 }
@@ -491,7 +498,6 @@ shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
 		if (lexer_->HasClosingBrace()) {
 			return shared_ptr<ExprSpec>(new WildcardExprSpec());
 		}
-		
 	}
 	
 	lexer_->MatchQuotationMarks();

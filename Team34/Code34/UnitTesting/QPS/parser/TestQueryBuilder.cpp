@@ -737,5 +737,32 @@ namespace UnitTesting
 			}
 			Assert::IsTrue(syntax_error_thrown);
 		};
+
+		TEST_METHOD(Valid_BasicIfPattern) {
+			const std::string query_ = "variable v; if ifs ; Select v pattern ifs(v, _, _)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtRefType() == RefType::kIfRef);
+		};
+
+		TEST_METHOD(Valid_BasicWhilePattern) {
+			const std::string query_ = "variable v; while w ; Select v pattern w(v, _)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 1);
+			Assert::IsTrue(query->GetPatterns()->at(0)->StmtRefType() == RefType::kWhileRef);
+		};
+
 	};
 }
