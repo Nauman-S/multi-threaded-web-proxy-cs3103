@@ -49,6 +49,7 @@ private:
 	string GetExpression();
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
+	shared_ptr<Rel> QueryBuilder::ParseRelation();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);
 	shared_ptr<Rel> ParseUsesRel();
 	shared_ptr<Rel> ParseModifiesRel();
@@ -62,6 +63,7 @@ private:
 	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetParentOrFollowsSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
+	shared_ptr<Pattern> QueryBuilder::ParsePattern();
 
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 

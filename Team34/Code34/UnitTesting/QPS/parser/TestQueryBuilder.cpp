@@ -17,8 +17,6 @@ namespace UnitTesting
 	private:
 		shared_ptr<QueryBuilder> query_builder_ = shared_ptr<QueryBuilder>(new QueryBuilder());
 	public:
-
-
 		TEST_METHOD(TestValidSelectAllVariableQuery)
 		{
 			const std::string query_ = "variable V; Select V";
@@ -663,5 +661,81 @@ namespace UnitTesting
 			Assert::IsTrue(semantic_error_thrown);
 		};
 
+		TEST_METHOD(Valid_MultipleSuchthat_UsingAnd) {
+			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) and Parent* (_,_)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 2);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+
+		};
+
+		TEST_METHOD(Valid_MultipleSuchthat_UsingSuchthat) {
+			const std::string query_ = "assign a; variable haha; Select haha such that Parent* (_,_) such that Parent* (_,_)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 2);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+
+		};
+
+		TEST_METHOD(Valid_MultiplePattern_UsingAnd) {
+			const std::string query_ = "assign a, a1; variable haha; Select haha pattern a(_, _) and a1(_, _)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 2);
+		};
+
+		TEST_METHOD(Valid_MultiplePattern_UsingPattern) {
+			const std::string query_ = "assign a, a1; variable haha; Select haha pattern a(_, _) pattern a1(_, _)";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 2);
+		};
+
+		TEST_METHOD(Invalid_MultiplePattern_UsingAndAndPattern) {
+			const std::string query_ = "assign a, a1; variable haha; Select haha pattern a(_, _) and pattern a1(_, _)";
+
+			bool syntax_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntax_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntax_error_thrown);
+		};
 	};
 }

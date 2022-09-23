@@ -62,6 +62,9 @@ public:
 	bool HasPatternKeyword();
 	std::string MatchPatternKeyword();
 
+	bool HasAndKeyword();
+	std::string MatchAndKeyword();
+
 	bool HasMoreTokens();
 
 	bool HasQuotationMarks();
