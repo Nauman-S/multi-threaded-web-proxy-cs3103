@@ -11,7 +11,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	TEST_CLASS(TestPatternManager)
+	TEST_CLASS(TestAssignPatternManager)
 	{
 	private:
 		AssignPatternManager assign_pattern_manager_;
