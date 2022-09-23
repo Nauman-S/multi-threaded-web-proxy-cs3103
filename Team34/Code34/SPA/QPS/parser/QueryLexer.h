@@ -56,8 +56,8 @@ public:
 	bool HasRightAngle();
 	void MatchRightAngle();
 
-	bool HasCommaDelimeter();
-	std::string MatchCommaDelimeter();
+	bool HasComma();
+	std::string MatchComma();
 
 	bool HasInteger();
 	int MatchInteger();

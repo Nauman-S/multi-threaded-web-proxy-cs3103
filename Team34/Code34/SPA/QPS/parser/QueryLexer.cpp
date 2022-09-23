@@ -121,7 +121,7 @@ void QueryLexer::MatchRightBrace() {
 }
 
 bool QueryLexer::HasLeftAngle() {
-	return this->tokenizer_->getToken().type_ == TokenType::kLeftAngle;
+	return this->tokenizer_->getToken().type_ == TokenType::kLesser;
 }
 
 void QueryLexer::MatchLeftAngle() {
@@ -130,7 +130,7 @@ void QueryLexer::MatchLeftAngle() {
 }
 
 bool QueryLexer::HasRightAngle() {
-	return this->tokenizer_->getToken().type_ == TokenType::kRightAngle;
+	return this->tokenizer_->getToken().type_ == TokenType::kGreater;
 }
 
 void QueryLexer::MatchRightAngle() {
@@ -156,12 +156,12 @@ void QueryLexer::MatchQuotationMarks() {
 	this->tokenizer_->nextToken();
 }
 
-bool QueryLexer::HasCommaDelimeter() {
+bool QueryLexer::HasComma() {
 	return this->tokenizer_->getToken().type_ == TokenType::kComma;
 }
 
-std::string QueryLexer::MatchCommaDelimeter() {
-	if (!HasCommaDelimeter()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
+std::string QueryLexer::MatchComma() {
+	if (!HasComma()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return ",";
 }

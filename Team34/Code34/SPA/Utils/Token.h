@@ -25,8 +25,6 @@ enum TokenType {
     // Structural delimiters
     kLeftRound,
     kRightRound,
-    kLeftAngle,
-    kRightAngle,
     kLeftCurly,
     kRightCurly,
     kSemiColon,

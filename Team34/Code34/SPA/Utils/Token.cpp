@@ -31,8 +31,6 @@ const map<char, TokenType> Token::allowed_special_char_{
     // Structural delimiters
     {'(', kLeftRound},
     {')', kRightRound},
-    {'<', kLeftAngle},
-    {'>', kRightAngle},
     {'{', kLeftCurly},
     {'}', kRightCurly},
     {';', kSemiColon},

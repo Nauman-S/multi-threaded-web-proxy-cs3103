@@ -57,6 +57,27 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
+		TEST_METHOD(Valid_MultipleDeclaration_MultipleSelect)
+		{
+			const std::string query_ = "variable v, v1  ,  v2; Select <v, v1,  v2>";
+			const std::string var = "v";
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Assert::IsTrue(query->);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 3);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query->GetSelectTuple()->at(0)->GetName(), var);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
 		TEST_METHOD(TestValidBasicLineNumberSuchThatUses) {
 
 			const std::string query_ = "variable V; Select V such that Uses(3,V)";
