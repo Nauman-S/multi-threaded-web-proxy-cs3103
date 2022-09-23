@@ -39,12 +39,12 @@ private:
 	std::vector<shared_ptr<Ref>> ParseReturnValues();
 
 
-	shared_ptr<StmtRef> GetNextStmtRef();
-	shared_ptr<ProcRef> GetNextProcRef();
-	shared_ptr<VarRef> GetNextVarRef();
-	shared_ptr<ExprSpec> GetNextExpression();
+	shared_ptr<StmtRef> ParseStmtRef();
+	shared_ptr<ProcRef> ParseProcRef();
+	shared_ptr<VarRef> ParseVarRef();
+	shared_ptr<ExprSpec> ParseExpression();
 
-	string GetExpression();
+	string GetExpressionStr();
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> QueryBuilder::ParseRelation();
@@ -55,10 +55,16 @@ private:
 	shared_ptr<Rel> ParseFollowsTRel();
 	shared_ptr<Rel> ParseParentRel();
 	shared_ptr<Rel> ParseParentTRel();
-	
+	shared_ptr<Rel> ParseNextRel();
+	shared_ptr<Rel> ParseNextTRel();
+	shared_ptr<Rel> ParseAffectsRel();
+	shared_ptr<Rel> ParseAffectsTRel();
+	shared_ptr<Rel> ParseCallsRel();
+	shared_ptr<Rel> ParseCallsTRel();
 
 	std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> GetModifiesOrUsesSyns();
-	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetParentOrFollowsSyns();
+	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetStmtStmtSyns();
+	std::pair<shared_ptr<ProcRef>, shared_ptr<ProcRef>> GetProcProcSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
 	shared_ptr<Pattern> QueryBuilder::ParsePattern();
