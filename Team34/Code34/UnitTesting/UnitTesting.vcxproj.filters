@@ -47,9 +47,14 @@
     <ClCompile Include="TestFollowsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QPS\TestDataRetriever.cpp">
+	<ClCompile Include="QPS\TestDataRetriever.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
 	<ClCompile Include="TestFollowsManager.cpp">
-		<Filter>Source Files</Filter>
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+	<ClCompile Include="TestCallsManager.cpp">
+	  <Filter>Source Files</Filter>
 	</ClCompile>
     <ClCompile Include="TestStatementManager.cpp">
       <Filter>Source Files</Filter>
