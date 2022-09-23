@@ -201,10 +201,32 @@ std::string QueryLexer::MatchPatternKeyword() {
 	return "pattern";
 }
 
+bool QueryLexer::HasAndKeyword() {
+	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
+		std::string sval_ = this->tokenizer_->getTokenSval().value();
+		return sval_.compare("and") == 0;
+	}
+	return false;
+}
+
+void QueryLexer::MatchAndKeyword() {
+	if (!HasAndKeyword()) throw SyntaxError(GenerateErrorMessage("and", tokenizer_->getTokenSval().value_or("INTEGER")));
+
+	this->tokenizer_->nextToken();
+}
+
 bool QueryLexer::HasMoreTokens() {
 	return this->tokenizer_->getToken().type_ != TokenType::kParseEnd;
 }
 
+bool QueryLexer::HasSuchThatKeywords() {
+	return HasKeyword("such") && (PeekNextToken(1) == "that");
+}
+
+void QueryLexer::MatchSuchThatKeywords() {
+	MatchKeyword("such");
+	MatchKeyword("that");
+}
 
 string QueryLexer::GenerateErrorMessage(string expected, string actual) {
 	return "Expected Token: " + expected + " ; Actual Token: " + actual;
