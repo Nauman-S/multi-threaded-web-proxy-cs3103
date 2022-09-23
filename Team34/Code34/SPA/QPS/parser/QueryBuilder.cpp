@@ -24,6 +24,10 @@
 #include "..\relation\ParentTRel.h"
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
+#include "../pattern/Pattern.h"
+#include "../pattern/AssignPattern.h"
+#include "../pattern/IfPattern.h"
+#include "../pattern/WhilePattern.h"
 
 using std::shared_ptr;
 
@@ -508,7 +512,7 @@ std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
 	shared_ptr<ExprSpec> expression = GetNextExpression();
 	lexer_->MatchClosingBrace();
 
-	shared_ptr<Pattern> pattern = shared_ptr<Pattern>(new Pattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
+	shared_ptr<Pattern> pattern = shared_ptr<AssignPattern>(new AssignPattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
 	patterns.push_back(pattern);
 
 	return patterns;
