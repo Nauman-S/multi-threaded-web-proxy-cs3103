@@ -93,6 +93,7 @@
     <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="QPS\pattern\IfPattern.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
+    <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -219,5 +220,6 @@
     <ClInclude Include="QPS\pattern\PatternType.h" />
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
+    <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
   </ItemGroup>
 </Project>
