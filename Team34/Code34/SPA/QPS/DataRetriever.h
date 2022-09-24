@@ -25,6 +25,7 @@ class Pattern;
 class AssignPattern;
 class IfPattern;
 class WhilePattern;
+class With;
 
 
 class DataRetriever
@@ -110,4 +111,6 @@ public:
 	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
 
 	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
+
+	std::shared_ptr<ResWrapper> retrieve(With& with);
 };
