@@ -44,14 +44,20 @@ public:
 	std::string MatchReferenceKeyword();
 
 
-	bool HasOpeningBrace();
-	std::string MatchOpeningBrace();
+	bool HasLeftBrace();
+	void MatchLeftBrace();
 
-	bool HasClosingBrace();
-	std::string MatchClosingBrace();
+	bool HasRightBrace();
+	void MatchRightBrace();
 
-	bool HasCommaDelimeter();
-	std::string MatchCommaDelimeter();
+	bool HasLeftAngle();
+	void MatchLeftAngle();
+
+	bool HasRightAngle();
+	void MatchRightAngle();
+
+	bool HasComma();
+	std::string MatchComma();
 
 	bool HasInteger();
 	int MatchInteger();
@@ -64,6 +70,9 @@ public:
 
 	bool HasAndKeyword();
 	void MatchAndKeyword();
+
+	bool HasBooleanKeyword();
+	void MatchBooleanKeyword();
 
 	bool HasMoreTokens();
 
