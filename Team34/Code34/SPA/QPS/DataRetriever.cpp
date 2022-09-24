@@ -234,6 +234,121 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& 
     return res;
 }
 
+bool DataRetriever::CheckPPRel(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    string lhs_proc_name = rel.LhsValue();
+    string rhs_proc_name = rel.RhsValue();
+    bool res = false;
+    if (type == RelType::kCallsRel) {
+        res = pkb_ptr_->CheckCalls(lhs_proc_name, rhs_proc_name);
+    }
+    else if (type == RelType::kCallsTRel) {
+        res = pkb_ptr_->CheckCallsT(lhs_proc_name, rhs_proc_name);
+    }
+
+    return res;
+}
+
+bool DataRetriever::CheckPPRelExistence(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    bool is_empty = pkb_ptr_->IsCallsStoreEmpty();
+
+    return !is_empty;
+}
+
+bool DataRetriever::CheckPPRelExistenceByRhsProc(ProcProcRel& rel)
+{
+    auto lhs_proc_set = GetLhsProcByRhsProc(rel);
+
+    return !(lhs_proc_set->empty());
+}
+
+bool DataRetriever::CheckPPRelExistenceByLhsProc(ProcProcRel& rel)
+{
+    auto rhs_proc_set = GetRhsProcByLhsProc(rel);
+
+    return !(rhs_proc_set->empty());
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetRhsProcByLhsProc(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+
+    string lhs_proc_name = rel.LhsValue();
+    shared_ptr<unordered_set<string>> set;
+    if (type == RelType::kCallsRel) {
+        set = pkb_ptr_->GetCalleeFromCaller(lhs_proc_name);
+    }
+    else if (type == RelType::kCallsTRel) {
+        set = pkb_ptr_->GetAllCalleeFromCaller(lhs_proc_name);
+    }
+
+    return set;
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetRhsProcByWildcard(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    shared_ptr<unordered_set<string>> set;
+    set = pkb_ptr_->GetAllCallees();
+
+    return set;
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetLhsProcByRhsProc(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    string rhs_proc_name = rel.RhsValue();
+    shared_ptr<unordered_set<string>> set;
+    if (type == RelType::kCallsRel) {
+        set = pkb_ptr_->GetCallerFromCallee(rhs_proc_name);
+    }
+    else if (type == RelType::kCallsTRel) {
+        set = pkb_ptr_->GetAllCallerFromCallee(rhs_proc_name);
+    }
+
+    return set;
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetLhsProcByWildcard(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    string rhs_proc_name = rel.RhsValue();
+    shared_ptr<unordered_set<string>> set;
+    set = pkb_ptr_->GetAllCallers();
+
+    return set;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::GetAllPPRel(ProcProcRel& rel)
+{
+    RelType type = rel.GetRelType();
+    assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
+
+    shared_ptr<vector<StrPair>> table{ nullptr };
+    if (type == RelType::kCallsRel) {
+        table = pkb_ptr_->GetAllCallsRelations();
+    }
+    else if (type == RelType::kCallsTRel) {
+        table = pkb_ptr_->GetAllCallsTRelations();
+    }
+
+    return table;
+}
+
 bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
@@ -338,7 +453,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     RefType rhs_stmt_type = rel.RhsRefType();
-    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
+    shared_ptr<unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
         int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
@@ -351,6 +466,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         // What if no successor stmt num???
         // rhs_stmt_num will evaluate to 0
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
+        int_set = make_shared<unordered_set<int>>();
         if (rhs_stmt_num != 0) {
             int_set->insert(rhs_stmt_num);
         }
@@ -810,8 +926,56 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
 }
 
 shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
-    // TODO: Implement retrieving logic
-    return shared_ptr<ResWrapper>(new ResWrapper(false));
+
+    auto [lhs_type, rhs_type] = rel.ValTypes();
+
+    shared_ptr<ResWrapper> res;
+
+    if (lhs_type == ValType::kProcName && rhs_type == ValType::kProcName) {
+        bool ok = CheckPPRel(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kProcName) {
+        auto set = GetLhsProcByRhsProc(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.LhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kProcName && rhs_type == ValType::kSynonym) {
+        auto set = GetRhsProcByLhsProc(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
+        auto table = GetAllPPRel(rel);
+        unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(),1} };
+        shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
+        res = make_shared<ResWrapper>(table_res);
+    }
+    // Wildcard hanlding cases below
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kProcName) {
+        auto ok = CheckPPRelExistenceByRhsProc(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kSynonym) {
+        auto set = GetRhsProcByWildcard(rel);
+        shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kProcName && rhs_type == ValType::kWildcard) {
+        auto ok = CheckPPRelExistenceByLhsProc(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+    else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kWildcard) {
+        auto set = GetLhsProcByWildcard(rel);
+        auto set_res = make_shared<SetRes>(rel.LhsValue(), set);
+        res = make_shared<ResWrapper>(set_res);
+    }
+    else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kWildcard) {
+        bool ok = CheckPPRelExistence(rel);
+        res = make_shared<ResWrapper>(ok);
+    }
+
+    return res;
 }
 
 shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {    
