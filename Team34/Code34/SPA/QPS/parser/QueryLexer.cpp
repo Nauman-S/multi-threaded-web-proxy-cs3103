@@ -4,11 +4,12 @@
 #include "../reference/EntityRef.h"
 
 void QueryLexer::InitializeKeywords() {
-	this->relation_keywords_.insert({ "Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies" });
+	this->relation_keywords_.insert({ "Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies", 
+		"Next", "Next*", "Calls", "Calls*", "Affects", "Affects*"});
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
-	this->keywords_.insert({ "Select", "such", "that" });
-	this->delimiters_.insert({ ';',',','(',')','\"' });
+	this->keywords_.insert({ "Select", "such", "that", "BOOLEAN"});
+	this->delimiters_.insert({ ';',',','(',')','\"', '<', '>'});
 	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
 
@@ -100,26 +101,41 @@ std::string QueryLexer::MatchReferenceKeyword() {
 	return sval_;
 }
 
-//conintue below here
 
-bool QueryLexer::HasOpeningBrace() {
+bool QueryLexer::HasLeftBrace() {
 	return this->tokenizer_->getToken().type_ == TokenType::kLeftRound;
 }
 
-std::string QueryLexer::MatchOpeningBrace() {
-	if (!HasOpeningBrace()) throw SyntaxError(GenerateErrorMessage("(", tokenizer_->getTokenSval().value_or("INTEGER")));
-	this->tokenizer_->nextToken();
-	return "(";
+void QueryLexer::MatchLeftBrace() {
+	if (!HasLeftBrace()) throw SyntaxError(GenerateErrorMessage("(", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
 }
 
-bool QueryLexer::HasClosingBrace() {
+bool QueryLexer::HasRightBrace() {
 	return this->tokenizer_->getToken().type_ == TokenType::kRightRound;
 }
 
-std::string QueryLexer::MatchClosingBrace() {
-	if (!HasClosingBrace()) throw SyntaxError(GenerateErrorMessage(")", tokenizer_->getTokenSval().value_or("INTEGER")));
-	this->tokenizer_->nextToken();
-	return ")";
+void QueryLexer::MatchRightBrace() {
+	if (!HasRightBrace()) throw SyntaxError(GenerateErrorMessage(")", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
+bool QueryLexer::HasLeftAngle() {
+	return this->tokenizer_->getToken().type_ == TokenType::kLesser;
+}
+
+void QueryLexer::MatchLeftAngle() {
+	if (!HasLeftAngle()) throw SyntaxError(GenerateErrorMessage("<", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
+bool QueryLexer::HasRightAngle() {
+	return this->tokenizer_->getToken().type_ == TokenType::kGreater;
+}
+
+void QueryLexer::MatchRightAngle() {
+	if (!HasRightAngle()) throw SyntaxError(GenerateErrorMessage(">", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
 }
 
 bool QueryLexer::HasUnderScore() {
@@ -140,12 +156,12 @@ void QueryLexer::MatchQuotationMarks() {
 	this->tokenizer_->nextToken();
 }
 
-bool QueryLexer::HasCommaDelimeter() {
+bool QueryLexer::HasComma() {
 	return this->tokenizer_->getToken().type_ == TokenType::kComma;
 }
 
-std::string QueryLexer::MatchCommaDelimeter() {
-	if (!HasCommaDelimeter()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
+std::string QueryLexer::MatchComma() {
+	if (!HasComma()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
 	this->tokenizer_->nextToken();
 	return ",";
 }
@@ -201,10 +217,46 @@ std::string QueryLexer::MatchPatternKeyword() {
 	return "pattern";
 }
 
+bool QueryLexer::HasAndKeyword() {
+	if (this->tokenizer_->getToken().type_ == TokenType::kName) {
+		std::string sval_ = this->tokenizer_->getTokenSval().value();
+		return sval_.compare("and") == 0;
+	}
+	return false;
+}
+
+void QueryLexer::MatchAndKeyword() {
+	if (!HasAndKeyword()) throw SyntaxError(GenerateErrorMessage("and", tokenizer_->getTokenSval().value_or("INTEGER")));
+	this->tokenizer_->nextToken();
+}
+
+
+bool QueryLexer::HasBooleanKeyword() {
+	if (!this->tokenizer_->getToken().type_ == TokenType::kName) {
+		return false;
+	}
+	std::string sval_ = tokenizer_->getTokenSval().value();
+	return sval_.compare("BOOLEAN") == 0;
+}
+
+void QueryLexer::MatchBooleanKeyword() {
+	if (!HasBooleanKeyword()) throw SyntaxError(GenerateErrorMessage("BOOLEAN", tokenizer_->getTokenSval().value_or("INTEGER")));
+	this->tokenizer_->nextToken();
+}
+
+
 bool QueryLexer::HasMoreTokens() {
 	return this->tokenizer_->getToken().type_ != TokenType::kParseEnd;
 }
 
+bool QueryLexer::HasSuchThatKeywords() {
+	return HasKeyword("such") && (PeekNextToken(1) == "that");
+}
+
+void QueryLexer::MatchSuchThatKeywords() {
+	MatchKeyword("such");
+	MatchKeyword("that");
+}
 
 string QueryLexer::GenerateErrorMessage(string expected, string actual) {
 	return "Expected Token: " + expected + " ; Actual Token: " + actual;

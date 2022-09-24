@@ -26,29 +26,26 @@ class QueryBuilder
 private:
 	shared_ptr<QueryLexer> lexer_;
 	vector<shared_ptr<Ref>> synonyms_;
-	std::vector<shared_ptr<Rel>> relations_;
+	//std::vector<shared_ptr<Rel>> relations_;
 
 	std::unordered_set<RefType> stmt_ref_types = std::unordered_set<RefType>({ RefType::kAssignRef, RefType::kCallRef, RefType::kIfRef, RefType::kPrintRef, RefType::kReadRef, RefType::kWhileRef });
-
-
 
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
 
 	shared_ptr<Query> ParseSelectStatement();	
-	std::vector<shared_ptr<Ref>> ParseReturnValues();
+	std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();
 
 
-	bool HasSuchThatClause();
+	shared_ptr<StmtRef> ParseStmtRef();
+	shared_ptr<ProcRef> ParseProcRef();
+	shared_ptr<VarRef> ParseVarRef();
+	shared_ptr<ExprSpec> ParseExpression();
 
-	shared_ptr<StmtRef> GetNextStmtRef();
-	shared_ptr<ProcRef> GetNextProcRef();
-	shared_ptr<VarRef> GetNextVarRef();
-	shared_ptr<ExprSpec> GetNextExpression();
-
-	string GetExpression();
+	string GetExpressionStr();
 
 	std::vector< shared_ptr<Rel>> ParseRelations();
+	shared_ptr<Rel> QueryBuilder::ParseRelation();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);
 	shared_ptr<Rel> ParseUsesRel();
 	shared_ptr<Rel> ParseModifiesRel();
@@ -56,17 +53,25 @@ private:
 	shared_ptr<Rel> ParseFollowsTRel();
 	shared_ptr<Rel> ParseParentRel();
 	shared_ptr<Rel> ParseParentTRel();
-	
+	shared_ptr<Rel> ParseNextRel();
+	shared_ptr<Rel> ParseNextTRel();
+	shared_ptr<Rel> ParseAffectsRel();
+	shared_ptr<Rel> ParseAffectsTRel();
+	shared_ptr<Rel> ParseCallsRel();
+	shared_ptr<Rel> ParseCallsTRel();
 
 	std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> GetModifiesOrUsesSyns();
-	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetParentOrFollowsSyns();
+	std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> GetStmtStmtSyns();
+	std::pair<shared_ptr<ProcRef>, shared_ptr<ProcRef>> GetProcProcSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
+	shared_ptr<Pattern> ParsePattern();
 
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType ref_type);
+
 
 public:
 

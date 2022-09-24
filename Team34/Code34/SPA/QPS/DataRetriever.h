@@ -49,6 +49,18 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetProcByWildcard(ProcVarRel& rel);				// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPVRel(ProcVarRel& rel);		// (synonym, synonym)
 
+	// Proc-Proc relations
+	bool CheckPPRel(ProcProcRel& rel);																	// (proc_name, proc_name)
+	bool CheckPPRelExistence(ProcProcRel& rel);															// (wildcard, wildcard)
+	bool CheckPPRelExistenceByRhsProc(ProcProcRel& rel);												// (wildcard, proc_name)
+	bool CheckPPRelExistenceByLhsProc(ProcProcRel& rel);												// (proc_name, wildcard)
+	std::shared_ptr<std::unordered_set<std::string>> GetRhsProcByLhsProc(ProcProcRel& rel);				// (proc_name, synonym)
+	std::shared_ptr<std::unordered_set<std::string>> GetRhsProcByWildcard(ProcProcRel& rel);			// (wildcard, synonym)
+	std::shared_ptr<std::unordered_set<std::string>> GetLhsProcByRhsProc(ProcProcRel& rel);				// (synonym, proc_name)
+	std::shared_ptr<std::unordered_set<std::string>> GetLhsProcByWildcard(ProcProcRel& rel);			// (synonym, wildcard)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPPRel(ProcProcRel& rel);	// (synonym, synonym)
+
+
 	// Stmt-Stmt relations
 	bool CheckSSRel(StmtStmtRel& rel);																	// (stmt_num, stmt_num)
 	bool CheckSSRelExistence(StmtStmtRel& rel);															// (wildcard, wildcard)
