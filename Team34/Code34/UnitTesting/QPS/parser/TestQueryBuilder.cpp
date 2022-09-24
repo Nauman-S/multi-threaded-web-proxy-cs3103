@@ -127,7 +127,7 @@ namespace UnitTesting
 			}
 			Assert::IsTrue(syntax_error_thrown);
 		};
-		TEST_METHOD(TestValidBasicVariableProcedureNameSuchThatUses) {
+		TEST_METHOD(Valid_BasicVariable_ProcedureName_SuchThatUses) {
 
 			const std::string query_ = "variable VAR12; Select VAR12 such that Uses(\"MAIN\", VAR12)";
 			const std::string var_ = "VAR12";
@@ -156,7 +156,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicProcedureSynonymSuchThatModifies) {
+		TEST_METHOD(Valid_BasicProcedureSynonym_SuchThatModifies) {
 
 			const std::string query_ = "procedure P; Select P such that Modifies(P,\"X\")";
 			const std::string proc_ = "P";
@@ -185,7 +185,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicWhileSynonymSuchThatModifiesWildCard) {
+		TEST_METHOD(Valid_BasicWhileSynonym_SuchThatModifiesWildCard) {
 
 			const std::string query_ = "while W; Select W such that Modifies(W,_)";
 			const std::string while_ = "W";
@@ -214,7 +214,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicPrintSynonymSuchThatFollows) {
+		TEST_METHOD(Valid_BasicPrintSynonym_SuchThatFollows) {
 
 			const std::string query_ = "print p;\n\n\n    Select       \n  p such that Follows     (23,45)";
 			const std::string print_ = "p";
@@ -243,7 +243,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicCallSynonymSuchThatFollowsT) {
+		TEST_METHOD(Valid_BasicCall_SynonymSuchThatFollowsT) {
 
 			const std::string query_ = "call c, c1; Select c1 such that Follows* (c, 13)";
 			const std::string call_ = "c1";
@@ -272,8 +272,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicReadSynonymSuchThatFollowsTWildCard) {
-
+		TEST_METHOD(Valid_BasicReadSynonym_SuchThatFollowsTWildCard) {
 			const std::string query_ = "read Read57; Select Read57 such that Follows* ( _,   Read57)  ";
 			const std::string read_ = "Read57";
 			std::string lhs_value_ = "";
@@ -302,7 +301,7 @@ namespace UnitTesting
 		};
 
 
-		TEST_METHOD(TestValidBasicWhileSynonymSuchThatParentWildCard) {
+		TEST_METHOD(Valid_BasicWhileSynonym_SuchThatParentWildCard) {
 
 			const std::string query_ = "while w; Select w such that Parent (w,_)  ";
 			const std::string while_ = "w";
@@ -331,8 +330,7 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
-		TEST_METHOD(TestValidBasicVariableSynonymSuchThatParentTWildCard) {
-
+		TEST_METHOD(Valid_BasicVariableSynonym_SuchThatParentTWildCard) {
 			const std::string query_ = "variable v; Select v such that Parent* (_,_)  ";
 			const std::string variable_ = "v";
 			std::string lhs_value_ = "";
@@ -360,6 +358,109 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->size() == 0);
 		};
 
+		TEST_METHOD(Valid_BasicNextRel) {
+			const std::string query_ = "stmt s1, s2; Select s1 such that Next (s1,s2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kNextRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
+		TEST_METHOD(Valid_BasicNextTRel) {
+			const std::string query_ = "stmt s1; stmt s2; Select s1 such that Next*(s1,s2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kNextTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
+
+		TEST_METHOD(Valid_BasicAffectsRel) {
+			const std::string query_ = "stmt s1, s2; Select s1 such that Affects(s1,s2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kAffectsRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
+		TEST_METHOD(Valid_BasicAffectsTRel) {
+			const std::string query_ = "stmt s1, s2; Select s1 such that Affects*(s1,s2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kAffectsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
+		TEST_METHOD(Valid_BasicCallsRel) {
+			const std::string query_ = "procedure p1, p2; Select p1 such that Calls(p1, p2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
+
+		TEST_METHOD(Valid_BasicCallsTRel) {
+			const std::string query_ = "procedure p1, p2; Select p1 such that Calls*(p1, p2)  ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 1);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kCallsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
+			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
+
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+		};
 		TEST_METHOD(SyntaxError_WrongRelationshipName) {
 			const std::string query_ = "assign a; variable haha; select a such that ParentT (_,_) pattern a(\"v\", \" (x + y) * z + p \")";
 			bool syntax_error_thrown = false;

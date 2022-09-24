@@ -24,6 +24,12 @@
 #include "..\relation\ParentTRel.h"
 #include "..\relation\UsesSRel.h"
 #include "..\relation\UsesPRel.h"
+#include "..\relation\NextRel.h"
+#include "..\relation\NextTRel.h"
+#include "..\relation\AffectsRel.h"
+#include "..\relation\AffectsTRel.h"
+#include "..\relation\CallsRel.h"
+#include "..\relation\CallsTRel.h"
 #include "../pattern/Pattern.h"
 #include "../pattern/AssignPattern.h"
 #include "../pattern/IfPattern.h"
@@ -223,6 +229,24 @@ shared_ptr<Rel> QueryBuilder::ParseRelRefClause(std::string relation_name) {
 	else if (relation_name == "Modifies") {
 		return ParseModifiesRel();
 	}
+	else if (relation_name == "Next") {
+		return ParseNextRel();
+	}
+	else if (relation_name == "Next*") {
+		return ParseNextTRel();
+	}
+	else if (relation_name == "Affects") {
+		return ParseAffectsRel();
+	} 
+	else if (relation_name == "Affects*") {
+		return ParseAffectsTRel();
+	}
+	else if (relation_name == "Calls") {
+		return ParseCallsRel();
+	}
+	else if (relation_name == "Calls*") {
+		return ParseCallsTRel();
+	}
 	else {
 		throw SyntaxError("Select statement - [suchthatcl] - unidentifiable relRef: " + relation_name);
 	}
@@ -251,25 +275,54 @@ shared_ptr<Rel> QueryBuilder::ParseModifiesRel() {
 }
 
 shared_ptr<Rel> QueryBuilder::ParseFollowsRel() {
-	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
 	return shared_ptr<Rel>(new FollowsRel(lhs_syn, rhs_syn));
 }
 
 shared_ptr<Rel> QueryBuilder::ParseFollowsTRel() {
-	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
 	return shared_ptr<Rel>(new FollowsTRel(lhs_syn, rhs_syn));
 }
 
 shared_ptr<Rel> QueryBuilder::ParseParentRel() {
-	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
 	return shared_ptr<Rel>(new ParentRel(lhs_syn, rhs_syn));
 }
 
 shared_ptr<Rel> QueryBuilder::ParseParentTRel() {
-	auto [lhs_syn, rhs_syn] = GetParentOrFollowsSyns();
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
 	return shared_ptr<Rel>(new ParentTRel(lhs_syn, rhs_syn));
 }
 
+shared_ptr<Rel> QueryBuilder::ParseNextRel() {
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
+	return shared_ptr<Rel>(new NextRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseNextTRel() {
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
+	return shared_ptr<Rel>(new NextTRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseAffectsRel() {
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
+	return shared_ptr<Rel>(new AffectsRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseAffectsTRel() {
+	auto [lhs_syn, rhs_syn] = GetStmtStmtSyns();
+	return shared_ptr<Rel>(new AffectsTRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseCallsRel() {
+	auto [lhs_syn, rhs_syn] = GetProcProcSyns();
+	return shared_ptr<Rel>(new CallsRel(lhs_syn, rhs_syn));
+}
+
+shared_ptr<Rel> QueryBuilder::ParseCallsTRel() {
+	auto [lhs_syn, rhs_syn] = GetProcProcSyns();
+	return shared_ptr<Rel>(new CallsTRel(lhs_syn, rhs_syn));
+}
 
 std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSyns() {
 	shared_ptr<Ref> lhs_syn;
@@ -289,27 +342,34 @@ std::pair<shared_ptr<Ref>, shared_ptr<VarRef>> QueryBuilder::GetModifiesOrUsesSy
 
 	} 
 	else if (lexer_->HasInteger()) {
-		lhs_syn = GetNextStmtRef();
+		lhs_syn = ParseStmtRef();
 	}
 	else {
-		lhs_syn = GetNextProcRef();
+		lhs_syn = ParseProcRef();
 	}
 
 	lexer_->MatchCommaDelimeter();
 
-	rhs_syn = GetNextVarRef();
+	rhs_syn = ParseVarRef();
 	return { lhs_syn, rhs_syn };
 }
 
-std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> QueryBuilder::GetParentOrFollowsSyns() {
-	shared_ptr<StmtRef> lhs_syn = GetNextStmtRef();
+std::pair<shared_ptr<StmtRef>, shared_ptr<StmtRef>> QueryBuilder::GetStmtStmtSyns() {
+	shared_ptr<StmtRef> lhs_syn = ParseStmtRef();
 	lexer_->MatchCommaDelimeter();
-	shared_ptr<StmtRef>rhs_syn = GetNextStmtRef();
+	shared_ptr<StmtRef> rhs_syn = ParseStmtRef();
+	return { lhs_syn, rhs_syn };
+}
+
+std::pair<shared_ptr<ProcRef>, shared_ptr<ProcRef>> QueryBuilder::GetProcProcSyns() {
+	shared_ptr<ProcRef> lhs_syn = ParseProcRef();
+	lexer_->MatchCommaDelimeter();
+	shared_ptr<ProcRef> rhs_syn = ParseProcRef();
 	return { lhs_syn, rhs_syn };
 }
 
 
-shared_ptr<StmtRef> QueryBuilder::GetNextStmtRef() {
+shared_ptr<StmtRef> QueryBuilder::ParseStmtRef() {
 	shared_ptr<StmtRef> stmt_ref;
 	if (lexer_->HasInteger()) {
 		int line_number = lexer_->MatchInteger();
@@ -329,7 +389,7 @@ shared_ptr<StmtRef> QueryBuilder::GetNextStmtRef() {
 	return stmt_ref;
 };
 
-shared_ptr<ProcRef> QueryBuilder::GetNextProcRef() {
+shared_ptr<ProcRef> QueryBuilder::ParseProcRef() {
 	shared_ptr<ProcRef> proc_ref;
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
@@ -351,7 +411,7 @@ shared_ptr<ProcRef> QueryBuilder::GetNextProcRef() {
 	return proc_ref;
 }
 
-shared_ptr<VarRef> QueryBuilder::GetNextVarRef() {
+shared_ptr<VarRef> QueryBuilder::ParseVarRef() {
 	shared_ptr<VarRef> var_ref;
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
@@ -464,10 +524,10 @@ shared_ptr<Pattern> QueryBuilder::ParsePattern() {
 	shared_ptr<Ref> synonym = GetDeclaredSyn(syn_name);
 	RefType ref_type = synonym->GetRefType();
 
-	shared_ptr<VarRef> var_ref = GetNextVarRef();
+	shared_ptr<VarRef> var_ref = ParseVarRef();
 	lexer_->MatchCommaDelimeter();
 	if (ref_type == RefType::kAssignRef) {
-		shared_ptr<ExprSpec> expression = GetNextExpression();
+		shared_ptr<ExprSpec> expression = ParseExpression();
 		pattern = shared_ptr<AssignPattern>(new AssignPattern(std::dynamic_pointer_cast<AssignRef>(synonym), var_ref, expression));
 	}
 	else if (ref_type == RefType::kIfRef) {
@@ -489,7 +549,7 @@ shared_ptr<Pattern> QueryBuilder::ParsePattern() {
 	return pattern;
 }
 
-shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
+shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
 	bool is_partial_expr = false;
 	if (lexer_->HasUnderScore()) {
 		lexer_->MatchUnderScore();
@@ -502,7 +562,7 @@ shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
 	
 	lexer_->MatchQuotationMarks();
 	
-	string expr_str = GetExpression();
+	string expr_str = GetExpressionStr();
 
 	lexer_->MatchQuotationMarks();
 
@@ -521,7 +581,7 @@ shared_ptr<ExprSpec> QueryBuilder::GetNextExpression() {
 }
 
 
-string QueryBuilder::GetExpression() {
+string QueryBuilder::GetExpressionStr() {
 	string expr_str = "";
 	int expected_closing_brace_num = 0;
 

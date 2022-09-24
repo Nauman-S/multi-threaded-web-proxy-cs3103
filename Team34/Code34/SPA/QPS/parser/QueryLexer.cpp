@@ -4,7 +4,8 @@
 #include "../reference/EntityRef.h"
 
 void QueryLexer::InitializeKeywords() {
-	this->relation_keywords_.insert({ "Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies" });
+	this->relation_keywords_.insert({ "Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies", 
+		"Next", "Next*", "Calls", "Calls*", "Affects", "Affects*"});
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
 	this->keywords_.insert({ "Select", "such", "that" });
