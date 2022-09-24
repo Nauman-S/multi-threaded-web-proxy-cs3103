@@ -26,17 +26,15 @@ class QueryBuilder
 private:
 	shared_ptr<QueryLexer> lexer_;
 	vector<shared_ptr<Ref>> synonyms_;
-	std::vector<shared_ptr<Rel>> relations_;
+	//std::vector<shared_ptr<Rel>> relations_;
 
 	std::unordered_set<RefType> stmt_ref_types = std::unordered_set<RefType>({ RefType::kAssignRef, RefType::kCallRef, RefType::kIfRef, RefType::kPrintRef, RefType::kReadRef, RefType::kWhileRef });
-
-
 
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
 
 	shared_ptr<Query> ParseSelectStatement();	
-	std::vector<shared_ptr<Ref>> ParseReturnValues();
+	std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();
 
 
 	shared_ptr<StmtRef> ParseStmtRef();
@@ -67,12 +65,13 @@ private:
 	std::pair<shared_ptr<ProcRef>, shared_ptr<ProcRef>> GetProcProcSyns();
 
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
-	shared_ptr<Pattern> QueryBuilder::ParsePattern();
+	shared_ptr<Pattern> ParsePattern();
 
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType ref_type);
+
 
 public:
 
