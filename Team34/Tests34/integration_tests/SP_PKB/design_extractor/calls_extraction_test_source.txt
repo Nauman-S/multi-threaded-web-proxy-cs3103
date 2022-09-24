@@ -1,0 +1,36 @@
+procedure first {
+   a = 2;
+   call second;
+   a = 4;
+   call fourth;
+}
+
+procedure second {
+   a = 1;
+   while (a > 2) {
+      call third;
+   }
+}
+
+procedure third {
+   a = 1;
+}
+
+procedure fourth {
+   if (x > 2) then {
+      x = 5;
+   } else {
+      call fifth;
+   }
+}
+
+procedure fifth {
+   if (x > 2) then {
+       x = 1;
+       while (x > 0) {
+           call third;
+       }
+   } else {
+       x = 2;
+   }
+}
