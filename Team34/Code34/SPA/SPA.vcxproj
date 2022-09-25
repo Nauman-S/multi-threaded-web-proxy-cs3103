@@ -89,6 +89,7 @@
     <ClInclude Include="QPS\ResultExtractor.h" />
     <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
     <ClInclude Include="QPS\stub\RelationStubFactory.h" />
+    <ClInclude Include="QPS\with_clause\With.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
     <ClInclude Include="SP\ast\ASTNode.h" />
     <ClInclude Include="SP\ast\CallStatementASTNode.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="QPS\ResultExtractor.cpp" />
     <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
     <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
+    <ClCompile Include="QPS\with_clause\With.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\ASTNode.cpp" />
     <ClCompile Include="SP\ast\CallStatementASTNode.cpp" />

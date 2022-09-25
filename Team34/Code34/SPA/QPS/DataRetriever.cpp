@@ -28,6 +28,7 @@
 #include "relation/CallsTRel.h"
 #include "relation/RelType.h"
 #include "reference/ValType.h"
+#include "with_clause/With.h"
 #include "../PKB/ReadPKBManager.h"
 #include "../PKB/manager/UsesManager.h"
 #include "../Utils/type/TypeDef.h"
@@ -1038,6 +1039,14 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     string syn = ref_ptr->GetName();
     shared_ptr<SetRes> set_res = shared_ptr<SetRes>(new SetRes(syn, str_set));
     return make_shared<ResWrapper>(set_res);
-} 
+}
+
+std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with)
+{
+
+    // TODO: implement retrieving for with clause
+    return std::shared_ptr<ResWrapper>();
+}
+
 
 
