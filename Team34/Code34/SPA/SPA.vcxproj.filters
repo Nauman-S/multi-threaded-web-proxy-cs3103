@@ -94,6 +94,7 @@
     <ClCompile Include="QPS\pattern\IfPattern.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\with_clause\With.cpp" />
+    <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -221,5 +222,6 @@
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
     <ClInclude Include="QPS\with_clause\With.h" />
+    <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
   </ItemGroup>
 </Project>

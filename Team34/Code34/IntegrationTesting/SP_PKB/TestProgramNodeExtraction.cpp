@@ -16,6 +16,7 @@
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
 #include "../SPA/SP/design_extractor/ParentsExtractor.h"
 #include "../SPA/SP/design_extractor/FollowsExtractor.h"
+#include "../SPA/SP/design_extractor/CallsExtractor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -25,7 +26,7 @@ namespace IntegrationTesting
 	TEST_CLASS(TestProgramNodeExtraction)
 	{
 	private:
-		string test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor_test_source.txt";
+		string test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/design_extractor_test_source.txt";
 		shared_ptr<ProgramNode> root;
 
 		shared_ptr<ReadPKBManager> read;
@@ -202,6 +203,37 @@ namespace IntegrationTesting
 			// Follows relation within if loop
 			Assert::IsTrue(this->read->CheckFollows(8, 9));
 			Assert::IsFalse(this->read->CheckFollows(9, 10));
+		}
+
+		TEST_METHOD(TestCallsRelationPopulation) {
+			string calls_test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/calls_extraction_test_source.txt";
+			SourceParser parser = SourceParser();
+			shared_ptr<ProgramNode> root = parser.Parse(calls_test_file);
+
+			CallsExtractor extractor;
+			root->Extract(extractor);
+
+			// Calls is true for directly called procedure, but not for indirectly called ones
+			Assert::IsTrue(this->read->CheckCalls("first", "second"));
+			Assert::IsTrue(this->read->CheckCalls("first", "fourth"));
+			Assert::IsFalse(this->read->CheckCalls("first", "third"));
+
+			// Calls is true also in if and while statements
+			Assert::IsTrue(this->read->CheckCalls("fourth", "fifth"));
+			Assert::IsFalse(this->read->CheckCalls("fourth", "third"));
+
+			Assert::IsTrue(this->read->CheckCalls("second", "third"));
+
+			// Calls* is true for both directly and indirectly called procedures
+			Assert::IsTrue(this->read->CheckCallsT("first", "second"));
+			Assert::IsTrue(this->read->CheckCallsT("first", "fourth"));
+			Assert::IsTrue(this->read->CheckCallsT("first", "third"));
+			Assert::IsTrue(this->read->CheckCallsT("first", "fifth"));
+			
+			Assert::IsTrue(this->read->CheckCallsT("second", "third"));
+			Assert::IsTrue(this->read->CheckCallsT("fourth", "fifth"));
+			Assert::IsTrue(this->read->CheckCallsT("fourth", "third"));
+			Assert::IsFalse(this->read->CheckCallsT("fourth", "second"));
 		}
 	};
 }
