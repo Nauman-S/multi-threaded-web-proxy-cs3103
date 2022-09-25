@@ -11,5 +11,6 @@ enum class RefType
 	kWhileRef,
 	kReadRef,
 	kPrintRef,
+	kUnknown
 };
 

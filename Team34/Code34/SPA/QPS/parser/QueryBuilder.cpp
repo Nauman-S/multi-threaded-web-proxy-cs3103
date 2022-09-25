@@ -17,6 +17,7 @@
 #include "..\reference\ValType.h"
 #include "..\reference\Ref.h"
 #include "..\reference\EntityRef.h"
+#include "..\reference\TempRef.h"
 #include "..\relation\Rel.h"
 #include "..\relation\FollowsRel.h"
 #include "..\relation\FollowsTRel.h"
@@ -34,6 +35,7 @@
 #include "../pattern/AssignPattern.h"
 #include "../pattern/IfPattern.h"
 #include "../pattern/WhilePattern.h"
+#include "../with_clause/With.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -107,24 +109,27 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 
 }
 
-
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	lexer_->MatchKeyword("Select");
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = ParseReturnValues();
 
 	shared_ptr<vector<shared_ptr<Rel>>> relations = std::make_shared<vector<shared_ptr<Rel>>>();
 	shared_ptr<vector<shared_ptr<Pattern>>> patterns = std::make_shared<vector<shared_ptr<Pattern>>>();
-	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords()) {
+	shared_ptr<vector<shared_ptr<With>>> with_clauses = std::make_shared<vector<shared_ptr<With>>>();
+	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords() || lexer_->HasWithKeyword()) {
 			
 		if (lexer_->HasPatternKeyword()) {
-			std::vector<shared_ptr<Pattern>> curr_patterns = ParsePatterns();
+			vector<shared_ptr<Pattern>> curr_patterns = ParsePatterns();
 			patterns->insert(patterns->end(), curr_patterns.begin(), curr_patterns.end());
 
 		}
 		else if (lexer_->HasSuchThatKeywords()) {
-			std::vector<shared_ptr<Rel>> curr_relations = ParseRelations();
+			vector<shared_ptr<Rel>> curr_relations = ParseRelations();
 			// append new relations to the end of all relations
 			relations->insert(relations->end(), curr_relations.begin(), curr_relations.end());
+		}
+		else if (lexer_->HasWithKeyword()) {
+			vector<shared_ptr<With>> curr_with_clauses = ParseWithClauses();
 		}
 	}
 
@@ -502,8 +507,8 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synon
 }
 
 
-std::vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
-	std::vector<shared_ptr<Pattern>> patterns;
+vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
+	vector<shared_ptr<Pattern>> patterns;
 
 	lexer_->MatchPatternKeyword();
 	
@@ -635,5 +640,91 @@ string QueryBuilder::GetExpressionStr() {
 
 	return expr_str;
 }
+
+
+std::vector<shared_ptr<With>> QueryBuilder::ParseWithClauses() {
+	vector<shared_ptr<With>> with_clauses;
+	lexer_->MatchWithKeyword();
+	with_clauses.push_back(ParseWithClause());
+
+	while (lexer_->HasAndKeyword()) {
+		lexer_->MatchAndKeyword();
+		with_clauses.push_back(ParseWithClause());
+	}
+
+	return with_clauses;
+}
+
+shared_ptr<With> QueryBuilder::ParseWithClause() {
+	shared_ptr<Ref> lhs = ParseWithRef();
+	if (lexer_->MatchOperator() != "=") {
+		throw SyntaxError("The operator in with clause must be =");
+	}
+	shared_ptr<Ref> rhs = ParseWithRef();
+
+	// make sure if one reference is attrRef, it is on left hand side
+	if (rhs->GetValType() == ValType::kInt || rhs->GetValType() == ValType::kString) {
+		return std::make_shared<With>(lhs, rhs);
+	}
+	else {
+		return std::make_shared<With>(rhs, lhs);
+	}
+}
+
+shared_ptr<Ref> QueryBuilder::ParseWithRef() {
+	if (lexer_->HasInteger()) {
+		int integer = lexer_->MatchInteger();
+		return std::make_shared<TempRef>(ValType::kInt, std::to_string(integer));
+	}
+
+	if (lexer_->HasQuotationMarks()) {
+		lexer_->MatchQuotationMarks();
+		string identity = lexer_->MatchIdentity();
+		lexer_->MatchQuotationMarks();
+		return std::make_shared<TempRef>(ValType::kString, identity);
+	}
+
+	// parse attribute reference
+	string ref_name = lexer_->MatchIdentity();
+	lexer_->MatchFullStop();
+	string attr_name = lexer_->MatchAttrName();
+
+	shared_ptr<Ref> synonym = GetDeclaredSyn(ref_name);
+
+	ValidateAttrName(synonym, attr_name);
+
+	return synonym;
+}
+
+void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
+	string proc_name = "procName";
+	string var_name = "varName";
+	string value_str = "value";
+	string stmt = "stmt#";
+
+	const std::unordered_map<RefType, string> ref_type_to_attr_name_map{
+		{RefType::kProcRef, proc_name},
+		{RefType::kCallRef, proc_name},
+		{RefType::kVarRef, var_name},
+		{RefType::kReadRef, var_name},
+		{RefType::kPrintRef, var_name},
+		{RefType::kConstRef, value_str},
+		{RefType::kStmtRef, stmt},
+		{RefType::kReadRef, stmt},
+		{RefType::kPrintRef, stmt},
+		{RefType::kCallRef, stmt},
+		{RefType::kWhileRef, stmt},
+		{RefType::kIfRef, stmt},
+		{RefType::kAssignRef, stmt}
+	};
+
+	if (ref_type_to_attr_name_map.at(synonym->GetRefType()) != attr_name) {
+		throw SemanticError("The synonym " + synonym->GetName() + " has a wrong attribute name " + attr_name);
+	}
+}
+
+
+
+
 
 

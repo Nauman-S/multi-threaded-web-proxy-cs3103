@@ -32,6 +32,8 @@ enum TokenType {
     kUnderscore,
     kSingleQuote,
     kDoubleQuote,
+    kFullStop,
+    //kHashtag,
 
 
     // Self-defined for parsing usage

@@ -16,6 +16,7 @@ private:
 	std::unordered_set<std::string> design_entities_;
 	std::unordered_set<std::string> relation_keywords_;
 	std::unordered_set<std::string> keywords_;
+	std::unordered_set<std::string> attr_names_;
 	std::unordered_set <char> delimiters_;
 	std::unordered_set <TokenType> operators_;
 
@@ -65,8 +66,14 @@ public:
 	bool HasUnderScore();
 	void MatchUnderScore();
 
+	bool HasFullStop();
+	void MatchFullStop();
+
 	bool HasPatternKeyword();
-	std::string MatchPatternKeyword();
+	void MatchPatternKeyword();
+
+	bool HasWithKeyword();
+	void MatchWithKeyword();
 
 	bool HasAndKeyword();
 	void MatchAndKeyword();
@@ -84,6 +91,9 @@ public:
 
 	bool HasSuchThatKeywords();
 	void MatchSuchThatKeywords();
+
+	bool HasAttrName();
+	std::string MatchAttrName();
 
 	string GenerateErrorMessage(string expected, string actual);
 

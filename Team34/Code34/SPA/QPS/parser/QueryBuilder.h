@@ -67,10 +67,15 @@ private:
 	std::vector< shared_ptr<Pattern>> ParsePatterns();
 	shared_ptr<Pattern> ParsePattern();
 
+	std::vector<shared_ptr<With>> ParseWithClauses();
+	shared_ptr<With> ParseWithClause();
+	shared_ptr<Ref> ParseWithRef();
+	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
+
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
-	shared_ptr<Ref> GetDeclaredSyn(string name, RefType ref_type);
+	shared_ptr<Ref> GetDeclaredSyn(string name, RefType attr_name);
 
 
 public:

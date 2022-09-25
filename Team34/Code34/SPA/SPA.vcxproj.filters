@@ -223,5 +223,6 @@
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
     <ClInclude Include="QPS\with_clause\With.h" />
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
+    <ClInclude Include="QPS\reference\TempRef.h" />
   </ItemGroup>
 </Project>
