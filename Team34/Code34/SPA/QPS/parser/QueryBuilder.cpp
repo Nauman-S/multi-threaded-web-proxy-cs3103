@@ -130,6 +130,7 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 		}
 		else if (lexer_->HasWithKeyword()) {
 			vector<shared_ptr<With>> curr_with_clauses = ParseWithClauses();
+			with_clauses->insert(with_clauses->end(), curr_with_clauses.begin(), curr_with_clauses.end());
 		}
 	}
 
@@ -152,10 +153,10 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 
 	shared_ptr<Query> query;
 	if (select_tuple->size() == 0) {
-		query = shared_ptr<Query>(new Query(relations, patterns));
+		query = shared_ptr<Query>(new Query(relations, patterns, with_clauses));
 	}
 	else {
-		query = shared_ptr<Query>(new Query(select_tuple, relations, patterns));
+		query = shared_ptr<Query>(new Query(select_tuple, relations, patterns, with_clauses));
 	}
 	return query;
 
@@ -657,9 +658,7 @@ std::vector<shared_ptr<With>> QueryBuilder::ParseWithClauses() {
 
 shared_ptr<With> QueryBuilder::ParseWithClause() {
 	shared_ptr<Ref> lhs = ParseWithRef();
-	if (lexer_->MatchOperator() != "=") {
-		throw SyntaxError("The operator in with clause must be =");
-	}
+	lexer_->MatchEqualSign();
 	shared_ptr<Ref> rhs = ParseWithRef();
 
 	// make sure if one reference is attrRef, it is on left hand side

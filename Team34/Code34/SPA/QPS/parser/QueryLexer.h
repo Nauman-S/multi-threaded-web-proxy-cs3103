@@ -44,7 +44,6 @@ public:
 	bool HasReferenceKeyword();
 	std::string MatchReferenceKeyword();
 
-
 	bool HasLeftBrace();
 	void MatchLeftBrace();
 
@@ -58,7 +57,7 @@ public:
 	void MatchRightAngle();
 
 	bool HasComma();
-	std::string MatchComma();
+	void MatchComma();
 
 	bool HasInteger();
 	int MatchInteger();
@@ -68,6 +67,9 @@ public:
 
 	bool HasFullStop();
 	void MatchFullStop();
+
+	bool HasEqualSign();
+	void MatchEqualSign();
 
 	bool HasPatternKeyword();
 	void MatchPatternKeyword();

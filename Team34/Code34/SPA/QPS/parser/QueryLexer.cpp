@@ -157,6 +157,15 @@ void QueryLexer::MatchFullStop() {
 	tokenizer_->nextToken();
 }
 
+bool QueryLexer::HasEqualSign() {
+	return tokenizer_->getToken().type_ == TokenType::kEqual;
+}
+
+void QueryLexer::MatchEqualSign() {
+	if (!HasEqualSign()) throw SyntaxError(GenerateErrorMessage("=", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
 bool QueryLexer::HasQuotationMarks() {
 	return this->tokenizer_->getToken().type_ == TokenType::kDoubleQuote || this->tokenizer_->getToken().type_ == TokenType::kSingleQuote;
 }
@@ -170,10 +179,9 @@ bool QueryLexer::HasComma() {
 	return this->tokenizer_->getToken().type_ == TokenType::kComma;
 }
 
-std::string QueryLexer::MatchComma() {
+void QueryLexer::MatchComma() {
 	if (!HasComma()) throw SyntaxError(GenerateErrorMessage(",", tokenizer_->getTokenSval().value_or("INTEGER")));
-	this->tokenizer_->nextToken();
-	return ",";
+	tokenizer_->nextToken();
 }
 
 bool QueryLexer::HasInteger() {
@@ -186,22 +194,21 @@ bool QueryLexer::HasOperator() {
 
 std::string QueryLexer::MatchOperator() {
 	std::string operator_string_;
-		if (this->tokenizer_->getToken().type_ == TokenType::kAdd) {
+		if (tokenizer_->getToken().type_ == TokenType::kAdd) {
 			operator_string_ = "+";
 		}
-		else if (this->tokenizer_->getToken().type_ == TokenType::kMinus) {
+		else if (tokenizer_->getToken().type_ == TokenType::kMinus) {
 			operator_string_ = "-";
 		}
-		else if (this->tokenizer_->getToken().type_ == TokenType::kkDivide) {
+		else if (tokenizer_->getToken().type_ == TokenType::kkDivide) {
 			operator_string_ = "/";
 		}
-		else if (this->tokenizer_->getToken().type_ == TokenType::kMultiply) {
+		else if (tokenizer_->getToken().type_ == TokenType::kMultiply) {
 			operator_string_ = "*";
 		}
-		else if (this->tokenizer_->getToken().type_ == TokenType::kModulo) {
+		else if (tokenizer_->getToken().type_ == TokenType::kModulo) {
 			operator_string_ = "%";
-		}
-
+		} 
 		this->tokenizer_->nextToken();
 		return operator_string_;
 }

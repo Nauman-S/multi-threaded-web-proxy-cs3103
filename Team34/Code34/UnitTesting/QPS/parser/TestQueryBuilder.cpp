@@ -900,5 +900,69 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetPatterns()->at(0)->StmtRefType() == RefType::kWhileRef);
 		};
 
+		TEST_METHOD(Valid_BasicWithClause_VarName) {
+			const std::string query_ = "variable v; while w; Select v with v.varName = \" xb\" ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+			// Check if all with clauses are correct
+			Assert::IsTrue(query->GetWithClauses()->size() == 1);
+			Assert::IsTrue(query->GetWithClauses()->at(0)->LhsValue() == "v");
+			Assert::IsTrue(query->GetWithClauses()->at(0)->RhsValue() == "xb");
+		};
+
+		TEST_METHOD(Valid_BasicWithClause_Stmt) {
+			const std::string query_ = "variable v; while w; Select v with w.stmt# = 1";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+			// Check if all with clauses are correct
+			Assert::IsTrue(query->GetWithClauses()->size() == 1);
+			Assert::IsTrue(query->GetWithClauses()->at(0)->LhsValue() == "w");
+			Assert::IsTrue(query->GetWithClauses()->at(0)->RhsValue() == "1");
+		};
+
+		TEST_METHOD(Valid_BasicWithClause_Const) {
+			const std::string query_ = "constant c; while w; Select w with c.value = 1";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+			// Check if all with clauses are correct
+			Assert::IsTrue(query->GetWithClauses()->size() == 1);
+			Assert::IsTrue(query->GetWithClauses()->at(0)->LhsValue() == "c");
+			Assert::IsTrue(query->GetWithClauses()->at(0)->RhsValue() == "1");
+		};
+
+		TEST_METHOD(Valid_BasicWithClause_Proc) {
+			const std::string query_ = "constant c; procedure p; Select p with p.procName = \" test \" ";
+
+			shared_ptr<Query> query = query_builder_->GetQuery(query_);
+			//Check if entity references are correct
+			Assert::IsTrue(query->GetSelectTuple()->size() == 1);
+			//Check if such that clauses are correct
+			Assert::IsTrue(query->GetRelations()->size() == 0);
+			//Check if all pattern clauses are correct
+			Assert::IsTrue(query->GetPatterns()->size() == 0);
+			// Check if all with clauses are correct
+			Assert::IsTrue(query->GetWithClauses()->size() == 1);
+			Assert::IsTrue(query->GetWithClauses()->at(0)->LhsValue() == "p");
+			Assert::IsTrue(query->GetWithClauses()->at(0)->RhsValue() == "test");
+		};
+
 	};
 }
