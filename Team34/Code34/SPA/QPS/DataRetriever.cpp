@@ -26,6 +26,10 @@
 #include "relation/ParentTRel.h"
 #include "relation/CallsRel.h"
 #include "relation/CallsTRel.h"
+#include "relation/NextRel.h"
+#include "relation/NextTRel.h"
+#include "relation/AffectsRel.h"
+#include "relation/AffectsTRel.h"
 #include "relation/RelType.h"
 #include "reference/ValType.h"
 #include "with_clause/With.h"
@@ -425,7 +429,7 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
     assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
-    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
+    shared_ptr<unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
         int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num);  // set of immediate children
     }
@@ -433,9 +437,8 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
         int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num);  // set of immediate and indirect children
     }
     else if (type == RelType::kFollowsRel) {
-        // What if no successor stmt num???
-        // Discuss with PKB to return a set instead
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
+        int_set = make_shared<unordered_set<int>>();
         if (rhs_stmt_num != 0) {
             int_set->insert(rhs_stmt_num);
         }
@@ -464,8 +467,6 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        // What if no successor stmt num???
-        // rhs_stmt_num will evaluate to 0
         int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
         int_set = make_shared<unordered_set<int>>();
         if (rhs_stmt_num != 0) {
@@ -504,9 +505,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
-    shared_ptr<unordered_set<int>> int_set = std::make_shared<unordered_set<int>>();
+    shared_ptr<unordered_set<int>> int_set;
     if (type == RelType::kParentRel) {
         int lhs_stmt_num = pkb_ptr_->GetParentFromStmt(rhs_stmt_num);
+        int_set = std::make_shared<unordered_set<int>>();
         if (lhs_stmt_num != 0) {
             int_set->insert(lhs_stmt_num);
         }
@@ -517,6 +519,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     }
     else if (type == RelType::kFollowsRel) {
         int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
+        int_set = std::make_shared<unordered_set<int>>();
         if (lhs_stmt_num != 0) {
             int_set->insert(lhs_stmt_num);
         }
@@ -573,22 +576,40 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
 
 std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtByVar(Pattern& pat)
 {
-    if (pat.GetPatternType() == PatternType::kAssignPattern) {
-        return GetAssignPatternStmtByVar(static_cast<AssignPattern&>(pat));
+    auto type = pat.GetPatternType();
+    assert(type == PatternType::kAssignPattern || type == PatternType::kIfPattern || type == PatternType::kWhilePattern);
+    
+    shared_ptr<unordered_set<string>> set;
+    if (type == PatternType::kAssignPattern) {
+        set = GetAssignPatternStmtByVar(static_cast<AssignPattern&>(pat));
     }
-    // TODO: Add implementation for if and while pattern;
+    else if (type == PatternType::kIfPattern) {
+        set = GetIfPatternStmtByVar(static_cast<IfPattern&>(pat));
+    }
+    else if (type == PatternType::kWhilePattern) {
+        set = GetWhilePatternStmtByVar(static_cast<WhilePattern&>(pat));
+    }
 
-    return std::shared_ptr<std::unordered_set<std::string>>();
+    return set;
 }
 
 std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtByWildcard(Pattern& pat)
 {
-    if (pat.GetPatternType() == PatternType::kAssignPattern) {
-        return GetAssignPatternStmtByWildcard(static_cast<AssignPattern&>(pat));
-    }
-    // TODO: Add implementation for if and whild pattern
+    auto type = pat.GetPatternType();
+    assert(type == PatternType::kAssignPattern || type == PatternType::kIfPattern || type == PatternType::kWhilePattern);
 
-    return std::shared_ptr<std::unordered_set<std::string>>();
+    shared_ptr<unordered_set<string>> set;
+    if (type == PatternType::kAssignPattern) {
+        set = GetAssignPatternStmtByWildcard(static_cast<AssignPattern&>(pat));
+    }
+    else if (type == PatternType::kIfPattern) {
+        set = GetIfPatternStmtByWildcard(static_cast<IfPattern&>(pat));
+    }
+    else if (type == PatternType::kWhilePattern) {
+        set = GetWhilePatternStmtByWildcard(static_cast<WhilePattern&>(pat));
+    }
+
+    return set;
 }
 
 std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::GetAllPattern(Pattern& pat)

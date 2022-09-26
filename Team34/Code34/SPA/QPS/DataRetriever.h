@@ -75,13 +75,23 @@ protected:
 
 	// Pattern
 	std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByVar(Pattern& pat);					// assign_syn(var_name, ExprSpec)
-	std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByWildcard(Pattern& pat);				// assign_syn(wildcard, ExprSpec)
-	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPattern(Pattern& pat);// assign_syn(var_syn, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByWildcard(Pattern& pat);			// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPattern(Pattern& pat);		// assign_syn(var_syn, ExprSpec)
 
 	// Assign Pattern
-	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByVar(AssignPattern& pat);					// assign_syn(var_name, ExprSpec)
-	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByWildcard(AssignPattern& pat);				// assign_syn(wildcard, ExprSpec)
-	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllAssignPattern(AssignPattern& pat);// assign_syn(var_syn, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByVar(AssignPattern& pat);				// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetAssignPatternStmtByWildcard(AssignPattern& pat);		// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllAssignPattern(AssignPattern& pat);	// assign_syn(var_syn, ExprSpec)
+
+	// If Pattern
+	std::shared_ptr<std::unordered_set<std::string>> GetIfPatternStmtByVar(IfPattern& pat);				// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetIfPatternStmtByWildcard(IfPattern& pat);		// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllIfPattern(IfPattern& pat);	// assign_syn(var_syn, ExprSpec)
+
+	// While Pattern
+	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByVar(WhilePattern& pat);				// assign_syn(var_name, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByWildcard(WhilePattern& pat);		// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWhilePattern(WhilePattern& pat);	// assign_syn(var_syn, ExprSpec)
 
 	// type conversion helpers
 	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
