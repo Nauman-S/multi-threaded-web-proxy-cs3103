@@ -1,0 +1,8 @@
+procedure      PROC
+
+{
+
+abc1   =1023
+                ;
+
+}
