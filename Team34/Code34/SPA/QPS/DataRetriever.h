@@ -90,7 +90,7 @@ protected:
 
 	// While Pattern
 	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByVar(WhilePattern& pat);				// assign_syn(var_name, ExprSpec)
-	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByWildcard(WhilePattern& pat);		// assign_syn(wildcard, ExprSpec)
+	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByWildcard(WhilePattern& pat);			// assign_syn(wildcard, ExprSpec)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWhilePattern(WhilePattern& pat);	// assign_syn(var_syn, ExprSpec)
 
 	// type conversion helpers

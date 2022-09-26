@@ -614,12 +614,21 @@ std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtBy
 
 std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::GetAllPattern(Pattern& pat)
 {
-    if (pat.GetPatternType() == PatternType::kAssignPattern) {
-        return GetAllAssignPattern(static_cast<AssignPattern&>(pat));
+    auto type = pat.GetPatternType();
+    assert(type == PatternType::kAssignPattern || type == PatternType::kIfPattern || type == PatternType::kWhilePattern);
+
+    shared_ptr<vector<StrPair>> table;
+    if (type == PatternType::kAssignPattern) {
+        table = GetAllAssignPattern(static_cast<AssignPattern&>(pat));
+    }
+    else if (type == PatternType::kIfPattern) {
+        table = GetAllIfPattern(static_cast<IfPattern&>(pat));
+    }
+    else if (type == PatternType::kWhilePattern) {
+        table = GetAllWhilePattern(static_cast<WhilePattern&>(pat));
     }
 
-    // TODO: Add implementation for if and whild pattern
-    return std::shared_ptr<std::vector<std::pair<std::string, std::string>>>();
+    return table;
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(AssignPattern& pat)
@@ -668,6 +677,36 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(Assi
     shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table = pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
 
     return IntStrToStrStrTable(stmt_var_table);
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByVar(IfPattern& pat)
+{
+
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByWildcard(IfPattern& pat)
+{
+
+}
+
+shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllIfPattern(IfPattern& pat)
+{
+
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
+{
+
+}
+
+shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
+{
+
+}
+
+shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(WhilePattern& pat)
+{
+
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(shared_ptr<unordered_set<int>> set)
