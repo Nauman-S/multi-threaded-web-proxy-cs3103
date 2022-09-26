@@ -964,5 +964,292 @@ namespace UnitTesting
 			Assert::IsTrue(query->GetWithClauses()->at(0)->RhsValue() == "test");
 		};
 
+		TEST_METHOD(Invalid_RedeclarationOfSynonyms) {
+			const std::string query_ = "assign a1, a2, a3; stmt s1, s2, s3; variable v1, v2, v3; variable a1; Select a1";
+
+			bool semantic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SemanticError&) {
+				semantic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(semantic_error_thrown);
+		}
+
+		TEST_METHOD(Invalid_SyntaticallyInvalidQuery) {
+			const std::string query_ = "assign a1; Select a1 such that";
+			bool syntatic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_);
+			}
+			catch (const SyntaxError&) {
+				syntatic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntatic_error_thrown);
+		}
+
+		TEST_METHOD(Valid_BooleanSelectWithoutSynonym) {
+			const std::string query_string_ = "Select BOOLEAN such that Next* (2, 9)";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+			std::string lhs_value_ = "2";
+			std::string rhs_value_ = "9";
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+			
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 1);
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kNextTRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(lhs_value_, query_->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kLineNum);
+			Assert::IsTrue(query_->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(rhs_value_, query_->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().second == ValType::kLineNum);
+
+			//Check if with clauses are correct
+			Assert::IsTrue(query_->GetWithClauses()->size() == 0);
+
+			//Check if pattern clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 0);
+		}
+
+		TEST_METHOD(Valid_BooleanSelectMultiSuchThatClause) {
+			const std::string query_string_ = "assign a; Select BOOLEAN such that Next (a, 9) and Uses(a,\"x\")";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+			std::string lhs_value_one_ = "a";
+			std::string rhs_value_one_ = "9";
+
+			std::string lhs_value_two_ = "a";
+			std::string rhs_value_two_ = "x";
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 2);
+
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kNextRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kAssignRef);
+			Assert::AreEqual(lhs_value_one_, query_->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
+			Assert::IsTrue(query_->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(rhs_value_one_, query_->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().second == ValType::kLineNum);
+
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kUsesSRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kAssignRef);
+			Assert::AreEqual(lhs_value_two_, query_->GetRelations()->at(1)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
+			Assert::IsTrue(query_->GetRelations()->at(1)->RhsRefType() == RefType::kVarRef);
+			Assert::AreEqual(rhs_value_two_, query_->GetRelations()->at(1)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().second == ValType::kVarName);
+
+			//Check if with clauses are correct
+			Assert::IsTrue(query_->GetWithClauses()->size() == 0);
+
+			//Check if pattern clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 0);
+		}
+
+
+		TEST_METHOD(Valid_BooleanSelectUsingWith) {
+			const std::string query_string_ = "variable v; Select BOOLEAN with 12 = \"number12\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+			std::string lhs_value_ = "12", rhs_value_ = "number12";
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 0);
+
+			//Check if with clauses are correct
+			Assert::IsTrue(query_->GetWithClauses()->size() == 1);
+
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->ValTypes().first == ValType::kInt);
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->ValTypes().second == ValType::kString);
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->RefType() == RefType::kUnknown);
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->LhsValue() == lhs_value_);
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->RhsValue() == rhs_value_);
+
+			//Check if pattern clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 0);
+
+		}
+
+		TEST_METHOD(Invalid_BooleanWithSyntaxError) {
+			const std::string query_string_ = "procedure p; Select BOOLEAN with p.procName = \"12\"";
+			bool syntatic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_string_);
+			}
+			catch (const SyntaxError&) {
+				syntatic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntatic_error_thrown);
+		}
+
+		TEST_METHOD(Valid_MultipleClauseTypes) {
+			const std::string query_string_ = "procedure p; call c; while w; procedure procName; assign a; \n\nSelect p such that Calls(\"Second\", p) and Parent(w, c) with c.procName = p.procName such that Calls* (p, \"Fifth\") with procName.procName = procName.procName pattern a(_, _\"y + z * t\"_)" ;
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+			std::string selectName = "p";
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 1);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kProcRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query_->GetSelectTuple()->at(0)->GetName(), selectName);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 3);
+
+			std::string rel_lhs_one_ = "Second";
+			std::string rel_rhs_one_ = "p";
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_lhs_one_, query_->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kProcName);
+			Assert::IsTrue(query_->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_rhs_one_, query_->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().second == ValType::kSynonym);
+
+			std::string rel_lhs_two_ = "w";
+			std::string rel_rhs_two_ = "c";
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kParentRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kWhileRef);
+			Assert::AreEqual(rel_lhs_two_, query_->GetRelations()->at(1)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
+			Assert::IsTrue(query_->GetRelations()->at(1)->RhsRefType() == RefType::kCallRef);
+			Assert::AreEqual(rel_rhs_two_, query_->GetRelations()->at(1)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().second == ValType::kSynonym);
+
+
+			std::string rel_lhs_three_ = "p";
+			std::string rel_rhs_three_ = "Fifth";
+			Assert::IsTrue(query_->GetRelations()->at(2)->GetRelType() == RelType::kCallsTRel);
+			Assert::IsTrue(query_->GetRelations()->at(2)->LhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_lhs_three_, query_->GetRelations()->at(2)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(2)->ValTypes().first == ValType::kSynonym);
+			Assert::IsTrue(query_->GetRelations()->at(2)->RhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_rhs_three_, query_->GetRelations()->at(2)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(2)->ValTypes().second == ValType::kProcName);
+
+			//Check if with clauses are correct - INCOMPLETE FEATURE - PLEASE UPDATE 
+
+			//Check if Pattern Clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 1);
+
+			const std::string select_variable = "a";
+			std::string expr_str = "y+z*t";
+			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kWildcard);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query_->GetPatterns()->at(0)->StmtSyn());
+			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == PatternType::kAssignPattern);
+			Assert::AreEqual(expr_str, query_->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
+			Assert::IsTrue(query_->GetPatterns()->at(0)->GetExprSpec()->IsWildcard() != true);
+			Assert::IsTrue( query_->GetPatterns()->at(0)->StmtRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kWildcard);
+
+		}
+
+		TEST_METHOD(Invalid_MultipleClauseTypes) {
+			const std::string query_string_ = "procedure p; call c; Select p with c.procName = p.procName and such that Calls(p,p)";
+
+			bool syntatic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_string_);
+			}
+			catch (const SyntaxError&) {
+				syntatic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntatic_error_thrown);
+		}
+
+		TEST_METHOD(Valid_WhilePatternMultipleReturn) {
+			const std::string query_string_ = "variable v; assign a; while w; Select <a, v> pattern w(v,_) such that Calls(\"Second\", \"Third\") such that Affects* (a, 10) and Affects(11,12)";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 2);
+
+			std::string select_name_one_ = "a";
+			std::string select_name_two_ = "v";
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kAssignRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query_->GetSelectTuple()->at(0)->GetName(), select_name_one_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(1)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(1)->GetValType() == ValType::kSynonym);
+			Assert::AreEqual(query_->GetSelectTuple()->at(1)->GetName(), select_name_two_);
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 3);
+
+			std::string rel_lhs_one_ = "Second";
+			std::string rel_rhs_one_ = "Third";
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_lhs_one_, query_->GetRelations()->at(0)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kProcName);
+			Assert::IsTrue(query_->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
+			Assert::AreEqual(rel_rhs_one_, query_->GetRelations()->at(0)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().second == ValType::kProcName);
+
+			std::string rel_lhs_two_ = "a";
+			std::string rel_rhs_two_ = "10";
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kAffectsTRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kAssignRef);
+			Assert::AreEqual(rel_lhs_two_, query_->GetRelations()->at(1)->LhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
+			Assert::IsTrue(query_->GetRelations()->at(1)->RhsRefType() == RefType::kStmtRef);
+			Assert::AreEqual(rel_rhs_two_, query_->GetRelations()->at(1)->RhsValue());
+			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().second == ValType::kLineNum);
+
+			
+
+			//Check if Pattern Clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 1);
+
+			//Check if with clauses are correct
+			Assert::IsTrue(query_->GetWithClauses()->size() == 0);
+
+			const std::string select_variable = "w";
+			std::string expr_str = "";
+			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
+			Assert::AreEqual(select_variable, query_->GetPatterns()->at(0)->StmtSyn());
+			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == PatternType::kWhilePattern);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtRefType() == RefType::kWhileRef);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kSynonym);
+
+		}
+
+
+		TEST_METHOD(Invalid_IfsPattern) {
+			const std::string query_string_ = "procedure p; call c; if ifs;variable v; Select p with c.procName = p.procName and such that Calls(p,p) pattern ifs(v,_,v)";
+
+			bool syntatic_error_thrown = false;
+			try {
+				query_builder_->GetQuery(query_string_);
+			}
+			catch (const SyntaxError&) {
+				syntatic_error_thrown = true;
+			}
+			catch (...) {
+			}
+			Assert::IsTrue(syntatic_error_thrown);
+		}
 	};
 }
