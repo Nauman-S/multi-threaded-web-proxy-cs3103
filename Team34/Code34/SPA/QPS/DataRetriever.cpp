@@ -775,7 +775,7 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
         || type == RelType::kNextRel || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    bool is_empty;
+    bool is_empty {false};
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
         is_empty = pkb_ptr_->IsParentStoreEmpty();
     }
