@@ -1253,7 +1253,7 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
     }
     else if (syn_ref_type == RefType::kReadRef) {
         if (req_val_type == ValType::kVarName) {
-            // str_set = pkb_ptr_->GetAllModifiesSVars();
+            str_set = pkb_ptr_->GetAllModifiesSVariables();
         }
         else if (req_val_type == ValType::kLineNum) {
             int_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
@@ -1262,7 +1262,7 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
     }
     else if (syn_ref_type == RefType::kPrintRef) {
         if (req_val_type == ValType::kVarName) {
-            // str_set = pkb_ptr_->GetAllUsesSVars();
+            str_set = pkb_ptr_->GetAllUsesSVariables();
         }
         else if (req_val_type == ValType::kLineNum) {
             int_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
