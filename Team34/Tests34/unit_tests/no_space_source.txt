@@ -1,0 +1,1 @@
+procedure proc1{x=1;}

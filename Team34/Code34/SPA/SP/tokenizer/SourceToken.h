@@ -65,5 +65,7 @@ public:
     bool IsIf();
     bool IsThen();
     bool IsElse();
+
+    bool operator==(const SourceToken&);
 };
 

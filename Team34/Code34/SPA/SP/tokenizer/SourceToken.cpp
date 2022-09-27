@@ -34,3 +34,9 @@ bool SourceToken::IsThen() {
 bool SourceToken::IsElse() {
     return this->str_val_ == "else";
 }
+
+bool SourceToken::operator==(const SourceToken& other) {
+    return this->type_ == other.type_
+        && this->str_val_ == other.str_val_;
+}
+
