@@ -117,6 +117,7 @@
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
+    <ClInclude Include="QPS\query_result\Table.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
+    <ClCompile Include="QPS\query_result\Table.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
