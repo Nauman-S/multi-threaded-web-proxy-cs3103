@@ -25,7 +25,7 @@ string Table::ComputeHashkey(vector<string> common_field, unordered_map<string, 
 	string hash_key = "";
 
 	for (string field : common_field) {
-		hash_key += row.at(field);
+		hash_key += (row.at(field) + ",");
 	}
 
 	return hash_key;

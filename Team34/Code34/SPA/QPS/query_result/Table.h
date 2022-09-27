@@ -21,14 +21,14 @@ private:
 		std::vector<std::string> common_fields,
 		std::unordered_map<std::string, std::string> row
 	);
-
-	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 		
 	std::shared_ptr<Table> CrossProductJoin(std::shared_ptr<Table> that);
 
 	std::shared_ptr<Table> HashJoin(std::shared_ptr<Table> that, std::vector<std::string> common_fields);
 
 public:
+	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
+
 	Table(std::vector<std::string> fields, std::vector<std::unordered_map<std::string, std::string>> rows)
 		: fields_{ fields }, rows_{ rows } {};
 };
