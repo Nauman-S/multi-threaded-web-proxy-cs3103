@@ -102,6 +102,8 @@ protected:
 	std::shared_ptr<std::unordered_set<int>> FilterStmtSetByType(std::shared_ptr<std::unordered_set<int>> stmts, RefType stmt_type);
 	std::shared_ptr<std::vector<std::pair<int, std::string>>> FilterStmtTableByType(std::shared_ptr<std::vector<std::pair<int, std::string>>> table, RefType stmt_type);
 	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
+	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type);
+	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType rhs_stmt_type);
 
 public:
 	DataRetriever() {

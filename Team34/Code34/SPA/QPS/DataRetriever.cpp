@@ -907,7 +907,11 @@ shared_ptr<vector<pair<int, string>>> DataRetriever::FilterStmtTableByType(share
         return table;
     }
     auto res = make_shared<vector<pair<int, string>>>();
-    auto type_predicate = [this, stmt_type] (int stmt) -> bool { return *(this->pkb_ptr_->GetStatementType(stmt)) == stmt_type; };
+    auto type_predicate = [this, stmt_type] (int stmt) -> bool { 
+        auto type_ptr = this->pkb_ptr_->GetStatementType(stmt);
+        return type_ptr != nullptr && *type_ptr == stmt_type; 
+    };
+
     for (auto iter=table->begin(); iter != table->end(); ++iter) {
         if (type_predicate(iter->first)) {
             res->push_back(*iter);
@@ -919,15 +923,58 @@ shared_ptr<vector<pair<int, string>>> DataRetriever::FilterStmtTableByType(share
 
 shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByType(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
 {
-    if (lhs_stmt_type == RefType::kStmtRef || rhs_stmt_type == RefType::kStmtRef) {
+    if (lhs_stmt_type == RefType::kStmtRef && rhs_stmt_type == RefType::kStmtRef) {
         return table;
     }
-    auto res = make_shared<vector<pair<int, int>>>();
-    auto lhs_type_predicate = [this, lhs_stmt_type](int stmt) -> bool { return *(this->pkb_ptr_->GetStatementType(stmt)) == lhs_stmt_type; };
-    auto rhs_type_predicate = [this, rhs_stmt_type](int stmt) -> bool { return *(this->pkb_ptr_->GetStatementType(stmt)) == rhs_stmt_type; };
 
+    shared_ptr<vector<pair<int, int>>> res;
+    if (lhs_stmt_type != RefType::kStmtRef && rhs_stmt_type != RefType::kStmtRef) {
+        auto lhs_type_predicate = [this, lhs_stmt_type](int stmt) -> bool { 
+            auto type_ptr = this->pkb_ptr_->GetStatementType(stmt);
+            return type_ptr != nullptr && *type_ptr == lhs_stmt_type; 
+        };
+        auto rhs_type_predicate = [this, rhs_stmt_type](int stmt) -> bool { 
+            auto type_ptr = this->pkb_ptr_->GetStatementType(stmt);
+            return type_ptr != nullptr && *type_ptr == rhs_stmt_type;
+        };
+
+        res = make_shared<vector<pair<int, int>>>();
+
+        for (auto iter = table->begin(); iter != table->end(); ++iter) {
+            if (lhs_type_predicate(iter->first) && rhs_type_predicate(iter->second)) {
+                res->push_back(*iter);
+            }
+        }
+    }
+    else if (lhs_stmt_type != RefType::kStmtRef) {
+        res = FilterStmtTableByLhsType(table, lhs_stmt_type);
+    }
+    else if (rhs_stmt_type != RefType::kStmtRef) {
+        res = FilterStmtTableByRhsType(table, rhs_stmt_type);
+    }
+    
+    return res;
+}
+
+shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByLhsType(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type)
+{
+    auto res = make_shared<vector<pair<int, int>>>();
     for (auto iter = table->begin(); iter != table->end(); ++iter) {
-        if (lhs_type_predicate(iter->first) && rhs_type_predicate(iter->second)) {
+        auto type_ptr = pkb_ptr_->GetStatementType(iter->first);
+        if (type_ptr != nullptr && *type_ptr == lhs_stmt_type) {
+            res->push_back(*iter);
+        }
+    }
+
+    return res;
+}
+
+shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByRhsType(shared_ptr<vector<pair<int, int>>> table, RefType rhs_stmt_type)
+{
+    auto res = make_shared<vector<pair<int, int>>>();
+    for (auto iter = table->begin(); iter != table->end(); ++iter) {
+        auto type_ptr = pkb_ptr_->GetStatementType(iter->second);
+        if (type_ptr != nullptr && *type_ptr == rhs_stmt_type) {
             res->push_back(*iter);
         }
     }
