@@ -2,11 +2,11 @@
 
 using namespace std;
 
-void ConditionExpression::SetVariables(std::vector<VariableIndex>& v) {
+void ConditionExpression::SetVariables(std::vector<Variable>& v) {
 	vars = v;
 }
 
-std::vector<VariableIndex> ConditionExpression::GetVariables() {
+std::vector<Variable> ConditionExpression::GetVariables() {
 	return vars;
 }
 

@@ -109,13 +109,10 @@
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
-    <ClInclude Include="SP\LineIndex.h" />
-    <ClInclude Include="SP\ProcedureIndex.h" />
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="SP\SourceValidator.h" />
     <ClInclude Include="SP\tokenizer\SourceLexer.h" />
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
-    <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
@@ -208,13 +205,10 @@
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
-    <ClCompile Include="SP\LineIndex.cpp" />
-    <ClCompile Include="SP\ProcedureIndex.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
-    <ClCompile Include="SP\VariableIndex.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
