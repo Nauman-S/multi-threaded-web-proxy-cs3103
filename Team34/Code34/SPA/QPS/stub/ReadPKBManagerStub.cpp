@@ -29,6 +29,8 @@ std::shared_ptr<RefType> ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
 	else if (stmt_num == 3) {
 		return std::make_shared<RefType>(RefType::kIfRef);
 	}
+
+	return nullptr;
 }
 
 bool ReadPKBManagerStub::CheckUses(StmtNum stmt_num, Variable var)

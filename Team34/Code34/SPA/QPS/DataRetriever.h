@@ -30,8 +30,29 @@ class With;
 
 class DataRetriever
 {
-protected:
+protected: // attributes
 	std::shared_ptr<ReadPKBManager> pkb_ptr_;
+
+public:  // public API
+	DataRetriever() { pkb_ptr_ = ReadPKBManager::GetInstance(); };
+
+	DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb } {};
+
+	std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(ProcProcRel& rel);
+
+	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
+
+	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
+
+	std::shared_ptr<ResWrapper> retrieve(With& with);
+
+protected:  // helper methods
 
 	// Stmt-Var relations
 	bool CheckSVRel(StmtVarRel& rel);																	// (stmt_num, var_name)
@@ -41,7 +62,6 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetStmtByWildcard(StmtVarRel& rel);				// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSVRel(StmtVarRel& rel);		// (synonym, synonym)
 	
-
 	// Proc-Var relations
 	bool CheckPVRel(ProcVarRel& rel);																	// (proc_name, var_name)
 	bool CheckPVRelExistenceByProc(ProcVarRel& rel);													// (proc_name, wildcard)
@@ -60,7 +80,6 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetLhsProcByRhsProc(ProcProcRel& rel);				// (synonym, proc_name)
 	std::shared_ptr<std::unordered_set<std::string>> GetLhsProcByWildcard(ProcProcRel& rel);			// (synonym, wildcard)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllPPRel(ProcProcRel& rel);	// (synonym, synonym)
-
 
 	// Stmt-Stmt relations
 	bool CheckSSRel(StmtStmtRel& rel);																	// (stmt_num, stmt_num)
@@ -93,6 +112,10 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> GetWhilePatternStmtByWildcard(WhilePattern& pat);			// assign_syn(wildcard, ExprSpec)
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWhilePattern(WhilePattern& pat);	// assign_syn(var_syn, ExprSpec)
 
+	// With clause
+	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, std::shared_ptr<std::string> filter_val);
+	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWithClause(With& with);
+
 	// type conversion helpers
 	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntStrToStrStrTable(std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
@@ -100,29 +123,47 @@ protected:
 	
 	// Filter helpers
 	std::shared_ptr<std::unordered_set<int>> FilterStmtSetByType(std::shared_ptr<std::unordered_set<int>> stmts, RefType stmt_type);
-	std::shared_ptr<std::vector<std::pair<int, std::string>>> FilterStmtTableByType(std::shared_ptr<std::vector<std::pair<int, std::string>>> table, RefType stmt_type);
-	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
-	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type);
-	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType rhs_stmt_type);
+	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByTypes(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
 
-public:
-	DataRetriever() {
-		pkb_ptr_ = ReadPKBManager::GetInstance();
-	};
+	template<typename T>
+	std::shared_ptr<std::vector<std::pair<int, T>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<int, T>>> table, RefType lhs_stmt_type)
+	{
+		auto res = std::make_shared<std::vector<std::pair<int, T>>>();
+		for (auto iter = table->begin(); iter != table->end(); ++iter) {
+			auto type_ptr = pkb_ptr_->GetStatementType(iter->first);
+			if (type_ptr != nullptr && *type_ptr == lhs_stmt_type) {
+				res->push_back(*iter);
+			}
+		}
 
-	DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb } {};
+		return res;
+	}
 
-	std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
+	template<typename T>
+	std::shared_ptr<std::vector<std::pair<T, int>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<T, int>>> table, RefType rhs_stmt_type)
+	{
+		auto res = std::make_shared<std::vector<std::pair<T, int>>>();
+		for (auto iter = table->begin(); iter != table->end(); ++iter) {
+			auto type_ptr = pkb_ptr_->GetStatementType(iter->second);
+			if (type_ptr != nullptr && *type_ptr == rhs_stmt_type) {
+				res->push_back(*iter);
+			}
+		}
 
-	std::shared_ptr<ResWrapper> retrieve(ProcVarRel& rel);
+		return res;
+	}
 
-	std::shared_ptr<ResWrapper> retrieve(StmtStmtRel& rel);
+	template<typename T>
+	std::shared_ptr<std::unordered_set<T>> FilterSetByValue(std::shared_ptr<std::unordered_set<T>> set, T filter_val)
+	{
+		auto res = std::make_shared<std::unordered_set<T>>();
 
-	std::shared_ptr<ResWrapper> retrieve(ProcProcRel& rel);
+		for (auto iter = set->begin(); iter != set->end(); ++iter) {
+			if (*iter == filter_val) {
+				res->insert(*iter);
+			}
+		}
 
-	std::shared_ptr<ResWrapper> retrieve(Pattern& pat);
-
-	std::shared_ptr<ResWrapper> retrieve(std::shared_ptr<Ref> ref_ptr);
-
-	std::shared_ptr<ResWrapper> retrieve(With& with);
+		return res;
+	}
 };
