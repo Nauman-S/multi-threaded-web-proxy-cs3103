@@ -357,7 +357,10 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
 bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel 
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
@@ -374,6 +377,20 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
     else if (type == RelType::kFollowsTRel) {
         res = pkb_ptr_->CheckFollowsT(lhs_stmt_num, rhs_stmt_num);
     }
+    /*
+    else if (type == RelType::kNextRel) {
+        res = pkb_ptr_->CheckNext(lhs_stmt_num, rhs_stmt_num);
+    }
+    else if (type == RelType::kNextTRel) {
+        res = pkb_ptr_->CheckNextT(lhs_stmt_num, rhs_stmt_num);
+    }
+    else if (type == RelType::kAffectsRel) {
+        res = pkb_ptr_->CheckAffects(lhs_stmt_num, rhs_stmt_num);
+    }
+    else if (type == RelType::kAffectsTRel) {
+        res = pkb_ptr_->CheckAffectsT(lhs_stmt_num, rhs_stmt_num);
+    }
+    */
 
     return res;
 }
@@ -381,7 +398,10 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     bool is_empty;
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
@@ -390,6 +410,15 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel) {
         is_empty = pkb_ptr_->IsFollowsStoreEmpty();
     }
+    /*
+    else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
+        is_empty = pkb_ptr_->IsNextStoreEmpty();
+    }
+    else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
+        is_empty = pkb_ptr_->IsAffectsStoreEmpty();
+    }
+    */
+    
 
     return !is_empty;
 }
@@ -397,7 +426,10 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
@@ -419,6 +451,20 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
     }
+    /*
+    else if (type == RelType::kNextRel) {
+        
+    }
+    else if (type == RelType::kNextTRel) {
+        
+    }
+    else if (type == RelType::kAffectsRel) {
+        
+    }
+    else if (type == RelType::kAffectsTRel) {
+        
+    }
+    */
 
     return !int_set->empty();
 }
@@ -426,7 +472,10 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     shared_ptr<unordered_set<int>> int_set;
@@ -446,14 +495,30 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
     else if (type == RelType::kFollowsTRel) {
         int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
     }
-
+    /*
+    else if (type == RelType::kNextRel) {
+        
+    }
+    else if (type == RelType::kNextTRel) {
+        
+    }
+    else if (type == RelType::kAffectsRel) {
+       
+    }
+    else if (type == RelType::kAffectsTRel) {
+        
+    }
+    */
     return !int_set->empty();
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     RefType rhs_stmt_type = rel.RhsRefType();
@@ -477,6 +542,20 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
         int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
     }
+    /*
+    else if (type == RelType::kNextRel) {
+       
+    }
+    else if (type == RelType::kNextTRel) {
+        
+    }
+    else if (type == RelType::kAffectsRel) {
+       
+    }
+    else if (type == RelType::kAffectsTRel) {
+       
+    }
+    */
 
     return IntSetToStrSet(int_set);
 }
@@ -484,7 +563,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
 shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     shared_ptr<unordered_set<StmtNum>> int_set;
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
@@ -493,7 +575,16 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel)
     {
         int_set = pkb_ptr_->GetAllSuccessorStmts();
+    } 
+    /*
+    else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
+    
     }
+    else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
+
+    }
+    */
+    
 
     return IntSetToStrSet(int_set);
 }
@@ -501,7 +592,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
@@ -528,6 +622,21 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
         int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
         int_set = FilterStmtSetByType(int_set, lhs_stmt_type);
     }
+    /*
+    else if (type == RelType::kNextRel) {
+
+    }
+    else if (type == RelType::kNextTRel) {
+
+    }
+    else if (type == RelType::kAffectsRel) {
+
+    }
+    else if (type == RelType::kAffectsTRel) {
+
+    }
+    */
+
 
     return IntSetToStrSet(int_set);
 }
@@ -535,7 +644,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     shared_ptr<unordered_set<StmtNum>> int_set;
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
@@ -545,6 +657,14 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
     {
         int_set = pkb_ptr_->GetAllPredecessorStmts();
     }
+    /*
+    else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
+
+    }
+    else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
+
+    }
+    */
 
     return IntSetToStrSet(int_set);
 }
@@ -552,7 +672,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+        || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
+        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     RefType lhs_stmt_type = rel.LhsRefType();
     RefType rhs_stmt_type = rel.RhsRefType();
@@ -569,6 +692,20 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
     else if (type == RelType::kFollowsTRel) {
         table = pkb_ptr_->GetAllFollowsTRelations();
     }
+    /*
+    else if (type == RelType::kNextRel) {
+
+    }
+    else if (type == RelType::kNextTRel) {
+
+    }
+    else if (type == RelType::kAffectsRel) {
+
+    }
+    else if (type == RelType::kAffectsTRel) {
+
+    }
+    */
     table = FilterStmtTableByType(table, lhs_stmt_type, rhs_stmt_type);
 
     return IntIntToStrStrTable(table);
@@ -681,32 +818,38 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(Assi
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByVar(IfPattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByWildcard(IfPattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllIfPattern(IfPattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(WhilePattern& pat)
 {
-
+    // TODO: plug in PKB API here
+    return nullptr;
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(shared_ptr<unordered_set<int>> set)

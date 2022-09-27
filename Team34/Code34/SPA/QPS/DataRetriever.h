@@ -105,7 +105,7 @@ protected:
 
 public:
 	DataRetriever() {
-		pkb_ptr_ = std::move(ReadPKBManager::GetInstance());
+		pkb_ptr_ = ReadPKBManager::GetInstance();
 	};
 
 	DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb } {};
