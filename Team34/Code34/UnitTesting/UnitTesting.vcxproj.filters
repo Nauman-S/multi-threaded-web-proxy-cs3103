@@ -47,25 +47,28 @@
     <ClCompile Include="TestFollowsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="QPS\TestDataRetriever.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
-	<ClCompile Include="TestFollowsManager.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
-	<ClCompile Include="TestCallsManager.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="QPS\TestDataRetriever.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFollowsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCallsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TestStatementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="TestConstantManager.cpp">
+    <ClCompile Include="TestConstantManager.cpp">
       <Filter>Source Files</Filter>
-	</ClCompile>
-	<ClCompile Include="TestVariableManager.cpp">
-	  <Filter>Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
+    <ClCompile Include="TestVariableManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TestPatternManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\TestSourceLexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
