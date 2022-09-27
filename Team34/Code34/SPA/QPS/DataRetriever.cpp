@@ -840,7 +840,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhileP
     return nullptr;
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
+shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByWildcard(WhilePattern& pat)
 {
     // TODO: plug in PKB API here
     return nullptr;
