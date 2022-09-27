@@ -208,10 +208,15 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
         res = make_shared<ResWrapper>(set_res);
     }
     else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-        shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
-        unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
-        shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
-        res = make_shared<ResWrapper>(table_res);
+        if (IsSameSynonymsInvalid(rel)) {
+            res = make_shared<ResWrapper>(false);
+        }
+        else {
+            shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
+            unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(), 1} };
+            shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
+            res = make_shared<ResWrapper>(table_res);
+        }
     }
     // Wildcard hanlding cases below
     else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kLineNum) {
@@ -261,10 +266,15 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
         res = make_shared<ResWrapper>(set_res);
     }
     else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-        auto table = GetAllPPRel(rel);
-        unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(),1} };
-        shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
-        res = make_shared<ResWrapper>(table_res);
+        if (IsSameSynonymsInvalid(rel)) {
+            res = make_shared<ResWrapper>(false);
+        }
+        else {
+            auto table = GetAllPPRel(rel);
+            unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0}, {rel.RhsValue(),1} };
+            shared_ptr<TableRes> table_res = make_shared<TableRes>(syn_to_col, table);
+            res = make_shared<ResWrapper>(table_res);
+        }
     }
     // Wildcard hanlding cases below
     else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kProcName) {
@@ -1339,6 +1349,30 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::IntIntToStrStrTable
     }
 
     return res;
+}
+
+bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel)
+{
+    if (rel.LhsValue() != rel.RhsValue()) {
+        return false;
+    }
+    
+    auto rel_type = rel.GetRelType();
+    if (rel_type == RelType::kNextTRel || rel_type == RelType::kAffectsRel || rel_type == RelType::kAffectsTRel) {
+        // Exceptions that can have same synonym on both sides.
+        return false;
+    }
+
+    return true;
+}
+
+bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel)
+{
+    if (rel.LhsValue() != rel.RhsValue()) {
+        return false;
+    }
+
+    return true;
 }
 
 shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<unordered_set<int>> stmts, RefType stmt_type)

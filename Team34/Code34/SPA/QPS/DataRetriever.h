@@ -120,6 +120,10 @@ protected:  // helper methods
 	std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(std::shared_ptr<std::unordered_set<int>> set);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntStrToStrStrTable(std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> IntIntToStrStrTable(std::shared_ptr<std::vector<std::pair<int, int>>> table);
+
+	// type checking helpers
+	bool IsSameSynonymsInvalid(StmtStmtRel& rel);
+	bool IsSameSynonymsInvalid(ProcProcRel& rel);
 	
 	// Filter helpers
 	std::shared_ptr<std::unordered_set<int>> FilterStmtSetByType(std::shared_ptr<std::unordered_set<int>> stmts, RefType stmt_type);
