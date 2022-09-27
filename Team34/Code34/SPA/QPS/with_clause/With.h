@@ -24,7 +24,7 @@ protected:
 public:
 
 	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2)
-		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, is_valid_{ true } {};
+		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, is_valid_{ true }, req_lhs_val_type_(ValType::kInt), req_rhs_val_type_{ ValType::kInt } {};
 
 	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2, ValType lhs_type, ValType rhs_type)
 		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, req_lhs_val_type_(lhs_type), req_rhs_val_type_{rhs_type}, is_valid_{ true } {};

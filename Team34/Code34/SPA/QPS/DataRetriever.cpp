@@ -397,19 +397,22 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with)
     else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
         auto table = GetAllWithClause(with);
         unordered_map<string, int> syn_to_col = { {with.LhsValue(),0}, {with.RhsValue(),1} };
-        res = make_shared<ResWrapper>(syn_to_col, table);
+        auto table_res = make_shared<TableRes>(syn_to_col, table);
+        res = make_shared<ResWrapper>(table_res);
     }
     else if (lhs_type == ValType::kSynonym) {
-        auto str_val_ptr = make_shared<string>(&(with.RhsValue()));
+        auto str_val_ptr = make_shared<string>(with.RhsValue());
         auto set = GetWithClauseByRefType(with.LhsRefType(), with.RequiredLhsValType(), str_val_ptr);
         auto syn_name = with.LhsValue();
-        res = make_shared<ResWrapper>(syn_name, set);
+        auto set_res = make_shared<SetRes>(syn_name, set);
+        res = make_shared<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kSynonym) {
-        auto str_val_ptr = make_shared<string>(&(with.LhsValue()));
+        auto str_val_ptr = make_shared<string>(with.LhsValue());
         auto set = GetWithClauseByRefType(with.RhsRefType(), with.RequiredRhsValType(), str_val_ptr);
         auto syn_name = with.RhsValue();
-        res = make_shared<ResWrapper>(syn_name, set);
+        auto set_res = make_shared<SetRes>(syn_name, set);
+        res = make_shared<ResWrapper>(set_res);
     }
 
     return res;
@@ -1075,7 +1078,7 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
 
     }
     */
-    table = FilterStmtTableByType(table, lhs_stmt_type, rhs_stmt_type);
+    table = FilterStmtTableByTypes(table, lhs_stmt_type, rhs_stmt_type);
 
     return IntIntToStrStrTable(table);
 }

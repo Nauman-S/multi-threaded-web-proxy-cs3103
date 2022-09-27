@@ -1074,7 +1074,7 @@ namespace UnitTesting
 
 			Assert::IsTrue(query_->GetWithClauses()->at(0)->ValTypes().first == ValType::kInt);
 			Assert::IsTrue(query_->GetWithClauses()->at(0)->ValTypes().second == ValType::kString);
-			Assert::IsTrue(query_->GetWithClauses()->at(0)->RefType() == RefType::kUnknown);
+			Assert::IsTrue(query_->GetWithClauses()->at(0)->LhsRefType() == RefType::kUnknown);
 			Assert::IsTrue(query_->GetWithClauses()->at(0)->LhsValue() == lhs_value_);
 			Assert::IsTrue(query_->GetWithClauses()->at(0)->RhsValue() == rhs_value_);
 
