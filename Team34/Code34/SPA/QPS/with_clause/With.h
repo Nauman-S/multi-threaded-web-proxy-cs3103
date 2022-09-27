@@ -17,17 +17,27 @@ protected:
 	// either one of the reference shuold be synonym
 	std::shared_ptr<Ref> lhs_ref_ptr_;
 	std::shared_ptr<Ref> rhs_ref_ptr_;
+	ValType req_lhs_val_type_;
+	ValType req_rhs_val_type_;
 	bool is_valid_;
 
 public:
-	explicit With(bool is_valid) : lhs_ref_ptr_{ nullptr }, rhs_ref_ptr_{ nullptr }, is_valid_{ is_valid } {};
 
 	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2)
-		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, is_valid_{ true } {};  // Expect LHS always be synonym reference
+		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, is_valid_{ true }, req_lhs_val_type_(ValType::kInt), req_rhs_val_type_{ ValType::kInt } {};
 
-	RefType RefType() { return lhs_ref_ptr_->GetRefType(); }  // LHS and RHS should be the same RefType
+	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2, ValType lhs_type, ValType rhs_type)
+		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, req_lhs_val_type_(lhs_type), req_rhs_val_type_{rhs_type}, is_valid_{ true } {};
 
-	std::pair<ValType, ValType> ValTypes() { return std::make_pair<ValType, ValType>(lhs_ref_ptr_->GetValType(), rhs_ref_ptr_->GetValType()); }
+	RefType LhsRefType() { return lhs_ref_ptr_->GetRefType(); }
+
+	RefType RhsRefType() { return rhs_ref_ptr_->GetRefType(); }
+
+	std::pair<ValType, ValType> ValTypes() { return std::make_pair(lhs_ref_ptr_->GetValType(), rhs_ref_ptr_->GetValType()); }
+
+	ValType RequiredLhsValType() { return req_lhs_val_type_; }
+
+	ValType RequiredRhsValType() { return req_rhs_val_type_; }
 
 	std::string LhsValue() { return lhs_ref_ptr_->GetName(); }
 

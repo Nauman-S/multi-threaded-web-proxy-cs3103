@@ -199,6 +199,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatement
 	return pkb.uses_manager_.GetAllStatements();
 }
 
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllUsesSVariables()
+{
+	return pkb.uses_manager_.GetAllSVariables();
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllUsesProcedures()
 {
 	return pkb.uses_manager_.GetAllProcedures();
@@ -248,6 +253,11 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNa
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
 {
 	return pkb.modifies_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllModifiesSVariables()
+{
+	return pkb.modifies_manager_.GetAllSVariables();
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesProcedures()

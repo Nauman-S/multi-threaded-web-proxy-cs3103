@@ -62,6 +62,17 @@ namespace UnitTesting
 			Assert::AreEqual(2, int(stmts->size()));
 		};
 
+		TEST_METHOD(TestGetAllSVariables)
+		{
+			uses_manager_.SetUses(1, "x");
+			std::shared_ptr<std::unordered_set<Variable>> vars = uses_manager_.GetAllSVariables();
+			Assert::AreEqual(1, int(vars->size()));
+			uses_manager_.SetUses(1, "y");
+			uses_manager_.SetUses(2, "z");
+			vars = uses_manager_.GetAllSVariables();
+			Assert::AreEqual(3, int(vars->size()));
+		};
+
 		TEST_METHOD(TestGetAllPVUses) 
 		{
 			uses_manager_.SetUses("proc1", "x");
