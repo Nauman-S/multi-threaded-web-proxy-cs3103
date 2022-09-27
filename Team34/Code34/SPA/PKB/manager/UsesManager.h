@@ -19,6 +19,7 @@ public:
 	std::shared_ptr <std::unordered_set<StmtNum>> GetStmtNumByVar(Variable var);
 	std::shared_ptr <std::unordered_set<Procedure>> GetProcNameByVar(Variable var);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+	std::shared_ptr<std::unordered_set<Variable>> GetAllSVariables();
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
 	std::shared_ptr <std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
