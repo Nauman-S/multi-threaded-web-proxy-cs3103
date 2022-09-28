@@ -18,8 +18,13 @@ stmt s;
 Select s such that Parent(10, s)
 11, 12
 5000
-4 - test parents* for while
+5 - test parents* for while
 stmt s;
 Select s such that Parent*(10, s)
 11, 12, 13, 14
+5000
+6 - test parents with empty result
+stmt s; while w; read r;
+Select s such that Parent(w, r)
+none
 5000

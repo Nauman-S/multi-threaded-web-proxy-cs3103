@@ -34,6 +34,8 @@ public:
 
     std::shared_ptr<const std::vector<StrPair>> GetRows();
 
+    bool IsEmpty() { return rows_ptr_->empty(); }
+
     //string GetValue(int index, string syn);
 };
 

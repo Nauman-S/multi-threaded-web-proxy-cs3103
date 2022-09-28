@@ -26,7 +26,7 @@ protected:
 public:
 	QueryEvaluator(Query query);
 
-	bool evaluate();
+	bool Evaluate();
 
 	std::vector<std::string> ExtractResult();
 };

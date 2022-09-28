@@ -22,7 +22,7 @@ class TestWrapper : public AbstractWrapper {
   virtual void parse(std::string filename);
   
   // method for evaluating a query
-  virtual void evaluate(std::string query, std::list<std::string>& results);
+  virtual void Evaluate(std::string query, std::list<std::string>& results);
 };
 
 #endif

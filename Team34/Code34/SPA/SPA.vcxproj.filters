@@ -95,6 +95,7 @@
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\with_clause\With.cpp" />
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
+    <ClCompile Include="QPS\query_result\Table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -224,5 +225,6 @@
     <ClInclude Include="QPS\with_clause\With.h" />
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
+    <ClInclude Include="QPS\query_result\Table.h" />
   </ItemGroup>
 </Project>

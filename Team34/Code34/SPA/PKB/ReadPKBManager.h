@@ -71,6 +71,7 @@ public:
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllUsesSVariables();
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
 	virtual std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
@@ -83,6 +84,7 @@ public:
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
+	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllModifiesSVariables();
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
 	virtual std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();

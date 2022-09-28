@@ -54,7 +54,7 @@ void TestWrapper::parse(std::string filename) {
 }
 
 // method to evaluating a query
-void TestWrapper::evaluate(std::string query_str, std::list<std::string>& results){
+void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& results){
     // call your evaluator to evaluate the query here
     // ...code to evaluate query...
 	// store the answers to the query in the results list (it is initially empty)
@@ -84,7 +84,7 @@ void TestWrapper::evaluate(std::string query_str, std::list<std::string>& result
 
 		cout << query.GetSelectTuple() << endl;
 		QueryEvaluator evaluator(query);
-		if (evaluator.evaluate()) {
+		if (evaluator.Evaluate()) {
 			vector<std::string> res = evaluator.ExtractResult();
 			results.insert(results.end(), res.begin(), res.end());
 		}

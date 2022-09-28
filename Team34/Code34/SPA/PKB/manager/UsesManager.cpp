@@ -44,6 +44,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> UsesManager::GetAllStatements()
 	return uses_sv_store_.GetAllLHS();
 }
 
+std::shared_ptr<std::unordered_set<Variable>> UsesManager::GetAllSVariables()
+{
+	return uses_sv_store_.GetAllRHS();
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> UsesManager::GetAllProcedures()
 {
 	return uses_pv_store_.GetAllLHS();
