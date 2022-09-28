@@ -1,3 +1,8 @@
+6 - test empty follows
+if ifs; assign a; 
+Select a such that Follows (ifs, 3)
+
+5000
 1 - test follows in top level
 stmt s;
 Select s such that Follows(1, s)
