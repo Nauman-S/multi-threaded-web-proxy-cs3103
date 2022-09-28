@@ -36,16 +36,16 @@ public:
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child);
 	virtual bool IsParentStoreEmpty();
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
-	virtual StmtNum GetParentFromStmt(StmtNum child);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 
 	// APIs related to Parent* relation
 	virtual bool CheckParentT(StmtNum parent, StmtNum child);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt, RefType children_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt, RefType parent_type);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 
 	// APIs related to Follows relation
@@ -119,4 +119,6 @@ public:
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatmentsFromVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatements();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllWhilePatterns();
+private:
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterStmtSetByType(std::shared_ptr<std::unordered_set<StmtNum>> stmts, RefType stmt_type);
 };

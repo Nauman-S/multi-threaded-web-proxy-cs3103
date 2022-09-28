@@ -89,15 +89,15 @@ class ReadPKBManagerStub : public ReadPKBManager
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child) override;
 	virtual bool IsParentStoreEmpty() override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent) override;
-	virtual StmtNum GetParentFromStmt(StmtNum child) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type) override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren() override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents() override;
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations() override;
 
 	// APIs related to Parent* relation
 	virtual bool CheckParentT(StmtNum parent, StmtNum child) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt, RefType children_type) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt, RefType parent_type) override;
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations() override;
 };
