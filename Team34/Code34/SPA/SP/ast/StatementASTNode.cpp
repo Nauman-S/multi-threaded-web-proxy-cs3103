@@ -12,9 +12,6 @@ void StatementASTNode::SetLineIndex(StmtNum& idx) {
 	lineIndex = idx;
 }	
 
-StatementType StatementASTNode::GetStatementType() {
-	return statement_type;
-}
 
 std::string StatementASTNode::GetTypeVal() {
 	return type_val;

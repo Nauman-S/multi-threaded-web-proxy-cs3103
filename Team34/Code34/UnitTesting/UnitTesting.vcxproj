@@ -170,7 +170,9 @@
     <ClCompile Include="SP\TestSourceLexer.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
     <ClCompile Include="TestStatementManager.cpp" />
-    <ClCompile Include="TestPatternManager.cpp" />
+    <ClCompile Include="TestAssignPatternManager.cpp" />
+    <ClCompile Include="TestIfPatternManager.cpp" />
+    <ClCompile Include="TestWhilePatternManager.cpp" />
     <ClCompile Include="TestUsesManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

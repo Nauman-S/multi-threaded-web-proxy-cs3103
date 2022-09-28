@@ -1,16 +1,16 @@
 #pragma once
 
 #include "StatementASTNode.h"
-#include "../VariableIndex.h"
+#include "../../Utils/type/TypeDef.h"
 
 class PrintStatementASTNode : public StatementASTNode {
 public:
-	void SetVariable(VariableIndex&);
+	void SetVariable(Variable&);
 
-	VariableIndex GetVariable();
+	Variable GetVariable();
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
-	VariableIndex var;
+	Variable var;
 };

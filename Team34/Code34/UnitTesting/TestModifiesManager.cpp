@@ -48,14 +48,26 @@ namespace UnitTesting
 			Assert::AreEqual(3, int(all_pairs->size()));
 		};
 
-		TEST_METHOD(TestGetAllStatements) 
+		TEST_METHOD(TestGetAllStatements)
 		{
 			modifies_manager_.SetModifies(1, "x");
 			modifies_manager_.SetModifies(2, "y");
 			modifies_manager_.SetModifies(3, "z");
 			std::shared_ptr<std::unordered_set<StmtNum>> stmts = modifies_manager_.GetAllStatements();
 			Assert::AreEqual(3, int(stmts->size()));
-		}
+		};
+
+		TEST_METHOD(TestGetAllSVariables)
+		{
+			modifies_manager_.SetModifies(1, "x");
+			modifies_manager_.SetModifies(2, "y");
+			modifies_manager_.SetModifies(3, "z");
+			std::shared_ptr<std::unordered_set<Variable>> vars = modifies_manager_.GetAllSVariables();
+			Assert::AreEqual(3, int(vars->size()));
+			modifies_manager_.SetModifies(4, "z");
+			vars = modifies_manager_.GetAllSVariables();
+			Assert::AreEqual(3, int(vars->size()));
+		};
 
 		TEST_METHOD(TestGetAllPVModifies) 
 		{

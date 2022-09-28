@@ -8,12 +8,16 @@ class ControlFlowNode {
 public:
 	void AddStmtNum(StmtNum);
 
-	void AddOutgoingNode(shared_ptr<ControlFlowNode>);
+	void AddOutgoingNode(ControlFlowNode);
 
-	set<shared_ptr<ControlFlowNode>> GetOutgoingNodes();
+	void AddIncomingNode(ControlFlowNode);
 
+	set<ControlFlowNode> GetOutgoingNodes();
+
+	set<ControlFlowNode> GetIncomingNodes();
 
 protected:
 	set<StmtNum> elements;
-	set<shared_ptr<ControlFlowNode>> outgoing;
+	set<ControlFlowNode> outgoing;
+	set<ControlFlowNode> incoming;
 };

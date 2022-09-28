@@ -199,6 +199,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatement
 	return pkb.uses_manager_.GetAllStatements();
 }
 
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllUsesSVariables()
+{
+	return pkb.uses_manager_.GetAllSVariables();
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllUsesProcedures()
 {
 	return pkb.uses_manager_.GetAllProcedures();
@@ -250,6 +255,11 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesState
 	return pkb.modifies_manager_.GetAllStatements();
 }
 
+std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllModifiesSVariables()
+{
+	return pkb.modifies_manager_.GetAllSVariables();
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllModifiesProcedures()
 {
 	return pkb.modifies_manager_.GetAllProcedures();
@@ -265,20 +275,70 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::Get
 	return pkb.modifies_manager_.GetAllPVModifies();
 }
 
-// APIs related to Pattern relation
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
+// APIs related to Assign Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+	}
+	return filtered_stmts;
 }
 
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.modifies_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+	}
+	return filtered_stmts;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.GetAssignPatternMatch(expr);
+	return pkb.assign_pattern_manager_.GetPatternMatch(expr);
+}
+
+// APIs related to If Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatmentsFromVar(Variable var)
+{
+	return pkb.if_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatements()
+{
+	return pkb.if_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllIfPatterns()
+{
+	return pkb.if_pattern_manager_.GetAllPatterns();
+}
+
+// APIs related to While Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatmentsFromVar(Variable var)
+{
+	return pkb.while_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatements()
+{
+	return pkb.while_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllWhilePatterns()
+{
+	return pkb.while_pattern_manager_.GetAllPatterns();
 }
 
 // APIs related to Calls relation
