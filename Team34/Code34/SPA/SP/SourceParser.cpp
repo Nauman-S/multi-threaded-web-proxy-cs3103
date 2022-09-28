@@ -107,6 +107,7 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	shared_ptr<ConditionExpression> cond (new ConditionExpression());
 	StmtNum line_index = line_idx;
 	vector<Variable> vars = {};
+	vector<Constant> cons = {};
 	cond->SetLineIndex(line_index);
 	line_idx += 1;
 	int round_count = 1;
@@ -114,6 +115,10 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			Variable v = tokens.at(token_idx).GetStringVal();
 			vars.push_back(v);
+		}
+		else if (tokens.at(token_idx).GetType() == SourceTokenType::kInteger) {
+			Constant c = stoi(tokens.at(token_idx).GetStringVal());
+			cons.push_back(c);
 		}
 		else if (tokens.at(token_idx).GetType() == SourceTokenType::kLeftRound) {
 			round_count += 1;
@@ -127,6 +132,7 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 		token_idx += 1;
 	}
 	cond->SetVariables(vars);
+	cond->SetConstants(cons);
 	token_idx += 2;   // ) { x || ) then {
 	return cond;
 }
