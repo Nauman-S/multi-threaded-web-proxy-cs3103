@@ -1,7 +1,7 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests34</name><parsing_time_taken>16.000000</parsing_time_taken>
+<name>Tests34</name><parsing_time_taken>17.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
@@ -15,29 +15,45 @@
 <id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents* for if in if">2</id><querystr><![CDATA[stmt s; Select s such that Parent*(2, s)]]></querystr>
 <stuans>3,4,5,6,7,8</stuans>
 <correct>3,4,5,6,7,8</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for while in if">3</id><querystr><![CDATA[stmt s; Select s such that Parent(7, s)]]></querystr>
 <stuans>8</stuans>
 <correct>8</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents for while">4</id><querystr><![CDATA[stmt s; Select s such that Parent(10, s)]]></querystr>
 <stuans>11,12</stuans>
 <correct>11,12</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>2.000000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents* for while">4</id><querystr><![CDATA[stmt s; Select s such that Parent*(10, s)]]></querystr>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents* for while">5</id><querystr><![CDATA[stmt s; Select s such that Parent*(10, s)]]></querystr>
 <stuans>11,12,13,14</stuans>
 <correct>11,12,13,14</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>4.000000</time_taken>
 <passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="test parents with empty result">6</id><querystr><![CDATA[stmt s; while w; read r; Select s such that Parent(w, r)]]></querystr>
+<stuans>1,10,11,12,13,14,2,3,4,5,6,7,8,9</stuans>
+<correct></correct>
+<time_taken>4.000000</time_taken>
+<failed>
+<missing></missing>
+<additional>1,10,11,12,13,14,2,3,4,5,6,7,8,9</additional>
+<summary>
+<expected>0</expected>
+<matched>0</matched>
+<missing>0</missing>
+<additional>14</additional>
+</summary>
+</failed>
 </query>
 </queries>
 </test_results>

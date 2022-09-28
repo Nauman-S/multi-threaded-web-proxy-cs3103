@@ -1,14 +1,14 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests34</name><parsing_time_taken>11.000000</parsing_time_taken>
+<name>Tests34</name><parsing_time_taken>6.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test uses in procedure">1</id><querystr><![CDATA[variable v; Select v such that Uses("second", v)]]></querystr>
 <stuans>anotherProc</stuans>
 <correct>anotherProc</correct>
-<time_taken>3.000000</time_taken>
+<time_taken>4.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -43,7 +43,7 @@
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="test uses of call">6</id><querystr><![CDATA[variable v; Select v such that Uses(6, v)]]></querystr>
 <stuans>anotherProc</stuans>
 <correct>anotherProc</correct>
-<time_taken>2.000000</time_taken>
+<time_taken>3.000000</time_taken>
 <passed/>
 </query>
 </queries>

@@ -44,5 +44,4 @@ public:
 	std::string RhsValue() { return rhs_ref_ptr_->GetName(); }
 
 	std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
-
 };
