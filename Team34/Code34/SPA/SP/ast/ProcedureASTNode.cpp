@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ProcedureIndex ProcedureASTNode::GetProc() {
+Procedure ProcedureASTNode::GetProc() {
 	return proc;
 }
 
@@ -10,7 +10,7 @@ std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::GetChildren() {
 	return children;
 }
 
-void ProcedureASTNode::SetProc(ProcedureIndex& p) {
+void ProcedureASTNode::SetProc(Procedure& p) {
 	proc = p;
 }
 

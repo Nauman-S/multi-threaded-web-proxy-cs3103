@@ -15,6 +15,7 @@ public:
 		std::shared_ptr<ReadPKBManager> manager(new ReadPKBManager());
 		return manager;
 	}
+
     // APIs related to Variable entity
     virtual bool IsVariable(Variable var);
 	virtual const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
@@ -104,8 +105,18 @@ public:
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
 	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
 
-	// APIs related to Pattern relation
-	virtual bool IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);
-	virtual bool IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr);
+	// APIs related to Assign Pattern relation
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
+
+	// APIs related to If Pattern relation
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfPatternStatmentsFromVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfPatternStatements();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllIfPatterns();
+
+	// APIs related to While Pattern relation
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatmentsFromVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatements();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllWhilePatterns();
 };

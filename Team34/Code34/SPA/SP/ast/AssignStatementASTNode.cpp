@@ -2,20 +2,28 @@
 
 using namespace std;
 
-void AssignStatementASTNode::SetLeft(VariableIndex& l) {
+void AssignStatementASTNode::SetLeft(Variable& l) {
 	left = l;
 }
 
-void AssignStatementASTNode::SetRight(std::vector<VariableIndex>& r) {
-	right = r;
+void AssignStatementASTNode::SetRightVars(std::vector<Variable>& r) {
+	right_vars = r;
 }
 
-VariableIndex AssignStatementASTNode::GetLeft() {
+void AssignStatementASTNode::SetRightCons(std::vector<Constant>& r) {
+	right_cons = r;
+}
+
+Variable AssignStatementASTNode::GetLeft() {
 	return left;
 }
 
-std::vector<VariableIndex> AssignStatementASTNode::GetRight() {
-	return right;
+std::vector<Variable> AssignStatementASTNode::GetRightVars() {
+	return right_vars;
+}
+
+std::vector<Constant> AssignStatementASTNode::GetRightCons() {
+	return right_cons;
 }
 
 void AssignStatementASTNode::Extract(NodeExtractor& extractor) {

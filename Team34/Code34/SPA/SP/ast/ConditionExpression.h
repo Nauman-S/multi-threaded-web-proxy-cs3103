@@ -2,16 +2,21 @@
 
 # include <vector>
 # include "StatementASTNode.h"
-
+#include "../../Utils/type/TypeDef.h"
 
 class ConditionExpression : public StatementASTNode {
 public:
-	void SetVariables(std::vector<VariableIndex>&);
+	void SetVariables(std::vector<Variable>&);
 
-	std::vector<VariableIndex> GetVariables();
+	void SetConstants(std::vector<Constant>&);
+
+	std::vector<Variable> GetVariables();
+
+	std::vector<Constant> GetConstants();
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
-	std::vector<VariableIndex> vars;
+	std::vector<Variable> vars;
+	std::vector<Constant> cons;
 };
