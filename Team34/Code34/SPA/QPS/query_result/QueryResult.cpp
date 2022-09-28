@@ -47,10 +47,12 @@ bool QueryResult::MergeResult(shared_ptr<ResWrapper> res_wrapper) {
 
 	if (type == ResType::kSet) {
 		shared_ptr<SetRes> set_res = res_wrapper->GetSet();
+		if (set_res->IsEmpty()) { return false; }
 		return MergeSetResult(set_res);
 	}
 	else if (type == ResType::kTable) {
 		shared_ptr<TableRes> table_res = res_wrapper->GetTable();
+		if (table_res->IsEmpty()) { return false; }
 		return MergeTableResult(table_res);
 	}
 	else {
