@@ -1,5 +1,6 @@
 #include "PatternWithExprStore.h"
 
+// TODO: remove variable from PatternStore as not needed anymore
 void PatternWithExprStore::AddPattern(StmtNum stmt_num, Variable var, Expr expr)
 {
 	assert(statement_map_.find(stmt_num) == statement_map_.end());

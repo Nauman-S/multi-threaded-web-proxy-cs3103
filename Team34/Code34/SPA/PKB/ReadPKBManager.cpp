@@ -286,9 +286,8 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatte
 		{
 			filtered_stmts->insert(stmt_num);
 		}
-		return filtered_stmts;
 	}
-
+	return filtered_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr)
@@ -297,12 +296,12 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatte
 	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
 	for (auto stmt_num : *temp_set)
 	{
-		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, var, expr))
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
 		{
 			filtered_stmts->insert(stmt_num);
 		}
-		return filtered_stmts;
 	}
+	return filtered_stmts;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
