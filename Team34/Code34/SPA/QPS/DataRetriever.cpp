@@ -1161,11 +1161,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Assig
     }
     else {
         shared_ptr<unordered_set<StmtNum>> temp_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
-        for (auto stmt_num : *temp_set) {
-            if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
-                stmt_set->insert(stmt_num);
-            }
-        }
+        stmt_set = pkb_ptr_->FilterByAssignPatternMatch(temp_set, expr_spec_ptr);
     }
 
     return IntSetToStrSet(stmt_set);
@@ -1180,11 +1176,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
     }
     else {
         shared_ptr<unordered_set<StmtNum>> temp_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
-        for (auto stmt_num : *temp_set) {
-            if (pkb_ptr_->IsAssignPatternMatch(stmt_num, expr_spec_ptr)) {
-                stmt_set->insert(stmt_num);
-            }
-        }
+        stmt_set = pkb_ptr_->FilterByAssignPatternMatch(temp_set, expr_spec_ptr);
     }
 
     return IntSetToStrSet(stmt_set);

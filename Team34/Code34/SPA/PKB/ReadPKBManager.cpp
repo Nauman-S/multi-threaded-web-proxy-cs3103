@@ -276,14 +276,31 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::Get
 }
 
 // APIs related to Assign Pattern relation
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(std::shared_ptr<std::unordered_set<StmtNum>> stmts, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *stmts)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+		return filtered_stmts;
+	}
+
 }
 
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(std::shared_ptr<std::unordered_set<StmtNum>> stmts, Variable var, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, var, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *stmts)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, var, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+		return filtered_stmts;
+	}
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
