@@ -52,4 +52,7 @@ public:
 	std::map<LineIndex, std::shared_ptr<StatementASTNode>> is_mapping;
 
 	static inline std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_name_to_node_;
+
+private:
+	std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };
