@@ -37,34 +37,34 @@ void UsesModifiesExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 * Modifies: Variable on LHS of assignment
 */
 void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
-	std::string proc_name = assign.GetParentProcIndex().GetName();
-	int line_no = assign.GetLineIndex().GetLineNum();
+	std::string proc_name = assign.GetParentProcIndex();
+	int line_no = assign.GetLineIndex();
 
-	std::vector<VariableIndex> rhs = assign.GetRight();
-	for (VariableIndex var : rhs) {
-		this->SetUses(proc_name, var.GetName());
-		this->SetUses(line_no, var.GetName());
-		this->SetIndirectUses(var.GetName());
+	std::vector<Variable> rhs = assign.GetRightVars();
+	for (Variable var : rhs) {
+		this->SetUses(proc_name, var);
+		this->SetUses(line_no, var);
+		this->SetIndirectUses(var);
 	}
 
-	VariableIndex lhs = assign.GetLeft();
-	this->SetModifies(proc_name, lhs.GetName());
-	this->SetModifies(line_no, lhs.GetName());
-	this->SetIndirectModifies(lhs.GetName());
+	Variable lhs = assign.GetLeft();
+	this->SetModifies(proc_name, lhs);
+	this->SetModifies(line_no, lhs);
+	this->SetIndirectModifies(lhs);
 }
 
 void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
 	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> name_to_node_map = SourceParser::proc_name_to_node_;
-	Procedure proc_name = call.GetProcedure().GetName();
+	Procedure proc_name = call.GetProcedure();
 	if (name_to_node_map.find(proc_name) == name_to_node_map.end()) {
 		// Consider if should return error when calling undefined procedure
 		return;
 	}
 
-	Procedure parent_procedure = call.GetParentProcIndex().GetName();
+	Procedure parent_procedure = call.GetParentProcIndex();
 	std::shared_ptr<ProcedureASTNode> called_proc_node = name_to_node_map.at(proc_name);
 	this->proc_call_stack_.push_back(parent_procedure);
-	this->parent_smts_.push_back(call.GetLineIndex().GetLineNum());
+	this->parent_smts_.push_back(call.GetLineIndex());
 	called_proc_node->Extract(*this);
 	this->parent_smts_.pop_back();
 	this->proc_call_stack_.pop_back();
@@ -72,24 +72,24 @@ void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
 
 // Uses: variable used by print
 void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
-	VariableIndex var = print.GetVariable();
-	std::string proc_name = print.GetParentProcIndex().GetName();
-	int line_no = print.GetLineIndex().GetLineNum();
+	Variable var = print.GetVariable();
+	std::string proc_name = print.GetParentProcIndex();
+	int line_no = print.GetLineIndex();
 
-	this->SetUses(proc_name, var.GetName());
-	this->SetUses(line_no, var.GetName());
-	this->SetIndirectUses(var.GetName());
+	this->SetUses(proc_name, var);
+	this->SetUses(line_no, var);
+	this->SetIndirectUses(var);
 }
 
 // Modifies: variable used by read
 void UsesModifiesExtractor::ExtractReadNode(ReadStatementASTNode& read) {
-	VariableIndex var = read.GetReadVariable();
-	std::string proc_name = read.GetParentProcIndex().GetName();
-	int line_no = read.GetLineIndex().GetLineNum();
+	Variable var = read.GetReadVariable();
+	std::string proc_name = read.GetParentProcIndex();
+	int line_no = read.GetLineIndex();
 
-	this->SetModifies(proc_name, var.GetName());
-	this->SetModifies(line_no, var.GetName());
-	this->SetIndirectModifies(var.GetName());
+	this->SetModifies(proc_name, var);
+	this->SetModifies(line_no, var);
+	this->SetIndirectModifies(var);
 }
 
 void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
@@ -98,7 +98,7 @@ void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 
 	// Remember parent container statement, and all UsesModifies for children
 	// will also apply for this container statement
-	this->parent_smts_.push_back(if_stmt.GetLineIndex().GetLineNum());
+	this->parent_smts_.push_back(if_stmt.GetLineIndex());
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
 	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
 		then_child->Extract(*this);
@@ -115,7 +115,7 @@ void UsesModifiesExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) 
 	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
 	cond->Extract(*this);
 
-	this->parent_smts_.push_back(while_stmt.GetLineIndex().GetLineNum());
+	this->parent_smts_.push_back(while_stmt.GetLineIndex());
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
@@ -125,14 +125,14 @@ void UsesModifiesExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) 
 
 // Uses: all variables involved in a conditional expression
 void UsesModifiesExtractor::ExtractConditionExpression(ConditionExpression& cond) {
-	std::string proc_name = cond.GetParentProcIndex().GetName();
-	int line_no = cond.GetLineIndex().GetLineNum();
+	std::string proc_name = cond.GetParentProcIndex();
+	int line_no = cond.GetLineIndex();
 
-	std::vector<VariableIndex> vars = cond.GetVariables();
-	for (VariableIndex var : vars) {
-		this->SetUses(line_no, var.GetName());
-		this->SetUses(proc_name, var.GetName());
-		this->SetIndirectUses(var.GetName());
+	std::vector<Variable> vars = cond.GetVariables();
+	for (Variable var : vars) {
+		this->SetUses(line_no, var);
+		this->SetUses(proc_name, var);
+		this->SetIndirectUses(var);
 	}
 }
 
