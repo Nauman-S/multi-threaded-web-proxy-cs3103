@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <stack>
+#include <iostream>
 #include <algorithm>
 #include <iterator>
 #include <tuple>
@@ -30,6 +31,14 @@ unordered_map<char, int> SpaAlgo::precedence_ = {
 	{'*', 2},
 	{'/', 2},
 	{'%', 2},
+};
+
+unordered_map<string, int> SpaAlgo::precedence2_ = {
+	{"+", 1},
+	{"-", 1},
+	{"*", 2},
+	{"/", 2},
+	{"%", 2},
 };
 
 string SpaAlgo::InfixToPostfix(string infix)
@@ -70,6 +79,55 @@ string SpaAlgo::InfixToPostfix(string infix)
 		stk.pop();
 	}
 	return postfix;
+}
+
+string SpaAlgo::InfixToPostfix2(string& infix)
+{
+	stack<string> stk;
+	string postfix = "";
+	for (string& token : *Split(infix, ' ')) {
+		if (token == "(") {
+			stk.push(token);
+		}
+		else if (token == ")") {
+			assert(!stk.empty());
+			while (!stk.empty() && stk.top() != "(") {
+				postfix += (stk.top() + " ");
+				stk.pop();
+			}
+			stk.pop();  // discard the "("
+		}
+		else if (auto p = SpaAlgo::precedence2_.find(token); p != SpaAlgo::precedence2_.end()) {
+			while (!stk.empty() && stk.top() != "(" && SpaAlgo::precedence2_[stk.top()] >= p->second) {
+				// assume all operators are left-associative
+				postfix += (stk.top() + " ");
+				stk.pop();
+			}
+			stk.push(token);
+		}
+		else {
+			// is not an operator
+			postfix += (token + " ");
+		}
+	}
+
+	while (!stk.empty()) {
+		postfix += (stk.top() + " ");
+		stk.pop();
+	}
+	return postfix;
+}
+
+std::shared_ptr<std::vector<std::string>> SpaAlgo::Split(std::string& str, char delim)
+{
+	std::istringstream iss(str);
+	std::string token;
+	auto res = std::make_shared<std::vector<std::string>>();
+	while (std::getline(iss, token, delim)) {
+		res->push_back(token);
+	}
+
+	return res;
 }
 
 std::shared_ptr<SetRes> SpaAlgo::HashJoinSets(std::shared_ptr<SetRes> set_res_1, std::shared_ptr<SetRes> set_res_2)
