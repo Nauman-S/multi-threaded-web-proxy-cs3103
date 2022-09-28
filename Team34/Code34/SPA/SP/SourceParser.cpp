@@ -134,6 +134,7 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	}
 	cond->SetVariables(vars);
 	cond->SetConstants(cons);
+	cond->SetStatementType(StatementType::sexpre, "sexpre");
 	token_idx += 2;   // ) { x || ) then {
 	return cond;
 }
