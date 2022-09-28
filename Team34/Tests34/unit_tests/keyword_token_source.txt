@@ -1,0 +1,5 @@
+procedure proc {
+  print call;
+  read procedure;
+  while = 1;
+}
