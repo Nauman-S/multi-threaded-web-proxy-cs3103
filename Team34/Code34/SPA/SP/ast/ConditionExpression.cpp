@@ -10,7 +10,7 @@ std::vector<Variable> ConditionExpression::GetVariables() {
 	return vars;
 }
 
-std::vector<Variable> ConditionExpression::GetConstants() {
+std::vector<Constant> ConditionExpression::GetConstants() {
 	return cons;
 }
 
