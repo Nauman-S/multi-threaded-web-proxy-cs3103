@@ -483,12 +483,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     if (type == RelType::kUsesSRel) {
         //auto temp = pkb_ptr_->GetUsesStmtNumByVar(var_name);
 
-        set = pkb_ptr_->GetUsesStmtNumByVar(var_name);
-        set = FilterStmtSetByType(set, stmt_type);
+        set = pkb_ptr_->GetUsesStmtNumByVar(var_name, stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
-        set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
-        set = FilterStmtSetByType(set, stmt_type);
+        set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, stmt_type);
     }
 
     shared_ptr<unordered_set<string>> res = IntSetToStrSet(set);
@@ -1131,7 +1129,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Assig
 
     shared_ptr<unordered_set<StmtNum>> stmt_set = make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
-        stmt_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name);
+        stmt_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, RefType::kStmtRef);
     }
     else {
         stmt_set = pkb_ptr_->FilterByAssignPatternMatch(var_name, expr_spec_ptr);
@@ -1337,23 +1335,6 @@ bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel)
     }
 
     return true;
-}
-
-shared_ptr<unordered_set<int>> DataRetriever::FilterStmtSetByType(shared_ptr<unordered_set<int>> stmts, RefType stmt_type)
-{
-    if (stmt_type == RefType::kStmtRef) {
-        return stmts;
-    }
-
-    auto res = make_shared<unordered_set<int>>();
-
-    for (auto iter = stmts->begin(); iter != stmts->end(); ++iter) {
-        if (*(pkb_ptr_->GetStatementType(*iter)) == stmt_type) {
-            res->insert(*iter);
-        }
-    }
-
-    return res;
 }
 
 shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByTypes(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)

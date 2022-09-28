@@ -71,7 +71,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByPr
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var, RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "y") {
@@ -166,7 +166,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVar
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var, RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "x") {

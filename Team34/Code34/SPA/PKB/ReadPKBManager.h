@@ -69,7 +69,7 @@ public:
 	virtual bool CheckUses(Procedure proc_name, Variable var);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var, RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllUsesSVariables();
@@ -82,7 +82,7 @@ public:
 	virtual bool CheckModifies(Procedure proc_name, Variable var);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByStmtNum(StmtNum stmt_num);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var, RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllModifiesSVariables();

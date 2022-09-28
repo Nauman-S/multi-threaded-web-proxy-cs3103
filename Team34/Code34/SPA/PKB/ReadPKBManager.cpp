@@ -192,9 +192,10 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByProcNa
 	return pkb.uses_manager_.GetVarByProcName(proc_name);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetUsesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetUsesStmtNumByVar(Variable var, RefType stmt_type)
 {
-	return pkb.uses_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> uses_stmts = pkb.uses_manager_.GetStmtNumByVar(var);
+	return FilterStmtSetByType(uses_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameByVar(Variable var)
@@ -248,9 +249,10 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByPr
 	return pkb.modifies_manager_.GetVarByProcName(proc_name);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumByVar(Variable var, RefType stmt_type)
 {
-	return pkb.modifies_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> modifies_stmts = pkb.modifies_manager_.GetStmtNumByVar(var);
+	return FilterStmtSetByType(modifies_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNameByVar(Variable var)

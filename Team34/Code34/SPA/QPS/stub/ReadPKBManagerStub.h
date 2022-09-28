@@ -52,7 +52,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 	bool CheckUses(Procedure proc_name, Variable var) override;
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByStmtNum(StmtNum stmt_num) override;
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name) override;
-	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var, RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements() override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures() override;
@@ -64,7 +64,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 	bool CheckModifies(Procedure proc_name, Variable var) override;
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByStmtNum(StmtNum stmt_num) override;
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name) override;
-	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable , RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements() override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures() override;
