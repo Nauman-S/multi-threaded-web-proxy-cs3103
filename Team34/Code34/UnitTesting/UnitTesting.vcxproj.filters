@@ -61,15 +61,21 @@
     </ClCompile>
     <ClCompile Include="TestConstantManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestVariableManager.cpp">
+	</ClCompile>
+	<ClCompile Include="TestVariableManager.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="TestAssignPatternManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestPatternManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SP\TestSourceLexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+	<ClCompile Include="TestIfPatternManager.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+	<ClCompile Include="TestWhilePatternManager.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+  <ClCompile Include="SP\TestSourceLexer.cpp">
+    <Filter>Source Files</Filter>
+  </ClCompile>
   </ItemGroup>
 </Project>
