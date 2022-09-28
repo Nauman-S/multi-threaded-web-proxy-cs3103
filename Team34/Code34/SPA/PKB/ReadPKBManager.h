@@ -111,12 +111,12 @@ public:
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
 
 	// APIs related to If Pattern relation
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfStatmentsFromVar(Variable var);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfPatternStatmentsFromVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllIfPatternStatements();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllIfPatterns();
 
 	// APIs related to While Pattern relation
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhileStatmentsFromVar(Variable var);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhileStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatmentsFromVar(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllWhilePatternStatements();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllWhilePatterns();
 };

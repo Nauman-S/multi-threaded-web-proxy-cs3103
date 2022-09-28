@@ -292,12 +292,12 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAs
 }
 
 // APIs related to If Pattern relation
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfStatmentsFromVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatmentsFromVar(Variable var)
 {
 	return pkb.if_pattern_manager_.GetAllStatmentsFromVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatements()
 {
 	return pkb.if_pattern_manager_.GetAllStatements();
 }
@@ -308,12 +308,12 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAl
 }
 
 // APIs related to While Pattern relation
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhileStatmentsFromVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatmentsFromVar(Variable var)
 {
 	return pkb.while_pattern_manager_.GetAllStatmentsFromVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhileStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatements()
 {
 	return pkb.while_pattern_manager_.GetAllStatements();
 }
