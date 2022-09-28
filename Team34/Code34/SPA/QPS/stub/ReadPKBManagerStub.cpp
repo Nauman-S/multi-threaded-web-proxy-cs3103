@@ -232,22 +232,24 @@ bool ReadPKBManagerStub::IsFollowsStoreEmpty()
 	return false;
 }
 
-StmtNum ReadPKBManagerStub::GetSuccessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type)
 {
+	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 2) {
-		return 3;
+		res->insert(3);
 	}
 
-	return 0;
+	return res;
 }
 
-StmtNum ReadPKBManagerStub::GetPredecessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type)
 {
+	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 3) {
-		return 2;
+		res->insert(2);
 	}
 
-	return 0;
+	return res;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts()
@@ -284,7 +286,7 @@ bool ReadPKBManagerStub::CheckFollowsT(StmtNum left, StmtNum right)
 	return false;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 2) {
@@ -294,7 +296,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessor
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 6) {

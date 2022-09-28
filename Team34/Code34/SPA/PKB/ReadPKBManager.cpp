@@ -121,14 +121,16 @@ bool ReadPKBManager::IsFollowsStoreEmpty()
 	return pkb.follows_manager_.IsEmpty();
 }
 
-StmtNum ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type)
 {
-	return pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> successor_stmt = pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
+	return FilterStmtSetByType(successor_stmt, successor_type);
 }
 
-StmtNum ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> predecessor_stmt = pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
+	return FilterStmtSetByType(predecessor_stmt, predecessor_type);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
@@ -152,14 +154,16 @@ bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollowsT(left, right);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
-	return pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> successor_stmts = pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
+	return FilterStmtSetByType(successor_stmts, successor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> predecessor_stmts = pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
+	return FilterStmtSetByType(predecessor_stmts, predecessor_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsTRelations()

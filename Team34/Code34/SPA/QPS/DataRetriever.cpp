@@ -822,13 +822,11 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
         int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kFollowsRel) {
-        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
-        if (lhs_stmt_num != 0) {
-            int_set->insert(lhs_stmt_num);
-        } 
+        int_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, RefType::kStmtRef);
+
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
+        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -865,14 +863,10 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
         int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate and indirect children
     }
     else if (type == RelType::kFollowsRel) {
-        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
-        int_set = make_shared<unordered_set<int>>();
-        if (rhs_stmt_num != 0) {
-            int_set->insert(rhs_stmt_num);
-        }
+        int_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
+        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -909,15 +903,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate and indirect children
     }
     else if (type == RelType::kFollowsRel) {
-        int rhs_stmt_num = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num);
-        int_set = make_shared<unordered_set<int>>();
-        if (rhs_stmt_num != 0) {
-            int_set->insert(rhs_stmt_num);
-        }
+        int_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num);
-        int_set = FilterStmtSetByType(int_set, rhs_stmt_type);
+        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -984,15 +973,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
         int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        int lhs_stmt_num = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num);
-        int_set = std::make_shared<unordered_set<int>>();
-        if (lhs_stmt_num != 0) {
-            int_set->insert(lhs_stmt_num);
-        }
+        int_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num);
-        int_set = FilterStmtSetByType(int_set, lhs_stmt_type);
+        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel) {

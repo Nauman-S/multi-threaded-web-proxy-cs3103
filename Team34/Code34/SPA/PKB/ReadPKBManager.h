@@ -51,8 +51,8 @@ public:
 	// APIs related to Follows relation
 	virtual bool CheckFollows(StmtNum left, StmtNum right);
 	virtual bool IsFollowsStoreEmpty();
-	virtual StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
-	virtual StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
@@ -60,8 +60,8 @@ public:
 
 	// APIs relation to Follows* relation
 	virtual bool CheckFollowsT(StmtNum left, StmtNum right);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType predecessor_type);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 
 	// APIs related to Uses relation
