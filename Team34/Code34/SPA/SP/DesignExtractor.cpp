@@ -3,9 +3,6 @@
 #include <vector>
 #include <memory>
 
-#include "./tokenizer/SourceLexer.h"
-#include "./tokenizer/SourceToken.h"
-
 #include "./design_extractor/EntityExtractor.h"
 #include "./design_extractor/UsesModifiesExtractor.h"
 #include "./design_extractor/ParentsExtractor.h"
@@ -28,17 +25,4 @@ void DesignExtractor::PopulatePKB(std::shared_ptr<ProgramNode> root) {
 	root->Extract(parents_extractor);
 	root->Extract(follows_extractor);
 	root->Extract(calls_extractor);
-}
-
-void DesignExtractor::AddConstants(const std::string& source_filename) {
-	std::shared_ptr<WritePKBManager> manager = WritePKBManager::GetInstance();
-
-	SourceLexer lexer = SourceLexer(source_filename);
-	std::vector<SourceToken> tokens = lexer.GetAllTokens();
-	for (SourceToken t : tokens) {
-		if (t.GetType() == SourceTokenType::kInteger) {
-			int val = stoi(t.GetStringVal());
-			manager->AddConstant(val);
-		}
-	}
 }

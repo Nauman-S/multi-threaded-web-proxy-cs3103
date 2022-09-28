@@ -17,6 +17,8 @@
 #include "../ast/WhileStatementASTNode.h"
 #include "../ast/ConditionExpression.h"
 
+#include "../../Utils/type/TypeDef.h"
+
 /*
 * Extractor class to extract all entities from the AST.
 * Includes variable, procedure and statements.
