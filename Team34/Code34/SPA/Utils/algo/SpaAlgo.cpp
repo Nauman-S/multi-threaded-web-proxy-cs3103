@@ -86,7 +86,10 @@ string SpaAlgo::InfixToPostfix2(string& infix)
 	stack<string> stk;
 	string postfix = "";
 	for (string& token : *Split(infix, ' ')) {
-		if (token == "(") {
+		if (token == " ") {
+			continue;
+		}
+		else if (token == "(") {
 			stk.push(token);
 		}
 		else if (token == ")") {
