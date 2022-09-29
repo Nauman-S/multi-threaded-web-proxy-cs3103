@@ -1,3 +1,8 @@
+5 - test follows with same synonyms
+stmt s; 
+Select s such that Follows (s, s)
+
+5000
 7 - all uses stmts
 stmt s; variable v;
 Select s such that Uses (s,v)

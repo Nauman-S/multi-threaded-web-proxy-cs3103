@@ -101,7 +101,7 @@ shared_ptr<Table> QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> claus
 				continue;
 			}
 			else {
-				return false;
+				return table;
 			}	
 		}
 
