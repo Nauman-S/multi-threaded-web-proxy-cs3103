@@ -2,7 +2,7 @@
 
 #include "..\reference\Ref.h"
 
-#include<string>
+#include <string>
 #include <memory>
 
 class EntityRef
