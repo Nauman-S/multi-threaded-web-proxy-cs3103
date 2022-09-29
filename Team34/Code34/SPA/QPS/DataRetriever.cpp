@@ -738,9 +738,9 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
 bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel 
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel 
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
@@ -779,9 +779,9 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     bool is_empty {false};
@@ -807,9 +807,9 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
@@ -848,9 +848,9 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
 bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
@@ -887,9 +887,9 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
@@ -958,9 +958,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
@@ -1029,9 +1029,9 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     RefType lhs_stmt_type = rel.LhsRefType();
