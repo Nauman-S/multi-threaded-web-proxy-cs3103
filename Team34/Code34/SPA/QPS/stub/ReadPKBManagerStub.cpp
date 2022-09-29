@@ -91,7 +91,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetUsesProcNa
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements(RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
@@ -186,7 +186,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetModifiesPr
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements(RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
@@ -252,7 +252,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetPredecessorS
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts(RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(3);
@@ -261,7 +261,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessor
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmts(RefType predecessor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(2);
@@ -348,7 +348,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetParentFromSt
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren(RefType children_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(2);
@@ -357,7 +357,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren(
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParents()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParents(RefType parent_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(1);
