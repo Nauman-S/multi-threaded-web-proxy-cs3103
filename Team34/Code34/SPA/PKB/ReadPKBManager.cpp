@@ -411,6 +411,8 @@ std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManager::Ge
 // Utility functions
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterStmtSetByType(std::shared_ptr<std::unordered_set<StmtNum>> stmts, RefType stmt_type)
 {
+	assert(stmt_type == RefType::kStmtRef || stmt_type == RefType::kCallRef || stmt_type == RefType::kPrintRef || stmt_type == RefType::kAssignRef
+		|| stmt_type == RefType::kIfRef || stmt_type == RefType::kReadRef || stmt_type == RefType::kWhileRef);
 	if (stmt_type == RefType::kStmtRef)
 	{
 		return stmts;
