@@ -8,24 +8,11 @@ template <typename T>
 class ManyToManyTransitiveRelationStore : public ManyToManyRelationStore<T, T>
 {
 public:
-	void SetTransitiveRelation(T left, T right);
 	bool CheckTransitiveRelation(T left, T right);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveRHS(T t);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveLHS(T t);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
-private:
-	std::vector<std::pair<T, T>> all_transitive_relations_;
+	virtual std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations() = 0;
 };
-
-template<typename T>
-inline void ManyToManyTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	std::pair<T, T> pair = std::make_pair(left, right);
-	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
-	{
-		all_transitive_relations_.push_back(pair);
-	}
-}
 
 template<typename T>
 inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right)
@@ -67,12 +54,6 @@ template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> ManyToManyTransitiveRelationStore<T>::GetAllTransitiveLHS(T t)
 {
 	return GetAllElements(t, t_to_s_map_);
-}
-
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> ManyToManyTransitiveRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
 }
 
 template<typename T>
