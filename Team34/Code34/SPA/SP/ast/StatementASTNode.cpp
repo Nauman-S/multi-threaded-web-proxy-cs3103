@@ -10,17 +10,8 @@ StmtNum StatementASTNode::GetLineIndex() {
 
 void StatementASTNode::SetLineIndex(StmtNum& idx) {
 	lineIndex = idx;
-}	
-
-
-std::string StatementASTNode::GetTypeVal() {
-	return type_val;
 }
 
-void StatementASTNode::SetStatementType(StatementType tp, string val) {
-	statement_type = tp;
-	type_val = val;
-}
 
 void StatementASTNode::SetParentSatementLineIndex(StmtNum& l) {
 	parent_stmt = l;

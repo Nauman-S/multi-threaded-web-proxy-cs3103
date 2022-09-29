@@ -24,6 +24,7 @@ public:
 
 	virtual void Extract(NodeExtractor&) override;
 
+
 protected:
 	Variable left;
 	std::vector<Variable> right_vars;

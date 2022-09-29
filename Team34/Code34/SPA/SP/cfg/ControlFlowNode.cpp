@@ -1,23 +1,25 @@
 #include "ControlFlowNode.h"
 
-using namepace std;
+using namespace std;
 
 void ControlFlowNode::AddStmtNum(StmtNum num) {
+	flag = false;
 	elements.insert(num);
 }
 
-void ControlFlowNode::AddOutgoingNode(ControlFlowNode node) {
+set<StmtNum> ControlFlowNode::GetElements() {
+	return elements;
+}
+
+void ControlFlowNode::AddOutgoingNode(shared_ptr<ControlFlowNode> node) {
 	outgoing.insert(node);
 }
 
-void ControlFlowNode::AddIncomingNode(ControlFlowNode node) {
-	incoming.insert(node);
-}
-
-set<ControlFlowNode> ControlFlowNode::GetIncomingNodes() {
-	return incoming;
-}
-
-set<ControlFlowNode> ControlFlowNode::GetOutgoingNodes() {
+set<shared_ptr<ControlFlowNode>> ControlFlowNode::GetOutgoingNodes() {
 	return outgoing;
 }
+
+bool ControlFlowNode::isEmpty() {
+	return flag;
+}
+

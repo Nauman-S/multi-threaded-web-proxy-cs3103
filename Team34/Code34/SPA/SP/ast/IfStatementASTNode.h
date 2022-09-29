@@ -22,6 +22,7 @@ public:
 
 	virtual void Extract(NodeExtractor&) override;
 
+
 protected:
 	std::shared_ptr<ConditionExpression> condition;
 	std::vector<std::shared_ptr<StatementASTNode>> ifChildren;

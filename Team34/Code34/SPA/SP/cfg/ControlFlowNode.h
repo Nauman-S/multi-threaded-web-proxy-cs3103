@@ -1,6 +1,6 @@
 #pragma once
 #include <set>
-
+#include <memory>
 #include "../../Utils/type/TypeDef.h"
 using namespace std;
 
@@ -8,16 +8,16 @@ class ControlFlowNode {
 public:
 	void AddStmtNum(StmtNum);
 
-	void AddOutgoingNode(ControlFlowNode);
+	set<StmtNum> GetElements();
 
-	void AddIncomingNode(ControlFlowNode);
+	void AddOutgoingNode(shared_ptr<ControlFlowNode>);
 
-	set<ControlFlowNode> GetOutgoingNodes();
+	set<shared_ptr<ControlFlowNode>> GetOutgoingNodes();
 
-	set<ControlFlowNode> GetIncomingNodes();
+	bool isEmpty();
 
 protected:
 	set<StmtNum> elements;
-	set<ControlFlowNode> outgoing;
-	set<ControlFlowNode> incoming;
+	set<shared_ptr<ControlFlowNode>> outgoing;
+	bool flag = true;
 };

@@ -99,7 +99,6 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(vector<SourceToken
 	if_node->SetConditionExpression(cond);
 	if_node->SetIfChildren(if_children);
 	if_node->SetElseChildren(else_children);
-	if_node->SetStatementType(StatementType::sif, "sif");
 	return if_node;
 }
 
@@ -134,7 +133,6 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(vector<So
 	}
 	cond->SetVariables(vars);
 	cond->SetConstants(cons);
-	cond->SetStatementType(StatementType::sexpre, "sexpre");
 	token_idx += 2;   // ) { x || ) then {
 	return cond;
 }
@@ -168,7 +166,6 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	a_node->SetRightVars(r_vars);
 	a_node->SetRightCons(r_cons);
 	a_node->SetInfix(infix);
-	a_node->SetStatementType(StatementType::sassign, "sassign");
 	return a_node;
 }
 
@@ -189,7 +186,6 @@ shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(vector<Sourc
 	token_idx += 1;
 	w_node->SetChildren(children);
 	w_node->SetConditionExpression(cond);
-	w_node->SetStatementType(StatementType::swhile, "swhile");
 	return w_node;
 }
 
@@ -203,7 +199,6 @@ shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(vector<SourceT
 	Variable var_index = tokens.at(token_idx).GetStringVal();
 	r_node->SetVariable(var_index);
 	token_idx += 2;
-	r_node->SetStatementType(StatementType::sread, "sread");
 	return r_node;
 }
 
@@ -217,7 +212,6 @@ shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(vector<Sourc
 	Variable var_index = tokens.at(token_idx).GetStringVal();
 	p_node->SetVariable(var_index);
 	token_idx += 2;
-	p_node->SetStatementType(StatementType::sprint, "sprint");
 	return p_node;
 }
 
@@ -231,6 +225,5 @@ shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(vector<SourceT
 	Procedure proc_index = tokens.at(token_idx).GetStringVal();
 	p_node->SetProcedure(proc_index);
 	token_idx += 2;
-	p_node->SetStatementType(StatementType::scall, "scall");
 	return p_node;
 }

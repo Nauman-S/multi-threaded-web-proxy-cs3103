@@ -1,0 +1,19 @@
+procedure nest {
+    while (x > 1) {
+        if (y < 1) then {
+            while (z == 0) {
+                z = z - 1;
+            }
+            read a;
+        } else {
+            if (x == 0) then {
+                a = 1 + 2;
+            } else {
+                a = 1 - 2;
+            }
+        }
+        while (x < 1) {
+            x = x + 1;
+        }
+    }
+}
