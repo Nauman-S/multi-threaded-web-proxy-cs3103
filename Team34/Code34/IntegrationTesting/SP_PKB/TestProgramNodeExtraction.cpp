@@ -12,7 +12,6 @@
 #include "../SPA/SP/SourceParser.h"
 
 #include "../SPA/SP/design_extractor/EntityExtractor.h"
-#include "../SPA/SP/DesignExtractor.h"
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
 #include "../SPA/SP/design_extractor/ParentsExtractor.h"
 #include "../SPA/SP/design_extractor/FollowsExtractor.h"
@@ -42,10 +41,8 @@ namespace IntegrationTesting
 
 		TEST_METHOD(TestEntityPopulation)
 		{
-			DesignExtractor extractor;
 			EntityExtractor entity_extractor;
 			this->root->Extract(entity_extractor);
-			extractor.AddConstants(this->test_file);
 			
 			// Check all variables present
 			shared_ptr<unordered_set<Variable>> present_vars = read->GetAllVariables();

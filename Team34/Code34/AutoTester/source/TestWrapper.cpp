@@ -45,7 +45,6 @@ void TestWrapper::parse(std::string filename) {
 		std::shared_ptr<ProgramNode> root = parser.Parse(filename);
 		DesignExtractor extractor;
 		extractor.PopulatePKB(root);
-		extractor.AddConstants(filename);
 	}
 	else {
 		this->is_valid_source_ = false;
