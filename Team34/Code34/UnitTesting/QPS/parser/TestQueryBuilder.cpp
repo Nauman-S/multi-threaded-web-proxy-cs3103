@@ -543,7 +543,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
-			std::string expr_str = "x+3";
+			std::string expr_str = "x + 3";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -569,7 +569,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
-			std::string expr_str = "x+3";
+			std::string expr_str = "x + 3";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -595,7 +595,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
-			std::string expr_str = "(x+y)*z+p";
+			std::string expr_str = "( x + y ) * z + p";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -621,7 +621,7 @@ namespace UnitTesting
 			const std::string select_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
-			std::string expr_str = "((1+2)*(3+4))";
+			std::string expr_str = "( ( 1 + 2 ) * ( 3 + 4 ) )";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -648,7 +648,7 @@ namespace UnitTesting
 			const std::string assign_variable = "a";
 			std::string lhs_value_ = "v";
 			std::string rhs_value_ = "";
-			std::string expr_str = "(x+y)*z+p";
+			std::string expr_str = "( x + y ) * z + p";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -703,7 +703,7 @@ namespace UnitTesting
 			const std::string assign_variable = "a";
 			std::string lhs_value_ = "";
 			std::string rhs_value_ = "";
-			std::string expr_str = "(x+y)*z+p";
+			std::string expr_str = "( x + y ) * z + p";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -738,7 +738,7 @@ namespace UnitTesting
 			const std::string assign_variable = "a";
 			std::string lhs_value_ = "";
 			std::string rhs_value_ = "";
-			std::string expr_str = "(x+y)*z+p";
+			std::string expr_str = "( x + y ) * z + p";
 
 			shared_ptr<Query> query = query_builder_->GetQuery(query_);
 
@@ -1149,7 +1149,7 @@ namespace UnitTesting
 			Assert::IsTrue(query_->GetPatterns()->size() == 1);
 
 			const std::string select_variable = "a";
-			std::string expr_str = "y+z*t";
+			std::string expr_str = "y + z * t";
 			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kWildcard);
 			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
 			Assert::AreEqual(select_variable, query_->GetPatterns()->at(0)->StmtSyn());

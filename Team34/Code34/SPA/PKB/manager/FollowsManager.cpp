@@ -19,12 +19,12 @@ bool FollowsManager::IsEmpty()
     return follows_store_.IsEmpty();
 }
 
-StmtNum FollowsManager::GetSuccessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetSuccessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetRHSByLHS(stmt);
 }
 
-StmtNum FollowsManager::GetPredecessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetPredecessorStmtFromStmt(StmtNum stmt)
 {
     return follows_store_.GetLHSByRHS(stmt);
 }

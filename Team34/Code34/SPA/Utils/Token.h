@@ -33,7 +33,7 @@ enum TokenType {
     kSingleQuote,
     kDoubleQuote,
     kFullStop,
-    //kHashtag,
+    kHashtag,
 
 
     // Self-defined for parsing usage

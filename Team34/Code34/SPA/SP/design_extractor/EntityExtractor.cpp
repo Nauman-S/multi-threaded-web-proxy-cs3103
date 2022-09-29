@@ -49,7 +49,7 @@ void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
 
 	StmtNum line_no = assign.GetLineIndex();
 	Expr expr = Expr(assign.GetInfix());
-	this->write_manager_->AddAssignPattern(line_no, lhs, expr);
+	this->write_manager_->AddAssignPattern(line_no, expr);
 	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 

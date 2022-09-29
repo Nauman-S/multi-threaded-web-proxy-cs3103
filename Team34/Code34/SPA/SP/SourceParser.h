@@ -47,4 +47,7 @@ public:
 	std::shared_ptr<ConditionExpression> ParseConditionExpression(std::vector<SourceToken>, int&, int&, Procedure&);
 
 	static inline std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_name_to_node_;
+
+private:
+	std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };
