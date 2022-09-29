@@ -16,7 +16,7 @@ using StrPair = std::pair<string, string>;
 
 shared_ptr<vector<string>> TableRes::Columns()
 {
-    auto vec = std::shared_ptr<vector<string>>();
+    auto vec = std::make_shared<vector<string>>();
     for (auto& [syn, idx] : syn_to_col_) {
         vec->push_back(syn);
     }

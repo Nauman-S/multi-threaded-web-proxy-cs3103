@@ -3,12 +3,39 @@
 #include <iterator>
 #include <algorithm>
 
+#include "ResWrapper.h"
+#include "TableRes.h"
+#include "SetRes.h"
+
 using std::string;
 using std::vector;
 using std::unordered_map;
 using std::unordered_multimap;
 using std::shared_ptr;
 
+
+Table::Table(shared_ptr<ResWrapper> res_wrapper) {
+	is_empty_ = false;
+	if (res_wrapper->GetResType() == ResType::kSet) {
+		std::shared_ptr<SetRes> set_res = res_wrapper->GetSet();
+		fields_.push_back(set_res->GetSyn());
+		for (const auto& value: *set_res->GetDomain()) {
+			rows_.push_back({ value });
+		}
+	}
+	else {
+		std::shared_ptr<TableRes> table_res = res_wrapper->GetTable();
+		fields_ = *table_res->Columns();
+
+		for (auto& row : *table_res->GetRows()) {
+			rows_.push_back({ row.first, row.second });
+		}
+	}
+
+	for (int i = 0; i < fields_.size(); i++) {
+		field_to_index_map_.insert({ fields_.at(i), i });
+	}
+}
 
 vector<string> Table::GetCommonFields(shared_ptr<Table> that) {
 
@@ -33,6 +60,8 @@ string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 }
 
 shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
+	if (is_empty_) return that;
+
 	vector<string> common_fields = GetCommonFields(that);
 
 	if (common_fields.size() == 0) {
@@ -99,7 +128,6 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 
 			vector<string> new_row = row;
 			
-
 			for (int field_idx = 0; field_idx < that_row.size(); field_idx++) {
 				string& that_field = that->GetFieldAtIndex(field_idx);
 				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
@@ -107,13 +135,37 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 				}
 				new_row.push_back(that_row.at(field_idx));
 			}
-
-
 			new_rows.push_back(new_row);
 		}
 
 	}
 
 	return std::make_shared<Table>(new_fields, new_rows);
+}
+
+
+
+bool Table::ContainsSynonym(string synonym) {
+	return std::find(fields_.begin(), fields_.end(), synonym) != fields_.end();
+}
+
+bool Table::ContainsSynonyms(std::vector<std::string> synonyms) {
+	for (std::string& synonym : synonyms) {
+		if (ContainsSynonym(synonym)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+shared_ptr < std::unordered_set<std::string>> Table::GetDomainBySynonym(std::string synonym) {
+	int index = field_to_index_map_.at(synonym);
+
+	shared_ptr <std::unordered_set<std::string>> set = std::make_shared< std::unordered_set<std::string>>();
+
+	for (auto row : rows_) {
+		set->insert(row.at(index));
+	}
+	return set;
 }
 

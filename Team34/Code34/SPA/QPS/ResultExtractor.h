@@ -6,17 +6,22 @@
 #include <memory>
 
 #include "query_result/QueryResult.h"
+#include "query_result/Table.h"
 #include "reference/Ref.h"
-
 
 class ResultExtractor {
 private:
 	std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple_;
 	std::shared_ptr<QueryResult> query_result_;
+	std::shared_ptr<Table> result_table_;
 
 public:
 	ResultExtractor(std::shared_ptr<QueryResult> query_result, std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple)
 		: query_result_{ query_result }, select_tuple_{select_tuple} {};
+
+	ResultExtractor(std::shared_ptr<Table> result_table, std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple)
+		: result_table_{ result_table }, select_tuple_{ select_tuple } {};
+
 
 	std::vector<std::string> GetFormattedResult();
 

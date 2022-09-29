@@ -6,6 +6,7 @@
 #include <memory>
 #include <assert.h>
 
+#include "ResWrapper.h"
 class Table {
 private:
 	std::vector<std::string> fields_;
@@ -49,6 +50,8 @@ public:
 		}
 	};
 
+	Table(std::shared_ptr<ResWrapper>);
+
 	int GetNumOfRows() { return rows_.size(); };
 
 	int GetNumOfCols() { return fields_.size(); };
@@ -58,9 +61,14 @@ public:
 	}
 
 	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
-	//std::shared_ptr<Table> Join()
 
 	bool IsEmpty() { return is_empty_; }
 
+	bool ContainsSynonym(std::string synonym);
+
+	bool ContainsSynonyms(std::vector<std::string> synonyms);
 	
+
+	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
+
 };

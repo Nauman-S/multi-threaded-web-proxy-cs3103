@@ -21,14 +21,14 @@ QueryEvaluator::QueryEvaluator(Query query) {
 
 bool QueryEvaluator::Evaluate() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = query_.GetSelectTuple();
-	for (shared_ptr<Ref> ref : *select_tuple) {
-		//shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(std::make_shared<Ref>(ref));
-		shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
-		bool success = query_result_.MergeResult(res_wrapper);
-		if (!success) {
-			return false;
-		}
-	}
+	//for (shared_ptr<Ref> ref : *select_tuple) {
+	//	//shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(std::make_shared<Ref>(ref));
+	//	shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
+	//	bool success = query_result_.MergeResult(res_wrapper);
+	//	if (!success) {
+	//		return false;
+	//	}
+	//}
 
 	std::vector<shared_ptr<Clause>> clauses;
 
@@ -66,13 +66,33 @@ bool QueryEvaluator::Evaluate() {
 	//	//data_retriever_.retrieve(*it);
 
 	//}
-	bool success = EvaluateGroup(clauses);
+	result_table_ = EvaluateGroup(clauses);
+	if (result_table_->GetNumOfRows() == 0) {
+		return false;
+	}
+	vector<string> select_synonyms = query_.GetSelectSynonyms();
 
-	return success;
+	// If the result table from clauses does not contain any select synonyms,
+	// we create a new empty result table
+	if (!result_table_->ContainsSynonyms(select_synonyms)) {
+		result_table_ = std::make_shared<Table>();
+	}
+
+	for (shared_ptr<Ref> ref : *select_tuple) {
+		if (result_table_->ContainsSynonym(ref->GetName())) {
+			continue;
+		} 
+		shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
+		shared_ptr<Table> curr_result_table = std::make_shared<Table>(res_wrapper);
+
+		result_table_ = result_table_->Join(curr_result_table);
+	}
+
+	return result_table_->GetNumOfRows() > 0;
 }
 
-bool QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> clauses) {
-	Table table;
+shared_ptr<Table> QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> clauses) {
+	shared_ptr<Table> table = std::make_shared<Table>();
 
 	for (shared_ptr<Clause> clause : clauses) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -85,13 +105,21 @@ bool QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> clauses) {
 			}	
 		}
 
-		//table = table.Join(res_wrapper);
-	}
+		shared_ptr<Table> result_table = std::make_shared<Table>(res_wrapper);
 
+		table = table->Join(result_table);
+		if (table->GetNumOfRows() == 0) {
+			return table;
+		}
+	}
+	return table;
 }
 
 vector<std::string> QueryEvaluator::ExtractResult() {
-	ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
+	//ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
+
+	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectTuple());
+
 
 	return result_extractor.GetFormattedResult();
 }
