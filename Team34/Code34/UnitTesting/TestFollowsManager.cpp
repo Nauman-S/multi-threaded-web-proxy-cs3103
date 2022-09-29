@@ -43,15 +43,15 @@ namespace UnitTesting
 		TEST_METHOD(TestGetSuccessorStmtFromStmt)
 		{
 			follows_manager_.SetFollows(1, 2);
-			Assert::AreEqual(2, follows_manager_.GetSuccessorStmtFromStmt(1));
-			Assert::AreEqual(0, follows_manager_.GetSuccessorStmtFromStmt(2));
+			Assert::AreEqual(1, int(follows_manager_.GetSuccessorStmtFromStmt(1)->size()));
+			Assert::AreEqual(0, int(follows_manager_.GetSuccessorStmtFromStmt(2)->size()));
 		}
 
 		TEST_METHOD(TestGetPredecessorStmtFromStmt)
 		{
 			follows_manager_.SetFollows(1, 2);
-			Assert::AreEqual(1, follows_manager_.GetPredecessorStmtFromStmt(2));
-			Assert::AreEqual(0, follows_manager_.GetPredecessorStmtFromStmt(1));
+			Assert::AreEqual(1, int(follows_manager_.GetPredecessorStmtFromStmt(2)->size()));
+			Assert::AreEqual(0, int(follows_manager_.GetPredecessorStmtFromStmt(1)->size()));
 		}
 
 		TEST_METHOD(TestGetAllPredecessorStmts)
