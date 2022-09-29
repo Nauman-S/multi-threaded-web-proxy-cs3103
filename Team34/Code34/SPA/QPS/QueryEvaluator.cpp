@@ -67,7 +67,7 @@ bool QueryEvaluator::Evaluate() {
 
 	//}
 	result_table_ = EvaluateGroup(clauses);
-	if (result_table_->GetNumOfRows() == 0) {
+	if (clauses.size() > 0 && result_table_->GetNumOfRows() == 0) {
 		return false;
 	}
 	vector<string> select_synonyms = query_.GetSelectSynonyms();
