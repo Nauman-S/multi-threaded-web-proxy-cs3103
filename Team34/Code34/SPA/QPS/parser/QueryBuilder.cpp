@@ -591,27 +591,29 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
 }
 
 string QueryBuilder::GetExpressionStr() {
-	string expr_str = "";
+	vector<string> expr_tokens;
 	int expected_closing_brace_num = 0;
 
 	// make sure the expression is not empty;
-	
 	bool isExpectingToken = true;
 
 	while (isExpectingToken) {
 		while (lexer_->HasLeftBrace()) {
 			lexer_->MatchLeftBrace();
-			expr_str += "(";
+			//expr_str += "( ";
+			expr_tokens.push_back("(");
 			expected_closing_brace_num++;
 		}
 
 		if (lexer_->HasInteger()) {
 			int integer = lexer_->MatchInteger();
-			expr_str += std::to_string(integer);
+			//expr_str += (std::to_string(integer) + " ");
+			expr_tokens.push_back(std::to_string(integer));
 		}
 		else if (lexer_->HasIdentity()) {
 			string identity = lexer_->MatchIdentity();
-			expr_str += identity;
+			//expr_str += (identity + " ");
+			expr_tokens.push_back(identity);
 		}
 		else {
 			throw SyntaxError("A number or variable is expected in Assign clause");
@@ -619,7 +621,8 @@ string QueryBuilder::GetExpressionStr() {
 
 		while (lexer_->HasRightBrace()) {
 			lexer_->MatchRightBrace();
-			expr_str += ")";
+			//expr_str += ") ";
+			expr_tokens.push_back(")");
 			expected_closing_brace_num--;
 			if (expected_closing_brace_num < 0) {
 				throw SyntaxError("The opening and closing braces do not match");
@@ -628,7 +631,8 @@ string QueryBuilder::GetExpressionStr() {
 
 		if (lexer_->HasOperator()) {
 			string operator_str = lexer_->MatchOperator();
-			expr_str += operator_str;
+			//expr_str += (operator_str + " ");
+			expr_tokens.push_back(operator_str);
 		}
 		else {
 			isExpectingToken = false;
@@ -638,6 +642,13 @@ string QueryBuilder::GetExpressionStr() {
 	if (expected_closing_brace_num != 0) {
 		throw SyntaxError("The opening and closing braces do not match");
 	}
+
+
+	string expr_str = expr_tokens.at(0);
+	for (int idx = 1; idx < expr_tokens.size(); idx++) {
+		expr_str += (" " + expr_tokens.at(idx) );
+	}
+
 
 	return expr_str;
 }
