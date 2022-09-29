@@ -9,7 +9,7 @@ void QueryLexer::InitializeKeywords() {
 	this->design_entities_.insert({ EntityRef::kStmt, EntityRef::kRead, EntityRef::kPrint, EntityRef::kCall, EntityRef::kWhile,
 		EntityRef::kIf, EntityRef::kAssign, EntityRef::kVariable, EntityRef::kConstant, EntityRef::kProcedure });
 	this->keywords_.insert({ "Select", "such", "that", "BOOLEAN"});
-	attr_names_.insert({ "procName", "varName", "value", "stmt#" });
+	attr_names_.insert({ "procName", "varName", "value", "stmt" });
 	this->delimiters_.insert({ ';',',','(',')','\"', '<', '>', '.'});
 	this->operators_.insert({TokenType::kAdd, TokenType::kMinus, TokenType::kkDivide, TokenType::kMultiply,TokenType::kModulo});
 }
@@ -184,6 +184,15 @@ void QueryLexer::MatchComma() {
 	tokenizer_->nextToken();
 }
 
+bool QueryLexer::HasHashtag() {
+	return this->tokenizer_->getToken().type_ == TokenType::kHashtag;
+}
+
+void QueryLexer::MatchHashtag() {
+	if (!HasHashtag()) throw SyntaxError(GenerateErrorMessage("#", tokenizer_->getTokenSval().value_or("INTEGER")));
+	tokenizer_->nextToken();
+}
+
 bool QueryLexer::HasInteger() {
 	return this->tokenizer_->getToken().type_ == TokenType::kInteger;
 }
@@ -301,6 +310,11 @@ std::string QueryLexer::MatchAttrName() {
 	if (!HasAttrName()) throw SyntaxError(GenerateErrorMessage("AttrName", tokenizer_->getTokenSval().value_or("INTEGER")));
 	string sval = tokenizer_->getTokenSval().value();
 	tokenizer_->nextToken();
+	if (sval == "stmt") {
+		MatchHashtag();
+		sval += "#";
+	}
+
 	return sval;
 }
 
