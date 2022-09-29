@@ -39,7 +39,7 @@ const map<char, TokenType> Token::allowed_special_char_{
     {'\"', kDoubleQuote},
     {'\'', kSingleQuote},
     {'.', kFullStop},
-    //{'#', kHashtag},
+    {'#', kHashtag}
 };
 
 Token::Token(std::string value, TokenType type) : literal_value_(value), type_(type) {}
