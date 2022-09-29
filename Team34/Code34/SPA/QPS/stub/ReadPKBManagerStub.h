@@ -54,7 +54,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 	std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var, RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var) override;
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements() override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements(RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures() override;
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses() override;
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVUses() override;
@@ -66,7 +66,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 	std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable , RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var) override;
-	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements() override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements(RefType stmt_type) override;
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures() override;
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies() override;
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies() override;
@@ -76,8 +76,8 @@ class ReadPKBManagerStub : public ReadPKBManager
 	virtual bool IsFollowsStoreEmpty() override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type) override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts() override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts() override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type) override;
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations() override;
 
 	// APIs relation to Follows* relation
@@ -91,8 +91,8 @@ class ReadPKBManagerStub : public ReadPKBManager
 	virtual bool IsParentStoreEmpty() override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type) override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren() override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents() override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type) override;
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type) override;
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations() override;
 
 	// APIs related to Parent* relation
