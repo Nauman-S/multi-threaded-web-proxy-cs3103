@@ -52,7 +52,7 @@ public:
 	void SetCallsT(Procedure caller, Procedure callee);
 
 	// APIs related to Assign Pattern relation
-	void AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr);
+	void AddAssignPattern(StmtNum stmt_num, Expr expr);
 
 	// APIs related to If Pattern relation
 	void AddIfPattern(StmtNum stmt_num, Variable var);
