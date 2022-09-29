@@ -72,14 +72,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetParentFromStmt(S
 	return FilterStmtSetByType(parent, parent_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(RefType children_type)
 {
-	return pkb.parent_manager_.GetAllChildren();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_children = pkb.parent_manager_.GetAllChildren();
+	return FilterStmtSetByType(all_children, children_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents(RefType parent_type)
 {
-	return pkb.parent_manager_.GetAllParents();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_parents = pkb.parent_manager_.GetAllParents();
+	return FilterStmtSetByType(all_parents, parent_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
@@ -133,14 +135,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPredecessorStmtF
 	return FilterStmtSetByType(predecessor_stmt, predecessor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts(RefType successor_type)
 {
-	return pkb.follows_manager_.GetAllSuccessorStmts();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_successor_stmts = pkb.follows_manager_.GetAllSuccessorStmts();
+	return FilterStmtSetByType(all_successor_stmts, successor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts(RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetAllPredecessorStmts();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_predecessor_stmts = pkb.follows_manager_.GetAllPredecessorStmts();
+	return FilterStmtSetByType(all_predecessor_stmts, predecessor_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
@@ -203,9 +207,10 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameBy
 	return pkb.uses_manager_.GetProcNameByVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements(RefType stmt_type)
 {
-	return pkb.uses_manager_.GetAllStatements();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_uses_stmts = pkb.uses_manager_.GetAllStatements();
+	return FilterStmtSetByType(all_uses_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllUsesSVariables()
@@ -260,9 +265,10 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNa
 	return pkb.modifies_manager_.GetProcNameByVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements(RefType stmt_type)
 {
-	return pkb.modifies_manager_.GetAllStatements();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_modifies_stmts = pkb.modifies_manager_.GetAllStatements();
+	return FilterStmtSetByType(all_modifies_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllModifiesSVariables()

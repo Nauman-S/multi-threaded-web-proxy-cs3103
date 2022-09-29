@@ -39,8 +39,8 @@ public:
 	virtual bool IsParentStoreEmpty();
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
 
 	// APIs related to Parent* relation
@@ -54,8 +54,8 @@ public:
 	virtual bool IsFollowsStoreEmpty();
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
 
 
@@ -72,7 +72,7 @@ public:
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetUsesVarByProcName(Procedure proc_name);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetUsesStmtNumByVar(Variable var, RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetUsesProcNameByVar(Variable var);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllUsesStatements(RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllUsesSVariables();
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllUsesProcedures();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
@@ -85,7 +85,7 @@ public:
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetModifiesVarByProcName(Procedure proc_name);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetModifiesStmtNumByVar(Variable var, RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetModifiesProcNameByVar(Variable var);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllModifiesStatements(RefType stmt_type);
 	virtual std::shared_ptr<std::unordered_set<Variable>> GetAllModifiesSVariables();
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllModifiesProcedures();
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
