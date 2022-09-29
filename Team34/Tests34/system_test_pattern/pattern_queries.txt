@@ -3,33 +3,113 @@ variable v;
 Select v such that Uses(v, "x")
 SemanticError
 5000
-5 - comment
+2 - comment
 assign a; variable v;
 Select v pattern a("x", _"  a "_)
-a, b, c, d, x, y
+a, b, c, d, x, y, f,i,j,k,p,q
 5000
-4 - comment
+3 - comment
 assign a; variable v;
 Select v pattern a(v, _"  a "_)
 x, c, b
 5000
-1 - comment
+4 - comment
 assign a;
 Select a pattern a(_, _"  1 "_)
 5, 6, 7, 10
 5000
-2 - comment
+5 - comment
 assign a;
 Select a pattern a(_, _"  a "_)
 7, 8, 9, 10
 5000
-3 - comment
+6 - comment
 assign a;
 Select a pattern a(_,    _)
-2, 5, 6, 7, 8, 9, 10
+2, 5, 6, 7, 8, 9, 10, 11, 12
 5000
-6 - comment
+7 - comment
 assign a; variable v;
 Select v pattern a("xyz", _"  a "_)
 
+5000
+8 - comment
+assign a; variable v;
+Select a pattern a(_, _"  d + 1 + 5"_)
+10
+5000
+9 - comment
+assign a; variable v;
+Select a pattern a(_, "  d + 1 + 5")
+
+5000
+10 - comment
+assign a; variable v;
+Select a pattern a(_, "  (i + j) * (k - (p * q) % f)")
+11
+5000
+11 - comment
+assign a; variable v;
+Select a pattern a(_, _"  (i + j) * (k - (p * q) % f)"_)
+11
+5000
+12 - comment
+assign a; variable v;
+Select a pattern a(_, _"  (i + j) "_)
+11
+5000
+13 - comment
+assign a; variable v;
+Select a pattern a(_, _"  (((i)) + j) "_)
+11
+5000
+14 - comment
+assign a; variable v;
+Select a pattern a(_, "  i + j ")
+
+5000
+15 - comment
+assign a; variable v;
+Select a pattern a(_, _" (p * q) % f"_)
+11
+5000
+16 - comment
+assign a; variable v;
+Select a pattern a(_, _"  k - (p * q) "_)
+
+5000
+17 - comment
+assign a; variable v;
+Select a pattern a(_, _"(k - ((p * q) % f))"_)
+11
+5000
+18 - comment
+assign a; variable v;
+Select a pattern a(_, _"(k - ((p * q) % f))"_)
+11
+5000
+19 - comment
+assign a; variable v;
+Select a pattern a(_, _" (p * q) % f"_)
+11
+5000
+20 - comment
+assign a; variable v;
+Select a pattern a(_, _" j * k"_)
+
+5000
+21 - comment
+assign a; variable v;
+Select a pattern a(_, _" (q) % f"_)
+
+5000
+22 - comment
+assign a; variable v;
+Select a pattern a(_, _"  j * (k - p) * q"_)
+12
+5000
+23 - comment
+assign a; variable v;
+Select a pattern a(_, _"  j * (k        - p) * q % f              "_)
+12
 5000
