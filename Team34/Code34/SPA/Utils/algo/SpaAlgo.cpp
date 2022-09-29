@@ -42,7 +42,7 @@ string SpaAlgo::InfixToPostfix(string& infix)
 	stack<string> stk;
 	vector<string> postfix_tokens;
 	
-	auto splited = Split(infix, ' ');
+	auto splited = Split(infix, SpaAlgo::DELIM);
 	for (string& token : *splited) {
 		if (token == " ") {
 			continue;
@@ -77,7 +77,7 @@ string SpaAlgo::InfixToPostfix(string& infix)
 	
 	string postfix = postfix_tokens[0];
 	for (int i = 1; i < postfix_tokens.size(); ++i) {
-		postfix += (" " + postfix_tokens[i]);
+		postfix += (SpaAlgo::DELIM + postfix_tokens[i]);
 	}
 
 	return postfix;

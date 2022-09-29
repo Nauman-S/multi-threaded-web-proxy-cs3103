@@ -11,6 +11,8 @@
 class SpaAlgo
 {
 public:
+	static const char DELIM = ' ';
+
 	static std::string InfixToPostfix(std::string& infix);
 
 	static std::shared_ptr<std::vector<std::string>> SpaAlgo::Split(std::string& str, char delim);
@@ -25,5 +27,6 @@ public:
 
 protected:
 	static std::unordered_map<std::string, int> precedence_;
+
 };
 
