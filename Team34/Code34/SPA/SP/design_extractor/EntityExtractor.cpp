@@ -75,7 +75,13 @@ void EntityExtractor::ExtractReadNode(ReadStatementASTNode& read) {
 }
 
 void EntityExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+	StmtNum line_no = if_stmt.GetLineIndex();
 	std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
+	// Add variable pattern for if statements
+	std::vector<Variable> vars = cond->GetVariables();
+	for (Variable var : vars) {
+		this->write_manager_->AddIfPattern(line_no, var);
+	}
 	cond->Extract(*this);
 
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
@@ -88,12 +94,17 @@ void EntityExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 		else_child->Extract(*this);
 	}
 
-	StmtNum line_no = if_stmt.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kIfRef);
 }
 
 void EntityExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+	StmtNum line_no = while_stmt.GetLineIndex();
 	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
+	// Add variable pattern for while statements
+	std::vector<Variable> vars = cond->GetVariables();
+	for (Variable var : vars) {
+		this->write_manager_->AddWhilePattern(line_no, var);
+	}
 	cond->Extract(*this);
 
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
@@ -101,7 +112,6 @@ void EntityExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 		child->Extract(*this);
 	}
 
-	StmtNum line_no = while_stmt.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kWhileRef);
 }
 
