@@ -20,8 +20,8 @@ void CallsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 }
 
 void CallsExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	Procedure parent_proc = call.GetParentProcIndex().GetName();
-	Procedure called_proc = call.GetProcedure().GetName();
+	Procedure parent_proc = call.GetParentProcIndex();
+	Procedure called_proc = call.GetProcedure();
 	// Add direct call from parent
 	this->AddToCalls(parent_proc, called_proc);
 

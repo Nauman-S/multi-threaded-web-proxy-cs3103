@@ -18,5 +18,7 @@ public:
 	std::shared_ptr<std::unordered_set<std::string>> GetDomain() { return domain_ptr_; }
 
 	bool Merge(std::shared_ptr<SetRes> other);
+
+	bool IsEmpty() { return domain_ptr_->empty(); };
 };
  

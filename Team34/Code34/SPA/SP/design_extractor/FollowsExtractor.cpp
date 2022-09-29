@@ -71,11 +71,11 @@ void FollowsExtractor::AddFollowsRelation(const std::vector<std::shared_ptr<Stat
 	}
 
 	std::vector<StmtNum> previous_lines;
-	StmtNum prev = stmts[0]->GetLineIndex().GetLineNum();
+	StmtNum prev = stmts[0]->GetLineIndex();
 	previous_lines.push_back(prev);
 
 	for (int i = 1; i < stmts.size(); i++) {
-		StmtNum current = stmts[i]->GetLineIndex().GetLineNum();
+		StmtNum current = stmts[i]->GetLineIndex();
 		this->write_manager_->SetFollows(prev, current);
 		for (StmtNum line : previous_lines) {
 			this->write_manager_->SetFollowsT(line, current);

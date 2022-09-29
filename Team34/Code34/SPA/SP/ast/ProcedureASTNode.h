@@ -6,21 +6,21 @@
 
 #include "ASTNode.h"
 #include "StatementASTNode.h"
-#include "../ProcedureIndex.h"
+#include "../../Utils/type/TypeDef.h"
 
 class ProcedureASTNode : public ASTNode {
 public:
-	ProcedureIndex GetProc();
+	Procedure GetProc();
 
 	std::vector<std::shared_ptr<StatementASTNode>> GetChildren();
 
-	void SetProc(ProcedureIndex&);
+	void SetProc(Procedure&);
 
 	void SetChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
-	ProcedureIndex proc;
+	Procedure proc;
 	std::vector<std::shared_ptr<StatementASTNode>> children;
 };
