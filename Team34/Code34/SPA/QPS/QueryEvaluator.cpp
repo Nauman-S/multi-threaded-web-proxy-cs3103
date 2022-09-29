@@ -5,6 +5,7 @@
 #include "Query.h"
 #include "relation/Rel.h"
 #include "ResultExtractor.h"
+#include "query_result/Table.h"
 
 
 using std::vector;
@@ -29,36 +30,64 @@ bool QueryEvaluator::Evaluate() {
 		}
 	}
 
+	std::vector<shared_ptr<Clause>> clauses;
+
 	shared_ptr<std::vector<shared_ptr<Rel>>> relations = query_.GetRelations();
-
-	for (auto it = relations->begin(); it != relations->end(); ++it) {
-		shared_ptr<Rel> relation = *it;
-		// update sym_domain with data retriever
-
-		shared_ptr<ResWrapper> res_wrapper = relation->GetMatch(data_retriever_);
-
-		bool success = query_result_.MergeResult(res_wrapper);
-		if (!success) {
-			return false;
-		}
-		//data_retriever_.retrieve(*it);
-
-	}
-
 	shared_ptr<std::vector<shared_ptr<Pattern>>> patterns = query_.GetPatterns();
-	for (auto it = patterns->begin(); it != patterns->end(); ++it) {
-		shared_ptr<Pattern> pattern = *it;
+	shared_ptr<std::vector<shared_ptr<With>>> with_clauses = query_.GetWithClauses();
 
-		shared_ptr<ResWrapper> res_wrapper = pattern->GetMatch(data_retriever_);
+	clauses.insert(clauses.end(), relations->begin(), relations->end());
+	clauses.insert(clauses.end(), patterns->begin(), patterns->end());
+	clauses.insert(clauses.end(), with_clauses->begin(), with_clauses->end());
 
-		bool success = query_result_.MergeResult(res_wrapper);
-		if (!success) {
-			return false;
+	//for (auto it = relations->begin(); it != relations->end(); ++it) {
+	//	shared_ptr<Rel> relation = *it;
+	//	// update sym_domain with data retriever
+
+	//	shared_ptr<ResWrapper> res_wrapper = relation->GetMatch(data_retriever_);
+
+	//	bool success = query_result_.MergeResult(res_wrapper);
+	//	if (!success) {
+	//		return false;
+	//	}
+	//	//data_retriever_.retrieve(*it);
+	//}
+
+	//
+	//for (auto it = patterns->begin(); it != patterns->end(); ++it) {
+	//	shared_ptr<Pattern> pattern = *it;
+
+	//	shared_ptr<ResWrapper> res_wrapper = pattern->GetMatch(data_retriever_);
+
+	//	bool success = query_result_.MergeResult(res_wrapper);
+	//	if (!success) {
+	//		return false;
+	//	}
+	//	//data_retriever_.retrieve(*it);
+
+	//}
+	bool success = EvaluateGroup(clauses);
+
+	return success;
+}
+
+bool QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> clauses) {
+	Table table;
+
+	for (shared_ptr<Clause> clause : clauses) {
+		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
+		if (res_wrapper->GetResType() == ResType::kBool) {
+			if (res_wrapper->IsValid()) {
+				continue;
+			}
+			else {
+				return false;
+			}	
 		}
-		//data_retriever_.retrieve(*it);
 
+		//table = table.Join(res_wrapper);
 	}
-	return true;
+
 }
 
 vector<std::string> QueryEvaluator::ExtractResult() {

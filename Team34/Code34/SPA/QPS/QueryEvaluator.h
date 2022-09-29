@@ -22,6 +22,7 @@ protected:
 	std::vector<Clause> clauses_;
 	DataRetriever data_retriever_;
 
+	bool EvaluateGroup(std::vector<std::shared_ptr<Clause>>);
 
 public:
 	QueryEvaluator(Query query);

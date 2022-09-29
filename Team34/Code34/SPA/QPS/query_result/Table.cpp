@@ -21,11 +21,11 @@ vector<string> Table::GetCommonFields(shared_ptr<Table> that) {
 	return common_fields;
 }
 
-string Table::ComputeHashkey(vector<string> common_field, unordered_map<string, string> row) {
+string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 	string hash_key = "";
 
 	for (string field : common_field) {
-		hash_key += (row.at(field) + ",");
+		hash_key += (GetValueInField(field, row) + ",");
 	}
 
 	return hash_key;
@@ -48,13 +48,13 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 	vector<string> new_fields = that_fields;
 	new_fields.insert(new_fields.end(), fields_.begin(), fields_.end());
 
-	vector<unordered_map<string, string>> new_rows; 
+	vector<vector<string>> new_rows; 
 
 	
-	for (unordered_map<string, string> this_row: rows_) {
-		for (unordered_map<string, string> that_row : that->rows_) {
-			unordered_map<string, string> new_row = this_row;
-			new_row.insert(that_row.begin(), that_row.end());
+	for (vector<string>& this_row: rows_) {
+		for (vector<string>& that_row : that->rows_) {
+			vector<string> new_row = this_row;
+			new_row.insert(this_row.end(), that_row.begin(), that_row.end());
 			new_rows.push_back(new_row);
 		}
 	}
@@ -64,39 +64,41 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 
 shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_fields) {
 	vector<string> that_fields = that->fields_;
-	vector<string> new_fields = that_fields;
+	vector<string> new_fields = fields_;
 
 
 	// remove the common fields to avoid duplicates
 	// https://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
 	for (string common_field : common_fields) {
-		new_fields.erase(std::remove(new_fields.begin(), new_fields.end(), common_field), new_fields.end());
+		that_fields.erase(std::remove(that_fields.begin(), that_fields.end(), common_field), that_fields.end());
 	}
 	
-	new_fields.insert(new_fields.end(), fields_.begin(), fields_.end());
+	// new fields are in the sequence of (fields in this table + fields except common fields in that table )
+	new_fields.insert(new_fields.end(), that_fields.begin(), that_fields.end());
 
-	vector<unordered_map<string, string>> new_rows;
+	vector<vector<string>> new_rows;
 
-	unordered_multimap<string, unordered_map<string, string>> hashkey_to_rows;
+	unordered_multimap<string, vector<string>> hashkey_to_rows;
 
-	for (unordered_map<string, string> this_row : rows_) {
+	for (vector<string>& this_row : rows_) {
 		string hashkey = ComputeHashkey(common_fields, this_row);
 		hashkey_to_rows.insert({ hashkey, this_row });
 	}
 
-	for (unordered_map<string, string> that_row : that->rows_) {
+	for (vector<string>& that_row : that->rows_) {
 		string hashkey = ComputeHashkey(common_fields, that_row);
 		if (hashkey_to_rows.count(hashkey) == 0) continue;
 
 		//https://stackoverflow.com/questions/9046922/unordered-multimap-iterating-the-result-of-find-yields-elements-with-differe
-		auto iterators = hashkey_to_rows.equal_range(hashkey);
+		auto hashkey_to_row_entries = hashkey_to_rows.equal_range(hashkey);
 
-		for (auto iterator = iterators.first; iterator != iterators.second; ++iterator) {
-			string hashkey = iterator->first;
-			unordered_map<string, string> row = iterator->second;
+		for (auto hashkey_to_row_entry = hashkey_to_row_entries.first; hashkey_to_row_entry != hashkey_to_row_entries.second; ++hashkey_to_row_entry) {
+			string hashkey = hashkey_to_row_entry->first;
+			vector<string>& row = hashkey_to_row_entry->second;
 
-			unordered_map<string, string> new_row = that_row;
-			new_row.insert(row.begin(), row.end());
+			vector<string> new_row = row;
+			
+			//for (int i = 0; i < )
 
 			new_rows.push_back(new_row);
 		}
