@@ -147,11 +147,11 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	l_var = tokens.at(token_idx).GetStringVal();
 	token_idx += 2;
 	a_node->SetLeft(l_var);
+	std::vector<std::string> infix_tokens;
 	vector<Variable> r_vars = {};
 	vector<Constant> r_cons = {};
-	string infix = "";
 	while (tokens.at(token_idx).GetType() != SourceTokenType::kSemiColon) {
-		infix += tokens.at(token_idx).GetStringVal();
+		infix_tokens.push_back(tokens.at(token_idx).GetStringVal());
 		if (tokens.at(token_idx).GetType() == SourceTokenType::kName) {
 			Variable r_var = tokens.at(token_idx).GetStringVal();
 			r_vars.push_back(r_var);
@@ -165,6 +165,7 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(vector<Sou
 	token_idx += 1;
 	a_node->SetRightVars(r_vars);
 	a_node->SetRightCons(r_cons);
+	std::string infix = this->JoinWithDelimiter(infix_tokens, " ");
 	a_node->SetInfix(infix);
 	return a_node;
 }
@@ -226,4 +227,15 @@ shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(vector<SourceT
 	p_node->SetProcedure(proc_index);
 	token_idx += 2;
 	return p_node;
+}
+
+std::string SourceParser::JoinWithDelimiter(std::vector<std::string>& values, std::string delimiter) {
+	std::string result = "";
+	for (unsigned int i = 0; i < values.size(); i++) {
+		result += values[i];
+		if (i != values.size() - 1) {
+			result += delimiter; // Add delimiter only if not last element in vector
+		}
+	}
+	return result;
 }
