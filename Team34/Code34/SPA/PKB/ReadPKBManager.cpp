@@ -316,7 +316,20 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatte
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.assign_pattern_manager_.GetPatternMatch(expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> filtered_stmts_with_var = std::make_shared<std::vector<std::pair<StmtNum, Variable>>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			std::shared_ptr<std::unordered_set<Variable>> vars = pkb.modifies_manager_.GetVarByStmtNum(stmt_num);
+			for (auto iter = vars->begin(); iter != vars->end(); ++iter)
+			{
+				filtered_stmts_with_var->push_back(std::make_pair(stmt_num, *iter));
+			}
+		}
+	}
+	return filtered_stmts_with_var;
 }
 
 // APIs related to If Pattern relation

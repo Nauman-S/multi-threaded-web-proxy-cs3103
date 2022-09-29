@@ -78,9 +78,9 @@ void WritePKBManager::SetCallsT(Procedure caller, Procedure callee)
 	pkb.calls_manager_.SetCallsT(caller, callee);
 }
 
-void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr)
+void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Expr expr)
 {
-	pkb.assign_pattern_manager_.AddPattern(stmt_num, var, expr);
+	pkb.assign_pattern_manager_.AddPattern(stmt_num, expr);
 }
 
 void WritePKBManager::AddIfPattern(StmtNum stmt_num, Variable var)
