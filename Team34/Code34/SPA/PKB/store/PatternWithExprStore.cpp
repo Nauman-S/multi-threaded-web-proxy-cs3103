@@ -19,22 +19,6 @@ bool PatternWithExprStore::IsPatternMatch(StmtNum stmt_num, std::shared_ptr<Expr
 	return false;
 }
 
-bool PatternWithExprStore::IsPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
-{
-	auto iter = statement_map_.find(stmt_num);
-	if (iter != statement_map_.end())
-	{
-		std::pair <Variable, std::shared_ptr<Expr>> pair = statement_map_[stmt_num];
-		Variable stored_var = pair.first;
-		Expr stored_expr = *pair.second;
-		if (var == stored_var)
-		{
-			return expr->IsMatch(stored_expr);
-		}
-	}
-	return false;
-}
-
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> PatternWithExprStore::GetPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> all_sv_pairs = std::make_shared<std::vector<std::pair<StmtNum, Variable>>>();
