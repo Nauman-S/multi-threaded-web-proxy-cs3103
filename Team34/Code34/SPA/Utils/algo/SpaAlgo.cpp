@@ -75,7 +75,6 @@ string SpaAlgo::InfixToPostfix(string& infix)
 		stk.pop();
 	}
 	
-	assert(postfix_tokens.size() > 0);
 	string postfix = postfix_tokens[0];
 	for (int i = 1; i < postfix_tokens.size(); ++i) {
 		postfix += (" " + postfix_tokens[i]);
