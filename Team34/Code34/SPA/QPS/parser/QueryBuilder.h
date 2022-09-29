@@ -44,7 +44,7 @@ private:
 
 	string GetExpressionStr();
 
-	std::vector< shared_ptr<Rel>> ParseRelations();
+	std::vector<shared_ptr<Rel>> ParseRelations();
 	shared_ptr<Rel> QueryBuilder::ParseRelation();
 	shared_ptr<Rel> ParseRelRefClause(std::string relation_reference_);
 	shared_ptr<Rel> ParseUsesRel();
@@ -69,14 +69,16 @@ private:
 
 	std::vector<shared_ptr<With>> ParseWithClauses();
 	shared_ptr<With> ParseWithClause();
-	shared_ptr<Ref> ParseWithRef();
+	std::pair<shared_ptr<Ref>, ValType> ParseWithRef();
 	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
+	ValType GetValTypeFromAttrName(string);
 
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType attr_name);
 
+	
 
 public:
 
