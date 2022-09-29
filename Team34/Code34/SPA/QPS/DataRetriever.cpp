@@ -499,11 +499,12 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(StmtVarRel& r
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
     shared_ptr<unordered_set<int>> int_set;
+    RefType stmt_type = rel.LhsRefType();
     if (type == RelType::kUsesSRel) {
-        int_set = pkb_ptr_->GetAllUsesStatements();
+        int_set = pkb_ptr_->GetAllUsesStatements(stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
-        int_set = pkb_ptr_->GetAllModifiesStatements();
+        int_set = pkb_ptr_->GetAllModifiesStatements(stmt_type);
     }
 
     return IntSetToStrSet(int_set);
@@ -927,18 +928,19 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
 shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     shared_ptr<unordered_set<StmtNum>> int_set;
+    RefType rhs_stmt_type = rel.RhsRefType();
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllChildren();
+        int_set = pkb_ptr_->GetAllChildren(rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel)
     {
-        int_set = pkb_ptr_->GetAllSuccessorStmts();
+        int_set = pkb_ptr_->GetAllSuccessorStmts(rhs_stmt_type);
     } 
     /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
@@ -998,18 +1000,19 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
 shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel
+    assert(type == RelType::kParentRel  || type == RelType::kParentTRel
         || type == RelType::kFollowsRel || type == RelType::kFollowsTRel
-        || type == RelType::kNextRel || type == RelType::kNextTRel
+        || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
     shared_ptr<unordered_set<StmtNum>> int_set;
+    RefType lhs_stmt_type = rel.LhsRefType();
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllParents();
+        int_set = pkb_ptr_->GetAllParents(lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel)
     {
-        int_set = pkb_ptr_->GetAllPredecessorStmts();
+        int_set = pkb_ptr_->GetAllPredecessorStmts(lhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
