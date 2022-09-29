@@ -1,16 +1,16 @@
 #pragma once
 
 # include "StatementASTNode.h"
-# include "../ProcedureIndex.h"
+#include "../../Utils/type/TypeDef.h"
 
 class CallStatementASTNode : public StatementASTNode {
 public:
-	void SetProcedure(ProcedureIndex& p);
+	void SetProcedure(Procedure& p);
 
-	ProcedureIndex GetProcedure();
+	Procedure GetProcedure();
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
-	ProcedureIndex proc;
+	Procedure proc;
 };

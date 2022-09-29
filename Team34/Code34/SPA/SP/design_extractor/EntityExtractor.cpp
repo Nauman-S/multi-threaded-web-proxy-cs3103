@@ -26,7 +26,7 @@ void EntityExtractor::ExtractProgramNode(ProgramNode& program) {
 }
 
 void EntityExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
-	this->write_manager_->AddProcedure(proc.GetProc().GetName());
+	this->write_manager_->AddProcedure(proc.GetProc());
 
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
@@ -35,39 +35,39 @@ void EntityExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 }
 
 void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
-	int line_no = assign.GetLineIndex().GetLineNum();
+	int line_no = assign.GetLineIndex();
 
-	std::vector<VariableIndex> rhs = assign.GetRight();
-	for (VariableIndex var : rhs) {
-		this->write_manager_->AddVariable(var.GetName());
+	std::vector<Variable> rhs = assign.GetRightVars();
+	for (Variable var : rhs) {
+		this->write_manager_->AddVariable(var);
 	}
-	VariableIndex lhs = assign.GetLeft();
-	this->write_manager_->AddVariable(lhs.GetName());
+	Variable lhs = assign.GetLeft();
+	this->write_manager_->AddVariable(lhs);
 
 	Expr expr = Expr(assign.GetInfix());
-	this->write_manager_->AddAssignPattern(line_no, lhs.GetName(), expr);
+	this->write_manager_->AddAssignPattern(line_no, expr);
 
 	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 
 void EntityExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	int line_no = call.GetLineIndex().GetLineNum();
+	int line_no = call.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kCallRef);
 }
 
 void EntityExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
-	VariableIndex var = print.GetVariable();
-	this->write_manager_->AddVariable(var.GetName());
+	Variable var = print.GetVariable();
+	this->write_manager_->AddVariable(var);
 
-	int line_no = print.GetLineIndex().GetLineNum();
+	int line_no = print.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kPrintRef);
 }
 
 void EntityExtractor::ExtractReadNode(ReadStatementASTNode& read) {
-	VariableIndex var = read.GetReadVariable();
-	this->write_manager_->AddVariable(var.GetName());
+	Variable var = read.GetReadVariable();
+	this->write_manager_->AddVariable(var);
 
-	int line_no = read.GetLineIndex().GetLineNum();
+	int line_no = read.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kReadRef);
 }
 
@@ -85,7 +85,7 @@ void EntityExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 		else_child->Extract(*this);
 	}
 
-	int line_no = if_stmt.GetLineIndex().GetLineNum();
+	int line_no = if_stmt.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kIfRef);
 }
 
@@ -98,7 +98,7 @@ void EntityExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 		child->Extract(*this);
 	}
 
-	int line_no = while_stmt.GetLineIndex().GetLineNum();
+	int line_no = while_stmt.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kWhileRef);
 }
 
@@ -106,8 +106,8 @@ void EntityExtractor::ExtractConditionExpression(ConditionExpression& cond) {
 	//TODO: Check if variable in condition statement should be added
 	// Is variable not declared previously considered invalid to appear
 	// in cond expression? or should we add regardlessly as a variable
-	std::vector<VariableIndex> vars = cond.GetVariables();
-	for (VariableIndex var : vars) {
-		this->write_manager_->AddVariable(var.GetName());
+	std::vector<Variable> vars = cond.GetVariables();
+	for (Variable var : vars) {
+		this->write_manager_->AddVariable(var);
 	}
 }

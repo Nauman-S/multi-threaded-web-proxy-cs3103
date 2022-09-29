@@ -1,3 +1,8 @@
+5 - test parents* for empty
+stmt s; while w; read r;
+Select s such that Parent*(w, r)
+none
+5000
 1 - test parents for if
 stmt s;
 Select s such that Parent(2, s)
@@ -17,14 +22,4 @@ Select s such that Parent(7, s)
 stmt s;
 Select s such that Parent(10, s)
 11, 12
-5000
-5 - test parents* for while
-stmt s;
-Select s such that Parent*(10, s)
-11, 12, 13, 14
-5000
-6 - test parents with empty result
-stmt s; while w; read r;
-Select s such that Parent(w, r)
-none
 5000

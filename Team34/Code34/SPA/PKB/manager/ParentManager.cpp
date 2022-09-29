@@ -24,7 +24,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetChildrenFromStmt(
 	return parent_store_.GetMany(parent);
 }
 
-StmtNum ParentManager::GetParentFromStmt(StmtNum child)
+std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetParentFromStmt(StmtNum child)
 {
 	return parent_store_.GetOne(child);
 }

@@ -2,11 +2,11 @@
 
 using namespace std;
 
-void CallStatementASTNode::SetProcedure(ProcedureIndex& p) {
+void CallStatementASTNode::SetProcedure(Procedure& p) {
 	proc = p;
 }
 
-ProcedureIndex CallStatementASTNode::GetProcedure() {
+Procedure CallStatementASTNode::GetProcedure() {
 	return proc;
 }
 

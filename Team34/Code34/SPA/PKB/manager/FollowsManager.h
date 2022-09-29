@@ -15,8 +15,8 @@ public:
 	void SetFollows(StmtNum left, StmtNum right);
 	bool CheckFollows(StmtNum left, StmtNum right);
 	bool IsEmpty();
-	StmtNum GetSuccessorStmtFromStmt(StmtNum stmt);
-	StmtNum GetPredecessorStmtFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts();
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();

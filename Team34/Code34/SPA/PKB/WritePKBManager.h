@@ -51,6 +51,12 @@ public:
 	// APIs related to Calls* relation
 	void SetCallsT(Procedure caller, Procedure callee);
 
-	// APIs related to Pattern relation
-	void AddAssignPattern(StmtNum stmt_num, Variable var, Expr expr);
+	// APIs related to Assign Pattern relation
+	void AddAssignPattern(StmtNum stmt_num, Expr expr);
+
+	// APIs related to If Pattern relation
+	void AddIfPattern(StmtNum stmt_num, Variable var);
+
+	// APIs related to While Pattern relation
+	void AddWhilePattern(StmtNum stmt_num, Variable var);
 };

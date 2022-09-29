@@ -60,24 +60,28 @@ bool ReadPKBManager::IsParentStoreEmpty()
 	return pkb.parent_manager_.IsEmpty();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildrenFromStmt(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetChildrenFromStmt(StmtNum parent, RefType children_type)
 {
-	return pkb.parent_manager_.GetChildrenFromStmt(parent);
+	std::shared_ptr<std::unordered_set<StmtNum>> children = pkb.parent_manager_.GetChildrenFromStmt(parent);
+	return FilterStmtSetByType(children, children_type);
 }
 
-StmtNum ReadPKBManager::GetParentFromStmt(StmtNum child)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetParentFromStmt(StmtNum child, RefType parent_type)
 {
-	return pkb.parent_manager_.GetParentFromStmt(child);
+	std::shared_ptr<std::unordered_set<StmtNum>> parent = pkb.parent_manager_.GetParentFromStmt(child);
+	return FilterStmtSetByType(parent, parent_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(RefType children_type)
 {
-	return pkb.parent_manager_.GetAllChildren();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_children = pkb.parent_manager_.GetAllChildren();
+	return FilterStmtSetByType(all_children, children_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParents(RefType parent_type)
 {
-	return pkb.parent_manager_.GetAllParents();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_parents = pkb.parent_manager_.GetAllParents();
+	return FilterStmtSetByType(all_parents, parent_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentRelations()
@@ -91,14 +95,16 @@ bool ReadPKBManager::CheckParentT(StmtNum parent, StmtNum child)
 	return pkb.parent_manager_.CheckParentT(parent, child);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildrenFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildrenFromStmt(StmtNum stmt, RefType children_type)
 {
-	return pkb.parent_manager_.GetAllChildrenFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> all_children = pkb.parent_manager_.GetAllChildrenFromStmt(stmt);
+	return FilterStmtSetByType(all_children, children_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParentsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllParentsFromStmt(StmtNum stmt, RefType parent_type)
 {
-	return pkb.parent_manager_.GetAllParentsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> all_parents = pkb.parent_manager_.GetAllParentsFromStmt(stmt);
+	return FilterStmtSetByType(all_parents, parent_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllParentTRelations()
@@ -117,24 +123,28 @@ bool ReadPKBManager::IsFollowsStoreEmpty()
 	return pkb.follows_manager_.IsEmpty();
 }
 
-StmtNum ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type)
 {
-	return pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> successor_stmt = pkb.follows_manager_.GetSuccessorStmtFromStmt(stmt);
+	return FilterStmtSetByType(successor_stmt, successor_type);
 }
 
-StmtNum ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> predecessor_stmt = pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
+	return FilterStmtSetByType(predecessor_stmt, predecessor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts(RefType successor_type)
 {
-	return pkb.follows_manager_.GetAllSuccessorStmts();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_successor_stmts = pkb.follows_manager_.GetAllSuccessorStmts();
+	return FilterStmtSetByType(all_successor_stmts, successor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmts(RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetAllPredecessorStmts();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_predecessor_stmts = pkb.follows_manager_.GetAllPredecessorStmts();
+	return FilterStmtSetByType(all_predecessor_stmts, predecessor_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsRelations()
@@ -148,14 +158,16 @@ bool ReadPKBManager::CheckFollowsT(StmtNum left, StmtNum right)
 	return pkb.follows_manager_.CheckFollowsT(left, right);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
-	return pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> successor_stmts = pkb.follows_manager_.GetAllSuccessorStmtsFromStmt(stmt);
+	return FilterStmtSetByType(successor_stmts, successor_type);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType predecessor_type)
 {
-	return pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> predecessor_stmts = pkb.follows_manager_.GetAllPredecessorStmtsFromStmt(stmt);
+	return FilterStmtSetByType(predecessor_stmts, predecessor_type);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllFollowsTRelations()
@@ -184,9 +196,10 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetUsesVarByProcNa
 	return pkb.uses_manager_.GetVarByProcName(proc_name);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetUsesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetUsesStmtNumByVar(Variable var, RefType stmt_type)
 {
-	return pkb.uses_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> uses_stmts = pkb.uses_manager_.GetStmtNumByVar(var);
+	return FilterStmtSetByType(uses_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameByVar(Variable var)
@@ -194,9 +207,10 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetUsesProcNameBy
 	return pkb.uses_manager_.GetProcNameByVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllUsesStatements(RefType stmt_type)
 {
-	return pkb.uses_manager_.GetAllStatements();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_uses_stmts = pkb.uses_manager_.GetAllStatements();
+	return FilterStmtSetByType(all_uses_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllUsesSVariables()
@@ -240,9 +254,10 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetModifiesVarByPr
 	return pkb.modifies_manager_.GetVarByProcName(proc_name);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetModifiesStmtNumByVar(Variable var, RefType stmt_type)
 {
-	return pkb.modifies_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> modifies_stmts = pkb.modifies_manager_.GetStmtNumByVar(var);
+	return FilterStmtSetByType(modifies_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNameByVar(Variable var)
@@ -250,9 +265,10 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetModifiesProcNa
 	return pkb.modifies_manager_.GetProcNameByVar(var);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllModifiesStatements(RefType stmt_type)
 {
-	return pkb.modifies_manager_.GetAllStatements();
+	std::shared_ptr<std::unordered_set<StmtNum>> all_modifies_stmts = pkb.modifies_manager_.GetAllStatements();
+	return FilterStmtSetByType(all_modifies_stmts, stmt_type);
 }
 
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManager::GetAllModifiesSVariables()
@@ -275,20 +291,83 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ReadPKBManager::Get
 	return pkb.modifies_manager_.GetAllPVModifies();
 }
 
-// APIs related to Pattern relation
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
+// APIs related to Assign Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+	}
+	return filtered_stmts;
 }
 
-bool ReadPKBManager::IsAssignPatternMatch(StmtNum stmt_num, Variable var, std::shared_ptr<ExprSpec> expr)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.IsAssignPatternMatch(stmt_num, var, expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.modifies_manager_.GetStmtNumByVar(var);
+	std::shared_ptr<std::unordered_set<StmtNum>> filtered_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			filtered_stmts->insert(stmt_num);
+		}
+	}
+	return filtered_stmts;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr)
 {
-	return pkb.pattern_manager_.GetAssignPatternMatch(expr);
+	std::shared_ptr<std::unordered_set<StmtNum>> temp_set = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> filtered_stmts_with_var = std::make_shared<std::vector<std::pair<StmtNum, Variable>>>();
+	for (auto stmt_num : *temp_set)
+	{
+		if (pkb.assign_pattern_manager_.IsPatternMatch(stmt_num, expr))
+		{
+			std::shared_ptr<std::unordered_set<Variable>> vars = pkb.modifies_manager_.GetVarByStmtNum(stmt_num);
+			for (auto iter = vars->begin(); iter != vars->end(); ++iter)
+			{
+				filtered_stmts_with_var->push_back(std::make_pair(stmt_num, *iter));
+			}
+		}
+	}
+	return filtered_stmts_with_var;
+}
+
+// APIs related to If Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatmentsFromVar(Variable var)
+{
+	return pkb.if_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllIfPatternStatements()
+{
+	return pkb.if_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllIfPatterns()
+{
+	return pkb.if_pattern_manager_.GetAllPatterns();
+}
+
+// APIs related to While Pattern relation
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatmentsFromVar(Variable var)
+{
+	return pkb.while_pattern_manager_.GetAllStatmentsFromVar(var);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllWhilePatternStatements()
+{
+	return pkb.while_pattern_manager_.GetAllStatements();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> ReadPKBManager::GetAllWhilePatterns()
+{
+	return pkb.while_pattern_manager_.GetAllPatterns();
 }
 
 // APIs related to Calls relation
@@ -346,4 +425,27 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallerFromC
 std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManager::GetAllCallsTRelations()
 {
 	return pkb.calls_manager_.GetAllCallsTRelations();
+}
+
+// Utility functions
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterStmtSetByType(std::shared_ptr<std::unordered_set<StmtNum>> stmts, RefType stmt_type)
+{
+	assert(stmt_type == RefType::kStmtRef || stmt_type == RefType::kCallRef || stmt_type == RefType::kPrintRef || stmt_type == RefType::kAssignRef
+		|| stmt_type == RefType::kIfRef || stmt_type == RefType::kReadRef || stmt_type == RefType::kWhileRef);
+	if (stmt_type == RefType::kStmtRef)
+	{
+		return stmts;
+	}
+
+	auto res = std::make_shared<std::unordered_set<StmtNum>>();
+
+	for (auto iter = stmts->begin(); iter != stmts->end(); ++iter) 
+	{
+		if (*(pkb.statement_manager_.GetStatementType(*iter)) == stmt_type)
+		{
+			res->insert(*iter);
+		}
+	}
+
+	return res;
 }

@@ -9,4 +9,6 @@ procedure test {
     c = a + 4;
     b = a + 4;
     x = d + 1 + 5 + a;
+    k = (i + j) * (k - (p * q) % f);
+    p = i + j * ((k - p)) * (q) % f;
 }

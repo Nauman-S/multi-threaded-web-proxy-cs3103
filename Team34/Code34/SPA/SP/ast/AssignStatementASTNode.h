@@ -2,27 +2,31 @@
 
 # include <vector>
 # include "StatementASTNode.h"
-# include "../VariableIndex.h"
-
+#include "../../Utils/type/TypeDef.h"
 
 class AssignStatementASTNode : public StatementASTNode {
 public:
-	void SetLeft(VariableIndex&);
+	void SetLeft(Variable&);
 
 	void SetInfix(string&);
 
-	void SetRight(std::vector<VariableIndex>&);
+	void SetRightVars(std::vector<Variable>&);
 
-	VariableIndex GetLeft();
+	void SetRightCons(std::vector<Constant>&);
+
+	Variable GetLeft();
 
 	std::string GetInfix();
 
-	std::vector<VariableIndex> GetRight();
+	std::vector<Variable> GetRightVars();
+
+	std::vector<Constant> GetRightCons();
 
 	virtual void Extract(NodeExtractor&) override;
 
 protected:
-	VariableIndex left;
-	std::vector<VariableIndex> right;
+	Variable left;
+	std::vector<Variable> right_vars;
+	std::vector<Constant> right_cons;
 	std::string infix;
 };
