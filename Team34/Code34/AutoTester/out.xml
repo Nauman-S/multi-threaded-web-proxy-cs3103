@@ -1,8 +1,47 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>AutoTester</name><parsing_time_taken>48.000000</parsing_time_taken>
+<name>AutoTester</name><parsing_time_taken>10.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="test two clauses with same pair of variables">1</id><querystr><![CDATA[variable v; assign a; Select v such that Modifies(a, v) pattern a(v, _" x "_)]]></querystr>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test empty follows">6</id><querystr><![CDATA[if ifs; assign a;  Select a such that Follows (ifs, 3)]]></querystr>
+<timeout/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in top level">1</id><querystr><![CDATA[stmt s; Select s such that Follows(1, s)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>2930.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows* in top level">2</id><querystr><![CDATA[stmt s; Select s such that Follows*(1, s)]]></querystr>
+<stuans>2,3,8</stuans>
+<correct>2,3,8</correct>
+<time_taken>9.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in then of if statement">3</id><querystr><![CDATA[stmt s; Select s such that Follows(4, s)]]></querystr>
+<stuans>5</stuans>
+<correct>5</correct>
+<time_taken>6.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows in else of if statement">4</id><querystr><![CDATA[stmt s; Select s such that Follows(6, s)]]></querystr>
+<stuans>7</stuans>
+<correct>7</correct>
+<time_taken>7.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="test follows* in then of if statement">5</id><querystr><![CDATA[stmt s; Select s such that Follows*(4, s)]]></querystr>
+<stuans>5</stuans>
+<correct>5</correct>
+<time_taken>6.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

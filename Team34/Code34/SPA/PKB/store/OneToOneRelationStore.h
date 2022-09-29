@@ -14,8 +14,8 @@ public:
 	void SetRelation(S left, T right);
 	bool CheckRelation(S left, T right);
 	bool IsEmpty();
-	T GetRHSByLHS(S left);
-	S GetLHSByRHS(T right);
+	std::shared_ptr<std::unordered_set<T>> GetRHSByLHS(S left);
+	std::shared_ptr<std::unordered_set<S>> GetLHSByRHS(T right);
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
@@ -56,29 +56,25 @@ inline bool OneToOneRelationStore<S, T>::IsEmpty()
 }
 
 template <typename S, typename T>
-inline T OneToOneRelationStore<S, T>::GetRHSByLHS(S left)
+inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetRHSByLHS(S left)
 {
-	if (left_to_right_map_.find(left) == left_to_right_map_.end())
+	std::shared_ptr<std::unordered_set<T>> rhs = std::make_shared<std::unordered_set<T>>();
+	if (left_to_right_map_.find(left) != left_to_right_map_.end())
 	{
-		return NULL;
+		rhs->insert(left_to_right_map_[left]);
 	}
-	else
-	{
-		return left_to_right_map_[left];
-	}
+	return rhs;
 }
 
 template <typename S, typename T>
-inline S OneToOneRelationStore<S, T>::GetLHSByRHS(T right)
+inline std::shared_ptr<std::unordered_set<S>> OneToOneRelationStore<S, T>::GetLHSByRHS(T right)
 {
-	if (right_to_left_map_.find(right) == right_to_left_map_.end())
+	std::shared_ptr<std::unordered_set<S>> lhs = std::make_shared<std::unordered_set<S>>();
+	if (right_to_left_map_.find(right) != right_to_left_map_.end())
 	{
-		return NULL;
+		lhs->insert(right_to_left_map_[right]);
 	}
-	else
-	{
-		return right_to_left_map_[right];
-	}
+	return lhs;
 }
 
 template <typename S, typename T>

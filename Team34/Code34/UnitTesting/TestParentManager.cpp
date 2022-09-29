@@ -50,10 +50,10 @@ namespace UnitTesting
 			parent_manager_.SetParent(1, 2);
 			parent_manager_.SetParent(1, 3);
 			parent_manager_.SetParent(2, 4);
-			Assert::AreEqual(0, parent_manager_.GetParentFromStmt(1));
-			Assert::AreEqual(1, parent_manager_.GetParentFromStmt(2));
-			Assert::AreEqual(1, parent_manager_.GetParentFromStmt(3));
-			Assert::AreEqual(2, parent_manager_.GetParentFromStmt(4));
+			Assert::AreEqual(0, int(parent_manager_.GetParentFromStmt(1)->size()));
+			Assert::AreEqual(1, int(parent_manager_.GetParentFromStmt(2)->size()));
+			Assert::AreEqual(1, int(parent_manager_.GetParentFromStmt(3)->size()));
+			Assert::AreEqual(1, int(parent_manager_.GetParentFromStmt(4)->size()));
 		}
 
 		TEST_METHOD(TestGetAllParents) 
