@@ -1,6 +1,7 @@
 #include "Table.h"
 
 #include <iterator>
+#include <algorithm>
 
 using std::string;
 using std::vector;
@@ -54,7 +55,7 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 	for (vector<string>& this_row: rows_) {
 		for (vector<string>& that_row : that->rows_) {
 			vector<string> new_row = this_row;
-			new_row.insert(this_row.end(), that_row.begin(), that_row.end());
+			new_row.insert(new_row.end(), that_row.begin(), that_row.end());
 			new_rows.push_back(new_row);
 		}
 	}
@@ -98,7 +99,15 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 
 			vector<string> new_row = row;
 			
-			//for (int i = 0; i < )
+
+			for (int field_idx = 0; field_idx < that_row.size(); field_idx++) {
+				string& that_field = that->GetFieldAtIndex(field_idx);
+				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
+					continue;
+				}
+				new_row.push_back(that_row.at(field_idx));
+			}
+
 
 			new_rows.push_back(new_row);
 		}

@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include <assert.h>
 
 class Table {
 private:
@@ -16,11 +17,13 @@ private:
 
 	bool is_empty_;
 
-	int GetNumOfRows() { return rows_.size(); };
-	
-	int GetNumOfCols() { return fields_.size(); };
 
-	std::string GetValueInField(std::string field, vector<string>& row) {
+	std::string GetFieldAtIndex(int idx) {
+		assert(idx < fields_.size());
+		return fields_.at(idx);
+	}
+
+	std::string GetValueInField(std::string field, std::vector<std::string>& row) {
 		return row.at(field_to_index_map_.at(field));
 	}
 
@@ -45,6 +48,14 @@ public:
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
 	};
+
+	int GetNumOfRows() { return rows_.size(); };
+
+	int GetNumOfCols() { return fields_.size(); };
+
+	std::vector<std::vector<std::string>> GetRows() {
+		return rows_;
+	}
 
 	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 	//std::shared_ptr<Table> Join()
