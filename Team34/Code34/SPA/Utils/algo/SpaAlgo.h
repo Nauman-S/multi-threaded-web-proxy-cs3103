@@ -11,9 +11,7 @@
 class SpaAlgo
 {
 public:
-	static std::string InfixToPostfix(std::string infix);
-
-	static std::string InfixToPostfix2(std::string& infix);
+	static std::string InfixToPostfix(std::string& infix);
 
 	static std::shared_ptr<std::vector<std::string>> SpaAlgo::Split(std::string& str, char delim);
 
@@ -26,7 +24,6 @@ public:
 	static std::shared_ptr<TableRes> JoinTablesOfTwoCommonColumns(std::shared_ptr<TableRes> table1, std::shared_ptr<TableRes> table2);
 
 protected:
-	static std::unordered_map<char, int> precedence_;
-	static std::unordered_map<std::string, int> precedence2_;
+	static std::unordered_map<std::string, int> precedence_;
 };
 

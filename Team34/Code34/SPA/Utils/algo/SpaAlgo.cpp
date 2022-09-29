@@ -25,15 +25,7 @@ using std::shared_ptr;
 using std::make_shared;
 
 // Init static member
-unordered_map<char, int> SpaAlgo::precedence_ = {
-	{'+', 1},
-	{'-', 1},
-	{'*', 2},
-	{'/', 2},
-	{'%', 2},
-};
-
-unordered_map<string, int> SpaAlgo::precedence2_ = {
+unordered_map<string, int> SpaAlgo::precedence_ = {
 	{"+", 1},
 	{"-", 1},
 	{"*", 2},
@@ -41,51 +33,17 @@ unordered_map<string, int> SpaAlgo::precedence2_ = {
 	{"%", 2},
 };
 
-string SpaAlgo::InfixToPostfix(string infix)
+string SpaAlgo::InfixToPostfix(string& infix)
 {
-	stack<char> stk;
-	string postfix = "";
-	for (char& iter : infix) {
-		if (iter == ' ') {
-			continue;
-		}
-		else if (iter == '(') {
-			stk.push(iter);
-		}
-		else if (iter == ')') {
-			assert(!stk.empty());
-			while (!stk.empty() && stk.top() != '(') {
-				postfix += stk.top();
-				stk.pop();
-			}
-			stk.pop();  // discard the '('
-		}
-		else if (auto p = SpaAlgo::precedence_.find(iter); p != SpaAlgo::precedence_.end()) {
-			while (!stk.empty() && stk.top() != '(' && SpaAlgo::precedence_[stk.top()] >= p->second) {
-				// assume all operators are left-associative
-				postfix += stk.top();
-				stk.pop();
-			}
-			stk.push(iter);
-		}
-		else {
-			// is not an operator
-			postfix += iter;
-		}
+	if (infix == "") {
+		return "";
 	}
 
-	while (!stk.empty()) {
-		postfix += stk.top();
-		stk.pop();
-	}
-	return postfix;
-}
-
-string SpaAlgo::InfixToPostfix2(string& infix)
-{
 	stack<string> stk;
-	string postfix = "";
-	for (string& token : *Split(infix, ' ')) {
+	vector<string> postfix_tokens;
+	
+	auto splited = Split(infix, ' ');
+	for (string& token : *splited) {
 		if (token == " ") {
 			continue;
 		}
@@ -93,31 +51,36 @@ string SpaAlgo::InfixToPostfix2(string& infix)
 			stk.push(token);
 		}
 		else if (token == ")") {
-			assert(!stk.empty());
 			while (!stk.empty() && stk.top() != "(") {
-				postfix += (stk.top() + " ");
+				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
 			stk.pop();  // discard the "("
 		}
-		else if (auto p = SpaAlgo::precedence2_.find(token); p != SpaAlgo::precedence2_.end()) {
-			while (!stk.empty() && stk.top() != "(" && SpaAlgo::precedence2_[stk.top()] >= p->second) {
+		else if (auto p = SpaAlgo::precedence_.find(token); p != SpaAlgo::precedence_.end()) {
+			while (!stk.empty() && stk.top() != "(" && SpaAlgo::precedence_[stk.top()] >= p->second) {
 				// assume all operators are left-associative
-				postfix += (stk.top() + " ");
+				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
 			stk.push(token);
 		}
-		else {
-			// is not an operator
-			postfix += (token + " ");
+		else {  // is not an operator
+			postfix_tokens.push_back(token);
 		}
 	}
 
 	while (!stk.empty()) {
-		postfix += (stk.top() + " ");
+		postfix_tokens.push_back(stk.top());
 		stk.pop();
 	}
+	
+	assert(postfix_tokens.size() > 0);
+	string postfix = postfix_tokens[0];
+	for (int i = 1; i < postfix_tokens.size(); ++i) {
+		postfix += (" " + postfix_tokens[i]);
+	}
+
 	return postfix;
 }
 
