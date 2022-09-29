@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include <unordered_set>
 
 #include "ManyToManyRelationStore.h"
 
@@ -17,6 +18,7 @@ public:
 template<typename T>
 inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right)
 {
+	std::unordered_set<T> visited;
 	std::queue<T> queue;
 	queue.push(left);
 	while (!queue.empty())
@@ -31,12 +33,17 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 		std::unordered_set<T>& elements = s_to_t_map_[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
+			if (visited.find(*iter) != visited.end())
+			{
+				continue;
+			}
 			if (*iter == right)
 			{
 				return true;
 			}
 			else
 			{
+				visited.insert(*iter);
 				queue.push(*iter);
 			}
 		}
@@ -60,6 +67,7 @@ template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered_map<T, std::unordered_set<T>>& map)
 {
 	std::shared_ptr<std::unordered_set<T>> all_elements = std::make_shared<std::unordered_set<T>>();
+	std::unordered_set<T> visited;
 	std::queue<T> queue;
 	queue.push(t);
 	while (!queue.empty())
@@ -74,7 +82,12 @@ inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered
 		std::unordered_set<T>& elements = map[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
+			if (visited.find(*iter) != visited.end())
+			{
+				continue;
+			}
 			all_elements->insert(*iter);
+			visited.insert(*iter);
 			queue.push(*iter);
 		}
 	}

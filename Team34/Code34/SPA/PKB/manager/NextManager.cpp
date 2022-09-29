@@ -15,16 +15,15 @@ bool NextManager::IsEmpty()
 	return next_store_.IsEmpty();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetNextStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetNextStmtsFromStmt(StmtNum stmt)
 {
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	return next_store_.GetRHSByLHS(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetPrevStmtsFromStmt(StmtNum stmt)
 {
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	return next_store_.GetLHSByRHS(stmt);
 }
-
 
 std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllNextStmts()
 {
@@ -41,3 +40,23 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllNex
 	return next_store_.GetAllRelations();
 }
 
+bool NextManager::CheckNextT(StmtNum prev, StmtNum next)
+{
+	return next_store_.CheckTransitiveRelation(prev, next);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllNextStmtsFromStmt(StmtNum stmt)
+{
+	return next_store_.GetAllTransitiveRHS(stmt);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllPrevStmtsFromStmt(StmtNum stmt)
+{
+	return next_store_.GetAllTransitiveLHS(stmt);
+}
+
+// TODO: implement in ManyToManyNextRelationStore
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllParentTRelations()
+{
+	return next_store_.GetAllTransitiveRelations();
+}

@@ -185,6 +185,7 @@
     <ClCompile Include="TestParentManager.cpp" />
     <ClCompile Include="TestFollowsManager.cpp" />
     <ClCompile Include="TestCallsManager.cpp" />
+    <ClCompile Include="TestNextManager.cpp" />
     <ClCompile Include="TestConstantManager.cpp" />
     <ClCompile Include="TestVariableManager.cpp" />
   </ItemGroup>

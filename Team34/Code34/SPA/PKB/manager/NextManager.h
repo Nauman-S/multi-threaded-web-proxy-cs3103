@@ -16,17 +16,17 @@ public:
 	void SetNext(StmtNum prev, StmtNum next);
 	bool CheckNext(StmtNum prev, StmtNum next);
 	bool IsEmpty();
-	std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetPrevStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts();
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
 
 	// Parent* Relation methods
-	// bool CheckNextT(StmtNum parent, StmtNum child);
-	// std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt);
-	// std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);
-	// std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
+	bool CheckNextT(StmtNum parent, StmtNum child);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 private:
 	ManyToManyNextStore<StmtNum> next_store_;
 };
