@@ -32,7 +32,5 @@ public:
 	std::shared_ptr<SetRes> GetSet() { return set_res_; }
 
 	std::shared_ptr<TableRes> GetTable() { return table_res_; }
-
-
 };
 
