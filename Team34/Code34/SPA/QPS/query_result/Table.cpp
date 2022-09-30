@@ -116,7 +116,7 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 	}
 
 	for (vector<string>& that_row : that->rows_) {
-		string hashkey = ComputeHashkey(common_fields, that_row);
+		string hashkey = that->ComputeHashkey(common_fields, that_row);
 		if (hashkey_to_rows.count(hashkey) == 0) continue;
 
 		//https://stackoverflow.com/questions/9046922/unordered-multimap-iterating-the-result-of-find-yields-elements-with-differe
