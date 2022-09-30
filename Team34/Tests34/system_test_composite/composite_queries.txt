@@ -1,3 +1,18 @@
+6 - test pattern and modifies
+assign a, a1; variable v, v1; 
+Select v1 such that Modifies (a, v) pattern a1 (v1, _)
+
+5000
+5 - test pattern
+assign a; while w; 
+Select a such that Modifies (w, "x") pattern a (_, _"x"_)
+
+5000
+4 - test pattern
+stmt s; 
+assign a; Select a pattern a ("x", _)
+1, 7
+5000
 1 - test two clauses with same pair of variables
 variable v; assign a;
 Select v such that Modifies(a, v) pattern a(v, _" x "_)

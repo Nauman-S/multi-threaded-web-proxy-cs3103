@@ -16,9 +16,7 @@ private:
 
 	std::vector<std::vector<std::string>> rows_;
 
-	bool is_empty_;
-
-
+	
 	std::string GetFieldAtIndex(int idx) {
 		assert(idx < fields_.size());
 		return fields_.at(idx);
@@ -39,9 +37,11 @@ private:
 
 	std::shared_ptr<Table> HashJoin(std::shared_ptr<Table> that, std::vector<std::string> common_fields);
 
+protected:
+	bool is_empty_;
 public:
 	Table()
-		: is_empty_{ true } {};
+		: is_empty_{ false } {};
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
 		: fields_{ fields }, rows_{ rows }, is_empty_{ false } {
