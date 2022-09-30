@@ -13,9 +13,9 @@ protected:
 public:
 	ExprSpec(std::string infix_expr);
 
-	virtual bool IsMatch(Expr expr) = 0;
+	virtual bool IsMatch(Expr& expr) = 0;
 	virtual bool IsWildcard() = 0;
-	string GetInfix() { return infix_expr_; }
-	string GetPostfix() { return post_expr_; }
+	string& GetInfix() { return infix_expr_; }
+	string& GetPostfix() { return post_expr_; }
 };
 
