@@ -227,6 +227,7 @@
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
+    <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
   </ItemGroup>

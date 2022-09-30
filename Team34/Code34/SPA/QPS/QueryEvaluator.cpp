@@ -6,7 +6,7 @@
 #include "relation/Rel.h"
 #include "ResultExtractor.h"
 #include "query_result/Table.h"
-
+#include "query_result/EmptyTable.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -40,34 +40,9 @@ bool QueryEvaluator::Evaluate() {
 	clauses.insert(clauses.end(), patterns->begin(), patterns->end());
 	clauses.insert(clauses.end(), with_clauses->begin(), with_clauses->end());
 
-	//for (auto it = relations->begin(); it != relations->end(); ++it) {
-	//	shared_ptr<Rel> relation = *it;
-	//	// update sym_domain with data retriever
 
-	//	shared_ptr<ResWrapper> res_wrapper = relation->GetMatch(data_retriever_);
-
-	//	bool success = query_result_.MergeResult(res_wrapper);
-	//	if (!success) {
-	//		return false;
-	//	}
-	//	//data_retriever_.retrieve(*it);
-	//}
-
-	//
-	//for (auto it = patterns->begin(); it != patterns->end(); ++it) {
-	//	shared_ptr<Pattern> pattern = *it;
-
-	//	shared_ptr<ResWrapper> res_wrapper = pattern->GetMatch(data_retriever_);
-
-	//	bool success = query_result_.MergeResult(res_wrapper);
-	//	if (!success) {
-	//		return false;
-	//	}
-	//	//data_retriever_.retrieve(*it);
-
-	//}
 	result_table_ = EvaluateGroup(clauses);
-	if (clauses.size() > 0 && result_table_->GetNumOfRows() == 0) {
+	if (result_table_->IsEmpty()) {
 		return false;
 	}
 	vector<string> select_synonyms = query_.GetSelectSynonyms();
@@ -101,7 +76,7 @@ shared_ptr<Table> QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> claus
 				continue;
 			}
 			else {
-				return table;
+				return std::make_shared<EmptyTable>();
 			}	
 		}
 

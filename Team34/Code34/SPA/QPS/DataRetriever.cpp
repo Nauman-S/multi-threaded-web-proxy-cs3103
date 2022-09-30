@@ -1127,7 +1127,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(Assig
 
     shared_ptr<unordered_set<StmtNum>> stmt_set = make_shared<unordered_set<StmtNum>>();
     if (expr_spec_ptr->IsWildcard()) {
-        stmt_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, RefType::kAssignRef);
     }
     else {
         stmt_set = pkb_ptr_->FilterByAssignPatternMatch(var_name, expr_spec_ptr);
