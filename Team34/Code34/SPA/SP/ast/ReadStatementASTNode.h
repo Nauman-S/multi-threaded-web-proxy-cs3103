@@ -11,6 +11,7 @@ public:
 
 	virtual void Extract(NodeExtractor&) override;
 
+
 protected:
 	Variable var;
 };
