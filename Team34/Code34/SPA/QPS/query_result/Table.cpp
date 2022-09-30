@@ -6,6 +6,7 @@
 #include "ResWrapper.h"
 #include "TableRes.h"
 #include "SetRes.h"
+#include "EmptyTable.h"
 
 using std::string;
 using std::vector;
@@ -15,7 +16,7 @@ using std::shared_ptr;
 
 
 Table::Table(shared_ptr<ResWrapper> res_wrapper) {
-	is_empty_ = false;
+	
 	if (res_wrapper->GetResType() == ResType::kSet) {
 		std::shared_ptr<SetRes> set_res = res_wrapper->GetSet();
 		fields_.push_back(set_res->GetSyn());
@@ -31,6 +32,8 @@ Table::Table(shared_ptr<ResWrapper> res_wrapper) {
 			rows_.push_back({ row.first, row.second });
 		}
 	}
+
+	is_empty_ = (rows_.size() == 0);
 
 	for (int i = 0; i < fields_.size(); i++) {
 		field_to_index_map_.insert({ fields_.at(i), i });
@@ -60,7 +63,7 @@ string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 }
 
 shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
-	if (is_empty_) return that;
+	if (GetNumOfRows() == 0) return that;
 
 	vector<string> common_fields = GetCommonFields(that);
 
@@ -89,6 +92,7 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 		}
 	}
 
+	
 	return std::make_shared<Table>(new_fields, new_rows);
 }
 
@@ -139,6 +143,10 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 		}
 
 	}
+	if (new_rows.size() == 0) {
+		return std::make_shared<EmptyTable>();
+	}
+
 
 	return std::make_shared<Table>(new_fields, new_rows);
 }
