@@ -32,25 +32,26 @@ vector<std::string> ResultExtractor::GetFormattedResult() {
 vector<std::string> ResultExtractor::GetSingleSynResult() {
 	shared_ptr<Ref> ref = select_tuple_->at(0);
 
-	// Get the domain in set results;
-	unordered_map<string, shared_ptr<SetRes>> set_results = query_result_->GetSetResults();
-	
-	auto iterator = set_results.find(ref->GetName());
-	assert(iterator != set_results.end() && "Result does not contain the synonym");
+	//// Get the domain in set results;
+	//unordered_map<string, shared_ptr<SetRes>> set_results = query_result_->GetSetResults();
+	//
+	//auto iterator = set_results.find(ref->GetName());
+	//assert(iterator != set_results.end() && "Result does not contain the synonym");
 
-	shared_ptr<unordered_set<string>> result_set = iterator->second->GetDomain();
+	//shared_ptr<unordered_set<string>> result_set = iterator->second->GetDomain();
 
 	// Get the domain in table results;
 
-	vector<shared_ptr<TableRes>> table_results = query_result_->GetTableResults();
-	for (shared_ptr<TableRes> table_result : table_results) {
-		shared_ptr<unordered_set<string>> domain_from_table = table_result->GetColumn(ref->GetName());
-		if (domain_from_table == nullptr) {
-			continue;
-		}
-		result_set = CombineResult(result_set, domain_from_table);
-		
-	}
+	//vector<shared_ptr<TableRes>> table_results = query_result_->GetTableResults();
+	//for (shared_ptr<TableRes> table_result : table_results) {
+	//	shared_ptr<unordered_set<string>> domain_from_table = table_result->GetColumn(ref->GetName());
+	//	if (domain_from_table == nullptr) {
+	//		continue;
+	//	}
+	//	result_set = CombineResult(result_set, domain_from_table);
+	//	
+	//}
+	shared_ptr<unordered_set<string>> result_set = result_table_->GetDomainBySynonym(ref->GetName());
 	return FormatResult(result_set, ref->GetRefType());
 
 }
@@ -76,15 +77,6 @@ vector<std::string> ResultExtractor::FormatResult(shared_ptr<unordered_set<strin
 
 	std::sort(result_vector.begin(), result_vector.end());
 
-	//string final_result = "";
-	//for (string value : result_vector) {
-	//	final_result += (value + ",");
-	//}
-	//if (final_result.size() == 0) {
-	//	return "none";
-	//}
-	//final_result.pop_back();
-	//final_result.pop_back();
 	return result_vector;
 }
 
