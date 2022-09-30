@@ -59,6 +59,9 @@ public:
 	bool HasComma();
 	void MatchComma();
 
+	bool HasHashtag();
+	void MatchHashtag();
+
 	bool HasInteger();
 	int MatchInteger();
 

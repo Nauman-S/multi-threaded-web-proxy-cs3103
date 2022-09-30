@@ -12,7 +12,6 @@
 #include "../SPA/SP/SourceParser.h"
 
 #include "../SPA/SP/design_extractor/EntityExtractor.h"
-#include "../SPA/SP/DesignExtractor.h"
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
 #include "../SPA/SP/design_extractor/ParentsExtractor.h"
 #include "../SPA/SP/design_extractor/FollowsExtractor.h"
@@ -42,10 +41,8 @@ namespace IntegrationTesting
 
 		TEST_METHOD(TestEntityPopulation)
 		{
-			DesignExtractor extractor;
 			EntityExtractor entity_extractor;
 			this->root->Extract(entity_extractor);
-			extractor.AddConstants(this->test_file);
 			
 			// Check all variables present
 			shared_ptr<unordered_set<Variable>> present_vars = read->GetAllVariables();
@@ -87,6 +84,23 @@ namespace IntegrationTesting
 			shared_ptr<unordered_set<StmtNum>> while_stmts = read->GetStatementsByType(RefType::kWhileRef);
 			unordered_set<StmtNum> expected_while = { 3, 12, 20 };
 			Assert::IsTrue(*while_stmts == expected_while);
+
+			// Check for if and while patterns
+			shared_ptr<vector<pair<StmtNum, Variable>>> if_patterns = read->GetAllIfPatterns();
+			vector<pair<StmtNum, Variable>> expected_if_patterns = {
+				make_pair(7, "y"),
+				make_pair(15, "call"),
+				make_pair(18, "x"),
+			};
+			Assert::IsTrue(*if_patterns == expected_if_patterns);
+
+			shared_ptr<vector<pair<StmtNum, Variable>>> while_patterns = read->GetAllWhilePatterns();
+			vector<pair<StmtNum, Variable>> expected_while_patterns = {
+				make_pair(3, "x"),
+				make_pair(12, "x"),
+				make_pair(20, "x"),
+			};
+			Assert::IsTrue(*while_patterns == expected_while_patterns);
 		}
 
 		TEST_METHOD(TestUsesRelationPopulation) {

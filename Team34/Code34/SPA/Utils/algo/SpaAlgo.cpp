@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <stack>
+#include <iostream>
 #include <algorithm>
 #include <iterator>
 #include <tuple>
@@ -24,52 +25,74 @@ using std::shared_ptr;
 using std::make_shared;
 
 // Init static member
-unordered_map<char, int> SpaAlgo::precedence_ = {
-	{'+', 1},
-	{'-', 1},
-	{'*', 2},
-	{'/', 2},
-	{'%', 2},
+unordered_map<string, int> SpaAlgo::precedence_ = {
+	{"+", 1},
+	{"-", 1},
+	{"*", 2},
+	{"/", 2},
+	{"%", 2},
 };
 
-string SpaAlgo::InfixToPostfix(string infix)
+string SpaAlgo::InfixToPostfix(string& infix)
 {
-	stack<char> stk;
-	string postfix = "";
-	for (char& iter : infix) {
-		if (iter == ' ') {
+	if (infix == "") {
+		return "";
+	}
+
+	stack<string> stk;
+	vector<string> postfix_tokens;
+	
+	auto splited = Split(infix, SpaAlgo::DELIM);
+	for (string& token : *splited) {
+		if (token == " ") {
 			continue;
 		}
-		else if (iter == '(') {
-			stk.push(iter);
+		else if (token == "(") {
+			stk.push(token);
 		}
-		else if (iter == ')') {
-			assert(!stk.empty());
-			while (!stk.empty() && stk.top() != '(') {
-				postfix += stk.top();
+		else if (token == ")") {
+			while (!stk.empty() && stk.top() != "(") {
+				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
-			stk.pop();  // discard the '('
+			stk.pop();  // discard the "("
 		}
-		else if (auto p = SpaAlgo::precedence_.find(iter); p != SpaAlgo::precedence_.end()) {
-			while (!stk.empty() && stk.top() != '(' && SpaAlgo::precedence_[stk.top()] >= p->second) {
+		else if (auto p = SpaAlgo::precedence_.find(token); p != SpaAlgo::precedence_.end()) {
+			while (!stk.empty() && stk.top() != "(" && SpaAlgo::precedence_[stk.top()] >= p->second) {
 				// assume all operators are left-associative
-				postfix += stk.top();
+				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
-			stk.push(iter);
+			stk.push(token);
 		}
-		else {
-			// is not an operator
-			postfix += iter;
+		else {  // is not an operator
+			postfix_tokens.push_back(token);
 		}
 	}
 
 	while (!stk.empty()) {
-		postfix += stk.top();
+		postfix_tokens.push_back(stk.top());
 		stk.pop();
 	}
+	
+	string postfix = postfix_tokens[0];
+	for (int i = 1; i < postfix_tokens.size(); ++i) {
+		postfix += (SpaAlgo::DELIM + postfix_tokens[i]);
+	}
+
 	return postfix;
+}
+
+std::shared_ptr<std::vector<std::string>> SpaAlgo::Split(std::string& str, char delim)
+{
+	std::istringstream iss(str);
+	std::string token;
+	auto res = std::make_shared<std::vector<std::string>>();
+	while (std::getline(iss, token, delim)) {
+		res->push_back(token);
+	}
+
+	return res;
 }
 
 std::shared_ptr<SetRes> SpaAlgo::HashJoinSets(std::shared_ptr<SetRes> set_res_1, std::shared_ptr<SetRes> set_res_2)

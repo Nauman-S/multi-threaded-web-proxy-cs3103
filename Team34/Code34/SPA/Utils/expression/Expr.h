@@ -13,7 +13,7 @@ protected:
 public:
 	explicit Expr(string infix_expr);
 
-	string GetInfix() { return infix_expr_; }
-	string GetPostfix() { return post_expr_; }
+	string& GetInfix() { return infix_expr_; }
+	string& GetPostfix() { return post_expr_; }
 };
 

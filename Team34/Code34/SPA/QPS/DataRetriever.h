@@ -126,7 +126,6 @@ protected:  // helper methods
 	bool IsSameSynonymsInvalid(ProcProcRel& rel);
 	
 	// Filter helpers
-	std::shared_ptr<std::unordered_set<int>> FilterStmtSetByType(std::shared_ptr<std::unordered_set<int>> stmts, RefType stmt_type);
 	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByTypes(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
 
 	template<typename T>

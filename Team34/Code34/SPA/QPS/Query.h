@@ -38,6 +38,8 @@ public:
 		return select_tuple_;
 	}
 
+	std::vector<std::string> GetSelectSynonyms();
+
 	shared_ptr< vector<shared_ptr<Rel>>> GetRelations() {
 		return relations_;
 	}

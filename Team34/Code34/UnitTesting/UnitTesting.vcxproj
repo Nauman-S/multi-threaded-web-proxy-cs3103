@@ -169,6 +169,7 @@
     <ClCompile Include="QPS\TestDataRetriever.cpp" />
     <ClCompile Include="SP\TestSourceLexer.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
+    <ClCompile Include="TestQueryEvaluator.cpp" />
     <ClCompile Include="TestStatementManager.cpp" />
     <ClCompile Include="TestAssignPatternManager.cpp" />
     <ClCompile Include="TestIfPatternManager.cpp" />

@@ -591,27 +591,29 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
 }
 
 string QueryBuilder::GetExpressionStr() {
-	string expr_str = "";
+	vector<string> expr_tokens;
 	int expected_closing_brace_num = 0;
 
 	// make sure the expression is not empty;
-	
 	bool isExpectingToken = true;
 
 	while (isExpectingToken) {
 		while (lexer_->HasLeftBrace()) {
 			lexer_->MatchLeftBrace();
-			expr_str += "(";
+			//expr_str += "( ";
+			expr_tokens.push_back("(");
 			expected_closing_brace_num++;
 		}
 
 		if (lexer_->HasInteger()) {
 			int integer = lexer_->MatchInteger();
-			expr_str += std::to_string(integer);
+			//expr_str += (std::to_string(integer) + " ");
+			expr_tokens.push_back(std::to_string(integer));
 		}
 		else if (lexer_->HasIdentity()) {
 			string identity = lexer_->MatchIdentity();
-			expr_str += identity;
+			//expr_str += (identity + " ");
+			expr_tokens.push_back(identity);
 		}
 		else {
 			throw SyntaxError("A number or variable is expected in Assign clause");
@@ -619,7 +621,8 @@ string QueryBuilder::GetExpressionStr() {
 
 		while (lexer_->HasRightBrace()) {
 			lexer_->MatchRightBrace();
-			expr_str += ")";
+			//expr_str += ") ";
+			expr_tokens.push_back(")");
 			expected_closing_brace_num--;
 			if (expected_closing_brace_num < 0) {
 				throw SyntaxError("The opening and closing braces do not match");
@@ -628,7 +631,8 @@ string QueryBuilder::GetExpressionStr() {
 
 		if (lexer_->HasOperator()) {
 			string operator_str = lexer_->MatchOperator();
-			expr_str += operator_str;
+			//expr_str += (operator_str + " ");
+			expr_tokens.push_back(operator_str);
 		}
 		else {
 			isExpectingToken = false;
@@ -638,6 +642,13 @@ string QueryBuilder::GetExpressionStr() {
 	if (expected_closing_brace_num != 0) {
 		throw SyntaxError("The opening and closing braces do not match");
 	}
+
+
+	string expr_str = expr_tokens.at(0);
+	for (int idx = 1; idx < expr_tokens.size(); idx++) {
+		expr_str += (" " + expr_tokens.at(idx) );
+	}
+
 
 	return expr_str;
 }
@@ -657,30 +668,24 @@ std::vector<shared_ptr<With>> QueryBuilder::ParseWithClauses() {
 }
 
 shared_ptr<With> QueryBuilder::ParseWithClause() {
-	shared_ptr<Ref> lhs = ParseWithRef();
+	auto [lhs_ref, lhs_val_type] = ParseWithRef();
 	lexer_->MatchEqualSign();
-	shared_ptr<Ref> rhs = ParseWithRef();
+	auto [rhs_ref, rhs_val_type] = ParseWithRef();
 
-	// make sure if one reference is attrRef, it is on left hand side
-	if (rhs->GetValType() == ValType::kInt || rhs->GetValType() == ValType::kString) {
-		return std::make_shared<With>(lhs, rhs);
-	}
-	else {
-		return std::make_shared<With>(rhs, lhs);
-	}
+	return std::make_shared<With>(lhs_ref, rhs_ref, lhs_val_type, rhs_val_type);
 }
 
-shared_ptr<Ref> QueryBuilder::ParseWithRef() {
+std::pair<shared_ptr<Ref>, ValType> QueryBuilder::ParseWithRef() {
 	if (lexer_->HasInteger()) {
 		int integer = lexer_->MatchInteger();
-		return std::make_shared<TempRef>(ValType::kInt, std::to_string(integer));
+		return { std::make_shared<TempRef>(ValType::kInt, std::to_string(integer)), ValType::kInt };
 	}
 
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
 		string identity = lexer_->MatchIdentity();
 		lexer_->MatchQuotationMarks();
-		return std::make_shared<TempRef>(ValType::kString, identity);
+		return { std::make_shared<TempRef>(ValType::kString, identity), ValType::kString };
 	}
 
 	// parse attribute reference
@@ -691,17 +696,18 @@ shared_ptr<Ref> QueryBuilder::ParseWithRef() {
 	shared_ptr<Ref> synonym = GetDeclaredSyn(ref_name);
 
 	ValidateAttrName(synonym, attr_name);
+	ValType val_type = GetValTypeFromAttrName(attr_name);
 
-	return synonym;
+	return { synonym, val_type};
 }
 
 void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
-	string proc_name = "procName";
-	string var_name = "varName";
-	string value_str = "value";
-	string stmt = "stmt#";
+	const string proc_name = "procName";
+	const string var_name = "varName";
+	const string value_str = "value";
+	const string stmt = "stmt#";
 
-	const std::unordered_map<RefType, string> ref_type_to_attr_name_map{
+	const std::unordered_multimap<RefType, string> ref_type_to_attr_name_map{
 		{RefType::kProcRef, proc_name},
 		{RefType::kCallRef, proc_name},
 		{RefType::kVarRef, var_name},
@@ -717,13 +723,34 @@ void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
 		{RefType::kAssignRef, stmt}
 	};
 
-	if (ref_type_to_attr_name_map.at(synonym->GetRefType()) != attr_name) {
+	RefType ref_type = synonym->GetRefType();
+	bool is_valid = false;
+	
+	for (const auto& entry : ref_type_to_attr_name_map) {
+		if (entry.first == ref_type && entry.second == attr_name) {
+			is_valid = true;
+		}
+	}
+		
+	if (!is_valid) {
 		throw SemanticError("The synonym " + synonym->GetName() + " has a wrong attribute name " + attr_name);
 	}
+	
+}
+
+ValType QueryBuilder::GetValTypeFromAttrName(string attr_name) {
+	const std::unordered_map<string, ValType> attr_name_to_val_type_map = {
+		{"procName", ValType::kProcName},
+		{"varName", ValType::kVarName},
+		{"value", ValType::kConst},
+		{"stmt#", ValType::kLineNum}
+	};
+
+	return attr_name_to_val_type_map.at(attr_name);
 }
 
 
-
+//"procName", "varName", "value", "stmt"
 
 
 

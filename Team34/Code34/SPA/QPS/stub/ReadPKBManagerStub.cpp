@@ -71,7 +71,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetUsesVarByPr
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetUsesStmtNumByVar(Variable var, RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "y") {
@@ -91,7 +91,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetUsesProcNa
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllUsesStatements(RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
@@ -166,7 +166,7 @@ std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVar
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetModifiesStmtNumByVar(Variable var, RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	if (var == "x") {
@@ -186,7 +186,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetModifiesPr
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllModifiesStatements(RefType stmt_type)
 {
 	shared_ptr<unordered_set<StmtNum>> res = make_shared<unordered_set<StmtNum>>();
 	res->insert(5);
@@ -232,25 +232,27 @@ bool ReadPKBManagerStub::IsFollowsStoreEmpty()
 	return false;
 }
 
-StmtNum ReadPKBManagerStub::GetSuccessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type)
 {
+	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 2) {
-		return 3;
+		res->insert(3);
 	}
 
-	return 0;
+	return res;
 }
 
-StmtNum ReadPKBManagerStub::GetPredecessorStmtFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type)
 {
+	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 3) {
-		return 2;
+		res->insert(2);
 	}
 
-	return 0;
+	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmts(RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(3);
@@ -259,7 +261,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessor
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmts()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmts(RefType predecessor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(2);
@@ -284,7 +286,7 @@ bool ReadPKBManagerStub::CheckFollowsT(StmtNum left, StmtNum right)
 	return false;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 2) {
@@ -294,7 +296,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllSuccessor
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmtsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType successor_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 6) {
@@ -326,7 +328,7 @@ bool ReadPKBManagerStub::IsParentStoreEmpty()
 	return false;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetChildrenFromStmt(StmtNum parent)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetChildrenFromStmt(StmtNum parent, RefType children_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (parent == 1) {
@@ -336,16 +338,17 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetChildrenFrom
 	return res;
 }
 
-StmtNum ReadPKBManagerStub::GetParentFromStmt(StmtNum child)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetParentFromStmt(StmtNum child, RefType parent_type)
 {
+	auto res = make_shared<unordered_set<int>>();
 	if (child == 2) {
-		return 1;
+		res->insert(1);
 	}
 
-	return 0;
+	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren(RefType children_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(2);
@@ -354,7 +357,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildren(
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParents()
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParents(RefType parent_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	res->insert(1);
@@ -379,7 +382,7 @@ bool ReadPKBManagerStub::CheckParentT(StmtNum parent, StmtNum child)
 	return false;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildrenFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildrenFromStmt(StmtNum stmt, RefType children_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 1) {
@@ -389,7 +392,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllChildrenF
 	return res;
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParentsFromStmt(StmtNum stmt)
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllParentsFromStmt(StmtNum stmt, RefType parent_type)
 {
 	auto res = make_shared<unordered_set<int>>();
 	if (stmt == 4) {
