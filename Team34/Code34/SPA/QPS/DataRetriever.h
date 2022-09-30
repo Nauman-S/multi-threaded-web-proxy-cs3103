@@ -16,6 +16,7 @@
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "../PKB/ReadPKBManager.h"
+#include "../Utils/type/TypeDef.h"
 // Use forward declaration to avoid cyclic include of Visitor pattern
 class StmtVarRel;
 class ProcVarRel;
@@ -126,15 +127,15 @@ protected:  // helper methods
 	bool IsSameSynonymsInvalid(ProcProcRel& rel);
 	
 	// Filter helpers
-	std::shared_ptr<std::vector<std::pair<int, int>>> FilterStmtTableByTypes(std::shared_ptr<std::vector<std::pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
-
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FilterStmtTableByTypes(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> FilterStmtTableByBothTypes(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type);
+	
 	template<typename T>
-	std::shared_ptr<std::vector<std::pair<int, T>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<int, T>>> table, RefType lhs_stmt_type)
+	std::shared_ptr<std::vector<std::pair<StmtNum, T>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<StmtNum, T>>> table, RefType lhs_stmt_type)
 	{
-		auto res = std::make_shared<std::vector<std::pair<int, T>>>();
+		auto res = std::make_shared<std::vector<std::pair<StmtNum, T>>>();
 		for (auto iter = table->begin(); iter != table->end(); ++iter) {
-			auto type_ptr = pkb_ptr_->GetStatementType(iter->first);
-			if (type_ptr != nullptr && *type_ptr == lhs_stmt_type) {
+			if (*(pkb_ptr_->GetStatementType(iter->first)) == lhs_stmt_type) {
 				res->push_back(*iter);
 			}
 		}
@@ -143,12 +144,11 @@ protected:  // helper methods
 	}
 
 	template<typename T>
-	std::shared_ptr<std::vector<std::pair<T, int>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<T, int>>> table, RefType rhs_stmt_type)
+	std::shared_ptr<std::vector<std::pair<T, StmtNum>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<T, StmtNum>>> table, RefType rhs_stmt_type)
 	{
-		auto res = std::make_shared<std::vector<std::pair<T, int>>>();
+		auto res = std::make_shared<std::vector<std::pair<T, StmtNum>>>();
 		for (auto iter = table->begin(); iter != table->end(); ++iter) {
-			auto type_ptr = pkb_ptr_->GetStatementType(iter->second);
-			if (type_ptr != nullptr && *type_ptr == rhs_stmt_type) {
+			if (*(pkb_ptr_->GetStatementType(iter->second)) == rhs_stmt_type) {
 				res->push_back(*iter);
 			}
 		}
