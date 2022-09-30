@@ -26,6 +26,7 @@ public:
 	Procedure GetParentProcIndex();
 
 	virtual void Extract(NodeExtractor&) = 0;
+
 	// virtual vector<VariableIndex> getModifies() = 0;
 
 protected:

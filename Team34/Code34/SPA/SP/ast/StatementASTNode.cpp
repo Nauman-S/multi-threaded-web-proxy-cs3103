@@ -10,7 +10,7 @@ StmtNum StatementASTNode::GetLineIndex() {
 
 void StatementASTNode::SetLineIndex(StmtNum& idx) {
 	lineIndex = idx;
-}	
+}
 
 
 void StatementASTNode::SetParentSatementLineIndex(StmtNum& l) {

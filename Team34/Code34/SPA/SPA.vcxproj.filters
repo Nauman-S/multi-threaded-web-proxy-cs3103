@@ -61,11 +61,8 @@
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
-    <ClCompile Include="SP\LineIndex.cpp" />
-    <ClCompile Include="SP\ProcedureIndex.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
-    <ClCompile Include="SP\VariableIndex.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
@@ -97,6 +94,8 @@
     <ClCompile Include="QPS\with_clause\With.cpp" />
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="QPS\query_result\Table.cpp" />
+    <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
+    <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -184,11 +183,8 @@
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
-    <ClInclude Include="SP\LineIndex.h" />
-    <ClInclude Include="SP\ProcedureIndex.h" />
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="SP\SourceValidator.h" />
-    <ClInclude Include="SP\VariableIndex.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -231,5 +227,7 @@
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
+    <ClInclude Include="SP\cfg\CFGBuilder.h" />
+    <ClInclude Include="SP\cfg\ControlFlowNode.h" />
   </ItemGroup>
 </Project>

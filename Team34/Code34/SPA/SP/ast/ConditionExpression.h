@@ -16,6 +16,7 @@ public:
 
 	virtual void Extract(NodeExtractor&) override;
 
+
 protected:
 	std::vector<Variable> vars;
 	std::vector<Constant> cons;

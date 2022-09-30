@@ -6,6 +6,7 @@
 #include <map>
 
 #include "../SPA/SP/SourceParser.h"
+#include "../SPA/SP/cfg/CFGBuilder.h"
 #include "../SPA/SP/DesignExtractor.h"
 #include "../SPA/SP/tokenizer/SourceLexer.h"
 #include "../SPA/SP/SourceValidator.h"
@@ -43,6 +44,14 @@ void TestWrapper::parse(std::string filename) {
 	if (validator.Validate(tokens)) {
  		SourceParser parser = SourceParser();
 		std::shared_ptr<ProgramNode> root = parser.Parse(filename);
+		CFGBuilder builder = CFGBuilder();
+		map<Procedure, shared_ptr<ControlFlowNode>> roots = builder.GenerateCFG(filename);
+		/*
+		for (pair<Procedure, shared_ptr<ControlFlowNode>> const& p : roots) {
+			set<set<StmtNum>> v;
+			builder.Display(p.second, v);
+		}
+		*/
 		DesignExtractor extractor;
 		extractor.PopulatePKB(root);
 	}
