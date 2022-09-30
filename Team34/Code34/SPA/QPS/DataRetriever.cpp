@@ -49,12 +49,12 @@ using std::make_shared;
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
 {
     /*
-        There are in total 9 combinations of LHS and RHS value types.
-        LHS type cannot be wildcard, otherwise semantic error is thrown (covers 3 cases);
-        if LHS is concrete ref, RHS is concrete ref OR wildcard, boolean result is expected (covers 2 cases);
-        else if RHS is synonym, then set result is expected (covers 1 case);
-        else if LHS is synonym, then set result is expected (covers 2 case);
-        else the both sides are synonym, table result is expected (covers 1 case).
+    * The 9 combinations of LHS and RHS value types are handled:
+    * LHS type cannot be wildcard, otherwise semantic error is thrown (covers 3 cases);
+    * if LHS is concrete ref, RHS is concrete ref OR wildcard, boolean result is expected (covers 2 cases);
+    * else if RHS is synonym, then set result is expected (covers 1 case);
+    * else if LHS is synonym, then set result is expected (covers 2 case);
+    * else the both sides are synonym, table result is expected (covers 1 case).
     */
     auto [lhs_type, rhs_type] = rel.ValTypes();
     assert(lhs_type != ValType::kWildcard && rel.LhsValue() != "_");
@@ -98,7 +98,7 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel)
 shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 {
     /*
-        The retrieving logic of ProcVarRel is similar to StmtVarRel.
+    * The retrieving logic of ProcVarRel is similar to that of StmtVarRel above.
     */
     auto [lhs_type, rhs_type] = rel.ValTypes();
     assert(lhs_type != ValType::kWildcard && rel.LhsValue() != "_");
@@ -140,6 +140,12 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel)
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
 {
+    /*
+    * For a pattern, it has a stmt_synonym_ref and var_ref associated to it;
+    * If the var_ref is a variable name, we retrieve all stmt associated with it;
+    * If the var_ref is a synonym, we retrieve the table of the stmt synonym and the variable synonym;
+    * If the var_ref is a wildcard, we retrieve all available stmt.
+    */
     ValType lhs_type = pat.VarValType();
     assert(lhs_type == ValType::kVarName || lhs_type == ValType::kSynonym || lhs_type == ValType::kWildcard);
 
@@ -173,21 +179,21 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(Pattern& pat)
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
 {
     /*
-        Classify LHS x RHS value type combinations by return result type
-        table result:
-            stmt_syn, stmt_syn -> get table of all pairs
-
-        set result:
-            stmt_syn, wildcard -> get all lhs stmt -> PENDING PKB API
-            stmt_syn, stmt_num -> get all lhs stmt by rhs stmt_num
-            wildcard, stmt_syn -> get all rhs stmt -> PENDING PKB API
-            stmt_num, stmt_syn -> get all rhs stmt by lhs stmt_num
-
-        bool result:
-            wildcard, wildcard -> check if any relation exists -> PENDING PKB API
-            wildcard, stmt_num -> get all lhs stmt by rhs stmt_num, and check set emptiness
-            stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and check set emptiness
-            stmt_num, stmt_num -> check relation existence
+    * Classify LHS x RHS value type combinations by return result type
+    * table result:
+    *     stmt_syn, stmt_syn -> get table of all pairs.
+    * 
+    * set result:
+    *     stmt_syn, wildcard -> get all lhs stmt.
+    *     stmt_syn, stmt_num -> get all lhs stmt by rhs stmt_num.
+    *     wildcard, stmt_syn -> get all rhs stmt.
+    *     stmt_num, stmt_syn -> get all rhs stmt by lhs stmt_num.
+    *
+    * bool result:
+    *     wildcard, wildcard -> check if any relation exists.
+    *     wildcard, stmt_num -> get all lhs stmt by rhs stmt_num, and check set emptiness.
+    *     stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and check set emptiness.
+    *     stmt_num, stmt_num -> check relation existence.
     */
     auto [lhs_type, rhs_type] = rel.ValTypes();
 
@@ -218,7 +224,7 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
             res = make_shared<ResWrapper>(table_res);
         }
     }
-    // Wildcard hanlding cases below
+    // Wildcard handling cases below
     else if (lhs_type == ValType::kWildcard && rhs_type == ValType::kLineNum) {
         bool ok = CheckSSRelExistenceByRhsStmt(rel);
         res = make_shared<ResWrapper>(ok);
@@ -245,7 +251,11 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel)
     return res;
 }
 
-shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
+shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) 
+{
+    /*
+    * The retreiving logic of ProcProcRel is similar to that of StmtStmtRel above.
+    */
 
     auto [lhs_type, rhs_type] = rel.ValTypes();
 
@@ -304,11 +314,8 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
 }
 
 shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
-    //shared_ptr<SetRes> res = make_shared<SetRes>();
     shared_ptr<SetRes> res;
     auto ref_type = ref_ptr->GetRefType();
-
-
     unordered_set<RefType> valid_types{
             RefType::kProcRef,
             RefType::kVarRef,
@@ -323,7 +330,7 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     };
     assert(valid_types.count(ref_type) > 0);
 
-    shared_ptr<unordered_set<int>> int_set{ nullptr };
+    shared_ptr<unordered_set<StmtNum>> stmt_set{ nullptr };
     shared_ptr<unordered_set<string>> str_set{ nullptr };
     if (ref_type == RefType::kProcRef) {
         str_set = pkb_ptr_->GetAllProcedures();
@@ -332,32 +339,32 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
         str_set = pkb_ptr_->GetAllVariables();
     }
     else if (ref_type == RefType::kConstRef) {
-        int_set = pkb_ptr_->GetAllConstants();
+        stmt_set = pkb_ptr_->GetAllConstants();
     }
     else if (ref_type == RefType::kStmtRef) {
-        int_set = pkb_ptr_->GetAllStatements();
+        stmt_set = pkb_ptr_->GetAllStatements();
     }
     else if (ref_type == RefType::kAssignRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
     }
     else if (ref_type == RefType::kCallRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
     }
     else if (ref_type == RefType::kIfRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
     }
     else if (ref_type == RefType::kWhileRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
     }
     else if (ref_type == RefType::kReadRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
     }
     else if (ref_type == RefType::kPrintRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
     }
 
-    if (int_set != nullptr) {
-        str_set = IntSetToStrSet(int_set);
+    if (stmt_set != nullptr) {
+        str_set = IntSetToStrSet(stmt_set);
     }
 
     string syn = ref_ptr->GetName();
@@ -368,31 +375,21 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with)
 {
     /*
-        lhs value type and rhs value type each can be one of {kInt, kString, kSynonym}
-        - (int, int) -> compare value
-        - (int, string) -> false
-        - (int, synonym) -> get by synonym reference type and filter
-        - (string, int) -> false
-        - (string, string) -> compare value
-        - (string, synonym) -> get by synonym reference type and filter
-        - (synonym, int) -> get by synonym reference type and filter
-        - (synonym, string) -> get by synonym reference type and filter
-        - (synonym, synonym) -> get by synonym reference and join
-
-        Re-group above cases as follows:
-        compare value:
-            - (int, int)
-            - (string, string)
-        false:
-            - (int, string)
-            - (string, int)
-        set result:
-            - (int, synonym)
-            - (string, synonym)
-            - (synonym, int)
-            - (synonym, string)
-        table result:
-            - (synonym, synonym)
+    * Each LHS and RHS reference in With clause can be one of {kInt, kString, kSynonym}
+    * bool result:
+    *     (int, int) -> test equality.
+    *     (string, string) -> test equality.
+    *     (int, string) -> false.
+    *     (string, int) -> false.
+    * 
+    * set result:
+    *     (int, synonym) -> get all possible values of synonym, then filter by LHS value.
+    *     (string, synonym) -> get all possible values of synonym, then filter by LHS value.
+    *     (synonym, int) -> get all possible values of synonym, then filter by RHS value.
+    *     (synonym, string) -> get all possible values of synonym, then filter by RHS value.
+    * 
+    * table result:
+    *     (synonym, synonym) -> get possible values of each synonym, then intersect.
     */
     auto [lhs_type, rhs_type] = with.ValTypes();
 
@@ -434,14 +431,15 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel)
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
     bool res;
-    int stmt_num = rel.LhsValueAsInt().value_or(-1);
-    string var_name = rel.RhsValue();
+    StmtNum stmt_num = rel.LhsValueAsInt().value_or(-1);
+    Variable var_name = rel.RhsValue();
     if (type == RelType::kUsesSRel) {
         res = pkb_ptr_->CheckUses(stmt_num, var_name);
     }
     else if (type == RelType::kModifiesSRel) {
         res = pkb_ptr_->CheckModifies(stmt_num, var_name);
     }
+
     return res;
 }
 
@@ -452,7 +450,7 @@ bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel)
 
     shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
 
-    return !set->empty();
+    return !(set->empty());
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
@@ -460,7 +458,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
-    int stmt_num = rel.LhsValueAsInt().value_or(-1);
+    StmtNum stmt_num = rel.LhsValueAsInt().value_or(-1);
     shared_ptr<unordered_set<string>> res;
     if (type == RelType::kUsesSRel) {
         res = pkb_ptr_->GetUsesVarByStmtNum(stmt_num);
@@ -477,20 +475,17 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
-    string var_name = rel.RhsValue();
+    Variable var_name = rel.RhsValue();
     RefType stmt_type = rel.LhsRefType();
-    shared_ptr<unordered_set<int>> set;
+    shared_ptr<unordered_set<StmtNum>> set;
     if (type == RelType::kUsesSRel) {
-        //auto temp = pkb_ptr_->GetUsesStmtNumByVar(var_name);
-
         set = pkb_ptr_->GetUsesStmtNumByVar(var_name, stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
         set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, stmt_type);
     }
 
-    shared_ptr<unordered_set<string>> res = IntSetToStrSet(set);
-    return res;
+    return IntSetToStrSet(set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(StmtVarRel& rel)
@@ -498,16 +493,16 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(StmtVarRel& r
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesSRel || type == RelType::kModifiesSRel);
 
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     RefType stmt_type = rel.LhsRefType();
     if (type == RelType::kUsesSRel) {
-        int_set = pkb_ptr_->GetAllUsesStatements(stmt_type);
+        stmt_set = pkb_ptr_->GetAllUsesStatements(stmt_type);
     }
     else if (type == RelType::kModifiesSRel) {
-        int_set = pkb_ptr_->GetAllModifiesStatements(stmt_type);
+        stmt_set = pkb_ptr_->GetAllModifiesStatements(stmt_type);
     }
 
-    return IntSetToStrSet(int_set);
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& rel)
@@ -525,8 +520,8 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(StmtVarRel& 
         table = pkb_ptr_->GetAllSVModifies();
         table = FilterStmtTableByLhsType(table, lhs_stmt_type);
     }
-    auto res = IntStrToStrStrTable(table);
-    return res;
+
+    return IntStrToStrStrTable(table);
 }
 
 bool DataRetriever::CheckPVRel(ProcVarRel& rel)
@@ -541,6 +536,7 @@ bool DataRetriever::CheckPVRel(ProcVarRel& rel)
     else if (type == RelType::kModifiesPRel) {
         res = pkb_ptr_->CheckModifies(rel.LhsValue(), rel.RhsValue());
     }
+
     return res;
 }
 
@@ -549,9 +545,9 @@ bool DataRetriever::CheckPVRelExistenceByProc(ProcVarRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
-    shared_ptr<unordered_set<string>> set = GetVarByProc(rel);
+    shared_ptr<unordered_set<Variable>> set = GetVarByProc(rel);
 
-    return !set->empty();
+    return !(set->empty());
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
@@ -559,7 +555,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByProc(ProcVarRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
-    string proc_name = rel.LhsValue();
+    Procedure proc_name = rel.LhsValue();
     shared_ptr<unordered_set<Variable>> res;
     if (type == RelType::kUsesPRel) {
         res = pkb_ptr_->GetUsesVarByProcName(proc_name);
@@ -576,8 +572,8 @@ shared_ptr<unordered_set<string>> DataRetriever::GetProcByVar(ProcVarRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
-    string var_name = rel.RhsValue();
-    shared_ptr<unordered_set<string>> res;
+    Variable var_name = rel.RhsValue();
+    shared_ptr<unordered_set<Variable>> res;
     if (type == RelType::kUsesPRel) {
         res = pkb_ptr_->GetUsesProcNameByVar(var_name);
     }
@@ -609,7 +605,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllPVRel(ProcVarRel& 
     RelType type = rel.GetRelType();
     assert(type == RelType::kUsesPRel || type == RelType::kModifiesPRel);
 
-    shared_ptr<vector<pair<string, string>>> res;
+    shared_ptr<vector<pair<Procedure, Variable>>> res;
     if (type == RelType::kUsesPRel) {
         res = pkb_ptr_->GetAllPVUses();
     }
@@ -625,8 +621,8 @@ bool DataRetriever::CheckPPRel(ProcProcRel& rel)
     RelType type = rel.GetRelType();
     assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
 
-    string lhs_proc_name = rel.LhsValue();
-    string rhs_proc_name = rel.RhsValue();
+    Procedure lhs_proc_name = rel.LhsValue();
+    Procedure rhs_proc_name = rel.RhsValue();
     bool res = false;
     if (type == RelType::kCallsRel) {
         res = pkb_ptr_->CheckCalls(lhs_proc_name, rhs_proc_name);
@@ -667,8 +663,8 @@ std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetRhsProcByLhsP
     RelType type = rel.GetRelType();
     assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
 
-    string lhs_proc_name = rel.LhsValue();
-    shared_ptr<unordered_set<string>> set;
+    Procedure lhs_proc_name = rel.LhsValue();
+    shared_ptr<unordered_set<Procedure>> set;
     if (type == RelType::kCallsRel) {
         set = pkb_ptr_->GetCalleeFromCaller(lhs_proc_name);
     }
@@ -684,7 +680,7 @@ std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetRhsProcByWild
     RelType type = rel.GetRelType();
     assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
 
-    shared_ptr<unordered_set<string>> set;
+    shared_ptr<unordered_set<Procedure>> set;
     set = pkb_ptr_->GetAllCallees();
 
     return set;
@@ -695,8 +691,8 @@ std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetLhsProcByRhsP
     RelType type = rel.GetRelType();
     assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
 
-    string rhs_proc_name = rel.RhsValue();
-    shared_ptr<unordered_set<string>> set;
+    Procedure rhs_proc_name = rel.RhsValue();
+    shared_ptr<unordered_set<Procedure>> set;
     if (type == RelType::kCallsRel) {
         set = pkb_ptr_->GetCallerFromCallee(rhs_proc_name);
     }
@@ -712,8 +708,8 @@ std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetLhsProcByWild
     RelType type = rel.GetRelType();
     assert(type == RelType::kCallsRel || type == RelType::kCallsTRel);
 
-    string rhs_proc_name = rel.RhsValue();
-    shared_ptr<unordered_set<string>> set;
+    Procedure rhs_proc_name = rel.RhsValue();
+    shared_ptr<unordered_set<Procedure>> set;
     set = pkb_ptr_->GetAllCallers();
 
     return set;
@@ -743,8 +739,8 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
-    int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    StmtNum rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     bool res = false;
     if (type == RelType::kParentRel) {
         res = pkb_ptr_->CheckParent(lhs_stmt_num, rhs_stmt_num);
@@ -812,20 +808,20 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
-    shared_ptr<unordered_set<int>> int_set = make_shared<unordered_set<int>>();
+    StmtNum rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        int_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kFollowsRel) {
-        int_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, RefType::kStmtRef);
 
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -842,7 +838,7 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
     }
     */
 
-    return !int_set->empty();
+    return !(stmt_set->empty());
 }
 
 bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
@@ -853,19 +849,19 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
-    shared_ptr<unordered_set<int>> int_set;
+    StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate children
+        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate children
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate and indirect children
+        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate and indirect children
     }
     else if (type == RelType::kFollowsRel) {
-        int_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
+        stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -881,7 +877,8 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
         
     }
     */
-    return !int_set->empty();
+
+    return !(stmt_set->empty());
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtStmtRel& rel)
@@ -892,20 +889,20 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    int lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     RefType rhs_stmt_type = rel.RhsRefType();
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        int_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate children
+        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate children
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate and indirect children
+        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate and indirect children
     }
     else if (type == RelType::kFollowsRel) {
-        int_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, rhs_stmt_type);
+        stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -922,7 +919,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     }
     */
 
-    return IntSetToStrSet(int_set);
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRel& rel)
@@ -933,14 +930,14 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    shared_ptr<unordered_set<StmtNum>> int_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     RefType rhs_stmt_type = rel.RhsRefType();
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllChildren(rhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllChildren(rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel)
     {
-        int_set = pkb_ptr_->GetAllSuccessorStmts(rhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllSuccessorStmts(rhs_stmt_type);
     } 
     /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
@@ -950,9 +947,8 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
 
     }
     */
-    
 
-    return IntSetToStrSet(int_set);
+    return IntSetToStrSet(stmt_set);
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtStmtRel& rel)
@@ -963,20 +959,20 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    int rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    StmtNum rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
     RefType lhs_stmt_type = rel.LhsRefType();
-    shared_ptr<unordered_set<int>> int_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        int_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
-        int_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kFollowsTRel) {
-        int_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel) {
@@ -993,8 +989,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     }
     */
 
-
-    return IntSetToStrSet(int_set);
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRel& rel)
@@ -1005,14 +1000,14 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
         || type == RelType::kNextRel    || type == RelType::kNextTRel
         || type == RelType::kAffectsRel || type == RelType::kAffectsTRel);
 
-    shared_ptr<unordered_set<StmtNum>> int_set;
+    shared_ptr<unordered_set<StmtNum>> stmt_set;
     RefType lhs_stmt_type = rel.LhsRefType();
     if (type == RelType::kParentRel || type == RelType::kParentTRel) {
-        int_set = pkb_ptr_->GetAllParents(lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllParents(lhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel)
     {
-        int_set = pkb_ptr_->GetAllPredecessorStmts(lhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllPredecessorStmts(lhs_stmt_type);
     }
     /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
@@ -1023,7 +1018,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
     }
     */
 
-    return IntSetToStrSet(int_set);
+    return IntSetToStrSet(stmt_set);
 }
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel)
@@ -1036,7 +1031,7 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
 
     RefType lhs_stmt_type = rel.LhsRefType();
     RefType rhs_stmt_type = rel.RhsRefType();
-    shared_ptr<vector<pair<int, int>>> table;
+    shared_ptr<vector<pair<StmtNum, StmtNum>>> table;
     if (type == RelType::kParentRel) {
         table = pkb_ptr_->GetAllParentRelations();
     }
@@ -1199,39 +1194,38 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(While
     return nullptr;
 }
 
-std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, shared_ptr<string> filter_val)
+std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, shared_ptr<string> filter_val=nullptr)
 {
     shared_ptr<unordered_set<string>> str_set{ nullptr };
-    shared_ptr<unordered_set<int>> int_set{ nullptr };
+    shared_ptr<unordered_set<StmtNum>> stmt_set{ nullptr };
 
-    if (syn_ref_type == RefType::kProcRef)
-    {
+    if (syn_ref_type == RefType::kProcRef) {
         str_set = pkb_ptr_->GetAllProcedures();
     }
     else if (syn_ref_type == RefType::kVarRef) {
         str_set = pkb_ptr_->GetAllVariables();
     }
     else if (syn_ref_type == RefType::kConstRef) {
-        int_set = pkb_ptr_->GetAllConstants();
+        stmt_set = pkb_ptr_->GetAllConstants();
     }
     else if (syn_ref_type == RefType::kStmtRef) {
-        int_set = pkb_ptr_->GetAllStatements();
+        stmt_set = pkb_ptr_->GetAllStatements();
     }
     else if (syn_ref_type == RefType::kIfRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kIfRef);
     }
     else if (syn_ref_type == RefType::kWhileRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kWhileRef);
     }
     else if (syn_ref_type == RefType::kAssignRef) {
-        int_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
     }
     else if (syn_ref_type == RefType::kReadRef) {
         if (req_val_type == ValType::kVarName) {
             str_set = pkb_ptr_->GetAllModifiesSVariables();
         }
         else if (req_val_type == ValType::kLineNum) {
-            int_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
+            stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
         }
 
     }
@@ -1240,7 +1234,7 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
             str_set = pkb_ptr_->GetAllUsesSVariables();
         }
         else if (req_val_type == ValType::kLineNum) {
-            int_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
+            stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
         }
     }
     else if (syn_ref_type == RefType::kCallRef) {
@@ -1248,12 +1242,12 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
             str_set = pkb_ptr_->GetAllCallees();
         }
         else if (req_val_type == ValType::kLineNum) {
-            int_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
+            stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
         }
     }
 
-    if (int_set != nullptr) {
-        str_set = IntSetToStrSet(int_set);
+    if (stmt_set != nullptr) {
+        str_set = IntSetToStrSet(stmt_set);
     }
     if (filter_val != nullptr) {
         str_set = FilterSetByValue(str_set, *filter_val);
@@ -1264,8 +1258,8 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(With& with)
 {
-    auto set1 = GetWithClauseByRefType(with.LhsRefType(), with.RequiredLhsValType(), nullptr);
-    auto set2 = GetWithClauseByRefType(with.RhsRefType(), with.RequiredRhsValType(), nullptr);
+    auto set1 = GetWithClauseByRefType(with.LhsRefType(), with.RequiredLhsValType());
+    auto set2 = GetWithClauseByRefType(with.RhsRefType(), with.RequiredRhsValType());
 
     auto table = make_shared<vector<pair<string, string>>>();
     if (set1->size() > set2->size()) {
@@ -1340,30 +1334,15 @@ bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel)
     return true;
 }
 
-shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByTypes(shared_ptr<vector<pair<int, int>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
+shared_ptr<vector<pair<StmtNum, StmtNum>>> DataRetriever::FilterStmtTableByTypes(shared_ptr<vector<pair<StmtNum, StmtNum>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
 {
     if (lhs_stmt_type == RefType::kStmtRef && rhs_stmt_type == RefType::kStmtRef) {
         return table;
     }
 
-    shared_ptr<vector<pair<int, int>>> res;
+    shared_ptr<vector<pair<StmtNum, StmtNum>>> res;
     if (lhs_stmt_type != RefType::kStmtRef && rhs_stmt_type != RefType::kStmtRef) {
-        auto lhs_type_predicate = [this, lhs_stmt_type](int stmt) -> bool { 
-            auto type_ptr = this->pkb_ptr_->GetStatementType(stmt);
-            return type_ptr != nullptr && *type_ptr == lhs_stmt_type; 
-        };
-        auto rhs_type_predicate = [this, rhs_stmt_type](int stmt) -> bool { 
-            auto type_ptr = this->pkb_ptr_->GetStatementType(stmt);
-            return type_ptr != nullptr && *type_ptr == rhs_stmt_type;
-        };
-
-        res = make_shared<vector<pair<int, int>>>();
-
-        for (auto iter = table->begin(); iter != table->end(); ++iter) {
-            if (lhs_type_predicate(iter->first) && rhs_type_predicate(iter->second)) {
-                res->push_back(*iter);
-            }
-        }
+        res = FilterStmtTableByBothTypes(table, lhs_stmt_type, rhs_stmt_type);
     }
     else if (lhs_stmt_type != RefType::kStmtRef) {
         res = FilterStmtTableByLhsType(table, lhs_stmt_type);
@@ -1375,5 +1354,23 @@ shared_ptr<vector<pair<int, int>>> DataRetriever::FilterStmtTableByTypes(shared_
     return res;
 }
 
+shared_ptr<vector<pair<StmtNum, StmtNum>>> DataRetriever::FilterStmtTableByBothTypes(shared_ptr<vector<pair<StmtNum, StmtNum>>> table, RefType lhs_stmt_type, RefType rhs_stmt_type)
+{
+    auto lhs_type_predicate = [this, lhs_stmt_type](StmtNum stmt) -> bool {
+        return *(this->pkb_ptr_->GetStatementType(stmt)) == lhs_stmt_type;
+    };
+    auto rhs_type_predicate = [this, rhs_stmt_type](StmtNum stmt) -> bool {
+        return *(this->pkb_ptr_->GetStatementType(stmt)) == rhs_stmt_type;
+    };
+
+    auto res = make_shared<vector<pair<StmtNum, StmtNum>>>();
+    for (auto iter = table->begin(); iter != table->end(); ++iter) {
+        if (lhs_type_predicate(iter->first) && rhs_type_predicate(iter->second)) {
+            res->push_back(*iter);
+        }
+    }
+
+    return res;
+}
 
 
