@@ -77,13 +77,11 @@ shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
 
 shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 	vector<string> that_fields = that->fields_;
-
-	vector<string> new_fields = that_fields;
-	new_fields.insert(new_fields.end(), fields_.begin(), fields_.end());
+	vector<string> new_fields = fields_;
+	new_fields.insert(new_fields.end(), that_fields.begin(), that_fields.end());
 
 	vector<vector<string>> new_rows; 
 
-	
 	for (vector<string>& this_row: rows_) {
 		for (vector<string>& that_row : that->rows_) {
 			vector<string> new_row = this_row;
