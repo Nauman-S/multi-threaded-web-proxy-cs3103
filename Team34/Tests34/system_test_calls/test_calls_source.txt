@@ -31,7 +31,7 @@ procedure Sixth {
 		p = 1;
 	} else {
 		print x;
-		p = y + z - 3 * (784 + w);
+		p = (y + z) - 3 * 784 + w;
 	}
 	while (!( (x!=y) && (p == q) )) {
 		read p;
