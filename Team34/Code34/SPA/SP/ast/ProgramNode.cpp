@@ -2,12 +2,22 @@
 
 using namespace std;
 
-std::vector<shared_ptr<ProcedureASTNode>> ProgramNode::GetChildren() {
-	return children;
+ProgramNode::ProgramNode() {
+	this->children_ = {};
+	this->proc_name_to_node_ = {};
 }
 
-void ProgramNode::SetChildren(std::vector<std::shared_ptr<ProcedureASTNode>> c) {
-	children = c;
+std::vector<shared_ptr<ProcedureASTNode>> ProgramNode::GetChildren() {
+	return this->children_;
+}
+
+std::map<Procedure, std::shared_ptr<ProcedureASTNode>> ProgramNode::GetProcNodeMapping() {
+	return this->proc_name_to_node_;
+}
+
+void ProgramNode::AddProcedure(std::shared_ptr<ProcedureASTNode> proc) {
+	this->children_.push_back(proc);
+	this->proc_name_to_node_.insert(std::make_pair(proc->GetProc(), proc));
 }
 
 void ProgramNode::Extract(NodeExtractor& extractor) {

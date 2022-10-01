@@ -1,4 +1,3 @@
-#include "../SourceParser.h"
 #include "CallsExtractor.h"
 
 CallsExtractor::CallsExtractor() {
@@ -6,6 +5,7 @@ CallsExtractor::CallsExtractor() {
 }
 
 void CallsExtractor::ExtractProgramNode(ProgramNode& program) {
+	this->proc_node_map_ = program.GetProcNodeMapping();
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
 		child->Extract(*this);
@@ -31,9 +31,10 @@ void CallsExtractor::ExtractCallNode(CallStatementASTNode& call) {
 		this->AddToCallsT(prev_proc, called_proc);
 	}
 
-	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> name_to_node_map = SourceParser::proc_name_to_node_;
-	std::shared_ptr<ProcedureASTNode> called_proc_node = name_to_node_map.at(called_proc);
-	called_proc_node->Extract(*this);
+	if (this->proc_node_map_.find(called_proc) != this->proc_node_map_.end()) {
+		std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
+		called_proc_node->Extract(*this);
+	}
 
 	this->procedure_calls_stack_.pop_back();
 }
