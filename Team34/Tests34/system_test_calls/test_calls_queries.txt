@@ -1,0 +1,5 @@
+1 - select variables
+variable v;
+Select v
+a, b, rem, p, y, z, w, x, q, temp
+5000

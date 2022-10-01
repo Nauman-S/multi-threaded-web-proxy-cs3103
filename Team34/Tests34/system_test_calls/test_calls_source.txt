@@ -1,0 +1,151 @@
+procedure GCD {
+	read a;
+	read b;
+	if (a > b) then {
+	temp = a;
+	a = b;
+	b = temp;
+	} else {
+
+	}
+	while (b!=0) 
+   	{
+
+      	rem=a % b;
+      	a=b;
+      	b=rem;
+		call Fifth;
+
+   	}
+	print a;
+}
+
+procedure Fifth {
+	call LAST2;
+}
+
+procedure LAST2 {}
+
+procedure Sixth {
+	if (x > y) then {
+		p = 1;
+	} else {
+		print x;
+		p = y + z - 3 * (784 + w);
+	}
+	while (!( (x!=y) && (p == q) )) {
+		read p;
+		read q;
+		while (! (( (1) > ((2)) )||((x * 3 + z) > (2 * z + 3 * y))) ) {
+			read x;
+			print z;
+			if (x > y) then {
+				while ( ((((7)))) > ((((((9)))))) ) {
+					call Fifth;
+				}
+				
+			} else {
+				print z;
+				print x;
+				read q;
+				p = q * z + (x / 5 * (10 + 6)); 
+				while  (p <= 24) {
+					if (x > p) then {
+						print z;
+						call GCD;
+					} else {
+						call Fifth;
+					}
+				}
+			}
+		}
+	}
+}
+
+procedure A {
+	while (x > y) {
+		if (p > q) then {
+
+		} else {
+			while (z > 789) {
+				if (z != p) then {
+					while (rem > q * p ) {
+						call D;
+					}
+				} else {
+
+				}
+			}
+		}
+		
+	}
+	
+}
+
+procedure B {
+	call D;
+}
+
+procedure C {
+	call E;
+}
+
+procedure D {
+		while (x > y) {
+		if (p > q) then {
+
+		} else {
+			while (z > 789) {
+				if (z != p) then {
+					while (rem > q * p ) {
+						call G;
+					}
+				} else {
+
+				}
+			}
+		}
+		
+		}
+
+		while (x > y) {
+			if (p > q) then {
+				while (z > 789) {
+					if (z != p) then {
+						while (rem > q * p ) {
+							call G;
+						}
+					} else {
+
+					}
+				}
+			} else {
+				if (p > q) then {
+					if (z == q) then {
+						if (x != 0) then {
+							call F;
+						} else {
+
+						}
+					} else {
+
+					}
+				} else {
+				}
+			}
+		}
+} 
+
+
+procedure E {
+	call G;
+}
+
+procedure G {
+	call H;
+}
+
+procedure F {}
+procedure H {}
+procedure Z {}
+
