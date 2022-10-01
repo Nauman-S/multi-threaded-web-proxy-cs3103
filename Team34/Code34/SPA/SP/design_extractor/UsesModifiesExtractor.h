@@ -37,6 +37,7 @@ public:
 
 private:
 	std::unique_ptr<WritePKBManager> write_manager_;
+	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
 
 	std::vector<Procedure> proc_call_stack_;
 	std::vector<StmtNum> parent_smts_;

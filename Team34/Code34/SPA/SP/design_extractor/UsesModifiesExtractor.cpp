@@ -1,7 +1,5 @@
 #include "UsesModifiesExtractor.h"
 
-#include "..\SourceParser.h"
-
 #include "../ast/ProgramNode.h"
 #include "../ast/ProcedureASTNode.h"
 
@@ -19,6 +17,7 @@ UsesModifiesExtractor::UsesModifiesExtractor() {
 }
 
 void UsesModifiesExtractor::ExtractProgramNode(ProgramNode& program) {
+	this->proc_node_map_ = program.GetProcNodeMapping();
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
 		child->Extract(*this);
@@ -54,18 +53,18 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 }
 
 void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
-	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> name_to_node_map = SourceParser::proc_name_to_node_;
-	Procedure proc_name = call.GetProcedure();
-	if (name_to_node_map.find(proc_name) == name_to_node_map.end()) {
-		// Consider if should return error when calling undefined procedure
+	Procedure called_proc = call.GetProcedure();
+	if (this->proc_node_map_.find(called_proc) == this->proc_node_map_.end()) {
 		return;
 	}
 
 	Procedure parent_procedure = call.GetParentProcIndex();
-	std::shared_ptr<ProcedureASTNode> called_proc_node = name_to_node_map.at(proc_name);
 	this->proc_call_stack_.push_back(parent_procedure);
 	this->parent_smts_.push_back(call.GetLineIndex());
+
+	std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
 	called_proc_node->Extract(*this);
+
 	this->parent_smts_.pop_back();
 	this->proc_call_stack_.pop_back();
 }
