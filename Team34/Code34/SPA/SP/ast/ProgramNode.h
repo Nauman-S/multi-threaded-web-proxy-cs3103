@@ -2,17 +2,24 @@
 
 #include <vector>
 #include <memory>
+#include <map>
+
 #include "ASTNode.h"
 #include "ProcedureASTNode.h"
+#include "../../Utils/type/TypeDef.h"
 
 class ProgramNode : ASTNode {
 public:
-	std::vector<std::shared_ptr<ProcedureASTNode>> GetChildren();
+	ProgramNode();
 
-	void SetChildren(std::vector<std::shared_ptr<ProcedureASTNode>>);
+	std::vector<std::shared_ptr<ProcedureASTNode>> GetChildren();
+	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> GetProcNodeMapping();
+
+	void AddProcedure(std::shared_ptr<ProcedureASTNode>);
 
 	virtual void Extract(NodeExtractor&) override;
 
-protected:
-	std::vector<std::shared_ptr<ProcedureASTNode>> children;
+private:
+	std::vector<std::shared_ptr<ProcedureASTNode>> children_;
+	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_name_to_node_;
 };

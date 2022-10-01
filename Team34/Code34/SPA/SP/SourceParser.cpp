@@ -15,12 +15,10 @@ std::shared_ptr<ProgramNode> SourceParser::Parse(std::string& source_filename) {
 	std::shared_ptr<ProgramNode> programNode (new ProgramNode());
 	int token_idx = 0;
 	int line_idx = 1;
-	vector<shared_ptr<ProcedureASTNode>> children = {};
 	while (token_idx < (int) tokens.size()) {
 		shared_ptr<ProcedureASTNode> p_node = ParseProcedure(tokens, token_idx, line_idx);
-		children.push_back(p_node);
+		programNode->AddProcedure(p_node);
 	}
-	programNode->SetChildren(children);
 	return programNode;
 }
 
@@ -40,7 +38,6 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(vector<SourceToke
 	procedure->SetChildren(children);
 	procedure->SetProc(p);
 
-	this->proc_name_to_node_.insert(std::make_pair(p, procedure));
 	return procedure;
 }
 
