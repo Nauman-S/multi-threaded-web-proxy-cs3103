@@ -9,6 +9,7 @@
 #include "manager/ModifiesManager.h"
 #include "manager/UsesManager.h"
 #include "manager/CallsManager.h"
+#include "manager/NextManager.h"
 #include "manager/AssignPatternManager.h"
 #include "manager/IfPatternManager.h"
 #include "manager/WhilePatternManager.h"
@@ -25,6 +26,7 @@ public:
 	ModifiesManager modifies_manager_;
 	UsesManager uses_manager_;
 	CallsManager calls_manager_;
+	NextManager next_manager_;
 	AssignPatternManager assign_pattern_manager_;
 	IfPatternManager if_pattern_manager_;
 	WhilePatternManager while_pattern_manager_;

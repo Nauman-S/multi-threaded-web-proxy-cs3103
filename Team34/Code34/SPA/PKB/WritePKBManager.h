@@ -51,6 +51,9 @@ public:
 	// APIs related to Calls* relation
 	void SetCallsT(Procedure caller, Procedure callee);
 
+	// APIs related to Next relation
+	void SetNext(StmtNum prev, StmtNum next);
+
 	// APIs related to Assign Pattern relation
 	void AddAssignPattern(StmtNum stmt_num, Expr expr);
 

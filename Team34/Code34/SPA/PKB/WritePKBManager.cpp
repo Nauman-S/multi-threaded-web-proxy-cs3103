@@ -68,26 +68,37 @@ void WritePKBManager::SetModifies(Procedure proc_name, Variable var)
 	pkb.modifies_manager_.SetModifies(proc_name, var);
 }
 
+// APIs related to Calls relation
 void WritePKBManager::SetCalls(Procedure caller, Procedure callee)
 {
 	pkb.calls_manager_.SetCalls(caller, callee);
 }
 
+// APIs related to Calls* relation
 void WritePKBManager::SetCallsT(Procedure caller, Procedure callee)
 {
 	pkb.calls_manager_.SetCallsT(caller, callee);
 }
 
+// APIs related to Next relation
+void WritePKBManager::SetNext(StmtNum prev, StmtNum next)
+{
+	pkb.next_manager_.SetNext(prev, next);
+}
+
+// APIs related to Assign Pattern relation
 void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Expr expr)
 {
 	pkb.assign_pattern_manager_.AddPattern(stmt_num, expr);
 }
 
+// APIs related to If Pattern relation
 void WritePKBManager::AddIfPattern(StmtNum stmt_num, Variable var)
 {
 	pkb.if_pattern_manager_.AddPattern(stmt_num, var);
 }
 
+// APIs related to While Pattern relation
 void WritePKBManager::AddWhilePattern(StmtNum stmt_num, Variable var)
 {
 	pkb.while_pattern_manager_.AddPattern(stmt_num, var);

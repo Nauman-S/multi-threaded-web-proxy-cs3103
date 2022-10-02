@@ -427,6 +427,69 @@ std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManager::Ge
 	return pkb.calls_manager_.GetAllCallsTRelations();
 }
 
+// APIs related to Next relation
+bool ReadPKBManager::CheckNext(StmtNum prev, StmtNum next)
+{
+	return pkb.next_manager_.CheckNext(prev, next);
+}
+
+bool ReadPKBManager::IsNextStoreEmpty()
+{
+	return pkb.next_manager_.IsEmpty();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = pkb.next_manager_.GetNextStmtsFromStmt(stmt);
+	return FilterStmtSetByType(next_stmts, next_stmt_type);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
+	return FilterStmtSetByType(prev_stmts, prev_stmt_type);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmts(RefType next_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> all_next_stmts = pkb.next_manager_.GetAllNextStmts();
+	return FilterStmtSetByType(all_next_stmts, next_stmt_type);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPrevStmts(RefType prev_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmts();
+	return FilterStmtSetByType(all_prev_stmts, prev_stmt_type);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllNextRelations()
+{
+	return pkb.next_manager_.GetAllNextRelations();
+}
+
+// APIs related to Next* relation
+bool ReadPKBManager::CheckNextT(StmtNum prev, StmtNum next)
+{
+	return pkb.next_manager_.CheckNextT(prev, next);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> all_next_stmts = pkb.next_manager_.GetAllNextStmtsFromStmt(stmt);
+	return FilterStmtSetByType(all_next_stmts, next_stmt_type);
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type)
+{
+	std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
+	return FilterStmtSetByType(all_prev_stmts, prev_stmt_type);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllNextTRelations()
+{
+	return pkb.next_manager_.GetAllNextTRelations();
+}
+
 // Utility functions
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterStmtSetByType(std::shared_ptr<std::unordered_set<StmtNum>> stmts, RefType stmt_type)
 {

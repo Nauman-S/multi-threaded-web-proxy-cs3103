@@ -106,6 +106,21 @@ public:
 	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
 	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
 
+	// APIs related to Next relation
+	virtual bool CheckNext(StmtNum prev, StmtNum next);
+	virtual bool IsNextStoreEmpty();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmts(RefType next_stmt_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts(RefType prev_stmt_type);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
+
+	// APIs related to Next* relation
+	virtual bool CheckNextT(StmtNum prev, StmtNum next);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
+
 	// APIs related to Assign Pattern relation
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr);
