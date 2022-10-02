@@ -1,11 +1,12 @@
 6 - test 6
 procedure p1; assign a2;
 Select p1 such that Calls*("C",p1) pattern a2(_," a    %    b     ") 
-E, G, F, H
+E, G, H
 5000
 7 - test 7
 procedure p1; assign a2;
 Select p1 such that Calls*("F",_) pattern a2(_,_)
+
 5000
 11 - test 11
 constant c; procedure p1, p2; variable v; assign a1;
