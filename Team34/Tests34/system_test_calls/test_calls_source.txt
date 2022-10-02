@@ -142,6 +142,7 @@ procedure E {
 }
 
 procedure G {
+	call F;
 	call H;
 }
 
