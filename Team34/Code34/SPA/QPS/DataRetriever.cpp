@@ -661,7 +661,7 @@ bool DataRetriever::CheckPPRelExistenceByLhsProc(ProcProcRel& rel)
 std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetRhsProcByLhsProc(ProcProcRel& rel)
 {
     RelType type = rel.GetRelType();
-    assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
+    //assert(type == RelType::kParentRel || type == RelType::kParentTRel || type == RelType::kFollowsRel || type == RelType::kFollowsTRel);
 
     Procedure lhs_proc_name = rel.LhsValue();
     shared_ptr<unordered_set<Procedure>> set;
