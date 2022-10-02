@@ -56,6 +56,9 @@
     <ClCompile Include="TestCallsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="TestNextManager.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="TestStatementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

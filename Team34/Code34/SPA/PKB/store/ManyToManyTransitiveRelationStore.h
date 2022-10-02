@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include <unordered_set>
 
 #include "ManyToManyRelationStore.h"
 
@@ -8,28 +9,16 @@ template <typename T>
 class ManyToManyTransitiveRelationStore : public ManyToManyRelationStore<T, T>
 {
 public:
-	void SetTransitiveRelation(T left, T right);
 	bool CheckTransitiveRelation(T left, T right);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveRHS(T t);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveLHS(T t);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
-private:
-	std::vector<std::pair<T, T>> all_transitive_relations_;
+	virtual std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations() = 0;
 };
-
-template<typename T>
-inline void ManyToManyTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	std::pair<T, T> pair = std::make_pair(left, right);
-	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
-	{
-		all_transitive_relations_.push_back(pair);
-	}
-}
 
 template<typename T>
 inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right)
 {
+	std::unordered_set<T> visited;
 	std::queue<T> queue;
 	queue.push(left);
 	while (!queue.empty())
@@ -44,12 +33,17 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 		std::unordered_set<T>& elements = s_to_t_map_[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
+			if (visited.find(*iter) != visited.end())
+			{
+				continue;
+			}
 			if (*iter == right)
 			{
 				return true;
 			}
 			else
 			{
+				visited.insert(*iter);
 				queue.push(*iter);
 			}
 		}
@@ -70,15 +64,10 @@ inline std::shared_ptr<std::unordered_set<T>> ManyToManyTransitiveRelationStore<
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> ManyToManyTransitiveRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
-}
-
-template<typename T>
 inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered_map<T, std::unordered_set<T>>& map)
 {
 	std::shared_ptr<std::unordered_set<T>> all_elements = std::make_shared<std::unordered_set<T>>();
+	std::unordered_set<T> visited;
 	std::queue<T> queue;
 	queue.push(t);
 	while (!queue.empty())
@@ -93,7 +82,12 @@ inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered
 		std::unordered_set<T>& elements = map[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
+			if (visited.find(*iter) != visited.end())
+			{
+				continue;
+			}
 			all_elements->insert(*iter);
+			visited.insert(*iter);
 			queue.push(*iter);
 		}
 	}
