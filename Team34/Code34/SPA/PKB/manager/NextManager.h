@@ -22,7 +22,7 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts();
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
 
-	// Parent* Relation methods
+	// Next* Relation methods
 	bool CheckNextT(StmtNum parent, StmtNum child);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);
