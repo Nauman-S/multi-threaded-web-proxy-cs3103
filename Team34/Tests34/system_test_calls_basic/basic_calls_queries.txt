@@ -1,0 +1,35 @@
+1 - select direct call for named procedure
+procedure p;
+Select p such that Calls("first", p)
+second, third, fourth
+5000
+2 - Select direct call for pairwise procedure
+procedure p, q;
+Select q such that Calls(p, q)
+second, third, fourth, fifth
+5000
+3 - Select calls* for named procedure
+procedure p;
+Select p such that Calls*("first", p)
+second, third, fourth, fifth
+5000
+4 - Select direct call for named procedure
+procedure p;
+Select p such that Calls("fourth", p)
+second
+5000
+5 - Select call* for named procedure
+procedure p;
+Select p such that Calls*("fourth", p)
+second, fifth
+5000
+6 - Select calls for procedure with no calls
+procedure p;
+Select p such that Calls("fifth", p)
+
+5000
+7 - Select calls for inexistent procedure
+procedure p;
+Select p such that Calls(p, "testproc")
+
+5000
