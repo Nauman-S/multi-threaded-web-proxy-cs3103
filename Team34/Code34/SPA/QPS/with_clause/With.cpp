@@ -1,6 +1,7 @@
 #include "With.h"
 
 #include "../DataRetriever.h"
+#include "../PriorityManager.h"
 
 std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever)
 {
@@ -18,4 +19,8 @@ int With::CountSynonyms()
     }
 
     return res;
+}
+
+Priority With::GetPriority(PriorityManager pm) {
+    return pm.GetClausePriority(ClauseType::kWith);
 }
