@@ -12,3 +12,7 @@ int WhilePattern::CountSynonyms()
 
     return res;
 }
+
+Priority WhilePattern::GetPriority(PriorityManager pm) {
+    return pm.GetClausePriority(ClauseType::kWhilePattern);
+}

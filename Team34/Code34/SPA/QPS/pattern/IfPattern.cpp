@@ -12,3 +12,7 @@ int IfPattern::CountSynonyms()
 
     return res;
 }
+
+Priority IfPattern::GetPriority(PriorityManager pm) {
+    return pm.GetClausePriority(ClauseType::kIfPattern);
+}

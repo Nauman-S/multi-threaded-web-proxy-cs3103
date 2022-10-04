@@ -1,5 +1,4 @@
 #include "AssignPattern.h"
-#include "../DataRetriever.h"
 
 int AssignPattern::CountSynonyms()
 {
@@ -12,4 +11,8 @@ int AssignPattern::CountSynonyms()
     }
 
     return res;
+}
+
+Priority AssignPattern::GetPriority(PriorityManager pm) {
+    return pm.GetClausePriority(ClauseType::kAssignPattern);
 }
