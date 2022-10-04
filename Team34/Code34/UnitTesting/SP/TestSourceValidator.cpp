@@ -72,6 +72,28 @@ namespace UnitTesting
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == true);
-		}
+		};
+
+		TEST_METHOD(ChildProcedure)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "parent"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "child"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kEqual, "="),
+				SourceToken(SourceTokenType::kInteger, "1"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = false;
+			Assert::IsTrue(actual == expected);
+		};
 	};
 }
