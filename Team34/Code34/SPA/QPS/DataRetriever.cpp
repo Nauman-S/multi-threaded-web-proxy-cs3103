@@ -1158,38 +1158,46 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(Assi
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByVar(IfPattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    Variable var_name = pat.VarName();
+    shared_ptr<unordered_set<StmtNum>> stmt_set = pkb_ptr_->GetAllIfPatternStatmentsFromVar(var_name);
+
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByWildcard(IfPattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    shared_ptr<unordered_set<StmtNum>> stmt_set = pkb_ptr_->GetAllIfPatternStatements();
+
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllIfPattern(IfPattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    shared_ptr<vector<pair<StmtNum, Variable>>> table = pkb_ptr_->GetAllIfPatterns();
+    
+    return IntStrToStrStrTable(table);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(WhilePattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    Variable var_name = pat.VarName();
+    shared_ptr<unordered_set<StmtNum>> stmt_set = pkb_ptr_->GetAllWhilePatternStatmentsFromVar(var_name);
+
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByWildcard(WhilePattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    shared_ptr<unordered_set<StmtNum>> stmt_set = pkb_ptr_->GetAllWhilePatternStatements();
+
+    return IntSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(WhilePattern& pat)
 {
-    // TODO: plug in PKB API here
-    return nullptr;
+    shared_ptr<vector<pair<StmtNum, Variable>>> table = pkb_ptr_->GetAllWhilePatterns();
+
+    return IntStrToStrStrTable(table);
 }
 
 std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, shared_ptr<string> filter_val=nullptr)
