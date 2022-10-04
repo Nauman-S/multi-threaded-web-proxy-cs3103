@@ -166,6 +166,7 @@
     <ClCompile Include="QPS\pattern\AssignPattern.cpp" />
     <ClCompile Include="QPS\pattern\IfPattern.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
+    <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />

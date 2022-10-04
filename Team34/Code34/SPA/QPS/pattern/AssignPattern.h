@@ -38,5 +38,7 @@ public:
 
 	std::shared_ptr<ExprSpec> GetExprSpec() override { return expr_spec_; }
 
+	int CountSynonyms() override;
+
 };
 

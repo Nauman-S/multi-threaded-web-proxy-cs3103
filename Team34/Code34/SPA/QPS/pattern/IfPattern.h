@@ -37,4 +37,6 @@ public:
 	PatternType GetPatternType() override { return PatternType::kIfPattern; }
 
 	std::shared_ptr<ExprSpec> GetExprSpec() override { return nullptr; }
+
+	int CountSynonyms() override;
 };

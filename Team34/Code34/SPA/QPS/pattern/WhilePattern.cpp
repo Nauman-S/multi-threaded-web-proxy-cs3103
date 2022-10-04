@@ -1,9 +1,9 @@
-#include "IfPattern.h"
+#include "WhilePattern.h"
 
-int IfPattern::CountSynonyms()
+int WhilePattern::CountSynonyms()
 {
     int res = 0;
-    if (if_ref_->GetValType() == ValType::kSynonym) {
+    if (while_ref_->GetValType() == ValType::kSynonym) {
         res += 1;
     }
     if (var_ref_->GetValType() == ValType::kSynonym) {
