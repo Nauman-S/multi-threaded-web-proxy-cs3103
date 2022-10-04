@@ -8,7 +8,7 @@ using namespace std;
 
 namespace UnitTesting
 {
-	TEST_CLASS(TestValidator)
+	TEST_CLASS(TestSourceValidator)
 	{
 	public:
 		string base_dir = "../../Tests34/unit_tests/validator";
