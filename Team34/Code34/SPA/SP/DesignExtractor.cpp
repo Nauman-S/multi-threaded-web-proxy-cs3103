@@ -8,6 +8,7 @@
 #include "./design_extractor/ParentsExtractor.h"
 #include "./design_extractor/FollowsExtractor.h"
 #include "./design_extractor/CallsExtractor.h"
+#include "./design_extractor/NextExtractor.h"
 
 #include "../PKB/WritePKBManager.h"
 
@@ -19,10 +20,12 @@ void DesignExtractor::PopulatePKB(std::shared_ptr<ProgramNode> root) {
 	ParentsExtractor parents_extractor;
 	FollowsExtractor follows_extractor;
 	CallsExtractor calls_extractor;
+	NextExtractor next_extractor;
 
 	root->Extract(entity_extractor);
 	root->Extract(uses_modifies_extractor);
 	root->Extract(parents_extractor);
 	root->Extract(follows_extractor);
 	root->Extract(calls_extractor);
+	root->Extract(next_extractor);
 }
