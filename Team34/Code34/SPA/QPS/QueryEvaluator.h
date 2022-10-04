@@ -34,6 +34,6 @@ public:
 
 	std::vector<std::string> ExtractResult();
 
-	std::vector<std::string> GetSelectSynonyms();
+	//std::vector<std::string> GetSelectSynonyms();
 };
 

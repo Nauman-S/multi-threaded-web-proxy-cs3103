@@ -21,14 +21,6 @@ QueryEvaluator::QueryEvaluator(Query query) {
 
 bool QueryEvaluator::Evaluate() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = query_.GetSelectTuple();
-	//for (shared_ptr<Ref> ref : *select_tuple) {
-	//	//shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(std::make_shared<Ref>(ref));
-	//	shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
-	//	bool success = query_result_.MergeResult(res_wrapper);
-	//	if (!success) {
-	//		return false;
-	//	}
-	//}
 
 	std::vector<shared_ptr<Clause>> clauses;
 
