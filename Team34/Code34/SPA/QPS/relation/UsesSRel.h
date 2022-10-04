@@ -13,4 +13,3 @@ public:
 
     Priority GetPriority(PriorityManager pm) override { return pm.GetClausePriority(ClauseType::kUsesSRel); }
 };
-

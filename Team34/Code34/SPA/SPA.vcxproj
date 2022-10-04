@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QPS\ClauseType.h" />
+    <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />

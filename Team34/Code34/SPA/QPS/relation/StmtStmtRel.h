@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "Rel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 #include "../reference/StmtRef.h"
 #include "../reference/ValType.h"
 #include "../query_result/ResWrapper.h"
@@ -25,7 +25,7 @@ public:
 
     std::string RhsValue() override;
 
-    RelType GetRelType() override { return RelType::kStmtStmtRel; }
+    ClauseType GetRelType() override { return ClauseType::kStmtStmtRel; }
 
     RefType LhsRefType() override;
 
