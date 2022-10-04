@@ -754,20 +754,19 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel)
     else if (type == RelType::kFollowsTRel) {
         res = pkb_ptr_->CheckFollowsT(lhs_stmt_num, rhs_stmt_num);
     }
-    /*
     else if (type == RelType::kNextRel) {
         res = pkb_ptr_->CheckNext(lhs_stmt_num, rhs_stmt_num);
     }
     else if (type == RelType::kNextTRel) {
         res = pkb_ptr_->CheckNextT(lhs_stmt_num, rhs_stmt_num);
     }
+    /*
     else if (type == RelType::kAffectsRel) {
         res = pkb_ptr_->CheckAffects(lhs_stmt_num, rhs_stmt_num);
     }
     else if (type == RelType::kAffectsTRel) {
         res = pkb_ptr_->CheckAffectsT(lhs_stmt_num, rhs_stmt_num);
-    }
-    */
+    }*/
 
     return res;
 }
@@ -787,10 +786,10 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel)
     else if (type == RelType::kFollowsRel || type == RelType::kFollowsTRel) {
         is_empty = pkb_ptr_->IsFollowsStoreEmpty();
     }
-    /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
         is_empty = pkb_ptr_->IsNextStoreEmpty();
     }
+    /*
     else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
         is_empty = pkb_ptr_->IsAffectsStoreEmpty();
     }
@@ -818,18 +817,17 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel)
     }
     else if (type == RelType::kFollowsRel) {
         stmt_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, RefType::kStmtRef);
-
     }
     else if (type == RelType::kFollowsTRel) {
         stmt_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
-    /*
     else if (type == RelType::kNextRel) {
-        
+        stmt_set = pkb_ptr_->GetPrevStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kNextTRel) {
-        
+        stmt_set = pkb_ptr_->GetAllPrevStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
+    /*
     else if (type == RelType::kAffectsRel) {
         
     }
@@ -852,10 +850,10 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
     StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate children
+        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kParentTRel) {
-        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);  // set of immediate and indirect children
+        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kFollowsRel) {
         stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, RefType::kStmtRef);
@@ -863,13 +861,13 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel)
     else if (type == RelType::kFollowsTRel) {
         stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
-    /*
     else if (type == RelType::kNextRel) {
-        
+        stmt_set = pkb_ptr_->GetNextStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
     else if (type == RelType::kNextTRel) {
-        
+        stmt_set = pkb_ptr_->GetAllNextStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
+    /*
     else if (type == RelType::kAffectsRel) {
        
     }
@@ -893,10 +891,10 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     RefType rhs_stmt_type = rel.RhsRefType();
     shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == RelType::kParentRel) {
-        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate children
+        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == RelType::kParentTRel) {
-        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);  // set of immediate and indirect children
+        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == RelType::kFollowsRel) {
         stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, rhs_stmt_type);
@@ -904,13 +902,13 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(StmtSt
     else if (type == RelType::kFollowsTRel) {
         stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
-    /*
     else if (type == RelType::kNextRel) {
-       
+        stmt_set = pkb_ptr_->GetNextStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == RelType::kNextTRel) {
-        
+        stmt_set = pkb_ptr_->GetAllNextStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
+    /*
     else if (type == RelType::kAffectsRel) {
        
     }
@@ -939,10 +937,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(StmtStmtRe
     {
         stmt_set = pkb_ptr_->GetAllSuccessorStmts(rhs_stmt_type);
     } 
-    /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
-    
+        stmt_set = pkb_ptr_->GetAllNextStmts(rhs_stmt_type);
     }
+    /*
     else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
 
     }
@@ -974,13 +972,13 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(StmtSt
     else if (type == RelType::kFollowsTRel) {
         stmt_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
-    /*
     else if (type == RelType::kNextRel) {
-
+        stmt_set = pkb_ptr_->GetPrevStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
     else if (type == RelType::kNextTRel) {
-
+        stmt_set = pkb_ptr_->GetAllPrevStmtsFromStmt(rhs_stmt_num, lhs_stmt_type);
     }
+    /*
     else if (type == RelType::kAffectsRel) {
 
     }
@@ -1009,10 +1007,10 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(StmtStmtRe
     {
         stmt_set = pkb_ptr_->GetAllPredecessorStmts(lhs_stmt_type);
     }
-    /*
     else if (type == RelType::kNextRel || type == RelType::kNextTRel) {
-
+        stmt_set = pkb_ptr_->GetAllPrevStmts(lhs_stmt_type);
     }
+    /*
     else if (type == RelType::kAffectsRel || type == RelType::kAffectsTRel) {
 
     }
@@ -1044,13 +1042,13 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
     else if (type == RelType::kFollowsTRel) {
         table = pkb_ptr_->GetAllFollowsTRelations();
     }
-    /*
     else if (type == RelType::kNextRel) {
-
+        table = pkb_ptr_->GetAllNextRelations();
     }
     else if (type == RelType::kNextTRel) {
-
+        table = pkb_ptr_->GetAllNextTRelations();
     }
+    /*
     else if (type == RelType::kAffectsRel) {
 
     }
