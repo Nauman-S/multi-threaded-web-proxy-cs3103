@@ -36,6 +36,19 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
     return rhs_ref_->ValueAsInt();
 }
 
+int StmtStmtRel::CountSynonyms()
+{
+    int res = 0;
+    if (lhs_ref_->GetValType() == ValType::kSynonym) {
+        res += 1;
+    }
+    if (rhs_ref_->GetValType() == ValType::kSynonym) {
+        res += 1;
+    }
+
+    return res;
+}
+
 std::shared_ptr<ResWrapper> StmtStmtRel::GetMatch(DataRetriever& retriever)
 {
     return retriever.retrieve(*this);

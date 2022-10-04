@@ -34,4 +34,6 @@ public:
 
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
+    int CountSynonyms() override;
+
 };

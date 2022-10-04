@@ -28,5 +28,6 @@ public:
 
 	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
 
+	virtual int CountSynonyms() = 0;
 };
 

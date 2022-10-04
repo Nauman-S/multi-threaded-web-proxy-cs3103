@@ -35,10 +35,11 @@ public:
 
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
+    int CountSynonyms() override;
+
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::optional<int> RhsValueAsInt();
 
-    
 };
 
