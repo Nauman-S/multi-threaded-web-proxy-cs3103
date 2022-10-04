@@ -97,6 +97,7 @@
     <ClCompile Include="QPS\query_result\Table.cpp" />
     <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
     <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
+    <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -234,5 +235,6 @@
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
+    <ClInclude Include="SP\design_extractor\NextExtractor.h" />
   </ItemGroup>
 </Project>
