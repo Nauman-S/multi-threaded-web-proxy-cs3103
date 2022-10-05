@@ -1,0 +1,94 @@
+procedure basicNext {
+   x = 1;
+   print y;
+   if (x == 3) then {
+     x = 5;
+     read a;
+   } else {
+     a = 5;
+   }
+   read x;
+   call IfAfterIf;
+   while (x != 5) {
+      x = 2;
+      a = b;
+      c = 5;
+   }
+   x = 4;
+}
+
+procedure IfAfterIf {
+   if (x == 4) then {
+     a = 2;
+     x = 4;
+   } else {
+     a = 3;
+     x = 4;
+   }
+   if (y == 4) then {
+     a = 5;
+     x = 9;
+   } else {
+     a = 3;
+     x = 2;
+   }
+}
+
+procedure WhileIfInIf {
+   if (x == 4) then {
+     while (x == 5) {
+        a = 2;
+     }
+     x = 3;
+   } else {
+     a = 3;
+     if (x == 5) then {
+        a = 2;
+     } else {
+        a = 5;
+     }
+   }
+}
+
+procedure WhileAfterIf {
+   x = 3;
+   if (x != 4) then {
+      a = 3;
+   } else {
+      x = 5;
+      print x;
+   }
+   while (x == 3) {
+      x = 2;
+   }
+}
+
+procedure IfAfterWhile {
+   x = 3;
+   while (x == 3) {
+      x = 2;
+   }
+   if (x != 4) then {
+      a = 3;
+   } else {
+      x = 5;
+      print x;
+   }
+}
+
+procedure IfInIf {
+   if (x == 4) then {
+     if (x == 5) then {
+        x = 1;
+     } else {
+        x = 2;
+     }
+   } else {
+     if (x == 5) then {
+        x = 1;
+     } else {
+        x = 2;
+     }
+   }
+   x = 1;
+}

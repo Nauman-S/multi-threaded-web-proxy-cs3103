@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ProcVarRel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 
 class UsesPRel :
     public ProcVarRel
@@ -9,6 +9,8 @@ class UsesPRel :
 public:
     using ProcVarRel::ProcVarRel;
 
-    RelType GetRelType() override { return RelType::kUsesPRel; }
+    ClauseType GetRelType() override { return ClauseType::kUsesPRel; }
+
+    Priority GetPriority(PriorityManager& pm) override;
 };
 

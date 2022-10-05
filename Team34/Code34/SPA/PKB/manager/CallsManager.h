@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/ManyToManyCallsStore.h"
+#include "../store/ManyToManyRelation/CallsRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class CallsManager
@@ -30,5 +30,5 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
 	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
 private:
-	ManyToManyCallsStore<Procedure> calls_store_;
+	CallsRelationStore calls_store_;
 };

@@ -12,8 +12,11 @@
     <ClCompile Include="PKB\manager\CallsManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
-    <ClCompile Include="PKB\store\PatternStore.cpp" />
-    <ClCompile Include="PKB\store\PatternWithExprStore.cpp" />
+	<ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
+	<ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
+	<ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
+    <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
+    <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
@@ -97,6 +100,14 @@
     <ClCompile Include="QPS\query_result\Table.cpp" />
     <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
     <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
+    <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
+    <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
+    <ClCompile Include="QPS\relation\AffectsRel.cpp" />
+    <ClCompile Include="QPS\relation\AffectsTRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsTRel.cpp" />
+    <ClCompile Include="QPS\relation\NextRel.cpp" />
+    <ClCompile Include="QPS\relation\NextTRel.cpp" />
     <ClCompile Include="QPS\optimization\ClauseGroup.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
   </ItemGroup>
@@ -124,17 +135,19 @@
     <ClInclude Include="PKB\manager\UsesManager.h" />
     <ClInclude Include="PKB\manager\VariableManager.h" />
     <ClInclude Include="PKB\store\EntityStore.h" />
-    <ClInclude Include="PKB\store\ManyToManyRelationStore.h" />
-    <ClInclude Include="PKB\store\ManyToManyTransitiveRelationStore.h" />
-    <ClInclude Include="PKB\store\ManyToManyCallsRelationStore.h" />
-    <ClInclude Include="PKB\store\ManyToManyNextRelationStore.h" />
-    <ClInclude Include="PKB\store\ManyToOneRelationStore.h" />
-    <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
-    <ClInclude Include="PKB\store\OneToManyTransitiveRelationStore.h" />
-    <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
-    <ClInclude Include="PKB\store\OneToOneTransitiveRelationStore.h" />
-    <ClInclude Include="PKB\store\PatternStore.h" />
-    <ClInclude Include="PKB\store\PatternWithExprStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelation\ManyToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelation\ManyToManyTransitiveRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelation\CallsRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToManyRelation\NextRelationStore.h" />
+    <ClInclude Include="PKB\store\ManyToOneRelation\ManyToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelation\OneToManyRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelation\OneToManyTransitiveRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyRelation\ParentRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelation\OneToOneRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelation\OneToOneTransitiveRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneRelation\FollowsRelationStore.h" />
+    <ClInclude Include="PKB\store\Pattern\PatternStore.h" />
+    <ClInclude Include="PKB\store\Pattern\PatternWithExprStore.h" />
     <ClInclude Include="PKB\PKB.h" />
     <ClInclude Include="PKB\ReadPKBManager.h" />
     <ClInclude Include="PKB\WritePKBManager.h" />
@@ -171,7 +184,6 @@
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\relation\Rel.h" />
-    <ClInclude Include="QPS\relation\RelType.h" />
     <ClInclude Include="QPS\relation\StmtStmtRel.h" />
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\relation\UsesPRel.h" />
@@ -226,7 +238,6 @@
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
-    <ClInclude Include="QPS\pattern\PatternType.h" />
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
     <ClInclude Include="QPS\with_clause\With.h" />
@@ -236,7 +247,5 @@
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
-    <ClInclude Include="QPS\optimization\ClauseGroup.h" />
-    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
   </ItemGroup>
 </Project>

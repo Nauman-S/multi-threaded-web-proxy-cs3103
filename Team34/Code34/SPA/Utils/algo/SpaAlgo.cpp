@@ -41,7 +41,7 @@ string SpaAlgo::InfixToPostfix(string& infix)
 
 	stack<string> stk;
 	vector<string> postfix_tokens;
-	
+
 	auto splited = Split(infix, SpaAlgo::DELIM);
 	for (string& token : *splited) {
 		if (token == " ") {
@@ -74,7 +74,7 @@ string SpaAlgo::InfixToPostfix(string& infix)
 		postfix_tokens.push_back(stk.top());
 		stk.pop();
 	}
-	
+
 	string postfix = postfix_tokens[0];
 	for (int i = 1; i < postfix_tokens.size(); ++i) {
 		postfix += (SpaAlgo::DELIM + postfix_tokens[i]);
@@ -105,7 +105,7 @@ std::shared_ptr<SetRes> SpaAlgo::HashJoinSets(std::shared_ptr<SetRes> set_res_1,
 
 	shared_ptr<unordered_set<string>> intersect;
 	std::set_intersection(set1->begin(), set1->end(), set2->begin(), set2->end(), std::inserter(*intersect, intersect->begin()));
-	
+
 	return make_shared<SetRes>(syn, intersect);
 }
 
@@ -121,14 +121,14 @@ pair<shared_ptr<SetRes>, shared_ptr<TableRes>> SpaAlgo::HashJoinSetWithTable(std
 	shared_ptr<unordered_set<string>> joined_set;
 	shared_ptr<vector<StrPair>> joined_table;
 	string join_val;
-	for (auto iter=table->begin(); iter != table->end(); ++iter) {
+	for (auto iter = table->begin(); iter != table->end(); ++iter) {
 		if (col_index == 0) {
 			join_val = iter->first;
 		}
 		else {
 			join_val = iter->second;
 		}
-		
+
 		if (set->find(join_val) != set->end()) {
 			joined_set->insert(join_val);
 			joined_table->push_back(*iter);
