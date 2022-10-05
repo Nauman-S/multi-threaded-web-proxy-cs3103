@@ -1,7 +1,7 @@
 #pragma once
 
 #include "StmtVarRel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 
 class UsesSRel :
     public StmtVarRel
@@ -9,6 +9,7 @@ class UsesSRel :
 public:
     StmtVarRel::StmtVarRel;
 
-    RelType GetRelType() override { return RelType::kUsesSRel; }
-};
+    ClauseType GetRelType() override { return ClauseType::kUsesSRel; }
 
+    Priority GetPriority(PriorityManager pm) override { return pm.GetClausePriority(ClauseType::kUsesSRel); }
+};

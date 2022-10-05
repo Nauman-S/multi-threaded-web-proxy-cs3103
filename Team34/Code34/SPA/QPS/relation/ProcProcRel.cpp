@@ -29,3 +29,16 @@ std::pair<ValType, ValType> ProcProcRel::ValTypes() {
 std::shared_ptr<ResWrapper> ProcProcRel::GetMatch(DataRetriever& retriever) {
 	return retriever.retrieve(*this);
 }
+
+int ProcProcRel::CountSynonyms()
+{
+	int res = 0;
+	if (lhs_ref_->GetValType() == ValType::kSynonym) {
+		res += 1;
+	}
+	if (rhs_ref_->GetValType() == ValType::kSynonym) {
+		res += 1;
+	}
+	
+	return res;
+}

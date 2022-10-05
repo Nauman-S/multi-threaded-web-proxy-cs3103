@@ -13,10 +13,11 @@
   <ItemGroup>
     <ClInclude Include="QPS\ClauseGrouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\ClauseGroup.h" />
+    <ClInclude Include="QPS\ClauseType.h" />
+    <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
-    <ClInclude Include="QPS\pattern\PatternType.h" />
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
     <ClInclude Include="QPS\relation\AffectsRel.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
@@ -91,7 +92,6 @@
     <ClInclude Include="QPS\relation\ProcProcRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\relation\Rel.h" />
-    <ClInclude Include="QPS\relation\RelType.h" />
     <ClInclude Include="QPS\relation\StmtStmtRel.h" />
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\relation\UsesPRel.h" />
@@ -171,6 +171,7 @@
     <ClCompile Include="QPS\pattern\AssignPattern.cpp" />
     <ClCompile Include="QPS\pattern\IfPattern.cpp" />
     <ClCompile Include="QPS\pattern\Pattern.cpp" />
+    <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\query_result\QueryResult.cpp" />
