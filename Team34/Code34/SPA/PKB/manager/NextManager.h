@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cassert>
 #include <memory>
 #include <queue>
@@ -28,5 +30,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
 private:
-	NextRelationStore<StmtNum> next_store_;
+	NextRelationStore next_store_;
 };

@@ -1,16 +1,10 @@
 #pragma once
 
 #include "ManyToManyTransitiveRelationStore.h"
+#include "../../../Utils/type/TypeDef.h"
 
-template <typename T>
-class NextRelationStore : public ManyToManyTransitiveRelationStore<T>
+class NextRelationStore : public ManyToManyTransitiveRelationStore<StmtNum>
 {
 public:
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllTransitiveRelations();
 };
-
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> NextRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::shared_ptr<std::vector<std::pair<T, T>>>();
-}
