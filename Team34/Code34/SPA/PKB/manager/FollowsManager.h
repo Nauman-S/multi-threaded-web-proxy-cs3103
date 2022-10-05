@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/OneToOneTransitiveRelationStore.h"
+#include "../store/OneToOneFollowsStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class FollowsManager
@@ -28,5 +28,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 private:
-	OneToOneTransitiveRelationStore<StmtNum> follows_store_;
+	OneToOneFollowsStore<StmtNum> follows_store_;
 };

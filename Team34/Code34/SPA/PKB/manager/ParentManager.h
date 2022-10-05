@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/OneToManyTransitiveRelationStore.h"
+#include "../store/OneToManyParentStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class ParentManager
@@ -30,5 +30,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 private:
-	OneToManyTransitiveRelationStore<StmtNum> parent_store_;
+	OneToManyParentStore<StmtNum> parent_store_;
 };

@@ -130,8 +130,10 @@
     <ClInclude Include="PKB\store\ManyToOneRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyRelationStore.h" />
     <ClInclude Include="PKB\store\OneToManyTransitiveRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToManyParentStore.h" />
     <ClInclude Include="PKB\store\OneToOneRelationStore.h" />
     <ClInclude Include="PKB\store\OneToOneTransitiveRelationStore.h" />
+    <ClInclude Include="PKB\store\OneToOneFollowsStore.h" />
     <ClInclude Include="PKB\store\PatternStore.h" />
     <ClInclude Include="PKB\store\PatternWithExprStore.h" />
     <ClInclude Include="PKB\PKB.h" />
