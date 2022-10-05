@@ -1,16 +1,13 @@
 #pragma once
 
 #include "ManyToManyTransitiveRelationStore.h"
+#include "../../../Utils/type/TypeDef.h"
 
-template <typename T>
-class NextRelationStore : public ManyToManyTransitiveRelationStore<T>
+class NextRelationStore : public ManyToManyTransitiveRelationStore<StmtNum>
 {
 public:
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllTransitiveRelations();
+	void SetCFGEdge(std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_node, std::shared_ptr<std::pair<StmtNum, StmtNum>> next_node);
+private:
+	std::unordered_map<std::shared_ptr<std::pair<StmtNum, StmtNum>>, std::unordered_set<std::shared_ptr<std::pair<StmtNum, StmtNum>>>> cfg_;
 };
-
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> NextRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::shared_ptr<std::vector<std::pair<T, T>>>();
-}

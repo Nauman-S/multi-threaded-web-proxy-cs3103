@@ -1,29 +1,13 @@
 #pragma once
 
 #include "ManyToManyTransitiveRelationStore.h"
+#include "../../../Utils/type/TypeDef.h"
 
-template <typename T>
-class CallsRelationStore : public ManyToManyTransitiveRelationStore<T>
+class CallsRelationStore : public ManyToManyTransitiveRelationStore<Procedure>
 {
 public:
-	void SetTransitiveRelation(T left, T right);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
+	void SetTransitiveRelation(Procedure left, Procedure right);
+	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllTransitiveRelations();
 private:
-	std::vector<std::pair<T, T>> all_transitive_relations_;
+	std::vector<std::pair<Procedure, Procedure>> all_transitive_relations_;
 };
-
-template<typename T>
-inline void CallsRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	std::pair<T, T> pair = std::make_pair(left, right);
-	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
-	{
-		all_transitive_relations_.push_back(pair);
-	}
-}
-
-template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> CallsRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
-}

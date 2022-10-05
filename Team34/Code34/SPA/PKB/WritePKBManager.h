@@ -52,6 +52,7 @@ public:
 	void SetCallsT(Procedure caller, Procedure callee);
 
 	// APIs related to Next relation
+	void SetCFGEdge(std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_node, std::shared_ptr<std::pair<StmtNum, StmtNum>> next_node);
 	void SetNext(StmtNum prev, StmtNum next);
 
 	// APIs related to Assign Pattern relation
