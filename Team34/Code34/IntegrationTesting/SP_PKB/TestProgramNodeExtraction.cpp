@@ -16,6 +16,7 @@
 #include "../SPA/SP/design_extractor/ParentsExtractor.h"
 #include "../SPA/SP/design_extractor/FollowsExtractor.h"
 #include "../SPA/SP/design_extractor/CallsExtractor.h"
+#include "../SPA/SP/design_extractor/NextExtractor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -248,6 +249,71 @@ namespace IntegrationTesting
 			Assert::IsTrue(this->read->CheckCallsT("fourth", "fifth"));
 			Assert::IsTrue(this->read->CheckCallsT("fourth", "third"));
 			Assert::IsFalse(this->read->CheckCallsT("fourth", "second"));
+		}
+
+		TEST_METHOD(TestNextRelationPopulation) {
+			string next_test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/next_extraction_test_source.txt";
+			SourceParser parser = SourceParser();
+			shared_ptr<ProgramNode> root = parser.Parse(next_test_file);
+
+			NextExtractor extractor;
+			root->Extract(extractor);
+
+			// Test Next for statement of same nesting level in procedure
+			Assert::IsTrue(this->read->CheckNext(1, 2));
+			Assert::IsTrue(this->read->CheckNext(2, 3));
+			Assert::IsFalse(this->read->CheckNext(3, 7));
+			Assert::IsTrue(this->read->CheckNext(7, 8));
+			Assert::IsTrue(this->read->CheckNext(9, 13));
+			Assert::IsFalse(this->read->CheckNext(1, 3));
+			Assert::IsFalse(this->read->CheckNext(7, 9));
+
+			// Test Next is not true across last statement and first statement of procedures
+			Assert::IsFalse(this->read->CheckNext(13, 14));
+			Assert::IsFalse(this->read->CheckNext(23, 24));
+			Assert::IsFalse(this->read->CheckNext(31, 32));
+			Assert::IsFalse(this->read->CheckNext(38, 39));
+
+			// Test Next for statement within if statements, 
+			// and statements within for different blocks
+			Assert::IsTrue(this->read->CheckNext(4, 5));
+			Assert::IsFalse(this->read->CheckNext(5, 6));
+			Assert::IsFalse(this->read->CheckNext(4, 6));
+
+			Assert::IsTrue(this->read->CheckNext(15, 16));
+			Assert::IsTrue(this->read->CheckNext(17, 18));
+			Assert::IsFalse(this->read->CheckNext(16, 17));
+			Assert::IsFalse(this->read->CheckNext(15, 17));
+
+			// Test Next for statement within while statements
+			Assert::IsTrue(this->read->CheckNext(10, 11));
+			Assert::IsTrue(this->read->CheckNext(11, 12));
+			Assert::IsFalse(this->read->CheckNext(12, 13));
+
+			// Test Next for split route between last statement in if statements
+			Assert::IsTrue(this->read->CheckNext(5, 7));
+			Assert::IsTrue(this->read->CheckNext(6, 7));
+			Assert::IsTrue(this->read->CheckNext(16, 19));
+			Assert::IsTrue(this->read->CheckNext(18, 19));
+			Assert::IsTrue(this->read->CheckNext(34, 37));
+			Assert::IsTrue(this->read->CheckNext(36, 37));
+
+			// Test loopback of while statements
+			Assert::IsTrue(this->read->CheckNext(12, 9));
+			Assert::IsFalse(this->read->CheckNext(11, 9));
+			Assert::IsTrue(this->read->CheckNext(26, 25));
+			Assert::IsFalse(this->read->CheckNext(25, 25));
+			Assert::IsTrue(this->read->CheckNext(38, 37));
+
+			// Test while statement after if statements
+			Assert::IsFalse(this->read->CheckNext(33, 37));
+			Assert::IsFalse(this->read->CheckNext(36, 38));
+
+			// Test if inside if statements (4 possible paths to following statement)
+			Assert::IsTrue(this->read->CheckNext(48, 53));
+			Assert::IsTrue(this->read->CheckNext(49, 53));
+			Assert::IsTrue(this->read->CheckNext(51, 53));
+			Assert::IsTrue(this->read->CheckNext(52, 53));
 		}
 	};
 }

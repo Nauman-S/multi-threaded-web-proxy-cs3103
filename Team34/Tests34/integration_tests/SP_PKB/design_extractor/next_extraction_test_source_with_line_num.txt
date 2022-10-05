@@ -1,0 +1,94 @@
+procedure basicNext {
+1.   x = 1;
+2.   print y;
+3.   if (x == 3) then {
+4.     x = 5;
+5.     read a;
+   } else {
+6.     a = 5;
+   }
+7.   read x;
+8.   call IfAfterIf;
+9.   while (x != 5) {
+10.      x = 2;
+11.      a = b;
+12.      c = 5;
+   }
+13.   x = 4;
+}
+
+procedure IfAfterIf {
+14.   if (x == 4) then {
+15.     a = 2;
+16.     x = 4;
+   } else {
+17.     a = 3;
+18.     x = 4;
+   }
+19.   if (y == 4) then {
+20.     a = 5;
+21.     x = 9;
+   } else {
+22.     a = 3;
+23.     x = 2;
+   }
+}
+
+procedure WhileIfInIf {
+24.   if (x == 4) then {
+25.     while (x == 5) {
+26.        a = 2;
+     }
+27.     x = 3;
+   } else {
+28.     a = 3;
+29.     if (x == 5) then {
+30.        a = 2;
+     } else {
+31.        a = 5;
+     }
+   }
+}
+
+procedure WhileAfterIf {
+32.   x = 3;
+33.   if (x != 4) then {
+34.      a = 3;
+   } else {
+35.      x = 5;
+36.      print x;
+   }
+37.   while (x == 3) {
+38.      x = 2;
+   }
+}
+
+procedure IfAfterWhile {
+39.   x = 3;
+40.   while (x == 3) {
+41.      x = 2;
+   }
+42.   if (x != 4) then {
+43.      a = 3;
+   } else {
+44.      x = 5;
+45.      print x;
+   }
+}
+
+procedure IfInIf {
+46.   if (x == 4) then {
+47.     if (x == 5) then {
+48.        x = 1;
+     } else {
+49.        x = 2;
+     }
+   } else {
+50.     if (x == 5) then {
+51.        x = 1;
+     } else {
+52.        x = 2;
+     }
+   }
+53.   x = 1;
+}

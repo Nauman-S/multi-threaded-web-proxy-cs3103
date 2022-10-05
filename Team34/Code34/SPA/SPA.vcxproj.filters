@@ -100,6 +100,7 @@
     <ClCompile Include="QPS\ClauseGroup.cpp" />
     <ClCompile Include="QPS\clause_grouper\ClauseGrouper.cpp" />
     <ClCompile Include="QPS\clause_grouper\SimpleClauseGrouper.cpp" />
+    <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
     <ClCompile Include="QPS\relation\AffectsRel.cpp" />
     <ClCompile Include="QPS\relation\AffectsTRel.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="QPS\ClauseGroup.h" />
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\clause_grouper\SimpleClauseGrouper.h" />
+    <ClInclude Include="SP\design_extractor\NextExtractor.h" />
     <ClInclude Include="QPS\ClauseType.h" />
     <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
