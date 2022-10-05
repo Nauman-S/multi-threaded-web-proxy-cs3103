@@ -20,7 +20,7 @@ std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever)
 
 int With::CountSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_ptr_, rhs_ref_ptr_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
     return Clause::CountSynonyms(args);
 }
 
@@ -30,6 +30,6 @@ Priority With::GetPriority(PriorityManager& pm) {
 
 std::shared_ptr<std::vector<std::string>> With::GetSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_ptr_, rhs_ref_ptr_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
     return Clause::GetSynonyms(args);
 }

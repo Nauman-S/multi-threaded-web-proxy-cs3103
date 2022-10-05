@@ -49,13 +49,13 @@ std::optional<int> StmtStmtRel::RhsValueAsInt()
 
 int StmtStmtRel::CountSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_, rhs_ref_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::CountSynonyms(args);
 }
 
 std::shared_ptr<std::vector<std::string>> StmtStmtRel::GetSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_, rhs_ref_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::GetSynonyms(args);
 
 }

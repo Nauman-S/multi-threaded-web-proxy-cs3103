@@ -50,12 +50,12 @@ std::shared_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
 
 int StmtVarRel::CountSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_, rhs_ref_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::CountSynonyms(args);
 }
 
 std::shared_ptr<std::vector<std::string>> StmtVarRel::GetSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { lhs_ref_, rhs_ref_ };
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::GetSynonyms(args);
 }

@@ -12,7 +12,7 @@ using std::make_shared;
 
 int AssignPattern::CountSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { assign_ref_, var_ref_ };
+    vector<shared_ptr<Ref>> args = { assign_ref_, var_ref_ };
     return Clause::CountSynonyms(args);
 }
 
@@ -22,6 +22,6 @@ Priority AssignPattern::GetPriority(PriorityManager& pm) {
 
 std::shared_ptr<std::vector<std::string>> AssignPattern::GetSynonyms()
 {
-    vector<shared_ptr<Ref>>& args = { assign_ref_, var_ref_ };
+    vector<shared_ptr<Ref>> args = { assign_ref_, var_ref_ };
     return Clause::GetSynonyms(args);
 }
