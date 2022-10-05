@@ -7,7 +7,7 @@
 
 #include "../../Utils/type/RefType.h"
 #include "../../Utils/type/TypeDef.h"
-#include "../../PKB/store/ManyToOneRelationStore.h"
+#include "../../PKB/store/ManyToOneRelation/ManyToOneRelationStore.h"
 
 class StatementManager
 {
