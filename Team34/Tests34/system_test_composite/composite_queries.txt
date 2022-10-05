@@ -1,6 +1,6 @@
-7 - test pattern and modifies
-stmt s;
-Select s such that Follows (s, s)
+7 - test Uses and pattern
+stmt s; variable v; 
+Select s such that Uses (s,v)
 
 5000
 6 - test pattern and modifies

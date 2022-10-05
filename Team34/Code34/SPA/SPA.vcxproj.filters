@@ -107,6 +107,7 @@
     <ClCompile Include="QPS\relation\CallsTRel.cpp" />
     <ClCompile Include="QPS\relation\NextRel.cpp" />
     <ClCompile Include="QPS\relation\NextTRel.cpp" />
+    <ClCompile Include="QPS\query_result\WilrdcardTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -249,5 +250,6 @@
     <ClInclude Include="QPS\ClauseType.h" />
     <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
+    <ClInclude Include="QPS\query_result\WildcardTable.h" />
   </ItemGroup>
 </Project>

@@ -61,15 +61,18 @@ public:
 		return rows_;
 	}
 
-	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
+	virtual std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 
-	bool IsEmpty() { return rows_.size() == 0; }
+	virtual bool IsEmpty() { return rows_.size() == 0; }
+
+	virtual bool IsWildcard() { return false; }
 
 	bool ContainsSynonym(std::string synonym);
 
 	bool ContainsSynonyms(std::vector<std::string> synonyms);
-	
 
 	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
+
+	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonyms(std::vector<std::string> synonyms);
 
 };

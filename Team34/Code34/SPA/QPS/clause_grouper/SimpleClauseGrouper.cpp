@@ -19,12 +19,16 @@ void SimpleClauseGrouper::Group() {
 			continue;
 		}
 
-		if (AreSelectSynsIn(*(clause->GetSynonyms()))) {
-			clauses_w_select_syn.push_back(clause);
-			continue;
-		}
+		//if (AreSelectSynsIn(*(clause->GetSynonyms()))) {
+		//	clauses_w_select_syn.push_back(clause);
+		//	continue;
+		//}
 
-		clauses_wo_select_syn_.push_back(clause);
+		//clauses_wo_select_syn_.push_back(clause);
+
+
+		clauses_w_select_syn.push_back(clause);
+
 	}
 
 	group_wo_syn_ = std::make_shared<ClauseGroup>(clauses_wo_syn_);

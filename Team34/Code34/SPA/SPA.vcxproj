@@ -130,6 +130,7 @@
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
+    <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
+    <ClCompile Include="QPS\query_result\WilrdcardTable.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />

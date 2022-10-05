@@ -7,6 +7,7 @@
 #include "ResultExtractor.h"
 #include "query_result/Table.h"
 #include "query_result/EmptyTable.h"
+#include "query_result/WildcardTable.h"
 #include "clause_grouper/ClauseGrouper.h"
 #include "clause_grouper/SimpleClauseGrouper.h"
 
@@ -47,7 +48,7 @@ bool QueryEvaluator::Evaluate() {
 	// If the result table from clauses does not contain any select synonyms,
 	// we create a new empty result table
 	if (!result_table_->ContainsSynonyms(select_synonyms)) {
-		result_table_ = std::make_shared<Table>();
+		result_table_ = std::make_shared<WildcardTable>();
 	}
 
 	for (shared_ptr<Ref> ref : *select_tuple) {
@@ -67,7 +68,7 @@ bool QueryEvaluator::Evaluate() {
 
 
 shared_ptr<Table> QueryEvaluator::EvaluateGroup(vector<shared_ptr<Clause>> clauses) {
-	shared_ptr<Table> table = std::make_shared<Table>();
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
 
 	for (shared_ptr<Clause> clause : clauses) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -120,7 +121,7 @@ bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_sy
 }
 
 bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group_wo_select_syn_) {
-	shared_ptr<Table> table = std::make_shared<Table>();
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
 
 	for (shared_ptr<Clause> clause : group_wo_select_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -155,7 +156,7 @@ bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<Claus
 
 
 std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
-	shared_ptr<Table> table = std::make_shared<Table>();
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
 
 	for (shared_ptr<Clause> clause : group_w_select_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -179,7 +180,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<Cl
 
 
 std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_) {
-	shared_ptr<Table> table = std::make_shared<Table>();
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
 	for (std::shared_ptr<ClauseGroup> clause_group : groups_w_select_syn_) {
 		shared_ptr<Table> curr_res_table = EvaluateSelectSynGroup(clause_group);
 
@@ -192,12 +193,10 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::
 }
 
 
-
-
 vector<std::string> QueryEvaluator::ExtractResult() {
 	//ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
 
-	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectTuple());
+	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms());
 
 
 	return result_extractor.GetFormattedResult();

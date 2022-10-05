@@ -8,6 +8,7 @@
 #include "SetRes.h"
 #include "EmptyTable.h"
 
+
 using std::string;
 using std::vector;
 using std::unordered_map;
@@ -63,7 +64,8 @@ string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 }
 
 shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
-	if (GetNumOfRows() == 0) return that;
+	//if (GetNumOfRows() == 0) return that;
+	if (that->IsWildcard()) return shared_ptr<Table>(this);
 
 	vector<string> common_fields = GetCommonFields(that);
 
@@ -175,3 +177,19 @@ shared_ptr < std::unordered_set<std::string>> Table::GetDomainBySynonym(std::str
 	return set;
 }
 
+shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonyms(std::vector<std::string> synonyms) {
+	shared_ptr <std::unordered_set<std::string>> result_set = std::make_shared< std::unordered_set<std::string>>();
+	for (auto& row : rows_) {
+		string row_result = "";
+		for (string& synonym : synonyms) {
+			int index = field_to_index_map_.at(synonym);
+			row_result += (row.at(index) + " ");
+		}
+
+		// remove the extra space
+		row_result.pop_back();
+
+		result_set->insert(row_result);
+	}
+	return result_set;
+}
