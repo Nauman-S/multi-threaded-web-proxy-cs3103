@@ -97,6 +97,9 @@
     <ClCompile Include="QPS\query_result\Table.cpp" />
     <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
     <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
+    <ClCompile Include="QPS\ClauseGroup.cpp" />
+    <ClCompile Include="QPS\ClauseGrouper\ClauseGrouper.cpp" />
+    <ClCompile Include="QPS\ClauseGrouper\SimpleClauseGrouper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -234,5 +237,8 @@
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
+    <ClInclude Include="QPS\ClauseGroup.h" />
+    <ClInclude Include="QPS\ClauseGrouper\ClauseGrouper.h" />
+    <ClInclude Include="QPS\ClauseGrouper\SimpleClauseGrouper.h" />
   </ItemGroup>
 </Project>
