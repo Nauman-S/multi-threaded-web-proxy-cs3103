@@ -47,7 +47,7 @@ QueryBuilder::QueryBuilder() {
 shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 		this->lexer_->FeedQuery(query_string_);
 		
-		synonyms_ = ParseDeclarationStatements();
+		select_synonyms_ = ParseDeclarationStatements();
 		
 		shared_ptr<Query> query_ = ParseSelectStatement();
 		//std::shared_ptr<Query> sp_ = std::shared_ptr<Query>(query_);
@@ -445,7 +445,7 @@ shared_ptr<VarRef> QueryBuilder::ParseVarRef() {
 
 
 shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name) {
-	for (shared_ptr<Ref> synonym : synonyms_) {
+	for (shared_ptr<Ref> synonym : select_synonyms_) {
 		if (synonym->GetName() == name) {
 			return synonym;
 		}
@@ -454,7 +454,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name) {
 }
 
 shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
-	for (shared_ptr<Ref> synonym : synonyms_) {
+	for (shared_ptr<Ref> synonym : select_synonyms_) {
 		if (synonym->GetName() == name) {
 			if (synonym->GetRefType() == ref_type) {
 				return synonym;
@@ -472,7 +472,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
 }
 
 
-shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_) {
+shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> select_synonyms_) {
 	if (this->lexer_->HasComma()) {
 		this->lexer_->MatchComma();
 	}
@@ -482,7 +482,7 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> synon
 
 	if (this->lexer_->HasIdentity()) {
 		std::string identity_rhs_ = this->lexer_->MatchIdentity();
-		for (shared_ptr<Ref> synonym_var_rhs_ : synonyms_) {
+		for (shared_ptr<Ref> synonym_var_rhs_ : select_synonyms_) {
 
 			if (synonym_var_rhs_->GetValType() == ValType::kSynonym && synonym_var_rhs_->GetRefType() == RefType::kVarRef && synonym_var_rhs_->GetName().compare(identity_rhs_) == 0) {
 				shared_ptr <VarRef> rhs_ = std::dynamic_pointer_cast<VarRef>(synonym_var_rhs_);

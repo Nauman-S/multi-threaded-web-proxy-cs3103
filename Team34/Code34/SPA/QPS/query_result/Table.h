@@ -44,10 +44,11 @@ public:
 		: is_empty_{ false } {};
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
-		: fields_{ fields }, rows_{ rows }, is_empty_{ false } {
+		: fields_{ fields }, rows_{ rows }  {
 		for (int i = 0; i < fields.size(); i++) {
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
+		is_empty_ = (rows_.size() == 0);
 	};
 
 	Table(std::shared_ptr<ResWrapper>);
@@ -62,7 +63,7 @@ public:
 
 	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 
-	bool IsEmpty() { return is_empty_; }
+	bool IsEmpty() { return rows_.size() == 0; }
 
 	bool ContainsSynonym(std::string synonym);
 

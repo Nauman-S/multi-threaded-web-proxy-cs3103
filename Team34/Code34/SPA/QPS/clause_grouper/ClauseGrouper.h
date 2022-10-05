@@ -10,22 +10,25 @@
 class ClauseGrouper
 {
 protected:
-	std::shared_ptr<std::vector<Clause>> clauses_;
-	std::vector<std::string> synonyms_;
+	std::vector<std::shared_ptr<Clause>> clauses_;
+	std::vector<std::string> select_synonyms_;
 	std::shared_ptr<ClauseGroup> group_wo_syn_;
 	std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_;
 	std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_;
 
-	ClauseGrouper(std::shared_ptr<std::vector<Clause>> clauses, std::vector<std::string> synonyms)
-		: clauses_{ clauses }, synonyms_{synonyms} {};
+	
 
-
+	virtual void Group() = 0;
+	bool AreSelectSynsIn(std::vector<std::string> syns);
+	
 public:
 	/*static std::shared_ptr<ClauseGrouper> CreateClauseGrouper(std::vector<Clause> clauses, std::vector<std::string> synonyms) {
 		return std::make_shared<ClauseGrouper>(clauses, synonyms);
 	}*/
 
-	virtual void Group() = 0;
+	ClauseGrouper(std::vector<std::shared_ptr<Clause>> clauses, std::vector<std::string> synonyms)
+		: clauses_{ clauses }, select_synonyms_{ synonyms } {
+	};
 
 	std::shared_ptr<ClauseGroup> GetClauseGroupWoSyn() {
 		return group_wo_syn_;

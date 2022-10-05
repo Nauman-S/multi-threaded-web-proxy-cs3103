@@ -7,11 +7,11 @@
 class ClauseGroup
 {
 private:
-	std::shared_ptr<std::vector<Clause>> clauses_;
+	std::vector<std::shared_ptr<Clause>> clauses_;
 
 public:
-	ClauseGroup(std::shared_ptr<std::vector<Clause>> clauses) : clauses_{ clauses } {};
+	ClauseGroup(std::vector<std::shared_ptr<Clause>> clauses) : clauses_{ clauses } {};
 
-	std::shared_ptr<std::vector<Clause>> GetClauses() { return clauses_; };
+	std::vector<std::shared_ptr<Clause>> GetClauses() { return clauses_; };
 };
 

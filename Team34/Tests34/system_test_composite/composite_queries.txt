@@ -1,3 +1,8 @@
+7 - test pattern and modifies
+stmt s;
+Select s such that Follows (s, s)
+
+5000
 6 - test pattern and modifies
 assign a, a1; variable v, v1; 
 Select v1 such that Modifies (a, v) pattern a1 (v1, _)

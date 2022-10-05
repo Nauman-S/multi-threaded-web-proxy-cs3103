@@ -12,7 +12,7 @@
 #include "Clause.h"
 #include "DataRetriever.h"
 #include "Query.h"
-
+#include "clause_grouper/ClauseGrouper.h"
 
 
 class QueryEvaluator
@@ -27,6 +27,15 @@ protected:
 
 	std::shared_ptr<Table> EvaluateGroup(std::vector<std::shared_ptr<Clause>>);
 
+	std::shared_ptr<Table> EvaluateByGroup(shared_ptr<ClauseGrouper> clause_grouper);
+	bool EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_syn_);
+
+	bool EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group_wo_select_syn_);
+	bool EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_);
+
+	std::shared_ptr<Table> EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_);
+	std::shared_ptr<Table> EvaluateSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_);
+
 public:
 	QueryEvaluator(Query query);
 
@@ -34,6 +43,6 @@ public:
 
 	std::vector<std::string> ExtractResult();
 
-	//std::vector<std::string> GetSelectSynonyms();
+
 };
 
