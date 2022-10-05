@@ -188,10 +188,16 @@
     <ClCompile Include="QPS\reference\StmtRef.cpp" />
     <ClCompile Include="QPS\reference\VarRef.cpp" />
     <ClCompile Include="QPS\reference\WhileRef.cpp" />
+    <ClCompile Include="QPS\relation\AffectsRel.cpp" />
+    <ClCompile Include="QPS\relation\AffectsTRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsTRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsRel.cpp" />
     <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
     <ClCompile Include="QPS\relation\ModifiesSRel.cpp" />
+    <ClCompile Include="QPS\relation\NextRel.cpp" />
+    <ClCompile Include="QPS\relation\NextTRel.cpp" />
     <ClCompile Include="QPS\relation\ParentRel.cpp" />
     <ClCompile Include="QPS\relation\ParentTRel.cpp" />
     <ClCompile Include="QPS\relation\ProcProcRel.cpp" />

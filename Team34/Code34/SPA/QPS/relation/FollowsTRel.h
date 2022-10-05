@@ -10,6 +10,6 @@ public:
 
     ClauseType GetRelType() override { return ClauseType::kFollowsTRel; }
 
-    Priority GetPriority(PriorityManager pm) override;
+    Priority GetPriority(PriorityManager& pm) override;
 };
 

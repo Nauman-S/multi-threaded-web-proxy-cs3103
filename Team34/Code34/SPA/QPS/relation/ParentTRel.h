@@ -10,6 +10,6 @@ public:
 
     ClauseType GetRelType() override { return ClauseType::kParentTRel; }
 
-    Priority GetPriority(PriorityManager pm) override { return pm.GetClausePriority(ClauseType::kParentTRel); }
+    Priority GetPriority(PriorityManager& pm) override;
 };
 

@@ -98,6 +98,12 @@
     <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
     <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
     <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
+    <ClCompile Include="QPS\relation\AffectsRel.cpp" />
+    <ClCompile Include="QPS\relation\AffectsTRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsRel.cpp" />
+    <ClCompile Include="QPS\relation\CallsTRel.cpp" />
+    <ClCompile Include="QPS\relation\NextRel.cpp" />
+    <ClCompile Include="QPS\relation\NextTRel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />

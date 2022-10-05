@@ -1,5 +1,5 @@
 #include "FollowsRel.h"
 
-Priority FollowsRel::GetPriority(PriorityManager pm) { 
+Priority FollowsRel::GetPriority(PriorityManager& pm) { 
 	return pm.GetClausePriority(ClauseType::kFollowsRel); 
 }

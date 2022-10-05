@@ -12,6 +12,7 @@
 //#include "../DataRetriever.h"
 class DataRetriever;
 
+
 class ProcVarRel :
     public Rel
 {
@@ -37,5 +38,7 @@ public:
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) override;
 
     int CountSynonyms() override;
+
+    virtual std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 };
 
