@@ -194,8 +194,6 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::
 
 
 vector<std::string> QueryEvaluator::ExtractResult() {
-	//ResultExtractor result_extractor = ResultExtractor(std::make_shared<QueryResult>(query_result_), query_.GetSelectTuple());
-
 	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms());
 
 
