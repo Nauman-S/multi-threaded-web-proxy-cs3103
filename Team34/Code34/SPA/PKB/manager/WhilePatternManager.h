@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../store/PatternStore.h"
+#include "../store/Pattern/PatternStore.h"
 
 class WhilePatternManager : public PatternStore
 {

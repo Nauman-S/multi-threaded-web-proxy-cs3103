@@ -3,7 +3,7 @@
 #include "OneToOneTransitiveRelationStore.h"
 
 template <typename T>
-class OneToOneFollowsStore : public OneToOneTransitiveRelationStore<T>
+class FollowsRelationStore : public OneToOneTransitiveRelationStore<T>
 {
 public:
 	void SetTransitiveRelation(T left, T right);
@@ -13,13 +13,13 @@ private:
 };
 
 template<typename T>
-inline void OneToOneFollowsStore<T>::SetTransitiveRelation(T left, T right)
+inline void FollowsRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
 	all_transitive_relations_.push_back(std::make_pair(left, right));
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToOneFollowsStore<T>::GetAllTransitiveRelations()
+inline std::shared_ptr<std::vector<std::pair<T, T>>> FollowsRelationStore<T>::GetAllTransitiveRelations()
 {
 	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
 }
