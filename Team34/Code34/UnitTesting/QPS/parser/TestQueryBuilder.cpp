@@ -109,7 +109,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kUsesSRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kUsesSRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kLineNum);
@@ -179,7 +179,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kUsesPRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kUsesPRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kProcName);
@@ -208,7 +208,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kModifiesPRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kModifiesPRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
@@ -237,7 +237,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kModifiesSRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kModifiesSRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kWhileRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
@@ -266,7 +266,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kFollowsRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kFollowsRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kLineNum);
@@ -295,7 +295,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kFollowsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kFollowsTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kCallRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
@@ -323,7 +323,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kFollowsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kFollowsTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
@@ -353,7 +353,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kParentRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kWhileRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
@@ -381,7 +381,7 @@ namespace UnitTesting
 
 			////Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kParentTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
@@ -403,7 +403,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kNextRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kNextRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
 
@@ -420,7 +420,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kNextTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kNextTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
 
@@ -438,7 +438,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kAffectsRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kAffectsRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
 
@@ -455,7 +455,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kAffectsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kAffectsTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kStmtRef);
 
@@ -472,7 +472,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kCallsRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
 
@@ -489,7 +489,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kCallsTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kCallsTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::IsTrue(query->GetRelations()->at(0)->RhsRefType() == RefType::kProcRef);
 
@@ -715,7 +715,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kParentTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
@@ -750,7 +750,7 @@ namespace UnitTesting
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query->GetRelations()->size() == 1);
-			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == RelType::kParentTRel);
+			Assert::IsTrue(query->GetRelations()->at(0)->GetRelType() == ClauseType::kParentTRel);
 			Assert::IsTrue(query->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query->GetRelations()->at(0)->ValTypes().first == ValType::kWildcard);
@@ -1004,7 +1004,7 @@ namespace UnitTesting
 			
 			//Check if such that clauses are correct
 			Assert::IsTrue(query_->GetRelations()->size() == 1);
-			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kNextTRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == ClauseType::kNextTRel);
 			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kStmtRef);
 			Assert::AreEqual(lhs_value_, query_->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kLineNum);
@@ -1034,7 +1034,7 @@ namespace UnitTesting
 			//Check if such that clauses are correct
 			Assert::IsTrue(query_->GetRelations()->size() == 2);
 
-			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kNextRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == ClauseType::kNextRel);
 			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kAssignRef);
 			Assert::AreEqual(lhs_value_one_, query_->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kSynonym);
@@ -1042,7 +1042,7 @@ namespace UnitTesting
 			Assert::AreEqual(rhs_value_one_, query_->GetRelations()->at(0)->RhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().second == ValType::kLineNum);
 
-			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kUsesSRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == ClauseType::kUsesSRel);
 			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kAssignRef);
 			Assert::AreEqual(lhs_value_two_, query_->GetRelations()->at(1)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
@@ -1114,7 +1114,7 @@ namespace UnitTesting
 
 			std::string rel_lhs_one_ = "Second";
 			std::string rel_rhs_one_ = "p";
-			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == ClauseType::kCallsRel);
 			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::AreEqual(rel_lhs_one_, query_->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kProcName);
@@ -1124,7 +1124,7 @@ namespace UnitTesting
 
 			std::string rel_lhs_two_ = "w";
 			std::string rel_rhs_two_ = "c";
-			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kParentRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == ClauseType::kParentRel);
 			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kWhileRef);
 			Assert::AreEqual(rel_lhs_two_, query_->GetRelations()->at(1)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
@@ -1135,7 +1135,7 @@ namespace UnitTesting
 
 			std::string rel_lhs_three_ = "p";
 			std::string rel_rhs_three_ = "Fifth";
-			Assert::IsTrue(query_->GetRelations()->at(2)->GetRelType() == RelType::kCallsTRel);
+			Assert::IsTrue(query_->GetRelations()->at(2)->GetRelType() == ClauseType::kCallsTRel);
 			Assert::IsTrue(query_->GetRelations()->at(2)->LhsRefType() == RefType::kProcRef);
 			Assert::AreEqual(rel_lhs_three_, query_->GetRelations()->at(2)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(2)->ValTypes().first == ValType::kSynonym);
@@ -1153,7 +1153,7 @@ namespace UnitTesting
 			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kWildcard);
 			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
 			Assert::AreEqual(select_variable, query_->GetPatterns()->at(0)->StmtSyn());
-			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == PatternType::kAssignPattern);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == ClauseType::kAssignPattern);
 			Assert::AreEqual(expr_str, query_->GetPatterns()->at(0)->GetExprSpec()->GetInfix());
 			Assert::IsTrue(query_->GetPatterns()->at(0)->GetExprSpec()->IsWildcard() != true);
 			Assert::IsTrue( query_->GetPatterns()->at(0)->StmtRefType() == RefType::kAssignRef);
@@ -1199,7 +1199,7 @@ namespace UnitTesting
 
 			std::string rel_lhs_one_ = "Second";
 			std::string rel_rhs_one_ = "Third";
-			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == RelType::kCallsRel);
+			Assert::IsTrue(query_->GetRelations()->at(0)->GetRelType() == ClauseType::kCallsRel);
 			Assert::IsTrue(query_->GetRelations()->at(0)->LhsRefType() == RefType::kProcRef);
 			Assert::AreEqual(rel_lhs_one_, query_->GetRelations()->at(0)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(0)->ValTypes().first == ValType::kProcName);
@@ -1209,7 +1209,7 @@ namespace UnitTesting
 
 			std::string rel_lhs_two_ = "a";
 			std::string rel_rhs_two_ = "10";
-			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == RelType::kAffectsTRel);
+			Assert::IsTrue(query_->GetRelations()->at(1)->GetRelType() == ClauseType::kAffectsTRel);
 			Assert::IsTrue(query_->GetRelations()->at(1)->LhsRefType() == RefType::kAssignRef);
 			Assert::AreEqual(rel_lhs_two_, query_->GetRelations()->at(1)->LhsValue());
 			Assert::IsTrue(query_->GetRelations()->at(1)->ValTypes().first == ValType::kSynonym);
@@ -1230,7 +1230,7 @@ namespace UnitTesting
 			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kSynonym);
 			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtValType() == ValType::kSynonym);
 			Assert::AreEqual(select_variable, query_->GetPatterns()->at(0)->StmtSyn());
-			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == PatternType::kWhilePattern);
+			Assert::IsTrue(query_->GetPatterns()->at(0)->GetPatternType() == ClauseType::kWhilePattern);
 			Assert::IsTrue(query_->GetPatterns()->at(0)->StmtRefType() == RefType::kWhileRef);
 			Assert::IsTrue(query_->GetPatterns()->at(0)->VarValType() == ValType::kSynonym);
 

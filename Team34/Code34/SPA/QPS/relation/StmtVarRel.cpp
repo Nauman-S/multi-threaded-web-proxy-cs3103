@@ -1,5 +1,16 @@
 #include "StmtVarRel.h"
+
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "../DataRetriever.h"
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
+
 
 std::string StmtVarRel::LhsValue()
 {
@@ -35,4 +46,16 @@ std::optional<int> StmtVarRel::LhsValueAsInt()
 std::shared_ptr<ResWrapper> StmtVarRel::GetMatch(DataRetriever& retriever)
 {
     return retriever.retrieve(*this);
+}
+
+int StmtVarRel::CountSynonyms()
+{
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
+    return Clause::CountSynonyms(args);
+}
+
+std::shared_ptr<std::vector<std::string>> StmtVarRel::GetSynonyms()
+{
+    vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
+    return Clause::GetSynonyms(args);
 }

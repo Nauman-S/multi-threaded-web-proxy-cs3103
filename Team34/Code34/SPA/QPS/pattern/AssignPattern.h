@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Pattern.h"
-#include "PatternType.h"
+#include "../ClauseType.h"
 #include "../reference/AssignRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
@@ -34,9 +34,15 @@ public:
 
 	ValType VarValType() override { return var_ref_->GetValType(); }
 
-	PatternType GetPatternType() override { return PatternType::kAssignPattern; }
+	ClauseType GetPatternType() override { return ClauseType::kAssignPattern; }
 
 	std::shared_ptr<ExprSpec> GetExprSpec() override { return expr_spec_; }
+
+	int CountSynonyms() override;
+
+	Priority GetPriority(PriorityManager& pm) override;
+
+	std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 
 };
 

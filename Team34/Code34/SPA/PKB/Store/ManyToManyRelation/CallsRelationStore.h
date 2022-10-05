@@ -3,7 +3,7 @@
 #include "ManyToManyTransitiveRelationStore.h"
 
 template <typename T>
-class ManyToManyCallsStore : public ManyToManyTransitiveRelationStore<T>
+class CallsRelationStore : public ManyToManyTransitiveRelationStore<T>
 {
 public:
 	void SetTransitiveRelation(T left, T right);
@@ -13,7 +13,7 @@ private:
 };
 
 template<typename T>
-inline void ManyToManyCallsStore<T>::SetTransitiveRelation(T left, T right)
+inline void CallsRelationStore<T>::SetTransitiveRelation(T left, T right)
 {
 	std::pair<T, T> pair = std::make_pair(left, right);
 	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
@@ -23,7 +23,7 @@ inline void ManyToManyCallsStore<T>::SetTransitiveRelation(T left, T right)
 }
 
 template<typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> ManyToManyCallsStore<T>::GetAllTransitiveRelations()
+inline std::shared_ptr<std::vector<std::pair<T, T>>> CallsRelationStore<T>::GetAllTransitiveRelations()
 {
 	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
 }
