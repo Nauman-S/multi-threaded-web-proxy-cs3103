@@ -55,7 +55,6 @@ std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllPrevStmtsFromStm
 	return next_store_.GetAllTransitiveLHS(stmt);
 }
 
-// TODO: implement in ManyToManyNextStore
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllNextTRelations()
 {
 	return next_store_.GetAllTransitiveRelations();
