@@ -72,6 +72,155 @@ namespace UnitTesting
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == true);
-		}
+		};
+
+		TEST_METHOD(ChildProcedure)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "parent"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "child"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kEqual, "="),
+				SourceToken(SourceTokenType::kInteger, "1"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = false;
+			Assert::IsTrue(actual == expected);
+		};
+
+		TEST_METHOD(ComplexCalls)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc1"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc2"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc5"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc2"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc3"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc4"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc3"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc3"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc4"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc4"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc5"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc6"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc6"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc7"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc8"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc9"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc7"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc7"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc8"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc8"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc9"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "proc9"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = true;
+			Assert::IsTrue(actual == expected);
+		};
+
+		TEST_METHOD(CyclicCall)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+								SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc1"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc2"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc2"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc3"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc4"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc3"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc4"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "call"),
+				SourceToken(SourceTokenType::kName, "proc1"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = false;
+			Assert::IsTrue(actual == expected);
+		};
 	};
 }
