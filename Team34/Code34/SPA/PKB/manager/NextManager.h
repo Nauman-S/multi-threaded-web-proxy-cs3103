@@ -25,6 +25,7 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
 
 	// Next* Relation methods
+	void SetCFGEdge(std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_node, std::shared_ptr<std::pair<StmtNum, StmtNum>> next_node);
 	bool CheckNextT(StmtNum parent, StmtNum child);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);

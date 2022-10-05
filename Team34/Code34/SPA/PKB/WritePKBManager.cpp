@@ -80,6 +80,11 @@ void WritePKBManager::SetCallsT(Procedure caller, Procedure callee)
 	pkb.calls_manager_.SetCallsT(caller, callee);
 }
 
+void WritePKBManager::SetCFGEdge(std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_node, std::shared_ptr<std::pair<StmtNum, StmtNum>> next_node)
+{
+	pkb.next_manager_.SetCFGEdge(prev_node, next_node);
+}
+
 // APIs related to Next relation
 void WritePKBManager::SetNext(StmtNum prev, StmtNum next)
 {
