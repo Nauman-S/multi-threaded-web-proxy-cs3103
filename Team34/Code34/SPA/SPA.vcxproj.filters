@@ -108,6 +108,8 @@
     <ClCompile Include="QPS\relation\CallsTRel.cpp" />
     <ClCompile Include="QPS\relation\NextRel.cpp" />
     <ClCompile Include="QPS\relation\NextTRel.cpp" />
+    <ClCompile Include="QPS\optimization\ClauseGroup.cpp" />
+    <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -245,8 +247,5 @@
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
-    <ClInclude Include="SP\design_extractor\NextExtractor.h" />
-    <ClInclude Include="QPS\ClauseType.h" />
-    <ClInclude Include="QPS\PriorityManager.h" />
   </ItemGroup>
 </Project>
