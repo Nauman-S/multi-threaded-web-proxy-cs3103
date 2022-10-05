@@ -1,18 +1,27 @@
 #include "IfPattern.h"
 
+#include <memory>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
+
+
 int IfPattern::CountSynonyms()
 {
-    int res = 0;
-    if (if_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-    if (var_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-
-    return res;
+    vector<shared_ptr<Ref>> args = { if_ref_, var_ref_ };
+    return Clause::CountSynonyms(args);
 }
 
-Priority IfPattern::GetPriority(PriorityManager pm) {
+Priority IfPattern::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kIfPattern);
+}
+
+std::shared_ptr<std::vector<std::string>> IfPattern::GetSynonyms()
+{
+    vector<shared_ptr<Ref>> args = { if_ref_, var_ref_ };
+    return Clause::GetSynonyms(args);
 }

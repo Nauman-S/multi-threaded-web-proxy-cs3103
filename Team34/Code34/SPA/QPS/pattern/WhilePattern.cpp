@@ -1,18 +1,27 @@
 #include "WhilePattern.h"
 
+#include <memory>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
+
+
 int WhilePattern::CountSynonyms()
 {
-    int res = 0;
-    if (while_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-    if (var_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-
-    return res;
+    vector<shared_ptr<Ref>> args = { while_ref_, var_ref_ };
+    return Clause::CountSynonyms(args);
 }
 
-Priority WhilePattern::GetPriority(PriorityManager pm) {
+Priority WhilePattern::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kWhilePattern);
+}
+
+std::shared_ptr<std::vector<std::string>> WhilePattern::GetSynonyms()
+{
+    vector<shared_ptr<Ref>> args = { while_ref_, var_ref_ };
+    return Clause::GetSynonyms(args);
 }

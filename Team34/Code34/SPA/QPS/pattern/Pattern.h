@@ -34,8 +34,4 @@ public:
 	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever);  // Implemented in Pattern.cpp
 
 	virtual std::shared_ptr<ExprSpec> GetExprSpec() = 0;
-
-	virtual int CountSynonyms() = 0;
-
-	virtual Priority GetPriority(PriorityManager pm) = 0;
 };

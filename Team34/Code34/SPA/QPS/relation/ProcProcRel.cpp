@@ -1,9 +1,15 @@
 #include "ProcProcRel.h"
 
-#include <string>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "../DataRetriever.h"
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
 
 
 std::string ProcProcRel::LhsValue() {
@@ -32,13 +38,12 @@ std::shared_ptr<ResWrapper> ProcProcRel::GetMatch(DataRetriever& retriever) {
 
 int ProcProcRel::CountSynonyms()
 {
-	int res = 0;
-	if (lhs_ref_->GetValType() == ValType::kSynonym) {
-		res += 1;
-	}
-	if (rhs_ref_->GetValType() == ValType::kSynonym) {
-		res += 1;
-	}
-	
-	return res;
+	vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
+	return Clause::CountSynonyms(args);
+}
+
+std::shared_ptr<std::vector<std::string>> ProcProcRel::GetSynonyms()
+{
+	vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
+	return Clause::GetSynonyms(args);
 }

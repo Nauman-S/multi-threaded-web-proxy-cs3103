@@ -1,7 +1,17 @@
 #include "With.h"
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "../DataRetriever.h"
 #include "../PriorityManager.h"
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
+
 
 std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever)
 {
@@ -10,17 +20,16 @@ std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever)
 
 int With::CountSynonyms()
 {
-    int res = 0;
-    if (lhs_ref_ptr_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-    if (rhs_ref_ptr_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-
-    return res;
+    vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
+    return Clause::CountSynonyms(args);
 }
 
-Priority With::GetPriority(PriorityManager pm) {
+Priority With::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kWith);
+}
+
+std::shared_ptr<std::vector<std::string>> With::GetSynonyms()
+{
+    vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
+    return Clause::GetSynonyms(args);
 }
