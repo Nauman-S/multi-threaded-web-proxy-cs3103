@@ -199,20 +199,6 @@ namespace UnitTesting
 			Assert::AreEqual(7, int(next_manager_.GetAllPrevStmtsFromStmt(10)->size()));
 			Assert::AreEqual(0, int(next_manager_.GetAllPrevStmtsFromStmt(11)->size()));
 		}
-
-		TEST_METHOD(TestSetCFGNode)
-		{
-			// std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_edge = std::make_shared<std::pair
-			std::pair<StmtNum, StmtNum> node1 = std::make_pair(1, 3);
-			std::pair<StmtNum, StmtNum> node2 = std::make_pair(4, 5);
-			std::pair<StmtNum, StmtNum> node3 = std::make_pair(6, 8);
-			std::pair<StmtNum, StmtNum> node4 = std::make_pair(9, 11);
-			next_manager_.SetCFGEdge(std::make_shared<std::pair<StmtNum, StmtNum>>(node1), std::make_shared<std::pair<StmtNum, StmtNum>>(node2));
-			next_manager_.SetCFGEdge(std::make_shared<std::pair<StmtNum, StmtNum>>(node1), std::make_shared<std::pair<StmtNum, StmtNum>>(node3));
-			next_manager_.SetCFGEdge(std::make_shared<std::pair<StmtNum, StmtNum>>(node2), std::make_shared<std::pair<StmtNum, StmtNum>>(node4));
-			next_manager_.SetCFGEdge(std::make_shared<std::pair<StmtNum, StmtNum>>(node3), std::make_shared<std::pair<StmtNum, StmtNum>>(node4));
-		}
-
 		TEST_METHOD(TestGetAllNextTRelations)
 		{
 
