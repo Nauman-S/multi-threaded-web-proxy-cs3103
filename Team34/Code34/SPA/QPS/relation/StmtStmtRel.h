@@ -11,6 +11,7 @@
 //#include "../DataRetriever.h"
 class DataRetriever;  // To avoid cyclic include of visitor pattern
 
+
 class StmtStmtRel :
     public Rel
 {
@@ -36,6 +37,8 @@ public:
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
     int CountSynonyms() override;
+
+    std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 
     virtual std::optional<int> LhsValueAsInt();
 

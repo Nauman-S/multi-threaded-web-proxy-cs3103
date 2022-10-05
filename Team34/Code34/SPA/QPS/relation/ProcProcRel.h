@@ -36,4 +36,6 @@ public:
 
     int CountSynonyms() override;
 
+    std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
+
 };

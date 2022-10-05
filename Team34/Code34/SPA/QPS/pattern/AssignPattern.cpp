@@ -1,18 +1,27 @@
 #include "AssignPattern.h"
 
+#include <memory>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
+using std::make_shared;
+
+
 int AssignPattern::CountSynonyms()
 {
-    int res = 0;
-    if (assign_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-    if (var_ref_->GetValType() == ValType::kSynonym) {
-        res += 1;
-    }
-
-    return res;
+    vector<shared_ptr<Ref>>& args = { assign_ref_, var_ref_ };
+    return Clause::CountSynonyms(args);
 }
 
-Priority AssignPattern::GetPriority(PriorityManager pm) {
+Priority AssignPattern::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kAssignPattern);
+}
+
+std::shared_ptr<std::vector<std::string>> AssignPattern::GetSynonyms()
+{
+    vector<shared_ptr<Ref>>& args = { assign_ref_, var_ref_ };
+    return Clause::GetSynonyms(args);
 }

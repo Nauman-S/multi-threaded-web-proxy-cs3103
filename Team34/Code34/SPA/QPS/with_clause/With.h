@@ -50,5 +50,7 @@ public:
 
 	int CountSynonyms() override;
 
-	Priority GetPriority(PriorityManager pm) override;
+	Priority GetPriority(PriorityManager& pm) override;
+
+	std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 };

@@ -27,11 +27,5 @@ public:
 	virtual RefType RhsRefType() = 0;
 
 	virtual std::pair<ValType, ValType> ValTypes() = 0;
-
-	virtual std::shared_ptr<ResWrapper> GetMatch(DataRetriever&) = 0;
-
-	virtual int CountSynonyms() = 0;
-
-	virtual Priority GetPriority(PriorityManager pm) = 0;
 };
 
