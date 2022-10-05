@@ -118,6 +118,7 @@
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\NextExtractor.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
     <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
