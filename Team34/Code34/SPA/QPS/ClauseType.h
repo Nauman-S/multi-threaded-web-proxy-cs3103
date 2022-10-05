@@ -1,6 +1,12 @@
 #pragma once
-enum class RelType
-{
+
+enum class ClauseType {
+	kWith,
+
+	kAssignPattern,
+	kIfPattern,
+	kWhilePattern,
+
 	kStmtStmtRel,
 	kStmtVarRel,
 	kProcVarRel,
@@ -20,4 +26,3 @@ enum class RelType
 	kAffectsRel,
 	kAffectsTRel,
 };
-

@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "Rel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 #include "../reference/ProcRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
@@ -26,7 +26,7 @@ public:
 
     std::string RhsValue() override;
 
-    RelType GetRelType() override { return RelType::kProcVarRel; }
+    ClauseType GetRelType() override { return ClauseType::kProcVarRel; }
 
     RefType LhsRefType() override;
 
@@ -36,6 +36,6 @@ public:
 
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& data_retriever) override;
 
-    
+    int CountSynonyms() override;
 };
 

@@ -4,11 +4,14 @@
 #include <memory>
 
 #include "../Clause.h"
+#include "../PriorityManager.h"
 #include "../reference/Ref.h"
-#include "../../Utils/type/RefType.h" 
 #include "../reference/ValType.h"
 #include "../query_result/ResWrapper.h"
+#include "../../Utils/type/TypeDef.h"
+#include "../../Utils/type/RefType.h" 
 class DataRetriever;
+
 
 class With
 	:public Clause
@@ -44,4 +47,8 @@ public:
 	std::string RhsValue() { return rhs_ref_ptr_->GetName(); }
 
 	std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+
+	int CountSynonyms() override;
+
+	Priority GetPriority(PriorityManager pm) override;
 };

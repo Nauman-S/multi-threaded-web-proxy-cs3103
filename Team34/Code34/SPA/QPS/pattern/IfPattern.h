@@ -3,12 +3,13 @@
 #include <memory>
 #include <string>
 
+#include "Pattern.h"
 #include "../reference/Ref.h"
 #include "../reference/IfRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
-#include "Pattern.h"
-#include "PatternType.h"
+#include "../ClauseType.h"
+#include "../PriorityManager.h"
 
 
 class IfPattern
@@ -34,7 +35,11 @@ public:
 
 	ValType VarValType() override { return var_ref_->GetValType(); }
 
-	PatternType GetPatternType() override { return PatternType::kIfPattern; }
+	ClauseType GetPatternType() override { return ClauseType::kIfPattern; }
 
 	std::shared_ptr<ExprSpec> GetExprSpec() override { return nullptr; }
+
+	int CountSynonyms() override;
+
+	Priority GetPriority(PriorityManager pm) override;
 };

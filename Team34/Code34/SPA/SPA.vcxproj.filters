@@ -97,6 +97,7 @@
     <ClCompile Include="QPS\query_result\Table.cpp" />
     <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
     <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
+    <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -169,7 +170,6 @@
     <ClInclude Include="QPS\relation\ParentTRel.h" />
     <ClInclude Include="QPS\relation\ProcVarRel.h" />
     <ClInclude Include="QPS\relation\Rel.h" />
-    <ClInclude Include="QPS\relation\RelType.h" />
     <ClInclude Include="QPS\relation\StmtStmtRel.h" />
     <ClInclude Include="QPS\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\relation\UsesPRel.h" />
@@ -224,7 +224,6 @@
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="QPS\pattern\Pattern.h" />
-    <ClInclude Include="QPS\pattern\PatternType.h" />
     <ClInclude Include="QPS\pattern\IfPattern.h" />
     <ClInclude Include="QPS\pattern\WhilePattern.h" />
     <ClInclude Include="QPS\with_clause\With.h" />
@@ -234,5 +233,7 @@
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="SP\cfg\CFGBuilder.h" />
     <ClInclude Include="SP\cfg\ControlFlowNode.h" />
+    <ClInclude Include="QPS\ClauseType.h" />
+    <ClInclude Include="QPS\PriorityManager.h" />
   </ItemGroup>
 </Project>

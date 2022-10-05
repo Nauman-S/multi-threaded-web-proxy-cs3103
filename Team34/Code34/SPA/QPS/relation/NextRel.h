@@ -1,6 +1,6 @@
 #pragma once
 #include "StmtStmtRel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 
 class NextRel
 	:public StmtStmtRel
@@ -8,5 +8,7 @@ class NextRel
 public:
 	using StmtStmtRel::StmtStmtRel;
 
-	RelType GetRelType() override { return RelType::kNextRel; }
+	ClauseType GetRelType() override { return ClauseType::kNextRel; }
+
+	Priority GetPriority(PriorityManager pm) override { return pm.GetClausePriority(ClauseType::kNextRel); }
 };
