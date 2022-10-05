@@ -11,5 +11,5 @@ public:
 
     ClauseType GetRelType() override { return ClauseType::kUsesSRel; }
 
-    Priority GetPriority(PriorityManager pm) override { return pm.GetClausePriority(ClauseType::kUsesSRel); }
+    Priority GetPriority(PriorityManager& pm) override;
 };
