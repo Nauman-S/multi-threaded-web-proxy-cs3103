@@ -5,13 +5,13 @@
 #include <string>
 #include <unordered_set>
 
+#include "ClauseType.h"
 #include "reference/Ref.h"
 #include "reference/ValType.h"
 #include "relation/UsesSRel.h"
 #include "relation/UsesPRel.h"
 #include "relation/ModifiesSRel.h"
 #include "relation/ModifiesPRel.h"
-#include "relation/RelType.h"
 #include "query_result/ResWrapper.h"
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"

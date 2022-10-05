@@ -7,24 +7,11 @@ class OneToManyTransitiveRelationStore : public OneToManyRelationStore<T, T>
 {
 public:
 	// Transitive Relation methods
-	void SetTransitiveRelation(T left, T right);
 	bool CheckTransitiveRelation(T left, T right);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveMany(T t);
 	std::shared_ptr<std::unordered_set<T>> GetAllTransitiveOne(T t);
-	std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations();
-private:
-	std::vector<std::pair<T, T>> all_transitive_relations_;
+	virtual std::shared_ptr<std::vector<std::pair<T, T>>> GetAllTransitiveRelations() = 0;
 };
-
-template <typename T>
-inline void OneToManyTransitiveRelationStore<T>::SetTransitiveRelation(T left, T right)
-{
-	std::pair<T, T> pair = std::make_pair(left, right);
-	if (std::find(all_transitive_relations_.begin(), all_transitive_relations_.end(), pair) == all_transitive_relations_.end())
-	{
-		all_transitive_relations_.push_back(pair);
-	}
-}
 
 template <typename T>
 inline bool OneToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right)
@@ -83,10 +70,4 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T
 		iter = many_to_one_map_.find(next);
 	}
 	return all_one;
-}
-
-template <typename T>
-inline std::shared_ptr<std::vector<std::pair<T, T>>> OneToManyTransitiveRelationStore<T>::GetAllTransitiveRelations()
-{
-	return std::make_shared<std::vector<std::pair<T, T>>>(all_transitive_relations_);
 }

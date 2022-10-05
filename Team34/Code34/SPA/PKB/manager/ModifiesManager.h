@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_set>
 
-#include "../store/ManyToManyRelationStore.h"
+#include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
 class ModifiesManager
