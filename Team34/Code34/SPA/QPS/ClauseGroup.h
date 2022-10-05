@@ -1,15 +1,17 @@
 #pragma once
 
+#include <memory>
+
 #include "Clause.h"
 
 class ClauseGroup
 {
 private:
-	std::vector<Clause> clauses_;
+	std::shared_ptr<std::vector<Clause>> clauses_;
 
 public:
-	ClauseGroup(std::vector<Clause> clauses) : clauses_{ clauses } {};
+	ClauseGroup(std::shared_ptr<std::vector<Clause>> clauses) : clauses_{ clauses } {};
 
-	std::vector<Clause> GetClauses() { return clauses_; };
+	std::shared_ptr<std::vector<Clause>> GetClauses() { return clauses_; };
 };
 
