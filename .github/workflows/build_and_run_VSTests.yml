@@ -1,9 +1,9 @@
 name: build and run VS tests
 on:
   push:
-    branches: [ "wp-setup-github-auto-test" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "wp-setup-github-auto-test" ]
+    branches: [ "master" ]
 
 env:
   # Path to the solution file relative to the root of the project.
