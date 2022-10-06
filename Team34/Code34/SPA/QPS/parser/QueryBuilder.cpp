@@ -645,7 +645,7 @@ string QueryBuilder::GetExpressionStr() {
 
 
 	string expr_str = expr_tokens.at(0);
-	for (int idx = 1; idx < expr_tokens.size(); idx++) {
+	for (unsigned idx = 1; idx < expr_tokens.size(); idx++) {
 		expr_str += (" " + expr_tokens.at(idx) );
 	}
 

@@ -36,7 +36,7 @@ Table::Table(shared_ptr<ResWrapper> res_wrapper) {
 
 	is_empty_ = (rows_.size() == 0);
 
-	for (int i = 0; i < fields_.size(); i++) {
+	for (unsigned i = 0; i < fields_.size(); i++) {
 		field_to_index_map_.insert({ fields_.at(i), i });
 	}
 }
@@ -132,7 +132,7 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 
 			vector<string> new_row = row;
 			
-			for (int field_idx = 0; field_idx < that_row.size(); field_idx++) {
+			for (unsigned field_idx = 0; field_idx < that_row.size(); field_idx++) {
 				string& that_field = that->GetFieldAtIndex(field_idx);
 				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
 					continue;

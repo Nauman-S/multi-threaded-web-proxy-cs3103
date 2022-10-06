@@ -12,9 +12,9 @@
     <ClCompile Include="PKB\manager\CallsManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
-	<ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
-	<ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
-	<ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
+    <ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
@@ -111,8 +111,6 @@
     <ClCompile Include="QPS\relation\CallsTRel.cpp" />
     <ClCompile Include="QPS\relation\NextRel.cpp" />
     <ClCompile Include="QPS\relation\NextTRel.cpp" />
-    <ClCompile Include="QPS\query_result\WilrdcardTable.cpp" />
-    <ClCompile Include="QPS\optimization\ClauseGroup.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -258,5 +256,6 @@
     <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
   </ItemGroup>
 </Project>

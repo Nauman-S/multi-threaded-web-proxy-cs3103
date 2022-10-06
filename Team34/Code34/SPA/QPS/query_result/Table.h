@@ -17,7 +17,7 @@ private:
 	std::vector<std::vector<std::string>> rows_;
 
 	
-	std::string GetFieldAtIndex(int idx) {
+	std::string GetFieldAtIndex(unsigned idx) {
 		assert(idx < fields_.size());
 		return fields_.at(idx);
 	}
@@ -45,7 +45,7 @@ public:
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
 		: fields_{ fields }, rows_{ rows }  {
-		for (int i = 0; i < fields.size(); i++) {
+		for (unsigned i = 0; i < fields.size(); i++) {
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
 		is_empty_ = (rows_.size() == 0);

@@ -247,7 +247,6 @@
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
-    <ClCompile Include="QPS\query_result\WilrdcardTable.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
