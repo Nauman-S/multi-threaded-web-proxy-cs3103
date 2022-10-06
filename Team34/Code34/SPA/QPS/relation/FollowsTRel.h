@@ -1,6 +1,6 @@
 #pragma once
 #include "StmtStmtRel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 
 class FollowsTRel :
     public StmtStmtRel
@@ -8,6 +8,8 @@ class FollowsTRel :
 public:
     using StmtStmtRel::StmtStmtRel;
 
-    RelType GetRelType() override { return RelType::kFollowsTRel; }
+    ClauseType GetRelType() override { return ClauseType::kFollowsTRel; }
+
+    Priority GetPriority(PriorityManager& pm) override;
 };
 

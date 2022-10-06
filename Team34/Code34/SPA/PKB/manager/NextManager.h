@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/ManyToManyNextStore.h"
+#include "../store/ManyToManyRelation/NextRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 #include "../../Utils/type/RefType.h"
 
@@ -28,5 +28,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
 private:
-	ManyToManyNextStore<StmtNum> next_store_;
+	NextRelationStore<StmtNum> next_store_;
 };

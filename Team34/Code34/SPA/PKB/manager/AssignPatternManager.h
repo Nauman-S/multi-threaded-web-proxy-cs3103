@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../store/PatternWithExprStore.h"
+#include "../store/Pattern/PatternWithExprStore.h"
 
 class AssignPatternManager : public PatternWithExprStore
 {
