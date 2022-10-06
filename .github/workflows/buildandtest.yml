@@ -43,5 +43,5 @@ jobs:
 
     - name: Run VSTest
       id: run_vstest
-      working-directory: $\Win32\Debug\
+      working-directory: $\UnitTesting\x64\Debug
       run: vstest.console.exe /Platform:Win32 .\UnitTests.dll
