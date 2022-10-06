@@ -186,7 +186,7 @@ namespace UnitTesting
 		{
 			SourceValidator validator = SourceValidator();
 			vector<SourceToken> stub = {
-								SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
 				SourceToken(SourceTokenType::kName, "call"),
@@ -217,6 +217,64 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = false;
+			Assert::IsTrue(actual == expected);
+		};
+
+		TEST_METHOD(EmptyBody)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "empty"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+
+			};
+			bool actual = validator.Validate(stub);
+			bool expected = true;
+			Assert::IsTrue(actual == expected);
+		};
+
+		TEST_METHOD(InvalidArithmeticFormula_1)
+		{
+			SourceValidator validator = SourceValidator();
+			vector<SourceToken> stub = {
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kMinus, "-"),
+				SourceToken(SourceTokenType::kName, "y"),
+				SourceToken(SourceTokenType::kEqual, "="),
+				SourceToken(SourceTokenType::kLeftRound, "("),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kRightRound, ")"),
+				SourceToken(SourceTokenType::kMultiply, "*"),
+				SourceToken(SourceTokenType::kLeftRound, "("),
+				SourceToken(SourceTokenType::kInteger, "9"),
+				SourceToken(SourceTokenType::kMinus, "-"),
+				SourceToken(SourceTokenType::kInteger, "2"),
+				SourceToken(SourceTokenType::kModulo, "%"),
+				SourceToken(SourceTokenType::kName, "y"),
+				SourceToken(SourceTokenType::kRightRound, ")"),
+				SourceToken(SourceTokenType::kAdd, "+"),
+				SourceToken(SourceTokenType::kLeftRound, "("),
+				SourceToken(SourceTokenType::kLeftRound, "("),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kMinus, "-"),
+				SourceToken(SourceTokenType::kName, "y"),
+				SourceToken(SourceTokenType::kRightRound, ")"),
+				SourceToken(SourceTokenType::kMinus, "-"),
+				SourceToken(SourceTokenType::kLeftRound, "("),
+				SourceToken(SourceTokenType::kName, "x"),
+				SourceToken(SourceTokenType::kAdd, "+"),
+				SourceToken(SourceTokenType::kName, "y"),
+				SourceToken(SourceTokenType::kRightRound, ")"),
+				SourceToken(SourceTokenType::kRightRound, ")"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
 			};
 			bool actual = validator.Validate(stub);
 			bool expected = false;
