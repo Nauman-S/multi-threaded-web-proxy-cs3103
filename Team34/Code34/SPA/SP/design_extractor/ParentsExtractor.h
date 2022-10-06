@@ -21,7 +21,7 @@
 class ParentsExtractor : public NodeExtractor {
 public:
 
-	ParentsExtractor();
+	ParentsExtractor(std::shared_ptr<WritePKBManager>);
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -36,7 +36,6 @@ public:
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
 	// Keeps track of parent statements in previous level as we go down
 	// in nesting level
 	std::vector<StmtNum> previous_parents_;

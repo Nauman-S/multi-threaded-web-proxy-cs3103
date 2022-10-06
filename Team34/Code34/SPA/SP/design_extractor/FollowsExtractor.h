@@ -20,8 +20,7 @@
 
 class FollowsExtractor : public NodeExtractor {
 public:
-
-	FollowsExtractor();
+	FollowsExtractor(std::shared_ptr<WritePKBManager>);
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -36,7 +35,5 @@ public:
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
-	
 	void AddFollowsRelation(const std::vector<std::shared_ptr<StatementASTNode>>);
 };

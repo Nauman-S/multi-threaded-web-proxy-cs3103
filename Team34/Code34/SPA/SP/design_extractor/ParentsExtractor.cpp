@@ -12,9 +12,7 @@
 #include "../ast/WhileStatementASTNode.h"
 #include "../ast/ConditionExpression.h"
 
-ParentsExtractor::ParentsExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+ParentsExtractor::ParentsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void ParentsExtractor::ExtractProgramNode(ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
