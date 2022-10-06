@@ -1,9 +1,9 @@
 name: build and test
 on:
   push:
-    branches: [ "ns-integration-testing" ]
+    branches: [ "ns-integration-test" ]
   pull_request:
-    branches: [ "ns-integration-testing" ]
+    branches: [ "ns-integration-test" ]
 jobs:
   build:
     runs-on: windows-latest
