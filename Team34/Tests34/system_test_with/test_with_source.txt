@@ -1,0 +1,25 @@
+procedure findPrimes {
+    read x;
+    i = 2;
+    while (i < x) {
+        flag = 1;
+        call checkPrime;
+        if (flag == 1) {
+            call printPrime;
+        }
+        i = i + 1;
+    }
+}
+
+procedure checkPrime {
+    j = 2;
+    while (j < i) {
+        if(i % j == 0) {
+            flag = 0;
+        }
+    }
+}
+
+procedure printPrime {
+    print i;
+}
