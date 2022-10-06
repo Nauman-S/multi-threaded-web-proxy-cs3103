@@ -1,5 +1,6 @@
 # Team 34
-[![MSBuild](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/msbuild.yml/badge.svg)](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/msbuild.yml)
+[![build and run VS tests](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/build_and_run_VSTests.yml/badge.svg)](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/build_and_run_VSTests.yml)
+[![Style Check](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/cpp_style_check.yml/badge.svg)](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/cpp_style_check.yml)
 
 ## Target Environment
 
