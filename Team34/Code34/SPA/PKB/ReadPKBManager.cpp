@@ -438,57 +438,137 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
 // APIs related to Affects relation
 bool ReadPKBManager::CheckAffects(StmtNum cause, StmtNum effect)
 {
+	// Can optimise by getting Uses variables from effect stmt and intersect
+	std::shared_ptr<std::unordered_set<Variable>> modified_var = GetModifiesVarByStmtNum(cause);
+	for (auto vars = modified_var->begin(); vars != modified_var->end(); ++vars)
+	{
+		std::unordered_set<StmtNum> visited;
+		std::queue<StmtNum> queue;
+		queue.push(cause);
+		while (!queue.empty())
+		{
+			StmtNum stmt = queue.front();
+			queue.pop();
+			std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = GetNextStmtsFromStmt(stmt, RefType::kStmtRef);
+			for (auto iter = next_stmts->begin(); iter != next_stmts->end(); ++iter)
+			{
+				if (visited.find(*iter) != visited.end())
+				{
+					continue;
+				}
+				if (*iter == effect && CheckUses(*iter, *vars))
+				{
+					return true;
+				}
+				else if (!CheckModifies(*iter, *vars))
+				{
+					visited.insert(*iter);
+					queue.push(*iter);
+				}
+			}
+		}
+	}
 	return false;
 }
 
 bool ReadPKBManager::IsAffectsStoreEmpty()
 {
+	// TODO: discuss implementation
 	return false;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
 {
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	std::shared_ptr<std::unordered_set<Variable>> modified_var = GetModifiesVarByStmtNum(stmt);
+	for (auto vars = modified_var->begin(); vars != modified_var->end(); ++vars)
+	{
+		std::unordered_set<StmtNum> visited;
+		std::queue<StmtNum> queue;
+		queue.push(stmt);
+		while (!queue.empty())
+		{
+			StmtNum stmt = queue.front();
+			queue.pop();
+			std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = GetNextStmtsFromStmt(stmt, RefType::kStmtRef);
+			for (auto iter = next_stmts->begin(); iter != next_stmts->end(); ++iter)
+			{
+				if (visited.find(*iter) != visited.end())
+				{
+					continue;
+				}
+				if (CheckUses(*iter, *vars))
+				{
+					effect_stmts->insert(*iter);
+				}
+				else if(!CheckModifies(*iter, *vars))
+				{
+					visited.insert(*iter);
+					queue.push(*iter);
+				}
+			}
+		}
+	}
+	return effect_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
 {
+	// TODO: same as GetEffectStmtsFromStmt
 	return std::shared_ptr<std::unordered_set<StmtNum>>();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts(RefType effect_stmt_type)
 {
+	// TODO: get all stmts that modify and BFS to find all stmts that Uses the same variable
 	return std::shared_ptr<std::unordered_set<StmtNum>>();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts(RefType cause_stmt_type)
 {
+	// TODO: get all stmts that uses and reverse BFS to find all stmts that Modifies the same variable
 	return std::shared_ptr<std::unordered_set<StmtNum>>();
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsRelations()
 {
+	// TODO: discuss implementation
 	return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
 }
 
 // APIs related to Affects* relation
 bool ReadPKBManager::CheckAffectsT(StmtNum cause, StmtNum effect)
 {
+	std::shared_ptr<std::unordered_set<Variable>> modified_vars = GetModifiesVarByStmtNum(cause);
+	std::shared_ptr<std::unordered_set<Variable>> uses_vars = GetUsesVarByStmtNum(effect);
+	for (auto iter = modified_vars->begin(); iter != modified_vars->end(); ++iter)
+	{
+		if (uses_vars->find(*iter) != uses_vars->end())
+		{
+			if (CheckNextT(cause, effect))
+			{
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
 {
+	// TODO: get all stmts that modify and BFS to find all stmts that Uses the same variable
 	return std::shared_ptr<std::unordered_set<StmtNum>>();
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type)
 {
+	// TODO: get all stmts that uses and reverse BFS to find all stmts that Modifies the same variable
 	return std::shared_ptr<std::unordered_set<StmtNum>>();
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsTRelations()
 {
+	// TODO: discuss implementation
 	return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
 }
 
