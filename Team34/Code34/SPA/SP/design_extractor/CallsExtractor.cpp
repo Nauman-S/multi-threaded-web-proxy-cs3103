@@ -1,8 +1,6 @@
 #include "CallsExtractor.h"
 
-CallsExtractor::CallsExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+CallsExtractor::CallsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void CallsExtractor::ExtractProgramNode(ProgramNode& program) {
 	this->proc_node_map_ = program.GetProcNodeMapping();

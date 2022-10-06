@@ -21,7 +21,7 @@
 
 class UsesModifiesExtractor : public NodeExtractor {
 public:
-	UsesModifiesExtractor();
+	UsesModifiesExtractor(std::shared_ptr<WritePKBManager>);
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -36,7 +36,6 @@ public:
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
 	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
 
 	std::vector<Procedure> proc_call_stack_;

@@ -12,9 +12,7 @@
 #include "../ast/WhileStatementASTNode.h"
 #include "../ast/ConditionExpression.h"
 
-UsesModifiesExtractor::UsesModifiesExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+UsesModifiesExtractor::UsesModifiesExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void UsesModifiesExtractor::ExtractProgramNode(ProgramNode& program) {
 	this->proc_node_map_ = program.GetProcNodeMapping();

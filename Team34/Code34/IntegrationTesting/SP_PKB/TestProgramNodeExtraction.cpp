@@ -42,7 +42,7 @@ namespace IntegrationTesting
 
 		TEST_METHOD(TestEntityPopulation)
 		{
-			EntityExtractor entity_extractor;
+			EntityExtractor entity_extractor(this->write);
 			this->root->Extract(entity_extractor);
 			
 			// Check all variables present
@@ -105,7 +105,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestUsesRelationPopulation) {
-			UsesModifiesExtractor extractor;
+			UsesModifiesExtractor extractor(this->write);
 			this->root->Extract(extractor);
 
 			// Uses in procedure
@@ -139,7 +139,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestModifiesRelationPopulation) {
-			UsesModifiesExtractor extractor;
+			UsesModifiesExtractor extractor(this->write);
 			this->root->Extract(extractor);
 
 			// Modifies in procedure
@@ -167,7 +167,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestParentsRelationPopulation) {
-			ParentsExtractor extractor;
+			ParentsExtractor extractor(this->write);
 			this->root->Extract(extractor);
 
 			// Parent and parent* relation for direct children of while stmts
@@ -199,7 +199,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestFollowsRelationPopulation) {
-			FollowsExtractor extractor;
+			FollowsExtractor extractor(this->write);
 			this->root->Extract(extractor);
 
 			// Follows relation for stmts in single procedure
@@ -225,7 +225,7 @@ namespace IntegrationTesting
 			SourceParser parser = SourceParser();
 			shared_ptr<ProgramNode> root = parser.Parse(calls_test_file);
 
-			CallsExtractor extractor;
+			CallsExtractor extractor(this->write);
 			root->Extract(extractor);
 
 			// Calls is true for directly called procedure, but not for indirectly called ones
@@ -256,7 +256,7 @@ namespace IntegrationTesting
 			SourceParser parser = SourceParser();
 			shared_ptr<ProgramNode> root = parser.Parse(next_test_file);
 
-			NextExtractor extractor;
+			NextExtractor extractor(this->write);
 			root->Extract(extractor);
 
 			// Test Next for statement of same nesting level in procedure
