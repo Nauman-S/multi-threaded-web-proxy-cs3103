@@ -14,9 +14,7 @@
 #include "../ast/IfStatementASTNode.h"
 #include "../ast/WhileStatementASTNode.h"
 
-NextExtractor::NextExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+NextExtractor::NextExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void NextExtractor::ExtractProgramNode(ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> procedures = program.GetChildren();

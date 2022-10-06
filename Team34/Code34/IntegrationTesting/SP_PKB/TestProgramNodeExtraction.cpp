@@ -26,8 +26,8 @@ namespace IntegrationTesting
 	TEST_CLASS(TestProgramNodeExtraction)
 	{
 	private:
-		string test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/design_extractor_test_source.txt";
-		shared_ptr<ProgramNode> root;
+		string base_dir = "../../Tests34/integration_tests/SP_PKB/design_extractor/";
+		shared_ptr<ProgramNode> common_root;
 
 		shared_ptr<ReadPKBManager> read;
 		shared_ptr<WritePKBManager> write;
@@ -35,15 +35,15 @@ namespace IntegrationTesting
 		
 		TestProgramNodeExtraction() {
 			SourceParser parser = SourceParser();
-			this->root = parser.Parse(this->test_file);
+			this->common_root = parser.Parse(this->base_dir + "design_extractor_test_source.txt");
 			this->read = ReadPKBManager::GetInstance();
 			this->write = WritePKBManager::GetInstance();
 		}
 
 		TEST_METHOD(TestEntityPopulation)
 		{
-			EntityExtractor entity_extractor;
-			this->root->Extract(entity_extractor);
+			EntityExtractor entity_extractor(this->write);
+			this->common_root->Extract(entity_extractor);
 			
 			// Check all variables present
 			shared_ptr<unordered_set<Variable>> present_vars = read->GetAllVariables();
@@ -105,8 +105,8 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestUsesRelationPopulation) {
-			UsesModifiesExtractor extractor;
-			this->root->Extract(extractor);
+			UsesModifiesExtractor extractor(this->write);
+			this->common_root->Extract(extractor);
 
 			// Uses in procedure
 			Assert::IsTrue(this->read->CheckUses("proc1", "var2"));
@@ -139,8 +139,8 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestModifiesRelationPopulation) {
-			UsesModifiesExtractor extractor;
-			this->root->Extract(extractor);
+			UsesModifiesExtractor extractor(this->write);
+			this->common_root->Extract(extractor);
 
 			// Modifies in procedure
 			Assert::IsTrue(this->read->CheckModifies("proc1", "var"));
@@ -167,8 +167,8 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestParentsRelationPopulation) {
-			ParentsExtractor extractor;
-			this->root->Extract(extractor);
+			ParentsExtractor extractor(this->write);
+			this->common_root->Extract(extractor);
 
 			// Parent and parent* relation for direct children of while stmts
 			Assert::IsTrue(this->read->CheckParent(3, 4));
@@ -199,8 +199,8 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestFollowsRelationPopulation) {
-			FollowsExtractor extractor;
-			this->root->Extract(extractor);
+			FollowsExtractor extractor(this->write);
+			this->common_root->Extract(extractor);
 
 			// Follows relation for stmts in single procedure
 			Assert::IsTrue(this->read->CheckFollows(1, 2));
@@ -221,12 +221,12 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestCallsRelationPopulation) {
-			string calls_test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/calls_extraction_test_source.txt";
+			string calls_test_file = this->base_dir + "calls_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
-			shared_ptr<ProgramNode> root = parser.Parse(calls_test_file);
+			shared_ptr<ProgramNode> calls_root = parser.Parse(calls_test_file);
 
-			CallsExtractor extractor;
-			root->Extract(extractor);
+			CallsExtractor extractor(this->write);
+			calls_root->Extract(extractor);
 
 			// Calls is true for directly called procedure, but not for indirectly called ones
 			Assert::IsTrue(this->read->CheckCalls("first", "second"));
@@ -252,12 +252,12 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestNextRelationPopulation) {
-			string next_test_file = "../../Tests34/integration_tests/SP_PKB/design_extractor/next_extraction_test_source.txt";
+			string next_test_file = this->base_dir + "next_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
-			shared_ptr<ProgramNode> root = parser.Parse(next_test_file);
+			shared_ptr<ProgramNode> next_root = parser.Parse(next_test_file);
 
-			NextExtractor extractor;
-			root->Extract(extractor);
+			NextExtractor extractor(this->write);
+			next_root->Extract(extractor);
 
 			// Test Next for statement of same nesting level in procedure
 			Assert::IsTrue(this->read->CheckNext(1, 2));

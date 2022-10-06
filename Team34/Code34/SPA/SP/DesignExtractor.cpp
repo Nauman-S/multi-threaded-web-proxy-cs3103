@@ -15,12 +15,14 @@
 // Extracts all entities and relations from given root node of
 // AST and stores into the PKB
 void DesignExtractor::PopulatePKB(std::shared_ptr<ProgramNode> root) {
-	EntityExtractor entity_extractor;
-	UsesModifiesExtractor uses_modifies_extractor;
-	ParentsExtractor parents_extractor;
-	FollowsExtractor follows_extractor;
-	CallsExtractor calls_extractor;
-	NextExtractor next_extractor;
+	std::shared_ptr<WritePKBManager> write_manager = WritePKBManager::GetInstance();
+
+	EntityExtractor entity_extractor(write_manager);
+	UsesModifiesExtractor uses_modifies_extractor(write_manager);
+	ParentsExtractor parents_extractor(write_manager);
+	FollowsExtractor follows_extractor(write_manager);
+	CallsExtractor calls_extractor(write_manager);
+	NextExtractor next_extractor(write_manager);
 
 	root->Extract(entity_extractor);
 	root->Extract(uses_modifies_extractor);

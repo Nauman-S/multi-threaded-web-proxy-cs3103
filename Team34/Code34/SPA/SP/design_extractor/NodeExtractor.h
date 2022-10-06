@@ -1,5 +1,9 @@
 #pragma once
 
+#include <memory>
+
+#include "../../PKB/WritePKBManager.h"
+
 // Forward declaration to prevent cyclic inclusion
 class ProgramNode;
 class ProcedureASTNode;
@@ -15,6 +19,8 @@ class ConditionExpression;
 
 class NodeExtractor {
 public:
+	NodeExtractor(std::shared_ptr<WritePKBManager> manager) : write_manager_(manager) {}
+
 	virtual void ExtractProgramNode(ProgramNode&) = 0;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) = 0;
 
@@ -26,5 +32,8 @@ public:
 	virtual void ExtractIfNode(IfStatementASTNode&) = 0;
 	virtual void ExtractWhileNode(WhileStatementASTNode&) = 0;
 	virtual void ExtractConditionExpression(ConditionExpression&) = 0;
+
+protected:
+	std::shared_ptr<WritePKBManager> write_manager_;
 };
 
