@@ -186,7 +186,7 @@ namespace UnitTesting
 		{
 			SourceValidator validator = SourceValidator();
 			vector<SourceToken> stub = {
-								SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
 				SourceToken(SourceTokenType::kName, "call"),
