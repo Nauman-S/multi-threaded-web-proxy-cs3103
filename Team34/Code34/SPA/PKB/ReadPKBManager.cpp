@@ -435,6 +435,63 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
     return pkb.next_manager_.GetAllNextTRelations();
 }
 
+// APIs related to Affects relation
+bool ReadPKBManager::CheckAffects(StmtNum cause, StmtNum effect)
+{
+	return false;
+}
+
+bool ReadPKBManager::IsAffectsStoreEmpty()
+{
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts(RefType effect_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts(RefType cause_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsRelations()
+{
+	return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
+}
+
+// APIs related to Affects* relation
+bool ReadPKBManager::CheckAffectsT(StmtNum cause, StmtNum effect)
+{
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type)
+{
+	return std::shared_ptr<std::unordered_set<StmtNum>>();
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsTRelations()
+{
+	return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
+}
+
 // Utility functions
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::FilterStmtSetByType(std::shared_ptr<std::unordered_set<StmtNum>> stmts, RefType stmt_type) {
     if (stmt_type == RefType::kStmtRef) {
