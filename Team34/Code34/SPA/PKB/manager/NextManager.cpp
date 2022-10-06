@@ -40,11 +40,6 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllNex
 	return next_store_.GetAllRelations();
 }
 
-void NextManager::SetCFGEdge(std::shared_ptr<std::pair<StmtNum, StmtNum>> prev_node, std::shared_ptr<std::pair<StmtNum, StmtNum>> next_node)
-{
-	next_store_.SetCFGEdge(prev_node, next_node);
-}
-
 bool NextManager::CheckNextT(StmtNum prev, StmtNum next)
 {
 	return next_store_.CheckTransitiveRelation(prev, next);
@@ -60,7 +55,6 @@ std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllPrevStmtsFromStm
 	return next_store_.GetAllTransitiveLHS(stmt);
 }
 
-// TODO: implement in ManyToManyNextStore
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllNextTRelations()
 {
 	return next_store_.GetAllTransitiveRelations();
