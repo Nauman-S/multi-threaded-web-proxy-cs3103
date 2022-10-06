@@ -25,7 +25,7 @@ class QueryBuilder
 {
 private:
 	shared_ptr<QueryLexer> lexer_;
-	vector<shared_ptr<Ref>> synonyms_;
+	vector<shared_ptr<Ref>> select_synonyms_;
 	//std::vector<shared_ptr<Rel>> relations_;
 
 	std::unordered_set<RefType> stmt_ref_types = std::unordered_set<RefType>({ RefType::kAssignRef, RefType::kCallRef, RefType::kIfRef, RefType::kPrintRef, RefType::kReadRef, RefType::kWhileRef });
@@ -73,7 +73,7 @@ private:
 	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
 	ValType GetValTypeFromAttrName(string);
 
-	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
+	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> select_synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType attr_name);

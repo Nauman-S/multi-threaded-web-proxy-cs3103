@@ -17,7 +17,7 @@ private:
 	std::vector<std::vector<std::string>> rows_;
 
 	
-	std::string GetFieldAtIndex(int idx) {
+	std::string GetFieldAtIndex(unsigned idx) {
 		assert(idx < fields_.size());
 		return fields_.at(idx);
 	}
@@ -44,10 +44,11 @@ public:
 		: is_empty_{ false } {};
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
-		: fields_{ fields }, rows_{ rows }, is_empty_{ false } {
-		for (int i = 0; i < fields.size(); i++) {
+		: fields_{ fields }, rows_{ rows }  {
+		for (unsigned i = 0; i < fields.size(); i++) {
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
+		is_empty_ = (rows_.size() == 0);
 	};
 
 	Table(std::shared_ptr<ResWrapper>);
@@ -60,15 +61,18 @@ public:
 		return rows_;
 	}
 
-	std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
+	virtual std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 
-	bool IsEmpty() { return is_empty_; }
+	virtual bool IsEmpty() { return rows_.size() == 0; }
+
+	virtual bool IsWildcard() { return false; }
 
 	bool ContainsSynonym(std::string synonym);
 
 	bool ContainsSynonyms(std::vector<std::string> synonyms);
-	
 
 	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
+
+	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonyms(std::vector<std::string> synonyms);
 
 };
