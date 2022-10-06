@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
+    <ClInclude Include="QPS\ClauseGroup.h" />
     <ClInclude Include="QPS\ClauseType.h" />
     <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
@@ -100,6 +102,7 @@
     <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
     <ClInclude Include="QPS\stub\RelationStubFactory.h" />
     <ClInclude Include="QPS\with_clause\With.h" />
+    <ClInclude Include="QPS\clause_grouper\SimpleClauseGrouper.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
     <ClInclude Include="SP\ast\ASTNode.h" />
     <ClInclude Include="SP\ast\CallStatementASTNode.h" />
@@ -128,6 +131,8 @@
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
+    <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -147,6 +152,8 @@
     <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\clause_grouper\ClauseGrouper.cpp" />
+    <ClCompile Include="QPS\ClauseGroup.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
@@ -154,6 +161,9 @@
     <ClCompile Include="PKB\manager\CallsManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
+    <ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
@@ -212,6 +222,7 @@
     <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
     <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
     <ClCompile Include="QPS\with_clause\With.cpp" />
+    <ClCompile Include="QPS\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\ASTNode.cpp" />
     <ClCompile Include="SP\ast\CallStatementASTNode.cpp" />
@@ -236,6 +247,7 @@
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
+    <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />

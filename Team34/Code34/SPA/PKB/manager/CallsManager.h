@@ -30,5 +30,5 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
 	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
 private:
-	CallsRelationStore<Procedure> calls_store_;
+	CallsRelationStore calls_store_;
 };
