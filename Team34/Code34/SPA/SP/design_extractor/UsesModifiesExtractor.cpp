@@ -39,14 +39,14 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 
 	std::vector<Variable> rhs = assign.GetRightVars();
 	for (Variable var : rhs) {
-		this->SetUses(proc_name, var);
-		this->SetUses(line_no, var);
+		this->AddToUses(proc_name, var);
+		this->AddToUses(line_no, var);
 		this->SetIndirectUses(var);
 	}
 
 	Variable lhs = assign.GetLeft();
-	this->SetModifies(proc_name, lhs);
-	this->SetModifies(line_no, lhs);
+	this->AddToModifies(proc_name, lhs);
+	this->AddToModifies(line_no, lhs);
 	this->SetIndirectModifies(lhs);
 }
 
@@ -73,8 +73,8 @@ void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
 	std::string proc_name = print.GetParentProcIndex();
 	int line_no = print.GetLineIndex();
 
-	this->SetUses(proc_name, var);
-	this->SetUses(line_no, var);
+	this->AddToUses(proc_name, var);
+	this->AddToUses(line_no, var);
 	this->SetIndirectUses(var);
 }
 
@@ -84,8 +84,8 @@ void UsesModifiesExtractor::ExtractReadNode(ReadStatementASTNode& read) {
 	std::string proc_name = read.GetParentProcIndex();
 	int line_no = read.GetLineIndex();
 
-	this->SetModifies(proc_name, var);
-	this->SetModifies(line_no, var);
+	this->AddToModifies(proc_name, var);
+	this->AddToModifies(line_no, var);
 	this->SetIndirectModifies(var);
 }
 
@@ -127,13 +127,13 @@ void UsesModifiesExtractor::ExtractConditionExpression(ConditionExpression& cond
 
 	std::vector<Variable> vars = cond.GetVariables();
 	for (Variable var : vars) {
-		this->SetUses(line_no, var);
-		this->SetUses(proc_name, var);
+		this->AddToUses(line_no, var);
+		this->AddToUses(proc_name, var);
 		this->SetIndirectUses(var);
 	}
 }
 
-void UsesModifiesExtractor::SetUses(StmtNum line, Variable var) {
+void UsesModifiesExtractor::AddToUses(StmtNum line, Variable var) {
 	std::pair<StmtNum, Variable> uses = std::make_pair(line, var);
 	if (this->stmt_uses_cache_.find(uses) == this->stmt_uses_cache_.end()) {
 		this->write_manager_->SetUses(line, var);
@@ -141,7 +141,7 @@ void UsesModifiesExtractor::SetUses(StmtNum line, Variable var) {
 	}
 }
 
-void UsesModifiesExtractor::SetUses(Procedure proc, Variable var) {
+void UsesModifiesExtractor::AddToUses(Procedure proc, Variable var) {
 	std::pair<Procedure, Variable> uses = std::make_pair(proc, var);
 	if (this->procedure_uses_cache_.find(uses) == this->procedure_uses_cache_.end()) {
 		this->write_manager_->SetUses(proc, var);
@@ -149,7 +149,7 @@ void UsesModifiesExtractor::SetUses(Procedure proc, Variable var) {
 	}
 }
 
-void UsesModifiesExtractor::SetModifies(StmtNum line, Variable var) {
+void UsesModifiesExtractor::AddToModifies(StmtNum line, Variable var) {
 	std::pair<StmtNum, Variable> modifies = std::make_pair(line, var);
 	if (this->stmt_modifies_cache_.find(modifies) == this->stmt_modifies_cache_.end()) {
 		this->write_manager_->SetModifies(line, var);
@@ -157,7 +157,7 @@ void UsesModifiesExtractor::SetModifies(StmtNum line, Variable var) {
 	}
 }
 
-void UsesModifiesExtractor::SetModifies(Procedure proc, Variable var) {
+void UsesModifiesExtractor::AddToModifies(Procedure proc, Variable var) {
 	std::pair<Procedure, Variable> modifies = std::make_pair(proc, var);
 	if (this->procedure_modifies_cache_.find(modifies) == this->procedure_modifies_cache_.end()) {
 		this->write_manager_->SetModifies(proc, var);
@@ -168,19 +168,19 @@ void UsesModifiesExtractor::SetModifies(Procedure proc, Variable var) {
 // Sets uses on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectUses(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
-		this->SetUses(p, var);
+		this->AddToUses(p, var);
 	}
 	for (StmtNum l : this->parent_smts_) {
-		this->SetUses(l, var);
+		this->AddToUses(l, var);
 	}
 }
 
 // Sets modifies on the variable for parent procedure calls and container stmts
 void UsesModifiesExtractor::SetIndirectModifies(Variable var) {
 	for (Procedure p : this->proc_call_stack_) {
-		this->SetModifies(p, var);
+		this->AddToModifies(p, var);
 	}
 	for (StmtNum l : this->parent_smts_) {
-		this->SetModifies(l, var);
+		this->AddToModifies(l, var);
 	}
 }
