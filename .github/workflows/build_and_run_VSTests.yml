@@ -1,9 +1,9 @@
-name: build and test
+name: build and run VS tests
 on:
   push:
-    branches: [ "ns-integration-test" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "ns-integration-test" ]
+    branches: [ "master" ]
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build_and_run_VSTests:
     runs-on: windows-latest
 
     steps:
