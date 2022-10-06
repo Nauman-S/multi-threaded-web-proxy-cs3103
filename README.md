@@ -1,4 +1,5 @@
 # Team 34
+[![MSBuild](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/msbuild.yml/badge.svg)](https://github.com/nus-cs3203/22s1-win-spa-team-34/actions/workflows/msbuild.yml)
 
 ## Target Environment
 

@@ -132,6 +132,7 @@
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -160,6 +161,9 @@
     <ClCompile Include="PKB\manager\CallsManager.cpp" />
     <ClCompile Include="PKB\manager\StatementManager.cpp" />
     <ClCompile Include="PKB\manager\UsesManager.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
+    <ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
+    <ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
@@ -244,6 +248,7 @@
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
     <ClCompile Include="QPS\query_result\WilrdcardTable.cpp" />
+    <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
