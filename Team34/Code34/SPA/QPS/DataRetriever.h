@@ -114,7 +114,9 @@ protected:  // helper methods
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWhilePattern(WhilePattern& pat);	// assign_syn(var_syn, ExprSpec)
 
 	// With clause
-	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, std::shared_ptr<std::string> filter_val);
+	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseBySingleValTypeRefType(RefType syn_ref_type);
+	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type, ValType comp_val_type, string& pivot_val);
+	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type, ValType comp_val_type, std::string& filter_val);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWithClause(With& with);
 
 	// type conversion helpers

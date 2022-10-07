@@ -1,25 +1,38 @@
 procedure findPrimes {
     read x;
-    i = 2;
-    while (i < x) {
-        flag = 1;
-        call checkPrime;
-        if (flag == 1) {
-            call printPrime;
+    if (x > 2) then {
+        i = 1 + 1;
+        while (i < x) {
+            flag = 1;
+            call checkPrime;
+            if (flag == 1) then {
+                call printPrime;
+            } else {
+                call x;
+            }
+            i = i + 1;
         }
-        i = i + 1;
+    } else {
+        call x;
     }
+    
 }
 
 procedure checkPrime {
     j = 2;
     while (j < i) {
-        if(i % j == 0) {
+        if(i % j == 0) then {
             flag = 0;
+        } else {
+            call x;
         }
     }
 }
 
 procedure printPrime {
     print i;
+}
+
+procedure x {
+    read z;
 }

@@ -1,0 +1,5 @@
+3 - Test call proc name 
+procedure p; call c;
+Select c with c.procName = "printPrime"
+8
+5000
