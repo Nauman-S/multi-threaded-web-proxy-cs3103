@@ -14,7 +14,7 @@ protected:
 
 public:
 	PostfixConverter()
-		:precedence_{ { "+", 1}, { "-", 1 }, { "*", 2 }, { "/", 2 }, { "%", 2 } } {}
+		:precedence_{ { "+", 1}, { "-", 1 }, { "*", 2 }, { "/", 2 }, { "%", 2 } } {};
 
 	static const char DELIM = ' ';
 

@@ -4,6 +4,7 @@
 
 #include "Expr.h"
 
+
 class ExprSpec
 {
 protected:
@@ -11,11 +12,17 @@ protected:
 	std::string post_expr_;
 
 public:
-	ExprSpec(std::string infix_expr);
+	ExprSpec(std::string infix_str) : infix_expr_{ infix_str }, post_expr_{""} {};
+
+	ExprSpec(std::string infix_str, std::string postfix_str)
+		: infix_expr_{ infix_str }, post_expr_{ postfix_str } {};
 
 	virtual bool IsMatch(Expr& expr) = 0;
+
 	virtual bool IsWildcard() = 0;
-	string& GetInfix() { return infix_expr_; }
-	string& GetPostfix() { return post_expr_; }
+
+	std::string& GetInfix() { return infix_expr_; }
+
+	std::string& GetPostfix() { return post_expr_; }
 };
 
