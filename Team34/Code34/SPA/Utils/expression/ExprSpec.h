@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Expr.h"
+#include "../algo/SpaAlgo.h"
 
 
 class ExprSpec
@@ -12,7 +13,7 @@ protected:
 	std::string post_expr_;
 
 public:
-	ExprSpec(std::string infix_str) : infix_expr_{ infix_str }, post_expr_{""} {};
+	ExprSpec(std::string infix_str) : infix_expr_{ infix_str }, post_expr_{ SpaAlgo::InfixToPostfix(infix_str) } {};
 
 	ExprSpec(std::string infix_str, std::string postfix_str)
 		: infix_expr_{ infix_str }, post_expr_{ postfix_str } {};
