@@ -33,6 +33,9 @@ public:
 	virtual std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCallsStatementFromProcedure(Procedure proc);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPrintStatementFromVariable(Variable var);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetReadStatementFromVariable(Variable var);
 
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child);
