@@ -407,15 +407,15 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with)
         res = make_shared<ResWrapper>(table_res);
     }
     else if (lhs_type == ValType::kSynonym) {
-        auto str_val_ptr = make_shared<string>(with.RhsValue());
-        auto set = GetWithClauseByRefType(with.LhsRefType(), with.RequiredLhsValType(), str_val_ptr);
+        auto rhs_val = with.RhsValue();
+        auto set = GetWithClauseByRefTypeAndFilterVal(with.LhsRefType(), with.RequiredLhsValType(), rhs_val);
         auto syn_name = with.LhsValue();
         auto set_res = make_shared<SetRes>(syn_name, set);
         res = make_shared<ResWrapper>(set_res);
     }
     else if (rhs_type == ValType::kSynonym) {
-        auto str_val_ptr = make_shared<string>(with.LhsValue());
-        auto set = GetWithClauseByRefType(with.RhsRefType(), with.RequiredRhsValType(), str_val_ptr);
+        auto lhs_val = with.LhsValue();
+        auto set = GetWithClauseByRefTypeAndFilterVal(with.RhsRefType(), with.RequiredRhsValType(), lhs_val);
         auto syn_name = with.RhsValue();
         auto set_res = make_shared<SetRes>(syn_name, set);
         res = make_shared<ResWrapper>(set_res);
@@ -1199,7 +1199,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(While
     return IntStrToStrStrTable(table);
 }
 
-std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefType(RefType syn_ref_type, ValType req_val_type, shared_ptr<string> filter_val=nullptr)
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetWithClauseBySingleValTypeRefType(RefType syn_ref_type)
 {
     shared_ptr<unordered_set<string>> str_set{ nullptr };
     shared_ptr<unordered_set<StmtNum>> stmt_set{ nullptr };
@@ -1224,29 +1224,50 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
     }
     else if (syn_ref_type == RefType::kAssignRef) {
         stmt_set = pkb_ptr_->GetStatementsByType(RefType::kAssignRef);
-    }
+    } 
     else if (syn_ref_type == RefType::kReadRef) {
-        if (req_val_type == ValType::kVarName) {
-            str_set = pkb_ptr_->GetAllModifiesSVariables();
-        }
-        else if (req_val_type == ValType::kLineNum) {
-            stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
-        }
-
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
     }
     else if (syn_ref_type == RefType::kPrintRef) {
-        if (req_val_type == ValType::kVarName) {
-            str_set = pkb_ptr_->GetAllUsesSVariables();
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
+    }
+    else if (syn_ref_type == RefType::kCallRef) {
+        stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
+    }
+
+    if (stmt_set != nullptr) {
+        str_set = IntSetToStrSet(stmt_set);
+    }
+
+    return str_set;
+}
+
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type, ValType comp_val_type, string& pivot_val)
+{
+    shared_ptr<unordered_set<string>> str_set{ nullptr };
+    shared_ptr<unordered_set<StmtNum>> stmt_set{ nullptr };
+
+    if (syn_ref_type == RefType::kReadRef) {
+        if (comp_val_type == ValType::kVarName) {
+            // TODO: add PKB API to get read stmt by var name
         }
-        else if (req_val_type == ValType::kLineNum) {
+        else if (comp_val_type == ValType::kLineNum) {
+            stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
+        }
+    }
+    else if (syn_ref_type == RefType::kPrintRef) {
+        if (comp_val_type == ValType::kVarName) {
+            // TODO: add PKB API to get print stmt by var name
+        }
+        else if (comp_val_type == ValType::kLineNum) {
             stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
         }
     }
     else if (syn_ref_type == RefType::kCallRef) {
-        if (req_val_type == ValType::kVarName) {
-            str_set = pkb_ptr_->GetAllCallees();
+        if (comp_val_type == ValType::kProcName) {
+            // TODO: add PKB API to get call stmt by proc name
         }
-        else if (req_val_type == ValType::kLineNum) {
+        else if (comp_val_type == ValType::kLineNum) {
             stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
         }
     }
@@ -1254,17 +1275,33 @@ std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTyp
     if (stmt_set != nullptr) {
         str_set = IntSetToStrSet(stmt_set);
     }
-    if (filter_val != nullptr) {
-        str_set = FilterSetByValue(str_set, *filter_val);
+
+    return str_set;
+}
+
+std::shared_ptr<std::unordered_set<string>> DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type, ValType comp_val_type, string& filter_val) 
+{
+    shared_ptr<unordered_set<string>> str_set{ nullptr };
+
+    unordered_set<RefType> single_val_type_ref_types = {
+        RefType::kProcRef, RefType::kVarRef, RefType::kConstRef, RefType::kStmtRef,
+        RefType::kIfRef,  RefType::kWhileRef, RefType::kAssignRef
+    };
+    if (single_val_type_ref_types.count(syn_ref_type) > 0) {
+        str_set = GetWithClauseBySingleValTypeRefType(syn_ref_type);
+        str_set = FilterSetByValue(str_set, filter_val);
     }
-    
+    else {
+        str_set = GetWithClauseByRefTypeAndFilterVal(syn_ref_type, comp_val_type, filter_val);
+    }
+
     return str_set;
 }
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(With& with)
 {
-    auto set1 = GetWithClauseByRefType(with.LhsRefType(), with.RequiredLhsValType());
-    auto set2 = GetWithClauseByRefType(with.RhsRefType(), with.RequiredRhsValType());
+    auto set1 = GetWithClauseBySingleValTypeRefType(with.LhsRefType());
+    auto set2 = GetWithClauseBySingleValTypeRefType(with.RhsRefType());
 
     auto table = make_shared<vector<pair<string, string>>>();
     if (set1->size() > set2->size()) {

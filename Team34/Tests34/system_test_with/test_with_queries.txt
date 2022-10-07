@@ -1,0 +1,115 @@
+1 - Test procedure proc name
+procedure p1;
+Select p1 with p1.procName = "findPrimes"
+findPrimes
+5000
+2 - Test procedure proc name
+procedure p;
+Select p with "checkPrime" = p.procName
+checkPrime
+5000
+3 - Test call proc name 
+procedure p; call c;
+Select c with c.procName = "printPrime"
+8
+5000
+4 - Test call proc name 
+procedure p; call c;
+Select c with "checkPrime" = c.procName
+6
+5000
+5 - Test variable var name
+variable v;
+Select v with v.varName = "x"
+x
+5000
+6 - Test read var name
+read r;
+Select r with r.varName = "x"
+1
+5000
+7 - Test read var name
+read r; variable v;
+Select r such that Modifies(r,v) with v.varName = "x"
+1
+5000
+8 - Test print var name
+print p;
+Select p with "i" = p.varName
+17
+5000
+9 - Test print var name
+print p; variable v;
+Select p such that Uses(p,v) with "i" = v.varName
+17
+5000
+10 - Test constant value
+stmt s; constant c;
+Select c with c.value = 2;
+2
+5000
+11 - Test stmt num
+stmt s;
+Select s such that s.stmt# = 9
+9
+5000
+12 - Test stmt num
+call c;
+Select c such that c.stmt# = 9
+9
+5000
+13 - Test stmt num
+assign a;
+Select a such that a.stmt# = 1
+
+5000
+14 - Test stmt num
+stmt s; variable v;
+Select s such that Modifies(s,v) with v.varName = "flag"
+5, 15
+5000
+15 - Test read stmt num
+read r;
+Select r such that Modifies(r, "x") with r.stmt# = 1
+1
+5000
+16 - Test read stmt num
+read r;
+Select r such that Modifies(r, "x") with r.stmt# = 2
+
+5000
+17 - Test assign stmt num
+assign a; variable v; procedure p;
+Select a Pattern a(v,_"1+1"_) with v.varName = "i"
+3
+5000
+18 - Test non existing stmt num
+stmt s; variable v;
+Select s such that Uses(s, v) with s.stmt# = 100;
+
+5000
+19 - Test non equal strings
+stmt s;
+Select s with "x" = "y"
+
+5000
+20 - Test non equal ints
+stmt s;
+Select s with 5 = 7
+
+5000
+21 - Test 2 synonyms (int)
+stms s; constant c;
+Select s with s.stmtNum# = c.value
+1, 2
+5000
+22 - Test 2 synonyms (string)
+procedure p; variable v;
+Select v with v.procName = v.varName
+x
+5000
+23 - Test 2 synonyms (unmatched types)
+procedure p; stmt s;
+Select s with s.stmtNum = p.procName;
+
+5000
