@@ -73,7 +73,6 @@ void Tokenizer::MoveToNextToken(int* current_index_) {
 	}
 	else if (isalpha(current_char)) {
 		ConsumeAlphanumericToken(current_index_);
-
 	}
 	else if (Token::IsValidToken(current_char)) {
 		ConsumeSpecialCharacter();

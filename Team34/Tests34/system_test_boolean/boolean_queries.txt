@@ -1,30 +1,21 @@
 1 - select BOOLEAN without clause
 while w, w2; assign a;
-Select BOOLEAN;
+Select BOOLEAN
 TRUE
 5000
 2 - select wrong BOOLEAN without clause
 while w, w2; if ifs;
-Select boolean;
-SyntaxError
+Select boolean
+SemanticError
 5000
-3 - select tuple of three without clause
-call c; if ifs; while w;
-Select <c, ifs, w>
-12 15 16, 12 15 6, 12 24 16, 12 24 6, 12 8 16, 12 8 6, 14 15 16, 14 15 6, 14 24 16, 14 24 6, 14 8 16, 14 8 6, 18 15 16, 18 15 6, 18 24 16, 18 24 6, 18 8 16, 18 8 6
-5000
-4 - select tuple of two with Parent and pattern
+3 - select BOOLEAN expecting false result
 while w, w2; assign a;
-Select <a, w> such that Parent (w, a) pattern a (_, _"x"_)
-11 6, 19 16, 7 6
+Select BOOLEAN such that Follows(2, 4)
+FALSE
 5000
-5 - select tuple of three with Parent and pattern
-while w, w2; assign a; variable v;
-Select <a, w, v> such that Parent (w, a) pattern a (v, _"x"_)
-11 6 z, 19 16 i, 7 6 x
+4 - select BOOLEAN when BOOLEAN is declared as synonym
+while w, BOOLEAN;
+Select BOOLEAN
+16 6
 5000
-6 - select tuple of three with Parent and pattern
-while w, w2; assign a;
-Select <w2, w> such that Modifies (w, "x") pattern a (_, _"x"_)
-16 16, 16 6, 6 16, 6 6
-5000
+
