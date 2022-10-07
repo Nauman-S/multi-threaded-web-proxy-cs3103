@@ -8,26 +8,21 @@
 
 class StatementASTNode : public ASTNode {
 public:
-	StmtNum GetLineIndex();
-
 	void SetLineIndex(StmtNum&);
+	StmtNum GetLineIndex() const;
+
+	void SetParentSatementLineIndex(StmtNum&);
+	StmtNum GetParentSatementLineIndex() const;
+
+	void SetParentProcIndex(Procedure&);
+	Procedure GetParentProcIndex() const;
+
+	virtual void Extract(NodeExtractor&) = 0;
 
 	bool operator < (const StatementASTNode& c) const
 	{
 		return lineIndex < c.lineIndex;
 	}
-
-	void SetParentSatementLineIndex(StmtNum&);
-
-	StmtNum GetParentSatementLineIndex();
-
-	void SetParentProcIndex(Procedure&);
-
-	Procedure GetParentProcIndex();
-
-	virtual void Extract(NodeExtractor&) = 0;
-
-	// virtual vector<VariableIndex> getModifies() = 0;
 
 protected:
 	StmtNum lineIndex;

@@ -2,11 +2,11 @@
 
 using namespace std;
 
-Procedure ProcedureASTNode::GetProc() {
+Procedure ProcedureASTNode::GetProc() const {
 	return proc;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::GetChildren() {
+std::vector<std::shared_ptr<StatementASTNode>> ProcedureASTNode::GetChildren() const {
 	return children;
 }
 

@@ -21,17 +21,17 @@ class NodeExtractor {
 public:
 	NodeExtractor(std::shared_ptr<WritePKBManager> manager) : write_manager_(manager) {}
 
-	virtual void ExtractProgramNode(ProgramNode&) = 0;
-	virtual void ExtractProcedureNode(ProcedureASTNode&) = 0;
+	virtual void ExtractProgramNode(const ProgramNode&) = 0;
+	virtual void ExtractProcedureNode(const ProcedureASTNode&) = 0;
 
-	virtual void ExtractAssignmentNode(AssignStatementASTNode&) = 0;
-	virtual void ExtractCallNode(CallStatementASTNode&) = 0;
-	virtual void ExtractPrintNode(PrintStatementASTNode&) = 0;
-	virtual void ExtractReadNode(ReadStatementASTNode&) = 0;
+	virtual void ExtractAssignmentNode(const AssignStatementASTNode&) = 0;
+	virtual void ExtractCallNode(const CallStatementASTNode&) = 0;
+	virtual void ExtractPrintNode(const PrintStatementASTNode&) = 0;
+	virtual void ExtractReadNode(const ReadStatementASTNode&) = 0;
 
-	virtual void ExtractIfNode(IfStatementASTNode&) = 0;
-	virtual void ExtractWhileNode(WhileStatementASTNode&) = 0;
-	virtual void ExtractConditionExpression(ConditionExpression&) = 0;
+	virtual void ExtractIfNode(const IfStatementASTNode&) = 0;
+	virtual void ExtractWhileNode(const WhileStatementASTNode&) = 0;
+	virtual void ExtractConditionExpression(const ConditionExpression&) = 0;
 
 protected:
 	std::shared_ptr<WritePKBManager> write_manager_;
