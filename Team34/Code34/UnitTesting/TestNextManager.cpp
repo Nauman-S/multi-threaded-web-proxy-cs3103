@@ -199,9 +199,19 @@ namespace UnitTesting
 			Assert::AreEqual(7, int(next_manager_.GetAllPrevStmtsFromStmt(10)->size()));
 			Assert::AreEqual(0, int(next_manager_.GetAllPrevStmtsFromStmt(11)->size()));
 		}
+
 		TEST_METHOD(TestGetAllNextTRelations)
 		{
-
+			next_manager_.SetNext(1, 2);
+			next_manager_.SetNext(2, 3);
+			Assert::AreEqual(3, int(next_manager_.GetAllNextTRelations()->size()));
+			next_manager_.SetNext(3, 6);
+			next_manager_.SetNext(4, 6);
+			next_manager_.SetNext(6, 7);
+			Assert::AreEqual(12, int(next_manager_.GetAllNextTRelations()->size()));
+			next_manager_.SetNext(4, 5);
+			next_manager_.SetNext(5, 4);
+			Assert::AreEqual(18, int(next_manager_.GetAllNextTRelations()->size()));
 		}
 	};
 }

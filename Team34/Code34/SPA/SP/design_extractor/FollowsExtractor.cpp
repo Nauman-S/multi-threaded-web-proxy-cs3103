@@ -12,9 +12,7 @@
 #include "../ast/IfStatementASTNode.h"
 #include "../ast/WhileStatementASTNode.h"
 
-FollowsExtractor::FollowsExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+FollowsExtractor::FollowsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void FollowsExtractor::ExtractProgramNode(ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
@@ -74,7 +72,7 @@ void FollowsExtractor::AddFollowsRelation(const std::vector<std::shared_ptr<Stat
 	StmtNum prev = stmts[0]->GetLineIndex();
 	previous_lines.push_back(prev);
 
-	for (int i = 1; i < stmts.size(); i++) {
+	for (unsigned int i = 1; i < stmts.size(); i++) {
 		StmtNum current = stmts[i]->GetLineIndex();
 		this->write_manager_->SetFollows(prev, current);
 		for (StmtNum line : previous_lines) {

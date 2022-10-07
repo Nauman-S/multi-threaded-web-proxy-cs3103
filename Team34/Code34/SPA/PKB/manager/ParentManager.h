@@ -30,5 +30,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
 private:
-	ParentRelationStore<StmtNum> parent_store_;
+	ParentRelationStore parent_store_;
 };

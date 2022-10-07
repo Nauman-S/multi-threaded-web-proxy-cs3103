@@ -21,7 +21,7 @@
 class NextExtractor : public NodeExtractor {
 public:
 
-	NextExtractor();
+	NextExtractor(std::shared_ptr<WritePKBManager>);
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
@@ -36,8 +36,6 @@ public:
 	virtual void ExtractConditionExpression(ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
-	
 	std::set<StmtNum> prev_stmts_;
 	void AddStmtToPrev(StmtNum);
 	void ClearPrevStmts();

@@ -14,9 +14,7 @@
 
 #include "../../Utils/type/RefType.h"
 
-EntityExtractor::EntityExtractor() {
-	this->write_manager_ = WritePKBManager::GetInstance();
-}
+EntityExtractor::EntityExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
 void EntityExtractor::ExtractProgramNode(ProgramNode& program) {
 	std::vector<std::shared_ptr<ProcedureASTNode>> children = program.GetChildren();

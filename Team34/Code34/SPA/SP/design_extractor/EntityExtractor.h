@@ -25,9 +25,7 @@
 */
 class EntityExtractor : public NodeExtractor {
 public:
-	std::unique_ptr<WritePKBManager> write_manager_;
-
-	EntityExtractor();
+	EntityExtractor(std::shared_ptr<WritePKBManager>);
 
 	virtual void ExtractProgramNode(ProgramNode&) override;
 	virtual void ExtractProcedureNode(ProcedureASTNode&) override;

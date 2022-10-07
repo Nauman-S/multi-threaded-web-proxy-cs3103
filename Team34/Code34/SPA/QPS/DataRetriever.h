@@ -133,6 +133,10 @@ protected:  // helper methods
 	template<typename T>
 	std::shared_ptr<std::vector<std::pair<StmtNum, T>>> FilterStmtTableByLhsType(std::shared_ptr<std::vector<std::pair<StmtNum, T>>> table, RefType lhs_stmt_type)
 	{
+		if (lhs_stmt_type == RefType::kStmtRef) {
+			return table;
+		}
+
 		auto res = std::make_shared<std::vector<std::pair<StmtNum, T>>>();
 		for (auto iter = table->begin(); iter != table->end(); ++iter) {
 			if (*(pkb_ptr_->GetStatementType(iter->first)) == lhs_stmt_type) {
@@ -146,6 +150,10 @@ protected:  // helper methods
 	template<typename T>
 	std::shared_ptr<std::vector<std::pair<T, StmtNum>>> FilterStmtTableByRhsType(std::shared_ptr<std::vector<std::pair<T, StmtNum>>> table, RefType rhs_stmt_type)
 	{
+		if (rhs_stmt_type == RefType::kStmtRef) {
+			return table;
+		}
+
 		auto res = std::make_shared<std::vector<std::pair<T, StmtNum>>>();
 		for (auto iter = table->begin(); iter != table->end(); ++iter) {
 			if (*(pkb_ptr_->GetStatementType(iter->second)) == rhs_stmt_type) {
