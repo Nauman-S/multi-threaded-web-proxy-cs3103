@@ -40,7 +40,7 @@ vector<std::string> ResultExtractor::GetSingleSynResult() {
 }
 
 vector<std::string> ResultExtractor::GetMultiSynResult() {
-	shared_ptr<unordered_set<string>> result_set = result_table_->GetDomainBySynonyms(declared_synonyms_);
+	shared_ptr<unordered_set<string>> result_set = result_table_->GetDomainBySynonyms(select_synonyms_);
 
 	return FormatResult(result_set);
 }
