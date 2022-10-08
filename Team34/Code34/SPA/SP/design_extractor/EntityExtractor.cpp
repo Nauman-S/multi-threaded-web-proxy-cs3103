@@ -46,8 +46,11 @@ void EntityExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign
 	}
 
 	StmtNum line_no = assign.GetLineIndex();
-	Expr expr = Expr(assign.GetInfix());
+
+	std::string infix = assign.GetInfix();
+	Expr expr = Expr(infix, this->postfix_converter_.InfixToPostfix(infix));
 	this->write_manager_->AddAssignPattern(line_no, expr);
+
 	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 
