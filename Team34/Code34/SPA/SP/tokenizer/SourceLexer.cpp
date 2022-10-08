@@ -11,7 +11,7 @@ SourceLexer::SourceLexer(const string& source_filename) {
     this->file_stream_.open(source_filename);
     string s;
     if (getline(this->file_stream_, s)) {
-        this->tokenizer_.feedLine(s);
+        this->tokenizer_.FeedLine(s);
     }
 }
 
@@ -92,14 +92,14 @@ SourceToken SourceLexer::ConstructSourceToken() {
 };
 
 bool SourceLexer::HasNextToken() {
-    if (!this->buffer_.empty() || this->tokenizer_.hasNextToken()) {
+    if (!this->buffer_.empty() || this->tokenizer_.HasNextToken()) {
         return true;
     }
 
     string line;
     while (getline(this->file_stream_, line)) {
-        this->tokenizer_.feedLine(line);
-        if (this->tokenizer_.hasNextToken()) {
+        this->tokenizer_.FeedLine(line);
+        if (this->tokenizer_.HasNextToken()) {
             return true;
         };
     }
@@ -116,8 +116,8 @@ Token SourceLexer::GetNextToken() {
         return token;
     }
 
-    this->tokenizer_.nextToken();
-    return this->tokenizer_.getToken();
+    this->tokenizer_.NextToken();
+    return this->tokenizer_.GetToken();
 }
 
 // Do a lookahead for the next token and attempt to combine
