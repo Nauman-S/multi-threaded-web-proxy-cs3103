@@ -1,0 +1,21 @@
+1 - select BOOLEAN without clause
+while w, w2; assign a;
+Select BOOLEAN
+TRUE
+5000
+2 - select wrong BOOLEAN without clause
+while w, w2; if ifs;
+Select boolean
+SemanticError
+5000
+3 - select BOOLEAN expecting false result
+while w, w2; assign a;
+Select BOOLEAN such that Follows(2, 4)
+FALSE
+5000
+4 - select BOOLEAN when BOOLEAN is declared as synonym
+while w, BOOLEAN;
+Select BOOLEAN
+16 6
+5000
+

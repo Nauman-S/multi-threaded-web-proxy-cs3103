@@ -1,5 +1,8 @@
 #include "Query.h"
 
+#include <string>
+
+using std::string;
 
 
 vector<string> Query::GetSelectSynonyms() {

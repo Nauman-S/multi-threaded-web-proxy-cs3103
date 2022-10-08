@@ -24,6 +24,9 @@ public:
 
 	// APIs related to Statement
 	void AddStatement(StmtNum stmt_num, RefType type);
+	void AddCallsStatement(Procedure proc, StmtNum stmt_num);
+	void AddPrintStatement(Variable var, StmtNum stmt_num);
+	void AddReadStatement(Variable var, StmtNum stmt_num);
 
 	// APIs related to Parent relation
 	void SetParent(StmtNum parent, StmtNum child);

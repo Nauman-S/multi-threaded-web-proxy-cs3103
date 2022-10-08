@@ -1,0 +1,55 @@
+1 - Test var name
+if ifs;
+Select ifs pattern ifs("x",_,_)
+2
+5000
+2 - Test var name
+if ifs;
+Select ifs pattern ifs("k",_,_)
+4
+5000
+3 - Test var name
+if ifs;
+Select ifs pattern ifs("a",_,_)
+10
+5000
+4 - Test wildcard
+if ifs;
+Select ifs pattern ifs(_,_,_)
+2, 4, 10
+5000
+5 - Test var synonym
+if ifs; variable v;
+Select ifs pattern ifs(v,_,_)
+2, 4, 10
+5000
+6 - Test var synonym
+if ifs; variable v;
+Select v pattern ifs(v,_,_)
+item, value, x, y, z, i, j, k, a, b, c, d
+5000
+7 - Test var synonym
+if ifs; variable v;
+Select v pattern ifs(v,_,_)
+item, value, x, y, z, i, j, k, a, b, c, d
+5000
+8 - Test with Uses
+if ifs; variable v; print p;
+Select v pattern ifs(v,_,_) such that Uses(p, v)
+j, a, b
+5000
+9 - Test with Uses
+if ifs; variable v; print p;
+Select ifs pattern ifs(v,_,_) such that Uses(p, v)
+4, 10
+5000
+10 - Test syntax error
+if ifs;
+Select ifs pattern ifs(_,_)
+SyntaxError
+5000
+11 - Test random things
+if ifs; variable v; assign a;
+Select ifs such that Parent*(ifs, a) pattern ifs(_,_,_)
+2, 4
+5000
