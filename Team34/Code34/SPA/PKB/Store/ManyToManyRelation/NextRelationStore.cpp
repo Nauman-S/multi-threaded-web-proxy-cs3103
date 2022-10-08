@@ -37,11 +37,17 @@ void NextRelationStore::OptimisedCFGTraversal(std::shared_ptr<std::vector<std::p
 		{
 			StmtNum ptr = queue.front();
 			queue.pop();
-			if (code_block_map_.find(ptr) == code_block_map_.end()) continue;
+			if (code_block_map_.find(ptr) == code_block_map_.end())
+			{
+				continue;
+			}
 			std::unordered_set<StmtNum>& next_nodes = optimised_cfg_[ptr];
 			for (auto iter = next_nodes.begin(); iter != next_nodes.end(); ++iter)
 			{
-				if (visited.find(*iter) != visited.end()) continue;
+				if (visited.find(*iter) != visited.end())
+				{
+					continue;
+				}
 				StmtNum next_block_start = *iter;
 				StmtNum next_block_end = code_block_map_[*iter];
 				if (code_block_start == next_block_start)
