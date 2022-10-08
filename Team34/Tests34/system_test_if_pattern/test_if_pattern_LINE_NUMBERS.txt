@@ -1,0 +1,22 @@
+procedure cond {
+    read value;                                 // 1
+    if (value == x + y % z ) then {             // 2
+        read item;                                       // 3
+        if ((item > i + j) && (item < j + k)) then {     // 4
+            while(m < n) {                               // 5
+                m = m + 1;                               // 6
+            }
+        } else {
+            print j;                            // 7
+        }
+    } else {
+        while (p - q % 5 > 0) {                 // 8
+            read type;                          // 9
+            if (a * b > c - d) then {           // 10
+                print a;                        // 11
+            } else {
+                print b;                        // 12
+            }
+        }
+    }
+}
