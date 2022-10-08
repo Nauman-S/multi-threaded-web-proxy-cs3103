@@ -14,14 +14,14 @@
 
 FollowsExtractor::FollowsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void FollowsExtractor::ExtractProgramNode(ProgramNode& program) {
+void FollowsExtractor::ExtractProgramNode(const ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void FollowsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void FollowsExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	this->AddFollowsRelation(children);
 	for (std::shared_ptr<StatementASTNode> child : children) {
@@ -29,17 +29,17 @@ void FollowsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 	}
 }
 
-void FollowsExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {}
+void FollowsExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {}
 
-void FollowsExtractor::ExtractCallNode(CallStatementASTNode& call) {}
+void FollowsExtractor::ExtractCallNode(const CallStatementASTNode& call) {}
 
-void FollowsExtractor::ExtractPrintNode(PrintStatementASTNode& print) {}
+void FollowsExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {}
 
-void FollowsExtractor::ExtractReadNode(ReadStatementASTNode& read) {}
+void FollowsExtractor::ExtractReadNode(const ReadStatementASTNode& read) {}
 
-void FollowsExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
+void FollowsExtractor::ExtractConditionExpression(const ConditionExpression& cond) {}
 
-void FollowsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void FollowsExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
 	this->AddFollowsRelation(then_children);
 	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
@@ -53,7 +53,7 @@ void FollowsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	}
 }
 
-void FollowsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void FollowsExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
 	this->AddFollowsRelation(children);
 	for (std::shared_ptr<StatementASTNode> child : children) {

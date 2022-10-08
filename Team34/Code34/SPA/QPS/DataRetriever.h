@@ -115,7 +115,7 @@ protected:  // helper methods
 
 	// With clause
 	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseBySingleValTypeRefType(RefType syn_ref_type);
-	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type, ValType comp_val_type, string& pivot_val);
+	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type, ValType comp_val_type, std::string& pivot_val);
 	std::shared_ptr<std::unordered_set<std::string>> GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type, ValType comp_val_type, std::string& filter_val);
 	std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllWithClause(With& with);
 

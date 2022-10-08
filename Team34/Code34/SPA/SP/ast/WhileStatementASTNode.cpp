@@ -6,7 +6,7 @@ void WhileStatementASTNode::SetChildren(std::vector<shared_ptr<StatementASTNode>
 	children = c;
 }
 
-std::vector<shared_ptr<StatementASTNode>> WhileStatementASTNode::GetChildren() {
+std::vector<shared_ptr<StatementASTNode>> WhileStatementASTNode::GetChildren() const {
 	return children;
 }
 
@@ -14,7 +14,7 @@ void WhileStatementASTNode::SetConditionExpression(std::shared_ptr<ConditionExpr
 	condition = cond;
 }
 
-shared_ptr<ConditionExpression> WhileStatementASTNode::GetCondition() {
+shared_ptr<ConditionExpression> WhileStatementASTNode::GetCondition() const {
 	return condition;
 }
 

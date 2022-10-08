@@ -7,11 +7,11 @@ ProgramNode::ProgramNode() {
 	this->proc_name_to_node_ = {};
 }
 
-std::vector<shared_ptr<ProcedureASTNode>> ProgramNode::GetChildren() {
+std::vector<shared_ptr<ProcedureASTNode>> ProgramNode::GetChildren() const {
 	return this->children_;
 }
 
-std::map<Procedure, std::shared_ptr<ProcedureASTNode>> ProgramNode::GetProcNodeMapping() {
+std::map<Procedure, std::shared_ptr<ProcedureASTNode>> ProgramNode::GetProcNodeMapping() const {
 	return this->proc_name_to_node_;
 }
 

@@ -1,0 +1,39 @@
+procedure proc1 {
+1.    var = var2 + var3;
+2.    x = var2 + 5;
+3.    while (x == 0) {
+4.        print var2;
+5.        print var3;
+    }
+6.    call proc2;
+7.    if (y < 0) then {
+8.        read x;
+9.        read y;
+    } else {
+10.        x = 5;
+    }
+}
+
+procedure proc2 {
+11.    camelCase = CAPSVAR + 5 + 2;
+12.    while (x > 0) {
+13.        read = camelCase;
+14.        call = 3 + 5;
+15.       if (call == 0) then {
+16.             y = 3;
+        } else {
+17.             call procedure;
+        }
+    }
+}
+
+procedure procedure {
+18.    if (x != 0) then {
+19.        print = 3;
+20.        while (x > 2) {
+21.            x = x - 1 + var2;
+        }
+    } else {
+22.        x = read;
+    }
+}

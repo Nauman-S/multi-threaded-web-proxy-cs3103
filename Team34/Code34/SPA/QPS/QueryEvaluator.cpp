@@ -1,5 +1,6 @@
 #include "QueryEvaluator.h"
 
+#include <string>
 #include <memory.h>
 
 #include "Query.h"
@@ -13,6 +14,7 @@
 
 using std::vector;
 using std::shared_ptr;
+using std::string;
 
 
 QueryEvaluator::QueryEvaluator(Query query) {

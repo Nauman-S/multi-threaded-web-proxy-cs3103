@@ -6,11 +6,11 @@ void ConditionExpression::SetVariables(std::vector<Variable>& v) {
 	vars = v;
 }
 
-std::vector<Variable> ConditionExpression::GetVariables() {
+std::vector<Variable> ConditionExpression::GetVariables() const {
 	return vars;
 }
 
-std::vector<Constant> ConditionExpression::GetConstants() {
+std::vector<Constant> ConditionExpression::GetConstants() const {
 	return cons;
 }
 
