@@ -1000,7 +1000,8 @@ namespace UnitTesting
 			std::string rhs_value_ = "9";
 
 			//Check declarations
-			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 0);
+			Assert::IsTrue(query_->IsBoolean());
 			
 			//Check if such that clauses are correct
 			Assert::IsTrue(query_->GetRelations()->size() == 1);
@@ -1029,7 +1030,8 @@ namespace UnitTesting
 			std::string rhs_value_two_ = "x";
 
 			//Check declarations
-			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 0);
+			Assert::IsTrue(query_->IsBoolean());
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query_->GetRelations()->size() == 2);
@@ -1064,7 +1066,8 @@ namespace UnitTesting
 			std::string lhs_value_ = "12", rhs_value_ = "number12";
 
 			//Check declarations
-			Assert::IsTrue(query_->GetSelectTuple() == NULL);
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 0);
+			Assert::IsTrue(query_->IsBoolean());
 
 			//Check if such that clauses are correct
 			Assert::IsTrue(query_->GetRelations()->size() == 0);
@@ -1080,9 +1083,26 @@ namespace UnitTesting
 
 			//Check if pattern clauses are correct
 			Assert::IsTrue(query_->GetPatterns()->size() == 0);
-
 		}
 
+		TEST_METHOD(Valid_BooleanSelectDeclaredBOOLEAN) {
+			const std::string query_string_ = "variable BOOLEAN; Select BOOLEAN";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+			std::string lhs_value_ = "12", rhs_value_ = "number12";
+
+			//Check declarations
+			Assert::IsTrue(query_->GetSelectTuple()->size() == 1);
+			Assert::IsTrue(!query_->IsBoolean());
+
+			//Check if such that clauses are correct
+			Assert::IsTrue(query_->GetRelations()->size() == 0);
+
+			//Check if with clauses are correct
+			Assert::IsTrue(query_->GetWithClauses()->size() == 0);
+
+			//Check if pattern clauses are correct
+			Assert::IsTrue(query_->GetPatterns()->size() == 0);
+		}
 		TEST_METHOD(Invalid_BooleanWithSyntaxError) {
 			const std::string query_string_ = "procedure p; Select BOOLEAN with p.procName = \"12\"";
 			bool syntatic_error_thrown = false;
