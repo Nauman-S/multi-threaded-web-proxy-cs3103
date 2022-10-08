@@ -171,7 +171,7 @@ shared_ptr < std::unordered_set<std::string>> Table::GetDomainBySynonym(std::str
 
 	shared_ptr <std::unordered_set<std::string>> set = std::make_shared< std::unordered_set<std::string>>();
 
-	for (auto row : rows_) {
+	for (auto& row : rows_) {
 		set->insert(row.at(index));
 	}
 	return set;
