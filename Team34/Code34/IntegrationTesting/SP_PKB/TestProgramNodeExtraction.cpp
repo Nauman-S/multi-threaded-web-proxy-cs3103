@@ -61,6 +61,22 @@ namespace IntegrationTesting
 			unordered_set<Procedure> expected_procs = { "proc1", "proc2", "procedure" };
 			Assert::IsTrue(*present_procs == expected_procs);
 
+			// Check call, print and read variables
+			shared_ptr<unordered_set<StmtNum>> calls_with_var = read->GetCallsStatementFromProcedure("proc2");
+			unordered_set<StmtNum> expected_stmt_for_calls = { 6 };
+			Assert::IsTrue(*calls_with_var == expected_stmt_for_calls);
+			calls_with_var = read->GetCallsStatementFromProcedure("procedure");
+			expected_stmt_for_calls = { 17 };
+			Assert::IsTrue(*calls_with_var == expected_stmt_for_calls);
+
+			shared_ptr<unordered_set<StmtNum>> print_with_var = read->GetPrintStatementFromVariable("var2");
+			unordered_set<StmtNum> expected_stmt_for_print = { 4 };
+			Assert::IsTrue(*print_with_var == expected_stmt_for_print);
+
+			shared_ptr<unordered_set<StmtNum>> read_with_var = read->GetReadStatementFromVariable("x");
+			unordered_set<StmtNum> expected_stmt_for_read = { 8 };
+			Assert::IsTrue(*read_with_var == expected_stmt_for_read);
+
 			// Check for statement types: assign, print, read, call, if, while
 			shared_ptr<unordered_set<StmtNum>> assign_stmts = read->GetStatementsByType(RefType::kAssignRef);
 			unordered_set<StmtNum> expected_assign = { 1, 2, 10, 11, 13, 14, 16, 19, 21, 22 };
