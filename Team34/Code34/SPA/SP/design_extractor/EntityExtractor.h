@@ -18,6 +18,7 @@
 #include "../ast/ConditionExpression.h"
 
 #include "../../Utils/type/TypeDef.h"
+#include "../../Utils/algo/PostfixConverter.h"
 
 /*
 * Extractor class to extract all entities from the AST.
@@ -38,4 +39,7 @@ public:
 	virtual void ExtractIfNode(const IfStatementASTNode&) override;
 	virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
 	virtual void ExtractConditionExpression(const ConditionExpression&) override;
+
+private:
+	PostfixConverter postfix_converter_;
 };
