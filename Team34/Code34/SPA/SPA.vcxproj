@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="QPS\AttrType.h" />
+    <ClInclude Include="PKB\manager\AffectsManager.h" />
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\ClauseGroup.h" />
     <ClInclude Include="QPS\ClauseType.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PKB\manager\AffectsManager.cpp" />
     <ClCompile Include="QPS\clause_grouper\ClauseGrouper.cpp" />
     <ClCompile Include="QPS\ClauseGroup.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />

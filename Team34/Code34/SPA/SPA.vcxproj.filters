@@ -116,6 +116,7 @@
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
     <ClCompile Include="QPS\reference\Ref.cpp" />
+    <ClCompile Include="PKB\manager\AffectsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -264,5 +265,6 @@
     <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="QPS\AttrType.h" />
+    <ClInclude Include="PKB\manager\AffectsManager.h" />
   </ItemGroup>
 </Project>
