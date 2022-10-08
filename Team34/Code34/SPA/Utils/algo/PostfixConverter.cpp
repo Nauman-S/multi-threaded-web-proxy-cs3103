@@ -37,18 +37,18 @@ std::string PostfixConverter::InfixToPostfix(std::string& infix)
 		if (token == " ") {
 			continue;
 		}
-		else if (token == "(") {
+		else if (token == left_bracket) {
 			stk.push(token);
 		}
-		else if (token == ")") {
-			while (!stk.empty() && stk.top() != "(") {
+		else if (token == right_bracket) {
+			while (!stk.empty() && stk.top() != left_bracket) {
 				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
-			stk.pop();  // discard the "("
+			stk.pop();  // discard left bracket
 		}
 		else if (auto p = precedence_.find(token); p != precedence_.end()) {
-			while (!stk.empty() && stk.top() != "(" && precedence_[stk.top()] >= p->second) {
+			while (!stk.empty() && stk.top() != left_bracket && precedence_[stk.top()] >= p->second) {
 				// assume all operators are left-associative
 				postfix_tokens.push_back(stk.top());
 				stk.pop();
@@ -66,7 +66,7 @@ std::string PostfixConverter::InfixToPostfix(std::string& infix)
 	}
 
 	string postfix = postfix_tokens[0];
-	for (int i = 1; i < postfix_tokens.size(); ++i) {
+	for (size_t i = 1; i < postfix_tokens.size(); ++i) {
 		postfix += (DELIM + postfix_tokens[i]);
 	}
 
