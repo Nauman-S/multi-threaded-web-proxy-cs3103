@@ -47,7 +47,7 @@ QueryBuilder::QueryBuilder() {
 shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 		this->lexer_->FeedQuery(query_string_);
 		
-		select_synonyms_ = ParseDeclarationStatements();
+		declared_synonyms_ = ParseDeclarationStatements();
 		
 		shared_ptr<Query> query_ = ParseSelectStatement();
 		//std::shared_ptr<Query> sp_ = std::shared_ptr<Query>(query_);
@@ -116,6 +116,8 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	shared_ptr<vector<shared_ptr<Rel>>> relations = std::make_shared<vector<shared_ptr<Rel>>>();
 	shared_ptr<vector<shared_ptr<Pattern>>> patterns = std::make_shared<vector<shared_ptr<Pattern>>>();
 	shared_ptr<vector<shared_ptr<With>>> with_clauses = std::make_shared<vector<shared_ptr<With>>>();
+	
+	
 	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords() || lexer_->HasWithKeyword()) {
 			
 		if (lexer_->HasPatternKeyword()) {
@@ -139,18 +141,6 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	}
 
 
-	//std::shared_ptr <std::vector<std::shared_ptr<Rel>>> relations_s_ = std::make_shared<std::vector<std::shared_ptr<Rel>>>();
-	//for (shared_ptr<Rel> rel_ : relations) {
-	//	std::shared_ptr <Rel> rel_s_ = std::shared_ptr<Rel>(rel_);
-	//	relations_s_->push_back(rel_s_);
-	//}
-
-	//std::shared_ptr < std::vector<std::shared_ptr<Pattern>>> patterns_s_ = std::make_shared<std::vector<std::shared_ptr<Pattern>>>();
-	//for (shared_ptr<Pattern> pattern_ : patterns) {
-	//	std::shared_ptr <Pattern> pattern_s_ = std::shared_ptr<Pattern>(pattern_);
-	//	patterns_s_->push_back(pattern_s_);
-	//}
-
 	shared_ptr<Query> query;
 	if (select_tuple->size() == 0) {
 		query = shared_ptr<Query>(new Query(relations, patterns, with_clauses));
@@ -165,7 +155,7 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = shared_ptr<vector<shared_ptr<Ref>>>(new vector<shared_ptr<Ref>>());
 	std::string syn_name;
-	if (lexer_->HasBooleanKeyword()) {
+	if (lexer_->HasBooleanKeyword() && !ContainsSynonym("BOOLEAN")) {
 		lexer_->MatchBooleanKeyword();
 		return select_tuple;
 	}
@@ -445,7 +435,7 @@ shared_ptr<VarRef> QueryBuilder::ParseVarRef() {
 
 
 shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name) {
-	for (shared_ptr<Ref> synonym : select_synonyms_) {
+	for (shared_ptr<Ref> synonym : declared_synonyms_) {
 		if (synonym->GetName() == name) {
 			return synonym;
 		}
@@ -454,7 +444,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name) {
 }
 
 shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
-	for (shared_ptr<Ref> synonym : select_synonyms_) {
+	for (shared_ptr<Ref> synonym : declared_synonyms_) {
 		if (synonym->GetName() == name) {
 			if (synonym->GetRefType() == ref_type) {
 				return synonym;
@@ -472,7 +462,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
 }
 
 
-shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> select_synonyms_) {
+shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> declared_synonyms_) {
 	if (this->lexer_->HasComma()) {
 		this->lexer_->MatchComma();
 	}
@@ -482,7 +472,7 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> selec
 
 	if (this->lexer_->HasIdentity()) {
 		std::string identity_rhs_ = this->lexer_->MatchIdentity();
-		for (shared_ptr<Ref> synonym_var_rhs_ : select_synonyms_) {
+		for (shared_ptr<Ref> synonym_var_rhs_ : declared_synonyms_) {
 
 			if (synonym_var_rhs_->GetValType() == ValType::kSynonym && synonym_var_rhs_->GetRefType() == RefType::kVarRef && synonym_var_rhs_->GetName().compare(identity_rhs_) == 0) {
 				shared_ptr <VarRef> rhs_ = std::dynamic_pointer_cast<VarRef>(synonym_var_rhs_);
@@ -750,7 +740,16 @@ ValType QueryBuilder::GetValTypeFromAttrName(string attr_name) {
 }
 
 
-//"procName", "varName", "value", "stmt"
+bool QueryBuilder::ContainsSynonym(string syn_name) {
+	for (auto& synonym : declared_synonyms_) {
+		if (synonym->GetName() == syn_name) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
 
 
 

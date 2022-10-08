@@ -21,26 +21,26 @@ private:
 
 	Token current_token = Token("", TokenType::kParseStart);
 
-	void consumeAlphanumericToken(int* current_index_);
-	void consumeIntegerToken(int* current_index_);
-	void consumeEndOfParsingToken();
-	void consumeSpecialCharacter();
-	void skipIgnoredChars(int* current_index_);
-	bool isIgnoredChar(char);
+	void ConsumeAlphanumericToken(int* current_index_);
+	void ConsumeIntegerToken(int* current_index_);
+	void ConsumeEndOfParsingToken();
+	void ConsumeSpecialCharacter();
+	void SkipIgnoredChars(int* current_index_);
+	bool IsIgnoredChar(char);
 public:
 	~Tokenizer();
 
-	void feedLine(const std::string& string);
-	void nextToken();
+	void FeedLine(const std::string& string);
+	void NextToken();
 	void MoveToNextToken(int* current_index_);
-	bool hasNextToken();
+	bool HasNextToken();
 	std::string PeekNextToken(int number_tokens_);
 
-	Token getToken();
+	Token GetToken();
 
-	std::optional<std::string> getTokenSval();
+	std::optional<std::string> GetTokenSval();
 
-	std::optional<int> Tokenizer::getTokenIval();
+	std::optional<int> Tokenizer::GetTokenIval();
 };
 
 #endif

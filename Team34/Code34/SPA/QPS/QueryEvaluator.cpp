@@ -196,10 +196,22 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::
 
 
 vector<std::string> QueryEvaluator::ExtractResult() {
+	vector<std::string> result;
+
+	if (query_.IsBoolean()) {
+		if (result_table_->IsEmpty()) {
+			result.push_back("FALSE");
+		}
+		else {
+			result.push_back("TRUE");
+		}
+		return result;
+	}
+
 	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms());
+	result = result_extractor.GetFormattedResult();
 
-
-	return result_extractor.GetFormattedResult();
+	return result;
 }
 
 

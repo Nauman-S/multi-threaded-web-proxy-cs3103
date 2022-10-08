@@ -23,6 +23,33 @@ namespace UnitTesting
 			Assert::AreEqual(1, int(statement_manager_.GetAllStatements()->size()));
 		};
 
+		TEST_METHOD(TestAddCallsStatement)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			statement_manager_.AddCallsStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			statement_manager_.AddCallsStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+		}
+
+		TEST_METHOD(TestAddPrintStatement)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			statement_manager_.AddPrintStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			statement_manager_.AddPrintStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+		}
+
+		TEST_METHOD(TestAddReadStatement)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			statement_manager_.AddReadStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			statement_manager_.AddReadStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+		}
+
 		TEST_METHOD(TestGetStatementType)
 		{
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
@@ -48,6 +75,33 @@ namespace UnitTesting
 			statement_manager_.AddStatement(2, RefType::kCallRef);
 			statement_manager_.AddStatement(3, RefType::kPrintRef);
 			Assert::AreEqual(3, int(statement_manager_.GetAllStatements()->size()));
+		};
+
+		TEST_METHOD(TestGetCallsStatementFromProcedure)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			statement_manager_.AddCallsStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			statement_manager_.AddCallsStatement("test", 2);
+			Assert::AreEqual(2, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+		};
+
+		TEST_METHOD(TestGetPrintStatementFromProcedure)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			statement_manager_.AddPrintStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			statement_manager_.AddPrintStatement("test", 2);
+			Assert::AreEqual(2, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+		};
+
+		TEST_METHOD(TestGetReadStatementFromProcedure)
+		{
+			Assert::AreEqual(0, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			statement_manager_.AddReadStatement("test", 1);
+			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			statement_manager_.AddReadStatement("test", 2);
+			Assert::AreEqual(2, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
 		};
 	};
 }
