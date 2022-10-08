@@ -56,6 +56,8 @@ public:
 
 	// APIs related to Next relation
 	void SetNext(StmtNum prev, StmtNum next);
+	void SetCodeBlock(StmtNum start, StmtNum end);
+	void SetOptimisedCFGEdge(StmtNum prev_start, StmtNum next_start);
 
 	// APIs related to Assign Pattern relation
 	void AddAssignPattern(StmtNum stmt_num, Expr expr);
