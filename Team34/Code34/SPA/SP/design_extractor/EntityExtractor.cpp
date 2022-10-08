@@ -56,6 +56,8 @@ void EntityExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign
 
 void EntityExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	StmtNum line_no = call.GetLineIndex();
+	Procedure called_proc = call.GetProcedure();
+	this->write_manager_->AddCallsStatement(called_proc, line_no);
 	this->write_manager_->AddStatement(line_no, RefType::kCallRef);
 }
 
@@ -64,6 +66,7 @@ void EntityExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
 	this->write_manager_->AddVariable(var);
 
 	StmtNum line_no = print.GetLineIndex();
+	this->write_manager_->AddPrintStatement(var, line_no);
 	this->write_manager_->AddStatement(line_no, RefType::kPrintRef);
 }
 
@@ -72,6 +75,7 @@ void EntityExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
 	this->write_manager_->AddVariable(var);
 
 	StmtNum line_no = read.GetLineIndex();
+	this->write_manager_->AddReadStatement(var, line_no);
 	this->write_manager_->AddStatement(line_no, RefType::kReadRef);
 }
 
