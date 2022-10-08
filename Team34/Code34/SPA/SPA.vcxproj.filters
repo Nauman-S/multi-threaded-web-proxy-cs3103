@@ -112,6 +112,7 @@
     <ClCompile Include="QPS\relation\NextRel.cpp" />
     <ClCompile Include="QPS\relation\NextTRel.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
+    <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -257,5 +258,6 @@
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
+    <ClInclude Include="Utils\algo\PostfixConverter.h" />
   </ItemGroup>
 </Project>
