@@ -1088,7 +1088,6 @@ namespace UnitTesting
 		TEST_METHOD(Valid_BooleanSelectDeclaredBOOLEAN) {
 			const std::string query_string_ = "variable BOOLEAN; Select BOOLEAN";
 			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
-			std::string lhs_value_ = "12", rhs_value_ = "number12";
 
 			//Check declarations
 			Assert::IsTrue(query_->GetSelectTuple()->size() == 1);
