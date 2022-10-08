@@ -1,0 +1,37 @@
+procedure wechat {
+	read name
+	while (user != name) {
+		print name;
+		user = other;
+		x = (y + 1) % z;
+		if (x > i*j/k) then {
+			x = x - (i+j+k);
+		} else {
+			x = x * k;
+		}
+	}
+	if(other == ok) then {
+		while (alpha < beta) {
+			print alpha;
+			alpha = gamma + 1;
+			print beta;
+			beta = omega * 2;
+			call gmail;
+		}
+	} else {
+		call telegram;
+	}
+	print end;
+}
+
+procedure gmail {
+	read mail;
+	print mail;
+	print bye;
+} 
+
+procedure telegram {
+	read text;
+	print text;
+}
+
