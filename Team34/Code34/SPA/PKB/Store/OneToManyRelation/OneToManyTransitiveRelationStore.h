@@ -42,10 +42,7 @@ inline std::shared_ptr<std::unordered_set<T>> OneToManyTransitiveRelationStore<T
 		T one = queue.front();
 		queue.pop();
 		auto iter = one_to_many_map_.find(one);
-		if (iter == one_to_many_map_.end())
-		{
-			continue;
-		}
+		if (iter == one_to_many_map_.end()) continue;
 		std::unordered_set<T>& many = one_to_many_map_[one];
 		for (auto iter = many.begin(); iter != many.end(); ++iter)
 		{

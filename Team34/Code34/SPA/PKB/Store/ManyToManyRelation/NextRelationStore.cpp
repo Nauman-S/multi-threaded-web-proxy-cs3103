@@ -37,33 +37,34 @@ void NextRelationStore::OptimisedCFGTraversal(std::shared_ptr<std::vector<std::p
 		{
 			StmtNum ptr = queue.front();
 			queue.pop();
-			auto iter = code_block_map_.find(ptr);
-			if (iter == code_block_map_.end())
-			{
-				continue;
-			}
-			std::unordered_set<StmtNum>& next_nodes = optimised_cfg_[ptr];
-			for (auto iter = next_nodes.begin(); iter != next_nodes.end(); ++iter)
-			{
-				if (visited.find(*iter) != visited.end())
-				{
-					continue;
-				}
-				StmtNum next_block_start = *iter;
-				StmtNum next_block_end = code_block_map_[*iter];
-				if (code_block_start == next_block_start)
-				{
-					PopulateNextTPairsBetweenSameBlock(all_transitive_relations, code_block_start, code_block_end);
-				}
-				else
-				{
-					PopulateNextTPairsBetweenBlocks(all_transitive_relations, code_block_start, code_block_end,
-						next_block_start, next_block_end);
-				}
-				visited.insert(next_block_start);
-				queue.push(next_block_start);
-			}
+			if (code_block_map_.find(ptr) == code_block_map_.end()) continue;
+			HandleNextNodes(all_transitive_relations, std::make_shared<std::unordered_set<StmtNum>>(visited), 
+				std::make_shared<std::queue<StmtNum>>(queue), ptr, code_block_start, code_block_end);
 		}
+	}
+}
+
+void NextRelationStore::HandleNextNodes(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations, 
+	std::shared_ptr<std::unordered_set<StmtNum>> visited, std::shared_ptr<std::queue<StmtNum>> queue,
+	StmtNum ptr, StmtNum code_block_start, StmtNum code_block_end)
+{
+	std::unordered_set<StmtNum>& next_nodes = optimised_cfg_[ptr];
+	for (auto iter = next_nodes.begin(); iter != next_nodes.end(); ++iter)
+	{
+		if (visited->find(*iter) != visited->end()) continue;
+		StmtNum next_block_start = *iter;
+		StmtNum next_block_end = code_block_map_[*iter];
+		if (code_block_start == next_block_start)
+		{
+			PopulateNextTPairsBetweenSameBlock(all_transitive_relations, code_block_start, code_block_end);
+		}
+		else
+		{
+			PopulateNextTPairsBetweenBlocks(all_transitive_relations, code_block_start, code_block_end,
+				next_block_start, next_block_end);
+		}
+		visited->insert(next_block_start);
+		queue->push(next_block_start);
 	}
 }
 

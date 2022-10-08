@@ -25,18 +25,11 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 	{
 		T ptr = queue.front();
 		queue.pop();
-		auto iter = s_to_t_map_.find(ptr);
-		if (iter == s_to_t_map_.end())
-		{
-			continue;
-		}
+		if (s_to_t_map_.find(ptr) == s_to_t_map_.end()) continue;
 		std::unordered_set<T>& elements = s_to_t_map_[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
-			if (visited.find(*iter) != visited.end())
-			{
-				continue;
-			}
+			if (visited.find(*iter) != visited.end()) continue;
 			if (*iter == right)
 			{
 				return true;
@@ -75,17 +68,11 @@ inline std::shared_ptr<std::unordered_set<T>> GetAllElements(T t, std::unordered
 		T ptr = queue.front();
 		queue.pop();
 		auto iter = map.find(ptr);
-		if (iter == map.end())
-		{
-			continue;
-		}
+		if (iter == map.end()) continue;
 		std::unordered_set<T>& elements = map[ptr];
 		for (auto iter = elements.begin(); iter != elements.end(); ++iter)
 		{
-			if (visited.find(*iter) != visited.end())
-			{
-				continue;
-			}
+			if (visited.find(*iter) != visited.end()) continue;
 			all_elements->insert(*iter);
 			visited.insert(*iter);
 			queue.push(*iter);
