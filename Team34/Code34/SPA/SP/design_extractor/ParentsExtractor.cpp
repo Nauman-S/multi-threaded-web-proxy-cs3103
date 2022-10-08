@@ -14,37 +14,37 @@
 
 ParentsExtractor::ParentsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void ParentsExtractor::ExtractProgramNode(ProgramNode& program) {
+void ParentsExtractor::ExtractProgramNode(const ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void ParentsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void ParentsExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void ParentsExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
+void ParentsExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {
 	this->AddIndirectParents(assign.GetLineIndex());
 }
 
-void ParentsExtractor::ExtractCallNode(CallStatementASTNode& call) {
+void ParentsExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	this->AddIndirectParents(call.GetLineIndex());
 }
 
-void ParentsExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
+void ParentsExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
 	this->AddIndirectParents(print.GetLineIndex());
 }
 
-void ParentsExtractor::ExtractReadNode(ReadStatementASTNode& read) {
+void ParentsExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
 	this->AddIndirectParents(read.GetLineIndex());
 }
 
-void ParentsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void ParentsExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	this->AddIndirectParents(if_stmt.GetLineIndex());
 
 	StmtNum parent_line = if_stmt.GetLineIndex();
@@ -68,7 +68,7 @@ void ParentsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	this->previous_parents_.pop_back();
 }
 
-void ParentsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void ParentsExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	this->AddIndirectParents(while_stmt.GetLineIndex());
 
 	int parent_line = while_stmt.GetLineIndex();
@@ -84,7 +84,7 @@ void ParentsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 	this->previous_parents_.pop_back();
 }
 
-void ParentsExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
+void ParentsExtractor::ExtractConditionExpression(const ConditionExpression& cond) {}
 
 void ParentsExtractor::AddIndirectParents(StmtNum current) {
 	for (StmtNum parent : this->previous_parents_) {

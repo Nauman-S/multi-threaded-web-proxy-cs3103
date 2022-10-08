@@ -16,14 +16,14 @@
 
 EntityExtractor::EntityExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void EntityExtractor::ExtractProgramNode(ProgramNode& program) {
+void EntityExtractor::ExtractProgramNode(const ProgramNode& program) {
 	std::vector<std::shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void EntityExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void EntityExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	this->write_manager_->AddProcedure(proc.GetProc());
 
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
@@ -32,7 +32,7 @@ void EntityExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 	}
 }
 
-void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
+void EntityExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {
 	Variable lhs = assign.GetLeft();
 	this->write_manager_->AddVariable(lhs);
 
@@ -51,12 +51,12 @@ void EntityExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
 	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 
-void EntityExtractor::ExtractCallNode(CallStatementASTNode& call) {
+void EntityExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	StmtNum line_no = call.GetLineIndex();
 	this->write_manager_->AddStatement(line_no, RefType::kCallRef);
 }
 
-void EntityExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
+void EntityExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
 	Variable var = print.GetVariable();
 	this->write_manager_->AddVariable(var);
 
@@ -64,7 +64,7 @@ void EntityExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
 	this->write_manager_->AddStatement(line_no, RefType::kPrintRef);
 }
 
-void EntityExtractor::ExtractReadNode(ReadStatementASTNode& read) {
+void EntityExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
 	Variable var = read.GetReadVariable();
 	this->write_manager_->AddVariable(var);
 
@@ -72,7 +72,7 @@ void EntityExtractor::ExtractReadNode(ReadStatementASTNode& read) {
 	this->write_manager_->AddStatement(line_no, RefType::kReadRef);
 }
 
-void EntityExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void EntityExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	StmtNum line_no = if_stmt.GetLineIndex();
 	std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
 	// Add variable pattern for if statements
@@ -95,7 +95,7 @@ void EntityExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	this->write_manager_->AddStatement(line_no, RefType::kIfRef);
 }
 
-void EntityExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void EntityExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	StmtNum line_no = while_stmt.GetLineIndex();
 	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
 	// Add variable pattern for while statements
@@ -113,7 +113,7 @@ void EntityExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 	this->write_manager_->AddStatement(line_no, RefType::kWhileRef);
 }
 
-void EntityExtractor::ExtractConditionExpression(ConditionExpression& cond) {
+void EntityExtractor::ExtractConditionExpression(const ConditionExpression& cond) {
 	std::vector<Variable> vars = cond.GetVariables();
 	for (Variable var : vars) {
 		this->write_manager_->AddVariable(var);

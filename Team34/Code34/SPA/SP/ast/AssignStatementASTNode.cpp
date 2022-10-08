@@ -14,26 +14,26 @@ void AssignStatementASTNode::SetRightCons(std::vector<Constant>& r) {
 	right_cons = r;
 }
 
-Variable AssignStatementASTNode::GetLeft() {
+Variable AssignStatementASTNode::GetLeft() const {
 	return left;
 }
 
-std::vector<Variable> AssignStatementASTNode::GetRightVars() {
+std::vector<Variable> AssignStatementASTNode::GetRightVars() const {
 	return right_vars;
 }
 
-std::vector<Constant> AssignStatementASTNode::GetRightCons() {
+std::vector<Constant> AssignStatementASTNode::GetRightCons() const {
 	return right_cons;
-}
-
-void AssignStatementASTNode::Extract(NodeExtractor& extractor) {
-	extractor.ExtractAssignmentNode(*this);
 }
 
 void AssignStatementASTNode::SetInfix(string& s) {
 	infix = s;
 }
 
-string AssignStatementASTNode::GetInfix() {
+string AssignStatementASTNode::GetInfix() const {
 	return infix;
+}
+
+void AssignStatementASTNode::Extract(NodeExtractor& extractor) {
+	extractor.ExtractAssignmentNode(*this);
 }

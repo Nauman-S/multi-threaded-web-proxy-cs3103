@@ -2,7 +2,7 @@
 
 CallsExtractor::CallsExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void CallsExtractor::ExtractProgramNode(ProgramNode& program) {
+void CallsExtractor::ExtractProgramNode(const ProgramNode& program) {
 	this->proc_node_map_ = program.GetProcNodeMapping();
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
@@ -10,14 +10,14 @@ void CallsExtractor::ExtractProgramNode(ProgramNode& program) {
 	}
 }
 
-void CallsExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void CallsExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void CallsExtractor::ExtractCallNode(CallStatementASTNode& call) {
+void CallsExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	Procedure parent_proc = call.GetParentProcIndex();
 	Procedure called_proc = call.GetProcedure();
 	// Add direct call from parent
@@ -37,7 +37,7 @@ void CallsExtractor::ExtractCallNode(CallStatementASTNode& call) {
 	this->procedure_calls_stack_.pop_back();
 }
 
-void CallsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void CallsExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
 	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
 		then_child->Extract(*this);
@@ -48,17 +48,17 @@ void CallsExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 		else_child->Extract(*this);
 	}
 }
-void CallsExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void CallsExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
 	}
 }
 
-void CallsExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {}
-void CallsExtractor::ExtractPrintNode(PrintStatementASTNode& print) {}
-void CallsExtractor::ExtractReadNode(ReadStatementASTNode& read) {}
-void CallsExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
+void CallsExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {}
+void CallsExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {}
+void CallsExtractor::ExtractReadNode(const ReadStatementASTNode& read) {}
+void CallsExtractor::ExtractConditionExpression(const ConditionExpression& cond) {}
 
 void CallsExtractor::AddToCalls(Procedure caller, Procedure callee) {
 	std::pair<Procedure, Procedure> calls = std::make_pair(caller, callee);

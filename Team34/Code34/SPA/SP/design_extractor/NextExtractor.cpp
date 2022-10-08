@@ -16,7 +16,7 @@
 
 NextExtractor::NextExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void NextExtractor::ExtractProgramNode(ProgramNode& program) {
+void NextExtractor::ExtractProgramNode(const ProgramNode& program) {
 	std::vector<shared_ptr<ProcedureASTNode>> procedures = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> proc : procedures) {
 		this->ClearPrevStmts(); // Clear stored statements from previous procedures
@@ -24,42 +24,42 @@ void NextExtractor::ExtractProgramNode(ProgramNode& program) {
 	}
 }
 
-void NextExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void NextExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	std::vector<std::shared_ptr<StatementASTNode>> stmts = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> stmt : stmts) {
 		stmt->Extract(*this);
 	}
 }
 
-void NextExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
+void NextExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {
 	StmtNum line = assign.GetLineIndex();
 	this->AddNextRelation(line);
 	this->ClearPrevStmts();
 	this->AddStmtToPrev(line);
 }
 
-void NextExtractor::ExtractCallNode(CallStatementASTNode& call) {
+void NextExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	StmtNum line = call.GetLineIndex();
 	this->AddNextRelation(line);
 	this->ClearPrevStmts();
 	this->AddStmtToPrev(line);
 }
 
-void NextExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
+void NextExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
 	StmtNum line = print.GetLineIndex();
 	this->AddNextRelation(line);
 	this->ClearPrevStmts();
 	this->AddStmtToPrev(line);
 }
 
-void NextExtractor::ExtractReadNode(ReadStatementASTNode& read) {
+void NextExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
 	StmtNum line = read.GetLineIndex();
 	this->AddNextRelation(line);
 	this->ClearPrevStmts();
 	this->AddStmtToPrev(line);
 }
 
-void NextExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void NextExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	StmtNum parent_line = if_stmt.GetLineIndex();
 	this->AddNextRelation(parent_line);
 
@@ -90,7 +90,7 @@ void NextExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	}
 }
 
-void NextExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void NextExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	StmtNum parent_line = while_stmt.GetLineIndex();
 	this->AddNextRelation(parent_line);
 	this->ClearPrevStmts();
@@ -112,7 +112,7 @@ void NextExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
 	this->AddStmtToPrev(parent_line);
 }
 
-void NextExtractor::ExtractConditionExpression(ConditionExpression& cond) {}
+void NextExtractor::ExtractConditionExpression(const ConditionExpression& cond) {}
 
 void NextExtractor::AddStmtToPrev(StmtNum num) {
 	this->prev_stmts_.insert(num);
