@@ -11,9 +11,6 @@ public:
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllTransitiveRelations();
 private:
 	void OptimisedCFGTraversal(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations);
-	void HandleNextNodes(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations,
-		std::shared_ptr<std::unordered_set<StmtNum>> visited, std::shared_ptr<std::queue<StmtNum>> queue,
-		StmtNum ptr, StmtNum code_block_start, StmtNum code_block_end);
 	void PopulateNextTPairsWithinBlock(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations,
 		StmtNum code_block_start, StmtNum code_block_end);
 	void PopulateNextTPairsBetweenSameBlock(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations,
