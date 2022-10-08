@@ -6,7 +6,7 @@ void PrintStatementASTNode::SetVariable(Variable& v) {
 	var = v;
 }
 
-Variable PrintStatementASTNode::GetVariable() {
+Variable PrintStatementASTNode::GetVariable() const {
 	return var;
 }
 

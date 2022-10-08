@@ -6,7 +6,7 @@ void IfStatementASTNode::SetIfChildren(std::vector<std::shared_ptr<StatementASTN
 	ifChildren = if_c;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>>IfStatementASTNode::GetIfChildren() {
+std::vector<std::shared_ptr<StatementASTNode>>IfStatementASTNode::GetIfChildren() const {
 	return ifChildren;
 }
 
@@ -14,7 +14,7 @@ void IfStatementASTNode::SetElseChildren(std::vector<std::shared_ptr<StatementAS
 	elseChildren = else_c;
 }
 
-std::vector<std::shared_ptr<StatementASTNode>> IfStatementASTNode::GetElseChildren() {
+std::vector<std::shared_ptr<StatementASTNode>> IfStatementASTNode::GetElseChildren() const {
 	return elseChildren;
 }
 
@@ -22,7 +22,7 @@ void IfStatementASTNode::SetConditionExpression(shared_ptr<ConditionExpression> 
 	condition = cond;
 }
 
-shared_ptr<ConditionExpression> IfStatementASTNode::GetCondition() {
+shared_ptr<ConditionExpression> IfStatementASTNode::GetCondition() const {
 	return condition;
 }
 

@@ -6,11 +6,9 @@
 class PrintStatementASTNode : public StatementASTNode {
 public:
 	void SetVariable(Variable&);
-
-	Variable GetVariable();
+	Variable GetVariable() const;
 
 	virtual void Extract(NodeExtractor&) override;
-
 
 protected:
 	Variable var;

@@ -6,7 +6,7 @@ void CallStatementASTNode::SetProcedure(Procedure& p) {
 	proc = p;
 }
 
-Procedure CallStatementASTNode::GetProcedure() {
+Procedure CallStatementASTNode::GetProcedure() const {
 	return proc;
 }
 

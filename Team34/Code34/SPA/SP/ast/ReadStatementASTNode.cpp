@@ -6,7 +6,7 @@ void ReadStatementASTNode::SetVariable(Variable& v) {
 	var = v;
 }
 
-Variable ReadStatementASTNode::GetReadVariable() {
+Variable ReadStatementASTNode::GetReadVariable() const {
 	return var;
 }
 

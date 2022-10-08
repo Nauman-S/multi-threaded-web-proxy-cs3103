@@ -7,23 +7,16 @@
 class AssignStatementASTNode : public StatementASTNode {
 public:
 	void SetLeft(Variable&);
-
 	void SetInfix(string&);
-
 	void SetRightVars(std::vector<Variable>&);
-
 	void SetRightCons(std::vector<Constant>&);
 
-	Variable GetLeft();
-
-	std::string GetInfix();
-
-	std::vector<Variable> GetRightVars();
-
-	std::vector<Constant> GetRightCons();
+	Variable GetLeft() const;
+	std::string GetInfix() const;
+	std::vector<Variable> GetRightVars() const;
+	std::vector<Constant> GetRightCons() const;
 
 	virtual void Extract(NodeExtractor&) override;
-
 
 protected:
 	Variable left;

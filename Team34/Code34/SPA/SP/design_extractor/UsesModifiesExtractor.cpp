@@ -14,7 +14,7 @@
 
 UsesModifiesExtractor::UsesModifiesExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
 
-void UsesModifiesExtractor::ExtractProgramNode(ProgramNode& program) {
+void UsesModifiesExtractor::ExtractProgramNode(const ProgramNode& program) {
 	this->proc_node_map_ = program.GetProcNodeMapping();
 	std::vector<shared_ptr<ProcedureASTNode>> children = program.GetChildren();
 	for (shared_ptr<ProcedureASTNode> child : children) {
@@ -22,7 +22,7 @@ void UsesModifiesExtractor::ExtractProgramNode(ProgramNode& program) {
 	}
 }
 
-void UsesModifiesExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
+void UsesModifiesExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
 	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
@@ -33,7 +33,7 @@ void UsesModifiesExtractor::ExtractProcedureNode(ProcedureASTNode& proc) {
 * Uses: All variables on RHS of assignment
 * Modifies: Variable on LHS of assignment
 */
-void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign) {
+void UsesModifiesExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {
 	std::string proc_name = assign.GetParentProcIndex();
 	int line_no = assign.GetLineIndex();
 
@@ -50,7 +50,7 @@ void UsesModifiesExtractor::ExtractAssignmentNode(AssignStatementASTNode& assign
 	this->SetIndirectModifies(lhs);
 }
 
-void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
+void UsesModifiesExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 	Procedure called_proc = call.GetProcedure();
 	if (this->proc_node_map_.find(called_proc) == this->proc_node_map_.end()) {
 		return;
@@ -68,7 +68,7 @@ void UsesModifiesExtractor::ExtractCallNode(CallStatementASTNode& call) {
 }
 
 // Uses: variable used by print
-void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
+void UsesModifiesExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
 	Variable var = print.GetVariable();
 	std::string proc_name = print.GetParentProcIndex();
 	int line_no = print.GetLineIndex();
@@ -79,7 +79,7 @@ void UsesModifiesExtractor::ExtractPrintNode(PrintStatementASTNode& print) {
 }
 
 // Modifies: variable used by read
-void UsesModifiesExtractor::ExtractReadNode(ReadStatementASTNode& read) {
+void UsesModifiesExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
 	Variable var = read.GetReadVariable();
 	std::string proc_name = read.GetParentProcIndex();
 	int line_no = read.GetLineIndex();
@@ -89,7 +89,7 @@ void UsesModifiesExtractor::ExtractReadNode(ReadStatementASTNode& read) {
 	this->SetIndirectModifies(var);
 }
 
-void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
+void UsesModifiesExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
 	std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
 	cond->Extract(*this);
 
@@ -108,7 +108,7 @@ void UsesModifiesExtractor::ExtractIfNode(IfStatementASTNode& if_stmt) {
 	this->parent_smts_.pop_back();
 }
 
-void UsesModifiesExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) {
+void UsesModifiesExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
 	cond->Extract(*this);
 
@@ -121,7 +121,7 @@ void UsesModifiesExtractor::ExtractWhileNode(WhileStatementASTNode& while_stmt) 
 }
 
 // Uses: all variables involved in a conditional expression
-void UsesModifiesExtractor::ExtractConditionExpression(ConditionExpression& cond) {
+void UsesModifiesExtractor::ExtractConditionExpression(const ConditionExpression& cond) {
 	std::string proc_name = cond.GetParentProcIndex();
 	int line_no = cond.GetLineIndex();
 
