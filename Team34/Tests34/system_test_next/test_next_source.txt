@@ -1,5 +1,5 @@
 procedure wechat {
-	read name
+	read name;
 	while (user != name) {
 		print name;
 		user = other;
