@@ -101,6 +101,16 @@ void WritePKBManager::SetNext(StmtNum prev, StmtNum next)
 	pkb.next_manager_.SetNext(prev, next);
 }
 
+void WritePKBManager::SetCodeBlock(StmtNum start, StmtNum end)
+{
+	pkb.next_manager_.SetCodeBlock(start, end);
+}
+
+void WritePKBManager::SetOptimisedCFGEdge(StmtNum prev_start, StmtNum next_start)
+{
+	pkb.next_manager_.SetOptimisedCFGEdge(prev_start, next_start);
+}
+
 // APIs related to Assign Pattern relation
 void WritePKBManager::AddAssignPattern(StmtNum stmt_num, Expr expr)
 {

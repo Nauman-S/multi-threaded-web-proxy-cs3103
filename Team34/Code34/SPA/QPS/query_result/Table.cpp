@@ -121,7 +121,10 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 
 	for (vector<string>& that_row : that->rows_) {
 		string hashkey = that->ComputeHashkey(common_fields, that_row);
-		if (hashkey_to_rows.count(hashkey) == 0) continue;
+		if (hashkey_to_rows.count(hashkey) == 0)
+		{
+			continue;
+		}
 
 		//https://stackoverflow.com/questions/9046922/unordered-multimap-iterating-the-result-of-find-yields-elements-with-differe
 		auto hashkey_to_row_entries = hashkey_to_rows.equal_range(hashkey);

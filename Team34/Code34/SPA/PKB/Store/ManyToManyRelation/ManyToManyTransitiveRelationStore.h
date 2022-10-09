@@ -25,8 +25,7 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 	{
 		T ptr = queue.front();
 		queue.pop();
-		auto iter = s_to_t_map_.find(ptr);
-		if (iter == s_to_t_map_.end())
+		if (s_to_t_map_.find(ptr) == s_to_t_map_.end())
 		{
 			continue;
 		}

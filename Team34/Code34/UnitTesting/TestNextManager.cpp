@@ -200,18 +200,75 @@ namespace UnitTesting
 			Assert::AreEqual(0, int(next_manager_.GetAllPrevStmtsFromStmt(11)->size()));
 		}
 
-		TEST_METHOD(TestGetAllNextTRelations)
+		TEST_METHOD(TestGetAllNextTRelations_Sequential)
 		{
-			next_manager_.SetNext(1, 2);
-			next_manager_.SetNext(2, 3);
+			next_manager_.SetCodeBlock(1, 3);
 			Assert::AreEqual(3, int(next_manager_.GetAllNextTRelations()->size()));
-			next_manager_.SetNext(3, 6);
-			next_manager_.SetNext(4, 6);
-			next_manager_.SetNext(6, 7);
-			Assert::AreEqual(12, int(next_manager_.GetAllNextTRelations()->size()));
-			next_manager_.SetNext(4, 5);
-			next_manager_.SetNext(5, 4);
-			Assert::AreEqual(18, int(next_manager_.GetAllNextTRelations()->size()));
+			next_manager_.SetCodeBlock(4, 6);
+			next_manager_.SetOptimisedCFGEdge(1, 4);
+			Assert::AreEqual(15, int(next_manager_.GetAllNextTRelations()->size()));
+		}
+
+		TEST_METHOD(TestGetAllNextTRelations_WhileLoop)
+		{
+			next_manager_.SetCodeBlock(1, 2);
+			next_manager_.SetCodeBlock(3, 3);
+			next_manager_.SetOptimisedCFGEdge(1, 3);
+			next_manager_.SetCodeBlock(4, 5);
+			next_manager_.SetOptimisedCFGEdge(3, 4);
+			next_manager_.SetOptimisedCFGEdge(4, 3);
+			next_manager_.SetCodeBlock(6, 7);
+			next_manager_.SetOptimisedCFGEdge(3, 6);
+			Assert::AreEqual(27, int(next_manager_.GetAllNextTRelations()->size()));
+		}
+
+		TEST_METHOD(TestGetAllNextTRelations_IfElse)
+		{
+			next_manager_.SetCodeBlock(1, 2);
+			next_manager_.SetCodeBlock(3, 3);
+			next_manager_.SetCodeBlock(4, 5);
+			next_manager_.SetCodeBlock(6, 7);
+			next_manager_.SetCodeBlock(8, 8);
+			next_manager_.SetOptimisedCFGEdge(1, 3);
+			next_manager_.SetOptimisedCFGEdge(3, 4);
+			next_manager_.SetOptimisedCFGEdge(3, 6);
+			next_manager_.SetOptimisedCFGEdge(4, 8);
+			next_manager_.SetOptimisedCFGEdge(6, 8);
+			Assert::AreEqual(24, int(next_manager_.GetAllNextTRelations()->size()));
+		}
+
+		TEST_METHOD(TestGetAllNextTRelations_NestedWhileIfElse)
+		{
+			next_manager_.SetCodeBlock(1, 2);
+			next_manager_.SetCodeBlock(3, 3);
+			next_manager_.SetCodeBlock(4, 5);
+			next_manager_.SetCodeBlock(6, 7);
+			next_manager_.SetCodeBlock(8, 8);
+			next_manager_.SetOptimisedCFGEdge(1, 3);
+			next_manager_.SetOptimisedCFGEdge(3, 4);
+			next_manager_.SetOptimisedCFGEdge(3, 6);
+			next_manager_.SetOptimisedCFGEdge(4, 3);
+			next_manager_.SetOptimisedCFGEdge(6, 3);
+			next_manager_.SetOptimisedCFGEdge(3, 8);
+			Assert::AreEqual(43, int(next_manager_.GetAllNextTRelations()->size()));
+		}
+
+		TEST_METHOD(TestGetAllNextTRelations_NestedIfElseWhile)
+		{
+			next_manager_.SetCodeBlock(1, 2);
+			next_manager_.SetCodeBlock(3, 3);
+			next_manager_.SetCodeBlock(4, 5);
+			next_manager_.SetCodeBlock(6, 6);
+			next_manager_.SetCodeBlock(7, 7);
+			next_manager_.SetCodeBlock(8, 8);
+			next_manager_.SetOptimisedCFGEdge(1, 3);
+			next_manager_.SetOptimisedCFGEdge(3, 4);
+			next_manager_.SetOptimisedCFGEdge(3, 6);
+			next_manager_.SetOptimisedCFGEdge(6, 7);
+			next_manager_.SetOptimisedCFGEdge(7, 6);
+			next_manager_.SetOptimisedCFGEdge(4, 8);
+			next_manager_.SetOptimisedCFGEdge(6, 8);
+			Assert::AreEqual(27, int(next_manager_.GetAllNextTRelations()->size()));
 		}
 	};
 }
