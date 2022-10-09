@@ -461,7 +461,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetNextStmtsFromStm
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type)
 {
-	std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
+	std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetPrevStmtsFromStmt(stmt);
 	return FilterStmtSetByType(prev_stmts, prev_stmt_type);
 }
 
