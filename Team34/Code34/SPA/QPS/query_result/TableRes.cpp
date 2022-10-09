@@ -1,6 +1,7 @@
 #include "TableRes.h"
 
 #include <assert.h>
+#include <algorithm>
 
 #include "../../Utils/type/TypeDef.h"
 
@@ -17,7 +18,12 @@ using StrPair = std::pair<string, string>;
 shared_ptr<vector<string>> TableRes::Columns()
 {
     auto vec = std::make_shared<vector<string>>();
-    for (auto& [syn, idx] : syn_to_col_) {
+    vector<std::pair<string, int>> entries(syn_to_col_.begin(), syn_to_col_.end());
+    auto comp = [](std::pair<string, int>& a, std::pair<string, int>& b) {
+        return a.second < b.second;
+    };
+    std::sort(entries.begin(), entries.end(), comp);
+    for (auto& [syn, idx] : entries) {
         vec->push_back(syn);
     }
 
