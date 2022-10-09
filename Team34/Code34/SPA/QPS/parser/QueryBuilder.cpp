@@ -37,6 +37,7 @@
 #include "../pattern/WhilePattern.h"
 #include "../with_clause/With.h"
 
+
 using std::shared_ptr;
 using std::vector;
 
@@ -63,7 +64,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 	while (this->lexer_->HasDesignEntity()) {
 		curr_synonyms = ParseDeclarationStatement();
-		for (auto syn : curr_synonyms) {
+		for (auto& syn : curr_synonyms) {
 			if (!used_names.count(syn->GetName())) {
 				used_names.insert(syn->GetName());
 				synonyms.push_back(syn);
@@ -562,7 +563,7 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
 	
 	lexer_->MatchQuotationMarks();
 	
-	string expr_str = GetExpressionStr();
+	string infix_expr_str = GetExpressionStr();
 
 	lexer_->MatchQuotationMarks();
 
@@ -570,12 +571,14 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
 		lexer_->MatchUnderScore();
 
 	}
+
+	string postfix_expr_str = postfix_converter_.InfixToPostfix(infix_expr_str);
 	
 	if (is_partial_expr) {
-		return shared_ptr<PartialExprSpec>(new PartialExprSpec(expr_str));
+		return shared_ptr<PartialExprSpec>(new PartialExprSpec(infix_expr_str, postfix_expr_str));
 	}
 	else {
-		return shared_ptr<ExactExprSpec>(new ExactExprSpec(expr_str));
+		return shared_ptr<ExactExprSpec>(new ExactExprSpec(infix_expr_str, postfix_expr_str));
 	}
 
 }

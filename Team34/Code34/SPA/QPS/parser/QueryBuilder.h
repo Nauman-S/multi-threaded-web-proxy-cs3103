@@ -1,22 +1,16 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "QueryLexer.h"
-
 #include "..\reference\Ref.h"
 #include "..\reference\StmtRef.h"
 #include "..\relation\Rel.h"
 #include "..\reference\VarRef.h"
 #include "..\pattern\Pattern.h"
 #include "..\Query.h"
-
-
-
-#ifndef QUERYBUILDER_H
-#define QUERYBUILDER_H
-
-#include <memory>
+#include "../../Utils/algo/PostfixConverter.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -26,7 +20,8 @@ class QueryBuilder
 private:
 	shared_ptr<QueryLexer> lexer_;
 	vector<shared_ptr<Ref>> declared_synonyms_;
-	//std::vector<shared_ptr<Rel>> relations_;
+	PostfixConverter postfix_converter_;
+	
 
 	std::unordered_set<RefType> stmt_ref_types = std::unordered_set<RefType>({ RefType::kAssignRef, RefType::kCallRef, RefType::kIfRef, RefType::kPrintRef, RefType::kReadRef, RefType::kWhileRef });
 
@@ -81,12 +76,9 @@ private:
 	
 
 public:
-
 	QueryBuilder();
 	std::shared_ptr<Query> GetQuery(const std::string& query_string);
 };
-
-#endif
 
 
 
