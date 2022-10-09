@@ -1,0 +1,5 @@
+8 - Basic next
+stmt s;
+Select s such that Next(s, 2)
+1, 7, 8
+5000
