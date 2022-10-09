@@ -305,6 +305,8 @@ namespace IntegrationTesting
 			Assert::IsTrue(this->read->CheckNext(10, 11));
 			Assert::IsTrue(this->read->CheckNext(11, 12));
 			Assert::IsFalse(this->read->CheckNext(12, 13));
+			Assert::IsFalse(this->read->CheckNext(10, 9));
+			Assert::IsFalse(this->read->CheckNext(11, 9));
 
 			// Test Next for split route between last statement in if statements
 			Assert::IsTrue(this->read->CheckNext(5, 7));
@@ -330,6 +332,13 @@ namespace IntegrationTesting
 			Assert::IsTrue(this->read->CheckNext(49, 53));
 			Assert::IsTrue(this->read->CheckNext(51, 53));
 			Assert::IsTrue(this->read->CheckNext(52, 53));
+
+			// Test if inside while statements 
+			Assert::IsTrue(this->read->CheckNext(57, 54));
+			Assert::IsTrue(this->read->CheckNext(58, 54));
+			Assert::IsFalse(this->read->CheckNext(56, 54));
+			Assert::IsFalse(this->read->CheckNext(55, 54));
+			Assert::IsFalse(this->read->CheckNext(54, 54));
 		}
 	};
 }
