@@ -92,3 +92,14 @@ procedure IfInIf {
    }
    x = 1;
 }
+
+procedure IfInWhile {
+   while (x != 0) {
+     x = 2;
+     if (x == 2) then {
+        x = 5;
+     } else {
+        x = 8;
+     }
+   }
+}

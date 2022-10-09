@@ -97,15 +97,11 @@ void NextExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
 	this->AddStmtToPrev(parent_line);
 
 	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
-	StmtNum last_stmt = 0; // Remember last statement to set back to parent line
 	for (std::shared_ptr<StatementASTNode> child : children) {
 		child->Extract(*this);
-		last_stmt = child->GetLineIndex();
 	}
+	this->AddNextRelation(parent_line);
 
-	assert(last_stmt != 0 && "While loops should have at least one statement");
-	this->AddNextRelation(last_stmt, parent_line);
-	
 	// Previous statements on leaving a while node should contain 
 	// only the while container
 	this->ClearPrevStmts();
