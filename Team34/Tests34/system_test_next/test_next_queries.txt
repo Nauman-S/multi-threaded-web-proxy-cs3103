@@ -1,0 +1,95 @@
+1 - Basic next
+stmt s;
+Select s such that Next(1, s);
+2
+5000
+2 - Basic next
+stmt s;
+Select s such that Next(3, s);
+4
+5000
+3 - Basic next
+stmt s;
+Select s such that Next(17, s);
+
+5000
+4 - Basic next
+stmt s;
+Select s such that Next(2, s);
+3, 9
+5000
+5 - Basic next
+stmt s;
+Select s such that Next(6, s);
+7, 8
+6 - Basic next
+stmt s;
+Select s such that Next(7, s)
+2
+5000
+7 - Basic next
+stmt s;
+Select s such that Next(8, s)
+2
+5000
+8 - Basic next
+stmt s;
+Select s such that Next(s, 2)
+1, 7, 8
+5000
+9 - Basic next
+stmt s;
+Select s such that Next(s, 10)
+9, 15
+5000
+10 - Basic next
+stmt s;
+Select s such that Next(s, 17)
+10, 16
+5000
+11 - Basic next*
+stmt s;
+Select s such that Next*(1, s)
+2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+5000
+12 - Basic next*
+stmt s;
+Select s such that Next*(6, s)
+2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+5000
+13 - Basic next*
+stmt s;
+Select s such that Next*(13, s)
+10, 11, 12, 13, 14, 15, 17
+5000
+14 - Basic next*
+stmt s;
+Select s such that Next*(s, 6)
+1, 2, 3, 4, 5, 6, 7, 8
+5000
+14 - Basic next*
+stmt s;
+Select s such that Next*(s, 16)
+1, 2, 3, 4, 5, 6, 7, 8, 9
+5000
+15 - Loop next*
+stmt s;
+Select s such that Next*(s, s)
+2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15
+5000
+16 - wildcard next
+stmt s;
+Select s such that Next(_,1)
+
+5000
+17 - wildcard next
+stmt s;
+Select s such that Next(17,_)
+
+5000
+18 - wildcard next*
+stmt s; variable v;
+Select s such that Next*(s,_) and Modifies(s,v)
+1, 4, 5, 7, 8, 12, 14, 15, 16, 18, 21
+5000
+
