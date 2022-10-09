@@ -36,10 +36,22 @@ public:
 	virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
+	void SetDirectEdge(StmtNum);
+	void SetBlockEdge(StmtNum);
+
 	std::set<StmtNum> prev_stmts_;
-	void AddStmtToPrev(StmtNum);
+	void AddPrevStmt(StmtNum);
 	void ClearPrevStmts();
+
+	std::set<StmtNum> prev_blocks_;
+	StmtNum block_start_stmt_ = 0;
+	StmtNum block_end_stmt_ = 0;
+	bool is_block_end_ = true;
+
+	void AddPrevBlockStart(StmtNum);
+	void ClearPrevBlocks();
+	void CreateBlock();
+	void MarkBlockEnd();
 	
-	void AddNextRelation(StmtNum, StmtNum);
 	void AddNextRelation(StmtNum);
 };

@@ -113,6 +113,7 @@
     <ClCompile Include="QPS\relation\NextTRel.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
+    <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -259,5 +260,6 @@
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
+    <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
   </ItemGroup>
 </Project>
