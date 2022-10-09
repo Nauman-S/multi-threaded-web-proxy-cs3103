@@ -89,5 +89,8 @@
     <ClCompile Include="SP\TestSourceValidator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SP\TestNextExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

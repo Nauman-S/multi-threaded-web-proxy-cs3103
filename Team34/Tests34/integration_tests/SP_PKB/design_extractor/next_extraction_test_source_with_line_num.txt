@@ -103,3 +103,10 @@ procedure IfInWhile {
      }
    }
 }
+
+procedure SingleLevel {
+59.   x = 2;
+60.   read x;
+61.   print y;
+62.   call IfInWhile;
+}
