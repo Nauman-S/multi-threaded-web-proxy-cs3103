@@ -22,3 +22,11 @@ void ProcedureASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractProcedureNode(*this);
 }
 
+string ProcedureASTNode::Stringify() {
+	string tp = "Procedure";
+	string children_s = "";
+	for (shared_ptr<StatementASTNode> node : children) {
+		children_s += node->Stringify();
+	}
+	return tp + children_s;
+}
