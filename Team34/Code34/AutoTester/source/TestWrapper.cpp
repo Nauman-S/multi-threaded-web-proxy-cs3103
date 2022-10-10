@@ -57,7 +57,7 @@ void TestWrapper::parse(std::string filename) {
 	}
 	else {
 		this->is_valid_source_ = false;
-	    cout << "Errors found in Source Code" << endl;
+	    cout << "\n\n***** Errors found in Source Code *****\n\n" << endl;
 	}
 }
 
