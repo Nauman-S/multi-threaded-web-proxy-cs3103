@@ -36,10 +36,10 @@ string IfStatementASTNode::Stringify() {
 	string else_s = "";
 	string condition_s = condition->Stringify();
 	for (shared_ptr<StatementASTNode> node : ifChildren) {
-		if_s += node->Stringify()
+		if_s += node->Stringify();
 	}
 	for (shared_ptr<StatementASTNode> node : elseChildren) {
-		else_s += node->Stringify()
+		else_s += node->Stringify();
 	}
 	return tp + condition_s + if_s + else_s;
 }

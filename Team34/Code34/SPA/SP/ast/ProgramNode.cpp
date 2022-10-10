@@ -27,7 +27,7 @@ void ProgramNode::Extract(NodeExtractor& extractor) {
 string ProgramNode::Stringify() {
 	string tp = "Program";
 	string children_s = "";
-	for (shared_ptr<ProcedureASTNode> node : children) {
+	for (shared_ptr<ProcedureASTNode> node : children_) {
 		children_s += node->Stringify();
 	}
 	return tp + children_s;

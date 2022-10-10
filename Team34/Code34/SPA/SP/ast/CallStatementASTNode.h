@@ -9,6 +9,7 @@ public:
 	Procedure GetProcedure() const;
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	Procedure proc;
