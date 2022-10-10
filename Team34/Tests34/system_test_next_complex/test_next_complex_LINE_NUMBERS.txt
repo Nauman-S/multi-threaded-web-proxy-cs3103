@@ -1,0 +1,78 @@
+procedure CS3203 {
+	read stuName;                      // 1
+	read stuNumber;                    // 2
+	read year;                         // 3
+	print stuName;                     // 4
+	print stuNumber;                   // 5
+	print year;                        // 6
+	if((year < (5*4+3)%22)) then {     // 7
+		call highSchool;               // 8
+		while(applyUni != success) {   // 9
+			print applyUni;            // 10
+		}
+		year = 0;                      // 11
+		year = year + 1;               // 12
+	} else {
+		if(CS2103 != (1 + 1 == 2)) then {                   // 13
+			while(CS2103 != (999 != 1000)) {                // 14
+				if((CS2030 != 1) || (CS2040 == 0)) then {   // 15
+					if(!(CS1010s)) then {           // 16
+						call CS1010s;               // 17
+					} else {
+						while(CS2030 != 1) {        // 18
+							call CS2030;            // 19
+						}
+						while(CS2040 == 0) {        // 20
+							call CS2040;            // 21
+						}
+					}
+				} else {
+					call CS2103;                    // 22
+				}
+			}
+		} else {
+			proj = i + j % k;                       // 23
+			while(week < 13) {                      // 24
+				CA = a + b % c * d;                 // 25
+				if(1 == 3 - 2) then {               // 26
+					print blabla;                   // 27
+				} else {
+					print plapla;                   // 28
+				}
+			}
+			if(score > 85) then {                   // 29
+				print A;                            // 30
+			} else {
+				print fWord;                        // 31
+			}
+		}
+	}
+}
+
+procedure CS1010s {
+	print CS1010sPass;          // 32
+}
+
+procedure CS2030 {
+	print CS2030Pass;           // 33
+}
+
+procedure CS2040 {
+	print CS2040Pass;           // 34
+}
+
+procedure CS2103 {
+	print CS2103Pass;           // 35
+}
+
+procedure highSchool {
+	while(age < 18) {           // 36
+		age = age + 1;          // 37
+		print age;              // 38
+	}
+	if(age > 18) then {         // 39
+		print applyPoly;        // 40
+	} else {
+		print applyUni;         // 41
+	}
+}
