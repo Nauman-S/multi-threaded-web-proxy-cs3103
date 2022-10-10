@@ -13,3 +13,9 @@ Variable ReadStatementASTNode::GetReadVariable() const {
 void ReadStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractReadNode(*this);
 }
+
+string ReadStatementASTNode::Stringify() {
+	string tp = "Read";
+	string var_s = var;
+	return tp + var_s;
+}

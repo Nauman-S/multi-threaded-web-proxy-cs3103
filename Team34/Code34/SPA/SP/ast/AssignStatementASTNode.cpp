@@ -37,3 +37,18 @@ string AssignStatementASTNode::GetInfix() const {
 void AssignStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractAssignmentNode(*this);
 }
+
+string AssignStatementASTNode::Stringify() {
+	string tp = "Assign";
+	string left_s = left;
+	string right_cons_s = "";
+	string right_vars_s = "";
+	string infix_s = infix;
+	for (Constant con : right_cons) {
+		right_cons_s += to_string(con);
+	}
+	for (Variable var : right_vars) {
+		right_vars_s += var;
+	}
+	return tp + left_s + left_s + right_cons_s + right_vars_s;
+}

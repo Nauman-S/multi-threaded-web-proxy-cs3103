@@ -18,6 +18,7 @@ public:
 	Procedure GetParentProcIndex() const;
 
 	virtual void Extract(NodeExtractor&) = 0;
+	virtual string Stringify() = 0;
 
 	bool operator < (const StatementASTNode& c) const
 	{

@@ -13,6 +13,7 @@ public:
 	std::vector<Constant> GetConstants() const;
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	std::vector<Variable> vars;

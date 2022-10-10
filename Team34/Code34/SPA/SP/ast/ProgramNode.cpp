@@ -23,3 +23,12 @@ void ProgramNode::AddProcedure(std::shared_ptr<ProcedureASTNode> proc) {
 void ProgramNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractProgramNode(*this);
 }
+
+string ProgramNode::Stringify() {
+	string tp = "Program";
+	string children_s = "";
+	for (shared_ptr<ProcedureASTNode> node : children_) {
+		children_s += node->Stringify();
+	}
+	return tp + children_s;
+}

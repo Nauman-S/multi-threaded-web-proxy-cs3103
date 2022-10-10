@@ -18,6 +18,7 @@ public:
 	void AddProcedure(std::shared_ptr<ProcedureASTNode>);
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 private:
 	std::vector<std::shared_ptr<ProcedureASTNode>> children_;

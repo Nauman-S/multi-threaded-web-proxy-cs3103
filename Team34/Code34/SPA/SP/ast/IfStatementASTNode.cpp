@@ -29,3 +29,17 @@ shared_ptr<ConditionExpression> IfStatementASTNode::GetCondition() const {
 void IfStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractIfNode(*this);
 }
+
+string IfStatementASTNode::Stringify() {
+	string tp = "if";
+	string if_s = "";
+	string else_s = "";
+	string condition_s = condition->Stringify();
+	for (shared_ptr<StatementASTNode> node : ifChildren) {
+		if_s += node->Stringify();
+	}
+	for (shared_ptr<StatementASTNode> node : elseChildren) {
+		else_s += node->Stringify();
+	}
+	return tp + condition_s + if_s + else_s;
+}

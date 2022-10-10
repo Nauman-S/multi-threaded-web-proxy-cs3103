@@ -1,6 +1,7 @@
 #pragma once
 
 # include <vector>
+# include <string>
 # include "StatementASTNode.h"
 #include "../../Utils/type/TypeDef.h"
 
@@ -17,6 +18,7 @@ public:
 	std::vector<Constant> GetRightCons() const;
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	Variable left;

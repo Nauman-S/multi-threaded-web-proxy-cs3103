@@ -21,3 +21,13 @@ shared_ptr<ConditionExpression> WhileStatementASTNode::GetCondition() const {
 void WhileStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractWhileNode(*this);
 }
+
+string WhileStatementASTNode::Stringify() {
+	string tp = "While";
+	string condition_s = condition->Stringify();
+	string children_s = "";
+	for (shared_ptr<StatementASTNode> node : children) {
+		children_s += node->Stringify();
+	}
+	return tp + condition_s + children_s;
+}
