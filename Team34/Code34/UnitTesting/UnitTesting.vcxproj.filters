@@ -92,5 +92,8 @@
     <ClCompile Include="SP\TestNextExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SP\TestSourceParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
