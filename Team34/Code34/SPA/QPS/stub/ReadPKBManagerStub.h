@@ -100,4 +100,6 @@ class ReadPKBManagerStub : public ReadPKBManager
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt, RefType children_type) override;
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt, RefType parent_type) override;
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations() override;
+
+	virtual const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
 };

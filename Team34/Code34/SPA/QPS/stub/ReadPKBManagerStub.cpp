@@ -409,3 +409,13 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManagerStub::Ge
 
 	return res;
 }
+
+const std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetAllVariables()
+{
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
+	res->insert("x");
+	res->insert("y");
+	res->insert("z");
+
+	return res;
+}
