@@ -18,6 +18,7 @@ public:
 	std::shared_ptr<ConditionExpression> GetCondition() const;
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	std::shared_ptr<ConditionExpression> condition;

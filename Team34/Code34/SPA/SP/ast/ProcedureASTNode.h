@@ -17,6 +17,7 @@ public:
 	void SetChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	Procedure proc;

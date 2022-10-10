@@ -13,3 +13,9 @@ Variable PrintStatementASTNode::GetVariable() const {
 void PrintStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractPrintNode(*this);
 }
+
+string PrintStatementASTNode::Stringify() {
+	string tp = "Print";
+	string var_s = var;
+	return tp + var_s;
+}

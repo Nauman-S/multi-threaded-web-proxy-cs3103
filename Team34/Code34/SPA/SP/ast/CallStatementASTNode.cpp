@@ -14,3 +14,8 @@ void CallStatementASTNode::Extract(NodeExtractor& extractor) {
 	extractor.ExtractCallNode(*this);
 }
 
+string CallStatementASTNode::Stringify() {
+	string tp = "Call";
+	string proc_s = proc;
+	return tp + proc_s;
+}

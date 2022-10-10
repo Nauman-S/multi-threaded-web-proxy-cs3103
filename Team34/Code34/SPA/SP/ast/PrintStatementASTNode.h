@@ -9,6 +9,7 @@ public:
 	Variable GetVariable() const;
 
 	virtual void Extract(NodeExtractor&) override;
+	virtual string Stringify() override;
 
 protected:
 	Variable var;
