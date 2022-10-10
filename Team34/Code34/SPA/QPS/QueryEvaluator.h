@@ -39,6 +39,8 @@ protected:
 public:
 	QueryEvaluator(Query query);
 
+	QueryEvaluator(Query query, DataRetriever data_retriever);
+
 	bool Evaluate();
 
 	std::vector<std::string> ExtractResult();
