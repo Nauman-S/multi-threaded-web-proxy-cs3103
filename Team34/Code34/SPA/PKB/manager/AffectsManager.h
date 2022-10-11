@@ -15,7 +15,7 @@ public:
 
 private:
 	bool IsPossibleAffectPair(StmtNum, StmtNum);
-	bool IsAffected(Variable, StmtNum);
+	bool IsDirectlyModified(Variable, StmtNum);
 
 	Variable GetModifiedVarInAssign(StmtNum);
 	bool IsStatementType(StmtNum, RefType);

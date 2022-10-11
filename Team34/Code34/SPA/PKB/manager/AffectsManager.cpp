@@ -9,7 +9,7 @@ bool AffectsManager::CheckAffects(StmtNum cause, StmtNum effect) {
 		return false;
 	}
 
-	Variable modified_var = GetModifiedVarInAssign(cause);
+	Variable& modified_var = GetModifiedVarInAssign(cause);
 
 	std::unordered_set<StmtNum> visited;
 	std::stack<StmtNum> stack;
@@ -32,8 +32,8 @@ bool AffectsManager::CheckAffects(StmtNum cause, StmtNum effect) {
 				return true;
 			}
 
-			if (IsAffected(modified_var, *child)) {
-				// Backtrack once there is a statement that affects the cause statement
+			if (IsDirectlyModified(modified_var, *child)) {
+				// Backtrack once there is a statement that directly modified variable in the cause statement
 				continue;
 			}
 			stack.push(*child);
@@ -54,9 +54,9 @@ bool AffectsManager::IsPossibleAffectPair(StmtNum cause, StmtNum effect) {
 	return pkb.uses_manager_.CheckUses(effect, modified_var);
 }
 
-// Check whether the variable is modified by an assignment,
+// Check whether the variable is directly modified by an assignment,
 // read or procedure call statement
-bool AffectsManager::IsAffected(Variable var, StmtNum stmt) {
+bool AffectsManager::IsDirectlyModified(Variable var, StmtNum stmt) {
 	if (!IsAssignStmt(stmt) || !IsReadStmt(stmt) || !IsCallStmt(stmt)) {
 		return false;
 	}
