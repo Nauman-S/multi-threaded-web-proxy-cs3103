@@ -1,0 +1,15 @@
+procedure proc1 {
+    read x;
+    while (x > 2) {
+        y = 1 + 2 * 3 / 4 % 5;
+    }
+    if (y > x) then {
+        call proc2;
+    } else {
+        print z;
+    }
+}
+
+procedure proc2 {
+    print x;
+}

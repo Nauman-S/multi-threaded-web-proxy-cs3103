@@ -18,13 +18,18 @@ namespace UnitTesting
 			SourceParser parser = SourceParser();
 			std::shared_ptr<ProgramNode> root = parser.Parse(base_dir + "/multiple_proc.txt");
 			string actual = root->Stringify();
-			ofstream outfile;
-			outfile.open("x.txt");
-			outfile << actual << endl;
 			string expected = "ProgramProcedureReadxReadzCallSecondProcedureAssignxx0Assignii5\
 WhileCondition0iAssignxx2xyCallThirdAssignii1iifCondition1xAssignxx1xAssignzz1AssignzzzxiAssignyy2z\
 AssignxxxyzProcedureAssignzz5AssignvvzPrintv";
 			Assert::IsTrue(actual == expected);
 		};
+        TEST_METHOD(BasicStmt) {
+            SourceParser parser = SourceParser();
+            std::shared_ptr<ProgramNode> root = parser.Parse(base_dir + "/basic_stmt.txt");
+            string actual = root->Stringify();
+            string expected = "ProgramProcedureReadxWhileCondition2xAssignyy12345ifConditionyx\
+Callproc2PrintzProcedurePrintx";
+            Assert::IsTrue(actual == expected);
+        };
 	};
 }
