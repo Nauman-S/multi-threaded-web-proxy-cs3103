@@ -15,7 +15,7 @@ namespace UnitTesting
 		TEST_METHOD(BasicStmt)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -68,7 +68,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "x"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == true);
@@ -77,7 +77,7 @@ namespace UnitTesting
 		TEST_METHOD(ChildProcedure)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "parent"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -90,7 +90,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -99,7 +99,7 @@ namespace UnitTesting
 		TEST_METHOD(ComplexCalls)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -176,7 +176,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -185,7 +185,7 @@ namespace UnitTesting
 		TEST_METHOD(CyclicCall)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -217,7 +217,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -226,13 +226,13 @@ namespace UnitTesting
 		TEST_METHOD(EmptyBody)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "empty"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -241,7 +241,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidArithmeticFormula_1)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken>{
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -275,7 +275,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightRound, ")"),
 				SourceToken(SourceTokenType::kRightRound, ")"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -284,7 +284,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidArithmeticFormula_2)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -318,7 +318,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightRound, ")"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -327,7 +327,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidConditionExpression_1)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -383,7 +383,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -392,7 +392,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidConditionExpression_2)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -448,7 +448,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -457,7 +457,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidConditionExpression_3)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -511,7 +511,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -520,7 +520,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidKeyword_1)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "Procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -528,7 +528,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "x"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -537,7 +537,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidKeyword_2)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -546,7 +546,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -555,7 +555,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidKeyword_3)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -577,7 +577,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -586,7 +586,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidKeyword_4)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -602,7 +602,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -611,7 +611,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidKeyword_5)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -628,7 +628,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -637,7 +637,7 @@ namespace UnitTesting
 		TEST_METHOD(KeywordVars)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -665,7 +665,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -674,7 +674,7 @@ namespace UnitTesting
 		TEST_METHOD(LongProgram)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "main"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -809,7 +809,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "cenY"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -818,7 +818,7 @@ namespace UnitTesting
 		TEST_METHOD(Nesting)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -860,7 +860,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -869,7 +869,7 @@ namespace UnitTesting
 		TEST_METHOD(InvalidSemiColon)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "main"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -1003,7 +1003,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "cenY"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
@@ -1012,7 +1012,7 @@ namespace UnitTesting
 		TEST_METHOD(ValidArithmeticFormula)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -1046,7 +1046,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
@@ -1055,7 +1055,7 @@ namespace UnitTesting
 		TEST_METHOD(ValidConditionExpression)
 		{
 			SourceValidator validator = SourceValidator();
-			vector<SourceToken> stub = {
+			shared_ptr<vector<SourceToken>> stub (new vector<SourceToken> {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
 				SourceToken(SourceTokenType::kLeftCurly, "{"),
@@ -1111,7 +1111,7 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
-			};
+			});
 			bool actual = validator.Validate(stub);
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
