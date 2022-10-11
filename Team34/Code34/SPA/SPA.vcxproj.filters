@@ -261,5 +261,6 @@
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
     <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
+    <ClInclude Include="QPS\AttrType.h" />
   </ItemGroup>
 </Project>
