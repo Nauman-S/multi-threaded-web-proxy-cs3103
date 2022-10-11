@@ -41,8 +41,8 @@ class QueryEvaluator {
 
  public:
   QueryEvaluator(Query query);
-
-  bool Evaluate();
+  QueryEvaluator(Query query, DataRetriever data_retriever);
+	bool Evaluate();
 
   std::vector<std::string> ExtractResult();
 };
