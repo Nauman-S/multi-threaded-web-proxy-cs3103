@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
+#include <fstream>
+
 #include "../../SPA/SP/SourceParser.h"
 #include "../../SPA/SP/tokenizer/SourceToken.h"
-#include <fstream>
+#include "../../SPA/SP/tokenizer/SourceLexer.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
@@ -16,16 +19,19 @@ namespace UnitTesting
 		TEST_METHOD(MultipleProc)
 		{
 			SourceParser parser = SourceParser();
-			std::shared_ptr<ProgramNode> root = parser.Parse(base_dir + "/multiple_proc.txt");
+            SourceLexer lexer = SourceLexer(base_dir + "/multiple_proc.txt");
+			std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
 			string actual = root->Stringify();
 			string expected = "ProgramProcedureReadxReadzCallSecondProcedureAssignxx0Assignii5\
 WhileCondition0iAssignxx2xyCallThirdAssignii1iifCondition1xAssignxx1xAssignzz1AssignzzzxiAssignyy2z\
 AssignxxxyzProcedureAssignzz5AssignvvzPrintv";
 			Assert::IsTrue(actual == expected);
 		};
+
         TEST_METHOD(BasicStmt) {
             SourceParser parser = SourceParser();
-            std::shared_ptr<ProgramNode> root = parser.Parse(base_dir + "/basic_stmt.txt");
+            SourceLexer lexer = SourceLexer(base_dir + "/basic_stmt.txt");
+            std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
             string actual = root->Stringify();
             string expected = "ProgramProcedureReadxWhileCondition2xAssignyy12345ifConditionyx\
 Callproc2PrintzProcedurePrintx";

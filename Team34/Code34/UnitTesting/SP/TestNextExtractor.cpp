@@ -3,10 +3,13 @@
 
 #include <memory>
 
-#include "../../SPA/SP/design_extractor/NextExtractor.h"
-#include "../../SPA/SP/stub/WritePKBManagerStub.h"
-#include "../../SPA/SP/ast/ProgramNode.h"
 #include "../../SPA/SP/SourceParser.h"
+#include "../../SPA/SP/tokenizer/SourceLexer.h"
+
+#include "../../SPA/SP/stub/WritePKBManagerStub.h"
+
+#include "../../SPA/SP/design_extractor/NextExtractor.h"
+#include "../../SPA/SP/ast/ProgramNode.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -24,7 +27,8 @@ namespace UnitTesting
 			NextExtractor extractor = NextExtractor(write_stub);
 
 			SourceParser parser;
-			std::shared_ptr<ProgramNode> root = parser.Parse(string("../../Tests34/integration_tests/SP_PKB/design_extractor/next_extraction_test_source.txt"));
+			SourceLexer lexer = SourceLexer("../../Tests34/integration_tests/SP_PKB/design_extractor/next_extraction_test_source.txt");
+			std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
 			root->Extract(extractor);
 		}
 

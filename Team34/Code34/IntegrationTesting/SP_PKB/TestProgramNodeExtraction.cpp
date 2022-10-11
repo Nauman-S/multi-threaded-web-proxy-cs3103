@@ -9,7 +9,7 @@
 #include "../SPA/PKB/WritePKBManager.h"
 
 #include "../SPA/SP/SourceParser.h"
-#include "../SPA/SP/SourceParser.h"
+#include "../SPA/SP/tokenizer/SourceLexer.h"
 
 #include "../SPA/SP/design_extractor/EntityExtractor.h"
 #include "../SPA/SP/design_extractor/UsesModifiesExtractor.h"
@@ -35,7 +35,8 @@ namespace IntegrationTesting
 		
 		TestProgramNodeExtraction() {
 			SourceParser parser = SourceParser();
-			this->common_root = parser.Parse(this->base_dir + "design_extractor_test_source.txt");
+			SourceLexer lexer = SourceLexer(this->base_dir + "design_extractor_test_source.txt");
+			this->common_root = parser.Parse(lexer.GetAllTokens());
 			this->read = ReadPKBManager::GetInstance();
 			this->write = WritePKBManager::GetInstance();
 		}
@@ -239,7 +240,8 @@ namespace IntegrationTesting
 		TEST_METHOD(TestCallsRelationPopulation) {
 			string calls_test_file = this->base_dir + "calls_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
-			shared_ptr<ProgramNode> calls_root = parser.Parse(calls_test_file);
+			SourceLexer lexer = SourceLexer(calls_test_file);
+			shared_ptr<ProgramNode> calls_root = parser.Parse(lexer.GetAllTokens());
 
 			CallsExtractor extractor(this->write);
 			calls_root->Extract(extractor);
@@ -270,7 +272,8 @@ namespace IntegrationTesting
 		TEST_METHOD(TestNextRelationPopulation) {
 			string next_test_file = this->base_dir + "next_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
-			shared_ptr<ProgramNode> next_root = parser.Parse(next_test_file);
+			SourceLexer lexer = SourceLexer(next_test_file);
+			shared_ptr<ProgramNode> next_root = parser.Parse(lexer.GetAllTokens());
 
 			NextExtractor extractor(this->write);
 			next_root->Extract(extractor);
