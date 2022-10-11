@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
+#include <fstream>
+
 #include "../../SPA/SP/SourceParser.h"
 #include "../../SPA/SP/tokenizer/SourceToken.h"
-#include <fstream>
+#include "../../SPA/SP/tokenizer/SourceLexer.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
@@ -16,7 +19,8 @@ namespace UnitTesting
 		TEST_METHOD(MultipleProc)
 		{
 			SourceParser parser = SourceParser();
-			std::shared_ptr<ProgramNode> root = parser.Parse(base_dir + "/multiple_proc.txt");
+            SourceLexer lexer = SourceLexer(base_dir + "/multiple_proc.txt");
+			std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
 			string actual = root->Stringify();
 			ofstream outfile;
 			outfile.open("x.txt");

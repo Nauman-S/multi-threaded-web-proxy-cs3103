@@ -3,12 +3,18 @@
 #include <fstream>
 #include <set>
 #include <map>
+#include <memory>
 
 #include "..\..\Utils\Tokenizer.h"
 #include "..\..\Utils\Token.h"
 #include "SourceToken.h"
 
 class SourceLexer {
+public:
+    SourceLexer(const std::string&);
+
+    std::shared_ptr<std::vector<SourceToken>> GetAllTokens();
+
 private:
     std::ifstream file_stream_;
     Tokenizer tokenizer_;
@@ -30,10 +36,5 @@ private:
     static const std::map<std::string, SourceTokenType> allowed_tokens_;
     // Set of character that signifies start of possible multi char token
     const static std::set<std::string> multi_char_tokens_starter_;
-
-public:
-    SourceLexer(const std::string&);
-
-    std::vector<SourceToken> GetAllTokens();
 };
 

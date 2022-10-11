@@ -15,11 +15,11 @@ SourceLexer::SourceLexer(const string& source_filename) {
     }
 }
 
-vector<SourceToken> SourceLexer::GetAllTokens() {
-    vector<SourceToken> results;
+std::shared_ptr<vector<SourceToken>> SourceLexer::GetAllTokens() {
+    std::shared_ptr<vector<SourceToken>> results(new vector<SourceToken>);
     while (HasNextToken()) {
         SourceToken token = ConstructSourceToken();
-        results.push_back(token);
+        results->push_back(token);
     }
     return results;
 }
