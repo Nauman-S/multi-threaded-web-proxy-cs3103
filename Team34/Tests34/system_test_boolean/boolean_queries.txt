@@ -1,3 +1,8 @@
+32 - Check Next* pairs and filter (a = stmt 23)
+assign a, b; stmt s;
+Select s such that Next*(s, a) pattern b(_,_"j%k"_)
+1, 2, 3, 4, 5, 6, 7, 13
+5000
 1 - select BOOLEAN without clause
 while w, w2; assign a;
 Select BOOLEAN
@@ -18,4 +23,3 @@ while w, BOOLEAN;
 Select BOOLEAN
 16 6
 5000
-
