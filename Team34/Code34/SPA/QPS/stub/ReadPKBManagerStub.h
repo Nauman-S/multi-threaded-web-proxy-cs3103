@@ -10,6 +10,19 @@ class ReadPKBManagerStub : public ReadPKBManager
 {
 	/*
 		This stub is made with the following SIMPLE source program
+		For testing calls and with procName:
+		procedure Foo1 {
+		7	call bar;
+		}
+
+		procedure bar {
+			
+		8	call Nine;
+		9	call Nine;
+		}
+
+		procedure Nine {
+		}
 
 		For testing ModifiesP:
 		procedure func1 {
@@ -26,8 +39,8 @@ class ReadPKBManagerStub : public ReadPKBManager
 
 		
 
-		For testing Follows(T), Parent(T)
-
+		For testing Follows(T), Parent(T), 
+		procedure main {
 		1  while(x < 2) {
 		2    x = y + 2
 		3    if(x < 2) {
@@ -37,6 +50,7 @@ class ReadPKBManagerStub : public ReadPKBManager
 			 }
 		6	 z = 5
 		   }
+		}
 
 		Parent(1,2), Parent(1,3), Parent(1,6), Parent(3,4), Parent(3,5)
 		ParentT(1,2), ParentT(1,3), ParentT(1,6), ParentT(3,4), ParentT(3,5), ParentT(1, 4), ParentT(1,5)
@@ -44,8 +58,35 @@ class ReadPKBManagerStub : public ReadPKBManager
 		FollowsT(2,3), FollowsT(3,6), FollowsT(2,6)
 	
 	*/
+
+	// APIs related to Variable Entity
+	virtual const std::shared_ptr<std::unordered_set<Variable>> GetAllVariables();
+	virtual bool IsVariable(Variable var);
+
+	// APIs related to Procedure entity
+	virtual bool IsProcedure(Procedure proc);
+	virtual const std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
+
 	// APIs related to Statements
-	std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
+	virtual std::shared_ptr<RefType> GetStatementType(StmtNum stmt_num);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetStatementsByType(RefType type);
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatements();
+	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCallsStatementFromProcedure(Procedure proc);
+
+	// APIs related to Calls relation
+	virtual bool CheckCalls(Procedure caller, Procedure callee);
+	virtual bool IsCallsStoreEmpty();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetCalleeFromCaller(Procedure caller);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetCallerFromCallee(Procedure callee);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallers();
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallees();
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsRelations();
+
+	// APIs related to Calls* relation
+	virtual bool CheckCallsT(Procedure caller, Procedure callee);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCalleeFromCaller(Procedure caller);
+	virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
+	virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
 
 	// APIs related to Uses relation
 	bool CheckUses(StmtNum stmt_num, Variable var) override;

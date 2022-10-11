@@ -16,7 +16,7 @@ procedure CS3203 {
 		if(CS2103 != 1) then {
 			while(CS2103 != 999) {
 				if((CS2030 != 1) || (CS2040 == 0)) then {
-					if(!(CS1010s)) then {
+					if(!(CS1010s == 1)) then {
 						call CS1010s;
 					} else {
 						while(CS2030 != 1) {

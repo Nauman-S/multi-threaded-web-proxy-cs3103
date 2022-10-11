@@ -23,6 +23,12 @@ QueryEvaluator::QueryEvaluator(Query query) {
 	data_retriever_ = DataRetriever();
 };
 
+QueryEvaluator::QueryEvaluator(Query query, DataRetriever data_retriever) {
+	query_ = query;
+	query_result_ = QueryResult();
+	data_retriever_ = data_retriever;
+}
+
 
 bool QueryEvaluator::Evaluate() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = query_.GetSelectTuple();
