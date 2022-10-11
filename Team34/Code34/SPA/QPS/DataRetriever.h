@@ -228,4 +228,18 @@ class DataRetriever {
 
     return res;
   }
+
+  template <typename T>
+  std::shared_ptr<std::unordered_set<T>> GetAllEqualRowValues(
+    std::shared_ptr<std::vector<std::pair<T, T>>> table) {
+
+    auto res_set = std::make_shared<std::unordered_set<T>>();
+    for (auto& [val1, val2] : *table) {
+      if (val1 == val2) {
+        res_set->insert(val1);
+      }
+    }
+
+    return res_set;
+  }
 };
