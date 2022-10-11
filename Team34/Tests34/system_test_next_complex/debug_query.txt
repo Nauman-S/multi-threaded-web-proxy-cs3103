@@ -1,0 +1,5 @@
+2 - Check key Next relation
+
+Select BOOLEAN such that Next(22,14)
+TRUE
+5000
