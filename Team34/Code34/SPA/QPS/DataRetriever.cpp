@@ -201,8 +201,14 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel) {
     shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
     res = make_shared<ResWrapper>(set_res);
   } else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-    if (IsSameSynonymsInvalid(rel)) {
+    bool are_same_synonyms = rel.LhsValue() == rel.RhsValue();
+    if (are_same_synonyms && IsSameSynonymsInvalid(rel)) {
       res = make_shared<ResWrapper>(false);
+    } else if (are_same_synonyms) {
+      shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
+      shared_ptr<unordered_set<string>> set = GetAllEqualRowValues(table);
+      shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.LhsValue(), set);
+      res = make_shared<ResWrapper>(set_res);
     } else {
       shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
       unordered_map<string, int> syn_to_col = {{rel.LhsValue(), 0},
@@ -256,7 +262,8 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
     shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
     res = make_shared<ResWrapper>(set_res);
   } else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-    if (IsSameSynonymsInvalid(rel)) {
+    bool are_same_synonyms = rel.LhsValue() == rel.RhsValue();
+    if (are_same_synonyms && IsSameSynonymsInvalid(rel)) {
       res = make_shared<ResWrapper>(false);
     } else {
       auto table = GetAllPPRel(rel);
@@ -1255,15 +1262,11 @@ DataRetriever::IntIntToStrStrTable(
 }
 
 bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel) {
-  if (rel.LhsValue() != rel.RhsValue()) {
-    return false;
-  }
-
   auto rel_type = rel.GetRelType();
   if (rel_type == ClauseType::kNextTRel ||
       rel_type == ClauseType::kAffectsRel ||
       rel_type == ClauseType::kAffectsTRel) {
-    // Exceptions that can have same synonym on both sides.
+    // Relations that can have same synonyms on both sides.
     return false;
   }
 
@@ -1271,10 +1274,7 @@ bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel) {
 }
 
 bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel) {
-  if (rel.LhsValue() != rel.RhsValue()) {
-    return false;
-  }
-
+  // So far all Proc-Proc relation cannot have same synonyms on both sides.
   return true;
 }
 
