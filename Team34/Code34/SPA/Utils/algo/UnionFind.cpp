@@ -1,7 +1,7 @@
 #include "UnionFind.h"
 
 UnionFind::UnionFind(std::vector<std::string> synonyms) {
-	int size = synonyms.size();
+	unsigned size = synonyms.size();
 	synonyms_ = synonyms;
 	parents_ = std::vector<unsigned>(size);
 	for (unsigned i = 0; i < size; i++) {
