@@ -10,16 +10,19 @@ void StatementManager::AddStatement(StmtNum stmt_num, RefType type)
 void StatementManager::AddCallsStatement(Procedure proc, StmtNum stmt_num)
 {
 	calls_statements_[proc].insert(stmt_num);
+	calls_procedures_[stmt_num] = proc;
 }
 
 void StatementManager::AddPrintStatement(Variable var, StmtNum stmt_num)
 {
 	print_statements_[var].insert(stmt_num);
+	print_variables_[stmt_num] = var;
 }
 
 void StatementManager::AddReadStatement(Variable var, StmtNum stmt_num)
 {
 	read_statements_[var].insert(stmt_num);
+	read_variables_[stmt_num] = var;
 }
 
 std::shared_ptr<RefType> StatementManager::GetStatementType(StmtNum stmt_num)
@@ -71,4 +74,19 @@ std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetReadStatementF
 	{
 		return std::make_shared<std::unordered_set<StmtNum>>(read_statements_[var]);
 	}
+}
+
+std::shared_ptr<Procedure> StatementManager::GetCallsProcedureFromStatement(StmtNum stmt_num)
+{
+	return std::make_shared<Procedure>(calls_procedures_[stmt_num]);
+}
+
+std::shared_ptr<Variable> StatementManager::GetPrintVariableFromStatement(StmtNum stmt_num)
+{
+	return std::make_shared<Variable>(print_variables_[stmt_num]);
+}
+
+std::shared_ptr<Variable> StatementManager::GetReadVariableFromStatement(StmtNum stmt_num)
+{
+	return std::make_shared<Variable>(read_variables_[stmt_num]);
 }

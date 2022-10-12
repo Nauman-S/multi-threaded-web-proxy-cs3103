@@ -36,6 +36,9 @@ public:
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCallsStatementFromProcedure(Procedure proc);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPrintStatementFromVariable(Variable var);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetReadStatementFromVariable(Variable var);
+	virtual std::shared_ptr<Procedure> GetCallsProcedureFromStatement(StmtNum stmt_num);
+	virtual std::shared_ptr<Variable> GetPrintVariableFromStatement(StmtNum stmt_num);
+	virtual std::shared_ptr<Variable> GetReadVariableFromStatement(StmtNum stmt_num);
 
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child);

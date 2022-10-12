@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="QPS\AttrType.h" />
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\ClauseGroup.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\Table.h" />
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
     <ClInclude Include="Utils\algo\SpaAlgo.h" />
@@ -173,6 +175,7 @@
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="QPS\Clause.cpp" />
+    <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="QPS\DataRetriever.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
@@ -255,6 +258,7 @@
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
     <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
+    <ClCompile Include="Utils\algo\UnionFind.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
     <ClCompile Include="Utils\expression\Expr.cpp" />
     <ClCompile Include="Utils\expression\ExprSpec.cpp" />

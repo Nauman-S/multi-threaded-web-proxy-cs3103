@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <unordered_set>
 
 #include "Clause.h"
 
@@ -13,5 +14,7 @@ public:
 	ClauseGroup(std::vector<std::shared_ptr<Clause>> clauses) : clauses_{ clauses } {};
 
 	std::vector<std::shared_ptr<Clause>> GetClauses() { return clauses_; };
+
+	std::shared_ptr<std::unordered_set<std::string>> GetSynSet();
 };
 

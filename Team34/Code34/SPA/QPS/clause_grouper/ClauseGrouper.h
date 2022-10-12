@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <set>
 
 #include "../ClauseGroup.h"
 #include "../Clause.h"
