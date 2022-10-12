@@ -66,7 +66,7 @@ Select a with a.stmt# = 1
 14 - Test stmt num
 stmt s; variable v;
 Select s such that Modifies(s,v) with v.varName = "flag"
-5, 15
+2, 4, 5, 6, 13, 14, 15
 5000
 15 - Test read stmt num
 read r;
@@ -99,17 +99,17 @@ Select s with 5 = 7
 
 5000
 21 - Test 2 synonyms (int)
-stms s; constant c;
-Select s with s.stmtNum# = c.value
+stmt s; constant c;
+Select s with s.stmt# = c.value
 1, 2
 5000
 22 - Test 2 synonyms (string)
 procedure p; variable v;
-Select v with v.procName = v.varName
+Select v with p.procName = v.varName
 x
 5000
 23 - Test 2 synonyms (unmatched types)
 procedure p; stmt s;
-Select s with s.stmtNum = p.procName
+Select s with s.stmt# = p.procName
 
 5000
