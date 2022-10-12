@@ -11,18 +11,24 @@ using namespace std;
 
 class SourceValidator {
 public:
-	bool Validate(std::shared_ptr<vector<SourceToken>>);
+    bool Validate(shared_ptr<vector<SourceToken>>);
 
-private:
-	bool ValidateProcedure(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateStatement(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateRead(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&);
-	bool ValidatePrint(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&);
-	bool ValidateCall(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<pair<string, string>>&);
-	bool ValidateIf(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateWhile(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateAssign(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, vector<string>&, map<string, float>&);
-	bool ValidateExpression(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, map<string, float>&);
-	bool ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, map<string, float>&);
-	bool ValidateRelation(std::shared_ptr<vector<SourceToken>>, int&, vector<string>&, map<string, float>&);
+ private:
+    int idx = 0;
+	vector<string> procedure_names;
+	vector<string> variable_names;
+    map<string, float> variable_map;
+    vector<pair<string, string>> calls;
+	bool ValidateProcedure(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateStatement(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateRead(std::shared_ptr<vector<SourceToken>>);
+	bool ValidatePrint(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateCall(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateIf(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateWhile(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateAssign(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateExpression(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>>);
+	bool ValidateRelation(std::shared_ptr<vector<SourceToken>>);
+    void IncrementIdx();
 };
