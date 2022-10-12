@@ -9,7 +9,7 @@
 using namespace std;
 
 bool SourceValidator::Validate(std::shared_ptr<vector<SourceToken>> tokens) {
-	while (idx < (int) tokens->size()) {
+	while (idx < (int)tokens->size()) {
 		if (!ValidateProcedure(tokens)) {
 			return false;
 		}
@@ -33,6 +33,11 @@ bool SourceValidator::ValidateProcedure(std::shared_ptr<vector<SourceToken>> tok
 	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
+	/*
+	if (count(procedure_names.begin(), procedure_names.end(), tokens->at(idx).GetStringVal()) || count(variable_names.begin(), variable_names.end(), tokens->at(idx).GetStringVal())) {
+		return false;
+	}
+	*/
 	procedure_names.push_back(tokens->at(idx++).GetStringVal());
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
@@ -56,26 +61,31 @@ bool SourceValidator::ValidateStatement(std::shared_ptr<vector<SourceToken>> tok
 			idx = tmp;
 		}
 		if (tokens->at(idx).IsRead()) {
+			IncrementIdx();
 			if (!ValidateRead(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsPrint()) {
+			IncrementIdx();
 			if (!ValidatePrint(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsCall()) {
+			IncrementIdx();
 			if (!ValidateCall(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsIf()) {
+			IncrementIdx();
 			if (!ValidateIf(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsWhile()) {
+			IncrementIdx();
 			if (!ValidateWhile(tokens)) {
 				return false;
 			}
@@ -88,7 +98,7 @@ bool SourceValidator::ValidateStatement(std::shared_ptr<vector<SourceToken>> tok
 }
 
 bool SourceValidator::ValidateRead(std::shared_ptr<vector<SourceToken>> tokens) {
-	if (tokens->at(++idx).GetType() != SourceTokenType::kName) {
+	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
 	/*
@@ -97,7 +107,7 @@ bool SourceValidator::ValidateRead(std::shared_ptr<vector<SourceToken>> tokens) 
 	}
 	*/
 	variable_names.push_back(tokens->at(idx++).GetStringVal());
-	if (tokens->at(idx++).GetType() != SourceTokenType::kSemiColon) {    
+	if (tokens->at(idx++).GetType() != SourceTokenType::kSemiColon) {
 		return false;
 	}
 	return true;
@@ -109,19 +119,18 @@ bool SourceValidator::ValidatePrint(std::shared_ptr<vector<SourceToken>> tokens)
 		return false;
 	}
 	*/
-	if (tokens->at(++idx).GetType() != SourceTokenType::kName) {
+	if (tokens->at(idx++).GetType() != SourceTokenType::kName) {
 		return false;
 	}
 
-	if (tokens->at(++idx).GetType() != SourceTokenType::kSemiColon) {
+	if (tokens->at(idx++).GetType() != SourceTokenType::kSemiColon) {
 		return false;
 	}
-    IncrementIdx();
 	return true;
 }
 
 bool SourceValidator::ValidateCall(std::shared_ptr<vector<SourceToken>> tokens) {
-	if (tokens->at(++idx).GetType() != SourceTokenType::kName) {
+	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
 	calls.push_back(pair<string, string>(procedure_names.at(procedure_names.size() - 1), tokens->at(idx++).GetStringVal()));
@@ -132,7 +141,7 @@ bool SourceValidator::ValidateCall(std::shared_ptr<vector<SourceToken>> tokens) 
 }
 
 bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens) {
-	if (tokens->at(++idx).GetType() != SourceTokenType::kLeftRound) {
+	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
 	if (!ValidateExpression(tokens)) {
@@ -169,7 +178,7 @@ bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens) {
 }
 
 bool SourceValidator::ValidateWhile(std::shared_ptr<vector<SourceToken>> tokens) {
-	if (tokens->at(++idx).GetType() != SourceTokenType::kLeftRound) {
+	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
 	if (!ValidateExpression(tokens)) {
@@ -213,11 +222,8 @@ bool SourceValidator::ValidateAssign(std::shared_ptr<vector<SourceToken>> tokens
 }
 
 bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> tokens) {
-	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
-	    return false;
-	}
 	if (tokens->at(idx).GetType() == SourceTokenType::kNegate) {
-        IncrementIdx();
+		IncrementIdx();
 		if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 			return false;
 		}
@@ -231,7 +237,7 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 	}
 	else if (tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
 		int temp = idx;
-        IncrementIdx();
+		IncrementIdx();
 		bool flag = true;
 		if (flag && !ValidateExpression(tokens)) {
 			flag = false;
@@ -242,7 +248,7 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 		if (flag && tokens->at(idx).GetType() != SourceTokenType::kLogicalAnd && tokens->at(idx).GetType() != SourceTokenType::kLogicalOr) {
 			flag = false;
 		}
-        IncrementIdx();
+		IncrementIdx();
 		if (flag && tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 			flag = false;
 		}
@@ -268,7 +274,7 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>> tokens) {
 	int cnt = 0;
 	string expected = "var";
-	while (tokens->at(idx).GetType() == SourceTokenType::kName || tokens->at(idx).GetType() == SourceTokenType::kInteger || tokens->at(idx).GetType() == SourceTokenType::kLeftRound || tokens->at(idx).GetType() == SourceTokenType::kRightRound || tokens->at(idx).GetType()== SourceTokenType::kAdd || tokens->at(idx).GetType() == SourceTokenType::kMinus || tokens->at(idx).GetType() == SourceTokenType::kMultiply || tokens->at(idx).GetType() == SourceTokenType::kDivide || tokens->at(idx).GetType() == SourceTokenType::kModulo) {
+	while (tokens->at(idx).GetType() == SourceTokenType::kName || tokens->at(idx).GetType() == SourceTokenType::kInteger || tokens->at(idx).GetType() == SourceTokenType::kLeftRound || tokens->at(idx).GetType() == SourceTokenType::kRightRound || tokens->at(idx).GetType() == SourceTokenType::kAdd || tokens->at(idx).GetType() == SourceTokenType::kMinus || tokens->at(idx).GetType() == SourceTokenType::kMultiply || tokens->at(idx).GetType() == SourceTokenType::kDivide || tokens->at(idx).GetType() == SourceTokenType::kModulo) {
 		if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kName) {
 			/*
 			if (!count(variable_names.begin(), variable_names.end(), tokens->at(idx).GetStringVal())) {
@@ -307,7 +313,7 @@ bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<Source
 		else {
 			return false;
 		}
-        IncrementIdx();
+		IncrementIdx();
 	}
 	if (cnt != 0) {
 		return false;
@@ -322,7 +328,7 @@ bool SourceValidator::ValidateRelation(std::shared_ptr<vector<SourceToken>> toke
 	if (tokens->at(idx).GetType() != SourceTokenType::kLesser && tokens->at(idx).GetType() != SourceTokenType::kLesserEqual && tokens->at(idx).GetType() != SourceTokenType::kGreater && tokens->at(idx).GetType() != SourceTokenType::kGreaterEqual && tokens->at(idx).GetType() != SourceTokenType::kNotEqual && tokens->at(idx).GetType() != SourceTokenType::kDoubleEqual) {
 		return false;
 	}
-    IncrementIdx();
+	IncrementIdx();
 	if (!ValidateArithmeticExpression(tokens)) {
 		return false;
 	}
