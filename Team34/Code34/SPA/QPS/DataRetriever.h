@@ -156,6 +156,11 @@ protected:  // helper methods
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetAllWithClause(With& with);
 
+    // Attribute selecting
+    std::shared_ptr<Procedure> MapCallsStmtNumToProcName(std::string& stmt_num_str);
+    std::shared_ptr<Variable> MapReadStmtNumToVarName(std::string& stmt_num_str);
+    std::shared_ptr<Variable> MapPrintStmtNumToVarName(std::string& stmt_num_str);
+
     // type conversion helpers
     std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(
         std::shared_ptr<std::unordered_set<int>> set);

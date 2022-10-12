@@ -5,12 +5,10 @@
 #include "Ref.h"
 
 
-class IntValueableRef :
-    public Ref
-{
+class IntValueableRef : public Ref {
+public:
     using Ref::Ref;
 
-public:
     virtual bool IsIntValued();
 
     virtual std::optional<int> ValueAsInt();
