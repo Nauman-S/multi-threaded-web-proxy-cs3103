@@ -10,9 +10,19 @@ procedure noNest {
 procedure SingleIf {
 7.  x = 2;
 8.  if (x == 1) then {
-9.    a = 1;
+9.     a = 1;
 10.    x = 4;
   } else {
 11.    z = 3 + x;
   }
+12. y = x;
+}
+
+procedure SingleLoop {
+13.  x = 1;
+14.  while (x < 10) {
+15.    y = x + y;
+16.    x = x + 1;
+  }
+17.  z = x;
 }

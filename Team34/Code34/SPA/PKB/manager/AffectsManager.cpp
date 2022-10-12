@@ -66,7 +66,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromS
 			{
 				effect_stmts->insert(*child);
 			}
-			else if (!IsDirectlyModified(modified_var, *child))
+			if (!IsDirectlyModified(modified_var, *child))
 			{
 				visited.insert(*child);
 				queue.push(*child);
@@ -204,7 +204,7 @@ bool AffectsManager::IsPossibleAffectPair(StmtNum cause, StmtNum effect)
 // read or procedure call statement
 bool AffectsManager::IsDirectlyModified(Variable var, StmtNum stmt)
 {
-	if (!IsAssignStmt(stmt) || !IsReadStmt(stmt) || !IsCallStmt(stmt))
+	if (!IsAssignStmt(stmt) && !IsReadStmt(stmt) && !IsCallStmt(stmt))
 	{
 		return false;
 	}
