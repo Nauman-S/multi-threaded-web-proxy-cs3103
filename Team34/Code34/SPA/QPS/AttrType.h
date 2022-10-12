@@ -1,8 +1,12 @@
 #pragma once
 
 enum class AttrType {
-  kProcName,
-  kVarName,
-  kStmtNum,
-  kConst
+	// temporary type
+	kStr,
+	kInt,
+
+	kProcName,
+	kVarName,
+	kStmtNum,
+	kConst
 };

@@ -11,6 +11,7 @@
 #include "..\pattern\Pattern.h"
 #include "..\Query.h"
 #include "../../Utils/algo/PostfixConverter.h"
+#include "../AttrType.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -64,9 +65,9 @@ private:
 
 	std::vector<shared_ptr<With>> ParseWithClauses();
 	shared_ptr<With> ParseWithClause();
-	std::pair<shared_ptr<Ref>, ValType> ParseWithRef();
+	std::pair<shared_ptr<Ref>, AttrType> ParseWithRef();
 	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
-	ValType GetValTypeFromAttrName(string);
+	AttrType GetAttrTypeFromName(string);
 
 	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> select_synonyms_);
 
