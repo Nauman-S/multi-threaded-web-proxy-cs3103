@@ -1344,6 +1344,18 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     return table;
 }
 
+std::shared_ptr<Procedure> DataRetriever::MapCallsStmtNumToProcName(std::string& stmt_num_str) {
+    return pkb_ptr_->GetCallsProcedureFromStatement(std::stoi(stmt_num_str));
+}
+
+std::shared_ptr<Variable> DataRetriever::MapReadStmtNumToVarName(std::string& stmt_num_str) {
+    return pkb_ptr_->GetReadVariableFromStatement(std::stoi(stmt_num_str));
+}
+
+std::shared_ptr<Variable> DataRetriever::MapPrintStmtNumToVarName(std::string& stmt_num_str) {
+    return pkb_ptr_->GetPrintVariableFromStatement(std::stoi(stmt_num_str));
+}
+
 shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(
     shared_ptr<unordered_set<int>> set) {
     auto res = make_shared<unordered_set<string>>();
