@@ -3,12 +3,19 @@
 #include "Ref.h"
 #include "../../Utils/type/RefType.h"
 
-class ProcRef :
-    public Ref
-{
-    using Ref::Ref;
+class ProcRef : public Ref {
+private:
+    const AttrType default_attr_type_{ AttrType::kProcName };
 
 public:
-    const RefType GetRefType() override { return RefType::kProcRef;  }
+    using Ref::Ref;
+
+    ProcRef(ValType val_type, std::string val)
+        : Ref{ val_type, val, default_attr_type_ } {
+    };
+
+    const RefType GetRefType() override { return RefType::kProcRef; }
+
+    bool IsAttrTypeDefault() override { return attr_type_ == default_attr_type_; }
 };
 
