@@ -64,6 +64,21 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetReadStatementFro
 	return pkb.statement_manager_.GetReadStatementFromVariable(var);
 }
 
+std::shared_ptr<Procedure> ReadPKBManager::GetCallsProcedureFromStatement(StmtNum stmt_num)
+{
+	return pkb.statement_manager_.GetCallsProcedureFromStatement(stmt_num);
+}
+
+std::shared_ptr<Variable> ReadPKBManager::GetPrintVariableFromStatement(StmtNum stmt_num)
+{
+	return pkb.statement_manager_.GetPrintVariableFromStatement(stmt_num);
+}
+
+std::shared_ptr<Variable> ReadPKBManager::GetReadVariableFromStatement(StmtNum stmt_num)
+{
+	return pkb.statement_manager_.GetReadVariableFromStatement(stmt_num);
+}
+
 // APIs related to Parent relation
 bool ReadPKBManager::CheckParent(StmtNum parent, StmtNum child)
 {
