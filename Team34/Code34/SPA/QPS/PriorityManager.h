@@ -9,7 +9,6 @@ class PriorityManager {
 private:
     std::unordered_map<ClauseType, Priority> priority_map_ = {
         // SMALLER priority number has HIGHER priority (should just sort ascendingly)
-
         {ClauseType::kParentRel, 0},
         {ClauseType::kFollowsRel, 0},
         {ClauseType::kCallsRel, 0},
@@ -33,7 +32,6 @@ private:
         {ClauseType::kCallsTRel, 5},
         {ClauseType::kNextTRel, 5},
         {ClauseType::kAffectsTRel, 5},
-
     };
 
 public:
