@@ -89,8 +89,6 @@ void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& result
 		vector<std::string> res = evaluator.ExtractResult();
 		results.insert(results.end(), res.begin(), res.end());
 		
-		//std::cout << res << std::endl;
-		//results.push_back(res);
 		return;
 	}
 }

@@ -11,6 +11,7 @@
 #include "query_result/WildcardTable.h"
 #include "clause_grouper/ClauseGrouper.h"
 #include "clause_grouper/SimpleClauseGrouper.h"
+#include "clause_grouper/OptimizedClauseGrouper.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -43,7 +44,8 @@ bool QueryEvaluator::Evaluate() {
 	clauses.insert(clauses.end(), with_clauses->begin(), with_clauses->end());
 
 
-	shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<SimpleClauseGrouper>(clauses, query_.GetSelectSynonyms());
+	//shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<SimpleClauseGrouper>(clauses, query_.GetSelectSynonyms());
+	shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<OptimizedClauseGrouper>(clauses, query_.GetSelectSynonyms());
 
 	result_table_ = EvaluateByGroup(clause_grouper);
 	//result_table_ = EvaluateGroup(clauses);

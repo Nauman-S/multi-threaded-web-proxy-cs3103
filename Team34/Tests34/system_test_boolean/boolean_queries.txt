@@ -16,6 +16,5 @@ FALSE
 4 - select BOOLEAN when BOOLEAN is declared as synonym
 while w, BOOLEAN;
 Select BOOLEAN
-16 6
+16, 6
 5000
-
