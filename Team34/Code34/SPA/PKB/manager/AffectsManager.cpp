@@ -45,6 +45,7 @@ bool AffectsManager::IsEmpty()
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromStmt(StmtNum stmt)
 {
+	// TODO: Check that stmt is assign stmt
 	std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
 	Variable& modified_var = GetModifiedVarInAssign(stmt);
 	std::unordered_set<StmtNum> visited;
@@ -77,8 +78,38 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromS
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromStmt(StmtNum stmt)
 {
-	// TODO: same as GetEffectStmtsFromStmt
-	return std::shared_ptr<std::unordered_set<StmtNum>>();
+	// TODO: Check that stmt is assign stmt
+	std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+	std::shared_ptr <std::unordered_set<Variable>> used_var = pkb.uses_manager_.GetVarByStmtNum(stmt);
+	for (auto var = used_var->begin(); var != used_var->end(); ++var)
+	{
+		std::unordered_set<StmtNum> visited;
+		std::queue<StmtNum> queue;
+		queue.push(stmt);
+		while (!queue.empty())
+		{
+			StmtNum stmt = queue.front();
+			queue.pop();
+			std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetPrevStmtsFromStmt(stmt);
+			for (auto parent = prev_stmts->begin(); parent != prev_stmts->end(); ++parent)
+			{
+				if (visited.find(*parent) != visited.end())
+				{
+					continue;
+				}
+				if (IsAssignStatementModifyingVariable(*var, *parent))
+				{
+					cause_stmts->insert(*parent);
+				}
+				else if (!IsDirectlyModified(*var, *parent))
+				{
+					visited.insert(*parent);
+					queue.push(*parent);
+				}
+			}
+		}
+	}
+	return cause_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmts()
@@ -161,6 +192,11 @@ bool AffectsManager::IsDirectlyModified(Variable var, StmtNum stmt)
 	}
 
 	return pkb.modifies_manager_.CheckModifies(stmt, var);
+}
+
+bool AffectsManager::IsAssignStatementModifyingVariable(Variable var, StmtNum stmt)
+{
+	return IsAssignStmt(stmt) && pkb.modifies_manager_.CheckModifies(stmt, var);
 }
 
 bool AffectsManager::IsAssignStatementUsingVariable(Variable var, StmtNum stmt)
