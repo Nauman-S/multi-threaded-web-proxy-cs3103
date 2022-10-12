@@ -31,7 +31,6 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(std::shared_ptr<s
         IncrementTokenIdx();
     }
 	while (tokens->at(token_idx).GetType() != SourceTokenType::kRightCurly) {
-        cout << token_idx << endl;
 		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, p);
 		children.push_back(s_node);
 	}
