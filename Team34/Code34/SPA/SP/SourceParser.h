@@ -30,7 +30,7 @@ public:
 
 private:
     int token_idx = 0;
-    int line_idx = 0;
+    int line_idx = 1;
     void IncrementTokenIdx();
     void IncrementLineIdex();
 	std::shared_ptr<ProcedureASTNode> ParseProcedure(std::shared_ptr<std::vector<SourceToken>>);
