@@ -8,30 +8,29 @@
 
 using namespace std;
 
-std::shared_ptr<ProgramNode> SourceParser::Parse(std::shared_ptr<std::vector<SourceToken>> source_tokens) {
+std::shared_ptr<ProgramNode> SourceParser::Parse() {
 	std::shared_ptr<ProgramNode> programNode (new ProgramNode());
-	while (token_idx < (int) source_tokens->size()) {
-		shared_ptr<ProcedureASTNode> p_node = ParseProcedure(source_tokens);
+	while (token_idx < (int) tokens->size()) {
+		shared_ptr<ProcedureASTNode> p_node = ParseProcedure();
 		programNode->AddProcedure(p_node);
 	}
 	return programNode;
 }
 
-std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(std::shared_ptr<std::vector<SourceToken>> tokens) {
+std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure() {
 	// Procedure name {
 	std::shared_ptr<ProcedureASTNode> procedure (new ProcedureASTNode());
 	vector<std::shared_ptr<StatementASTNode>> children = {};
 	Procedure p;
-    if (tokens->at(token_idx).GetStringVal() == "procedure") {
+    if (tokens->at(token_idx).IsProcedure()) {
 		IncrementTokenIdx();
 	}
-	p = tokens->at(token_idx).GetStringVal();
-    IncrementTokenIdx();
+	p = tokens->at(token_idx++).GetStringVal();
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
         IncrementTokenIdx();
     }
 	while (tokens->at(token_idx).GetType() != SourceTokenType::kRightCurly) {
-		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, p);
+		std::shared_ptr<StatementASTNode> s_node = ParseStatement(p);
 		children.push_back(s_node);
 	}
     if (tokens->at(token_idx).GetType() == SourceTokenType::kRightCurly) {
@@ -43,61 +42,64 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure(std::shared_ptr<s
 	return procedure;
 }
 
-shared_ptr<StatementASTNode> SourceParser::ParseStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<StatementASTNode> SourceParser::ParseStatement(Procedure& proc) {
 	std::shared_ptr<StatementASTNode> s_node;
 	if (tokens->at(token_idx).GetType() == SourceTokenType::kName && tokens->at(token_idx + 1).GetType() == SourceTokenType::kEqual) {
 		// Variable followed by equal sign to be parsed as assign
-		s_node = ParseAssignStatement(tokens, proc);
+		s_node = ParseAssignStatement(proc);
 	}
 	else if (tokens->at(token_idx).IsIf()) {
 		// cout << "if" << line_idx << endl;
-		s_node = ParseIfStatement(tokens, proc);
+		s_node = ParseIfStatement(proc);
 	}
 	else if (tokens->at(token_idx).IsWhile()) {
 		// cout << "while" << line_idx << endl;
-		s_node = ParseWhileStatement(tokens, proc);
+		s_node = ParseWhileStatement(proc);
 	}
 	else if (tokens->at(token_idx).IsRead()) {
 		// cout << "read" << line_idx << endl;
-		s_node = ParseReadStatement(tokens, proc);
+		s_node = ParseReadStatement(proc);
 	} else if (tokens->at(token_idx).IsPrint()) {
 		// cout << "print" << line_idx << endl;
-		s_node = ParsePrintStatement(tokens, proc);
+		s_node = ParsePrintStatement(proc);
 	}
 	else if (tokens->at(token_idx).IsCall()) {
-		s_node = ParseCallStatement(tokens, proc);
+		s_node = ParseCallStatement(proc);
 	} else {
 	}
 	s_node->SetParentProcIndex(proc);
 	return s_node;
 }
 
-shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(Procedure& proc) {
 	// if (...) then {...} else {...}
 	shared_ptr<IfStatementASTNode> if_node (new IfStatementASTNode());
 	StmtNum line_index = line_idx;
 	if_node->SetLineIndex(line_index);
-    if (tokens->at(token_idx).GetStringVal() == "if") {
+    if (tokens->at(token_idx).IsIf()) {
         IncrementTokenIdx();
 	}
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftRound) {
         IncrementTokenIdx();
     }
-	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, proc);
+	shared_ptr<ConditionExpression> cond = ParseConditionExpression(proc);
 	cond->SetParentProcIndex(proc);
+	if (tokens->at(token_idx).IsThen()) {
+		IncrementTokenIdx();
+	}
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
           IncrementTokenIdx();
     }
 	vector<std::shared_ptr<StatementASTNode>> if_children = {};
 	while (tokens->at(token_idx).GetType() != SourceTokenType::kRightCurly) {
-		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, proc);
+		std::shared_ptr<StatementASTNode> s_node = ParseStatement(proc);
 		s_node->SetParentSatementLineIndex(line_index);
 		if_children.push_back(s_node);
 	}
     if (tokens->at(token_idx).GetType() == SourceTokenType::kRightCurly) {
         IncrementTokenIdx();
     }
-    if (tokens->at(token_idx).GetStringVal() == "else") {
+    if (tokens->at(token_idx).IsElse()) {
       IncrementTokenIdx();
     }
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
@@ -105,7 +107,7 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(std::shared_ptr<st
     }
 	vector<std::shared_ptr<StatementASTNode>> else_children = {};
 	while (tokens->at(token_idx).GetType() != SourceTokenType::kRightCurly) {
-		std::shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, proc);
+		std::shared_ptr<StatementASTNode> s_node = ParseStatement(proc);
 		s_node->SetParentSatementLineIndex(line_index);
 		else_children.push_back(s_node);
 	}
@@ -118,7 +120,7 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(std::shared_ptr<st
 	return if_node;
 }
 
-shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(Procedure& proc) {
 	// (...)
 	shared_ptr<ConditionExpression> cond (new ConditionExpression());
 	StmtNum line_index = line_idx;
@@ -150,16 +152,13 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(std::shar
     if (tokens->at(token_idx).GetType() == SourceTokenType::kRightRound) {
         IncrementTokenIdx();
     }
-    if (tokens->at(token_idx).GetStringVal() == "then") {
-      IncrementTokenIdx();
-    }
 	cond->SetVariables(vars);
 	cond->SetConstants(cons);
 	
 	return cond;
 }
 
-shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(Procedure& proc) {
 	// a = ...;
 	shared_ptr<AssignStatementASTNode> a_node(new AssignStatementASTNode());
 	Variable l_var;
@@ -197,7 +196,7 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(std::share
 	return a_node;
 }
 
-shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(Procedure& proc) {
 	// while ()
 	shared_ptr<WhileStatementASTNode> w_node (new WhileStatementASTNode());
 	vector<shared_ptr<StatementASTNode>> children = {};
@@ -209,13 +208,13 @@ shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(std::shared_
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftRound) {
         IncrementTokenIdx();
     }
-	shared_ptr<ConditionExpression> cond = ParseConditionExpression(tokens, proc);
+	shared_ptr<ConditionExpression> cond = ParseConditionExpression(proc);
 	cond->SetParentProcIndex(proc);
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
         IncrementTokenIdx();
     }
 	while (tokens->at(token_idx).GetType() != SourceTokenType::kRightCurly) {
-		shared_ptr<StatementASTNode> s_node = ParseStatement(tokens, proc);
+		shared_ptr<StatementASTNode> s_node = ParseStatement(proc);
 		s_node->SetParentSatementLineIndex(line_index);
 		children.push_back(s_node);
 	}
@@ -227,13 +226,13 @@ shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(std::shared_
 	return w_node;
 }
 
-shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(Procedure& proc) {
 	// read x
 	shared_ptr<ReadStatementASTNode> r_node (new ReadStatementASTNode());
 	StmtNum line_index = line_idx;
 	r_node->SetLineIndex(line_index);
     IncrementLineIdex();
-    if (tokens->at(token_idx).GetStringVal() == "read") {
+    if (tokens->at(token_idx).IsRead()) {
         IncrementTokenIdx();
     }
 	Variable var_index = tokens->at(token_idx).GetStringVal();
@@ -245,13 +244,13 @@ shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(std::shared_pt
 	return r_node;
 }
 
-shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(Procedure& proc) {
 	// read x
 	shared_ptr<PrintStatementASTNode> p_node (new PrintStatementASTNode());
 	StmtNum line_index = line_idx;
 	p_node->SetLineIndex(line_index);
     IncrementLineIdex();
-    if (tokens->at(token_idx).GetStringVal() == "print") {
+    if (tokens->at(token_idx).IsPrint()) {
         IncrementTokenIdx();
     }
 	Variable var_index = tokens->at(token_idx).GetStringVal();
@@ -263,13 +262,13 @@ shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(std::shared_
 	return p_node;
 }
 
-shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(std::shared_ptr<std::vector<SourceToken>> tokens, Procedure& proc) {
+shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(Procedure& proc) {
 	// call p
 	shared_ptr<CallStatementASTNode> p_node(new CallStatementASTNode());
 	StmtNum line_index = line_idx;
 	p_node->SetLineIndex(line_index);
     IncrementLineIdex();
-    if (tokens->at(token_idx).GetStringVal() == "call") {
+    if (tokens->at(token_idx).IsCall()) {
         IncrementTokenIdx();
     }
 	Procedure proc_index = tokens->at(token_idx).GetStringVal();
@@ -295,3 +294,7 @@ std::string SourceParser::JoinWithDelimiter(std::vector<std::string>& values, st
 void SourceParser::IncrementLineIdex() { line_idx += 1; }
 
 void SourceParser::IncrementTokenIdx() { token_idx += 1; }
+
+void SourceParser::SetTokens(shared_ptr<vector<SourceToken>> source_tokens) {
+	tokens = source_tokens;
+}
