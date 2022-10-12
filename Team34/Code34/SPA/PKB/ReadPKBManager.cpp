@@ -448,12 +448,12 @@ bool ReadPKBManager::IsAffectsStoreEmpty()
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt)
 {
-	return pkb.affects_manager_.GetAllEffectStmtsFromStmt(stmt);
+	return pkb.affects_manager_.GetEffectStmtsFromStmt(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt)
 {
-	return pkb.affects_manager_.GetAllCauseStmtsFromStmt(stmt);
+	return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts()
