@@ -201,8 +201,14 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel) {
     shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
     res = make_shared<ResWrapper>(set_res);
   } else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-    if (IsSameSynonymsInvalid(rel)) {
+    bool are_same_synonyms = rel.LhsValue() == rel.RhsValue();
+    if (are_same_synonyms && IsSameSynonymsInvalid(rel)) {
       res = make_shared<ResWrapper>(false);
+    } else if (are_same_synonyms) {
+      shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
+      shared_ptr<unordered_set<string>> set = GetAllEqualRowValues(table);
+      shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.LhsValue(), set);
+      res = make_shared<ResWrapper>(set_res);
     } else {
       shared_ptr<vector<pair<string, string>>> table = GetAllSSRel(rel);
       unordered_map<string, int> syn_to_col = {{rel.LhsValue(), 0},
@@ -256,7 +262,8 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcProcRel& rel) {
     shared_ptr<SetRes> set_res = make_shared<SetRes>(rel.RhsValue(), set);
     res = make_shared<ResWrapper>(set_res);
   } else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-    if (IsSameSynonymsInvalid(rel)) {
+    bool are_same_synonyms = rel.LhsValue() == rel.RhsValue();
+    if (are_same_synonyms && IsSameSynonymsInvalid(rel)) {
       res = make_shared<ResWrapper>(false);
     } else {
       auto table = GetAllPPRel(rel);
@@ -367,15 +374,15 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with) {
     res = make_shared<ResWrapper>(table_res);
   } else if (lhs_type == ValType::kSynonym) {
     auto rhs_val = with.RhsValue();
-    auto set = GetWithClauseByRefTypeAndFilterVal(
-        with.LhsRefType(), with.RequiredLhsValType(), rhs_val);
+    auto set = GetWithClauseByRefTypeAndFilterVal(with.LhsRefType(),
+                                                  with.LhsAttrType(), rhs_val);
     auto syn_name = with.LhsValue();
     auto set_res = make_shared<SetRes>(syn_name, set);
     res = make_shared<ResWrapper>(set_res);
   } else if (rhs_type == ValType::kSynonym) {
     auto lhs_val = with.LhsValue();
-    auto set = GetWithClauseByRefTypeAndFilterVal(
-        with.RhsRefType(), with.RequiredRhsValType(), lhs_val);
+    auto set = GetWithClauseByRefTypeAndFilterVal(with.RhsRefType(),
+                                                  with.RhsAttrType(), lhs_val);
     auto syn_name = with.RhsValue();
     auto set_res = make_shared<SetRes>(syn_name, set);
     res = make_shared<ResWrapper>(set_res);
@@ -1111,7 +1118,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
-DataRetriever::GetWithClauseBySingleValTypeRefType(RefType syn_ref_type) {
+DataRetriever::GetWithClauseBySingleAttrTypeRefType(RefType syn_ref_type) {
   shared_ptr<unordered_set<string>> str_set{nullptr};
   shared_ptr<unordered_set<StmtNum>> stmt_set{nullptr};
 
@@ -1140,33 +1147,31 @@ DataRetriever::GetWithClauseBySingleValTypeRefType(RefType syn_ref_type) {
   if (stmt_set != nullptr) {
     str_set = IntSetToStrSet(stmt_set);
   }
-
   return str_set;
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
-DataRetriever::GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type,
-                                                     ValType comp_val_type,
+DataRetriever::GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
+                                                     AttrType attr_type,
                                                      string& pivot_val) {
   shared_ptr<unordered_set<string>> str_set{nullptr};
   shared_ptr<unordered_set<StmtNum>> stmt_set{nullptr};
-
   if (syn_ref_type == RefType::kReadRef) {
-    if (comp_val_type == ValType::kVarName) {
-      // TODO: add PKB API to get read stmt by var name
-    } else if (comp_val_type == ValType::kLineNum) {
+    if (attr_type == AttrType::kVarName) {
+      stmt_set = pkb_ptr_->GetReadStatementFromVariable(pivot_val);
+    } else if (attr_type == AttrType::kStmtNum) {
       stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
     }
   } else if (syn_ref_type == RefType::kPrintRef) {
-    if (comp_val_type == ValType::kVarName) {
-      // TODO: add PKB API to get print stmt by var name
-    } else if (comp_val_type == ValType::kLineNum) {
+    if (attr_type == AttrType::kVarName) {
+      stmt_set = pkb_ptr_->GetPrintStatementFromVariable(pivot_val);
+    } else if (attr_type == AttrType::kStmtNum) {
       stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
     }
   } else if (syn_ref_type == RefType::kCallRef) {
-    if (comp_val_type == ValType::kProcName) {
-      // TODO: add PKB API to get call stmt by proc name
-    } else if (comp_val_type == ValType::kLineNum) {
+    if (attr_type == AttrType::kProcName) {
+      stmt_set = pkb_ptr_->GetCallsStatementFromProcedure(pivot_val);
+    } else if (attr_type == AttrType::kStmtNum) {
       stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
     }
   }
@@ -1174,25 +1179,24 @@ DataRetriever::GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type,
   if (stmt_set != nullptr) {
     str_set = IntSetToStrSet(stmt_set);
   }
-
   return str_set;
 }
 
 std::shared_ptr<std::unordered_set<string>>
 DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
-                                                  ValType comp_val_type,
+                                                  AttrType attr_type,
                                                   string& filter_val) {
   shared_ptr<unordered_set<string>> str_set{nullptr};
 
-  unordered_set<RefType> single_val_type_ref_types = {
+  unordered_set<RefType> single_attr_type_ref_types = {
       RefType::kProcRef,  RefType::kVarRef, RefType::kConstRef,
       RefType::kStmtRef,  RefType::kIfRef,  RefType::kWhileRef,
       RefType::kAssignRef};
-  if (single_val_type_ref_types.count(syn_ref_type) > 0) {
-    str_set = GetWithClauseBySingleValTypeRefType(syn_ref_type);
+  if (single_attr_type_ref_types.count(syn_ref_type) > 0) {
+    str_set = GetWithClauseBySingleAttrTypeRefType(syn_ref_type);
     str_set = FilterSetByValue(str_set, filter_val);
   } else {
-    str_set = GetWithClauseByRefTypeAndFilterVal(syn_ref_type, comp_val_type,
+    str_set = GetWithClauseByMultipleAttrTypeRefType(syn_ref_type, attr_type,
                                                  filter_val);
   }
 
@@ -1201,8 +1205,8 @@ DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     With& with) {
-  auto set1 = GetWithClauseBySingleValTypeRefType(with.LhsRefType());
-  auto set2 = GetWithClauseBySingleValTypeRefType(with.RhsRefType());
+  auto set1 = GetWithClauseBySingleAttrTypeRefType(with.LhsRefType());
+  auto set2 = GetWithClauseBySingleAttrTypeRefType(with.RhsRefType());
 
   auto table = make_shared<vector<pair<string, string>>>();
   if (set1->size() > set2->size()) {
@@ -1255,15 +1259,11 @@ DataRetriever::IntIntToStrStrTable(
 }
 
 bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel) {
-  if (rel.LhsValue() != rel.RhsValue()) {
-    return false;
-  }
-
   auto rel_type = rel.GetRelType();
   if (rel_type == ClauseType::kNextTRel ||
       rel_type == ClauseType::kAffectsRel ||
       rel_type == ClauseType::kAffectsTRel) {
-    // Exceptions that can have same synonym on both sides.
+    // Relations that can have same synonyms on both sides.
     return false;
   }
 
@@ -1271,10 +1271,7 @@ bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel) {
 }
 
 bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel) {
-  if (rel.LhsValue() != rel.RhsValue()) {
-    return false;
-  }
-
+  // So far all Proc-Proc relation cannot have same synonyms on both sides.
   return true;
 }
 

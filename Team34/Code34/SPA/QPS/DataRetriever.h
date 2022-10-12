@@ -7,6 +7,7 @@
 
 #include "../PKB/ReadPKBManager.h"
 #include "../Utils/type/TypeDef.h"
+#include "AttrType.h"
 #include "ClauseType.h"
 #include "query_result/ResWrapper.h"
 #include "query_result/SetRes.h"
@@ -144,14 +145,13 @@ class DataRetriever {
 
   // With clause
   std::shared_ptr<std::unordered_set<std::string>>
-  GetWithClauseBySingleValTypeRefType(RefType syn_ref_type);
+  GetWithClauseBySingleAttrTypeRefType(RefType syn_ref_type);
   std::shared_ptr<std::unordered_set<std::string>>
-  GetWithClauseByMultipleValTypeRefType(RefType syn_ref_type,
-                                        ValType comp_val_type,
-                                        std::string& pivot_val);
+  GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
+                                         AttrType attr_type,
+                                         std::string& pivot_val);
   std::shared_ptr<std::unordered_set<std::string>>
-  GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
-                                     ValType comp_val_type,
+  GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type, AttrType attr_type,
                                      std::string& filter_val);
   std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
   GetAllWithClause(With& with);
@@ -227,5 +227,18 @@ class DataRetriever {
     }
 
     return res;
+  }
+
+  template <typename T>
+  std::shared_ptr<std::unordered_set<T>> GetAllEqualRowValues(
+      std::shared_ptr<std::vector<std::pair<T, T>>> table) {
+    auto res_set = std::make_shared<std::unordered_set<T>>();
+    for (auto& [val1, val2] : *table) {
+      if (val1 == val2) {
+        res_set->insert(val1);
+      }
+    }
+
+    return res_set;
   }
 };

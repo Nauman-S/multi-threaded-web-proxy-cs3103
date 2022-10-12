@@ -5,7 +5,7 @@ procedure CS3203 {
 	print stuName;                     // 4
 	print stuNumber;                   // 5
 	print year;                        // 6
-	if((year < (5*4+3)%22)) then {     // 7
+	if(year < 1) then {     // 7
 		call highSchool;               // 8
 		while(applyUni != success) {   // 9
 			print applyUni;            // 10
@@ -13,10 +13,10 @@ procedure CS3203 {
 		year = 0;                      // 11
 		year = year + 1;               // 12
 	} else {
-		if(CS2103 != (1 + 1 == 2)) then {                   // 13
-			while(CS2103 != (999 != 1000)) {                // 14
+		if(CS2103 != 1) then {                   // 13
+			while(CS2103 != 999) {                // 14
 				if((CS2030 != 1) || (CS2040 == 0)) then {   // 15
-					if(!(CS1010s)) then {           // 16
+					if(!(CS1010s == 1)) then {           // 16
 						call CS1010s;               // 17
 					} else {
 						while(CS2030 != 1) {        // 18

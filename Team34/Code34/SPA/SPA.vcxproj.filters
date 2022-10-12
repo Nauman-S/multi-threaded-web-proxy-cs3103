@@ -265,5 +265,6 @@
     <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
     <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
+    <ClInclude Include="QPS\AttrType.h" />
   </ItemGroup>
 </Project>

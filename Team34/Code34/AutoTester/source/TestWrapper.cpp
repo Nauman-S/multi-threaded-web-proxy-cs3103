@@ -39,19 +39,12 @@ void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
     // ...rest of your code...
 	SourceLexer lexer = SourceLexer(filename);
-	vector<SourceToken> tokens = lexer.GetAllTokens();
+	const std::shared_ptr<vector<SourceToken>> tokens = lexer.GetAllTokens();
 	SourceValidator validator = SourceValidator();
+
 	if (validator.Validate(tokens)) {
  		SourceParser parser = SourceParser();
-		std::shared_ptr<ProgramNode> root = parser.Parse(filename);
-		CFGBuilder builder = CFGBuilder();
-		map<Procedure, shared_ptr<ControlFlowNode>> roots = builder.GenerateCFG(filename);
-		/*
-		for (pair<Procedure, shared_ptr<ControlFlowNode>> const& p : roots) {
-			set<set<StmtNum>> v;
-			builder.Display(p.second, v);
-		}
-		*/
+		std::shared_ptr<ProgramNode> root = parser.Parse(tokens);
 		DesignExtractor extractor;
 		extractor.PopulatePKB(root);
 	}
