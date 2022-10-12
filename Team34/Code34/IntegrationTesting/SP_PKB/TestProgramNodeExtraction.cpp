@@ -36,7 +36,8 @@ namespace IntegrationTesting
 		TestProgramNodeExtraction() {
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(this->base_dir + "design_extractor_test_source.txt");
-			this->common_root = parser.Parse(lexer.GetAllTokens());
+			parser.SetTokens(lexer.GetAllTokens());
+			this->common_root = parser.Parse();
 			this->read = ReadPKBManager::GetInstance();
 			this->write = WritePKBManager::GetInstance();
 		}
@@ -241,7 +242,8 @@ namespace IntegrationTesting
 			string calls_test_file = this->base_dir + "calls_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(calls_test_file);
-			shared_ptr<ProgramNode> calls_root = parser.Parse(lexer.GetAllTokens());
+			parser.SetTokens(lexer.GetAllTokens());
+			shared_ptr<ProgramNode> calls_root = parser.Parse();
 
 			CallsExtractor extractor(this->write);
 			calls_root->Extract(extractor);
@@ -273,7 +275,8 @@ namespace IntegrationTesting
 			string next_test_file = this->base_dir + "next_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(next_test_file);
-			shared_ptr<ProgramNode> next_root = parser.Parse(lexer.GetAllTokens());
+			parser.SetTokens(lexer.GetAllTokens());
+			shared_ptr<ProgramNode> next_root = parser.Parse();
 
 			NextExtractor extractor(this->write);
 			next_root->Extract(extractor);
