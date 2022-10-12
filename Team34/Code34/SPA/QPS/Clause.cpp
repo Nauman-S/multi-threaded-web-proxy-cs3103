@@ -11,8 +11,7 @@ using std::shared_ptr;
 using std::make_shared;
 
 
-std::shared_ptr<std::vector<std::string>> Clause::GetSynonyms(vector<shared_ptr<Ref>>& refs)
-{
+std::shared_ptr<std::vector<std::string>> Clause::GetSynonyms(vector<shared_ptr<Ref>>& refs) {
     auto res = make_shared<vector<string>>();
     for (auto& ref : refs) {
         if (ref->GetValType() == ValType::kSynonym) {
@@ -23,8 +22,7 @@ std::shared_ptr<std::vector<std::string>> Clause::GetSynonyms(vector<shared_ptr<
     return res;
 }
 
-int Clause::CountSynonyms(std::vector<shared_ptr<Ref>>& refs)
-{
+int Clause::CountSynonyms(std::vector<shared_ptr<Ref>>& refs) {
     int count = 0;
     for (auto& ref : refs) {
         if (ref->GetValType() == ValType::kSynonym) {

@@ -1,21 +1,18 @@
 #pragma once
 
 #include <string>
-#include "../algo/SpaAlgo.h"
 
-class Expr
-{
+class Expr {
 protected:
-	std::string infix_expr_;
-	std::string post_expr_;
+    std::string infix_expr_;
+    std::string post_expr_;
 
 public:
-	explicit Expr(std::string infix_expr) : infix_expr_{ infix_expr }, post_expr_{ SpaAlgo::InfixToPostfix(infix_expr)} {};
+    Expr(std::string& infix_str, std::string& postfix_str)
+        : infix_expr_{ infix_str }, post_expr_{ postfix_str } {
+    };
 
-	Expr(std::string& infix_str, std::string& postfix_str)
-		: infix_expr_{ infix_str }, post_expr_{ postfix_str } {};
-
-	std::string& GetInfix() { return infix_expr_; }
-	std::string& GetPostfix() { return post_expr_; }
+    std::string& GetInfix() { return infix_expr_; }
+    std::string& GetPostfix() { return post_expr_; }
 };
 

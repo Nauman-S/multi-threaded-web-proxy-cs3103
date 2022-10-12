@@ -45,28 +45,28 @@ Select p such that Uses(p,v) with "i" = v.varName
 5000
 10 - Test constant value
 stmt s; constant c;
-Select c with c.value = 2;
+Select c with c.value = 2
 2
 5000
 11 - Test stmt num
 stmt s;
-Select s such that s.stmt# = 9
+Select s with s.stmt# = 9
 9
 5000
 12 - Test stmt num
 call c;
-Select c such that c.stmt# = 9
+Select c with c.stmt# = 9
 9
 5000
 13 - Test stmt num
 assign a;
-Select a such that a.stmt# = 1
+Select a with a.stmt# = 1
 
 5000
 14 - Test stmt num
 stmt s; variable v;
 Select s such that Modifies(s,v) with v.varName = "flag"
-5, 15
+2, 4, 5, 6, 13, 14, 15
 5000
 15 - Test read stmt num
 read r;
@@ -80,12 +80,12 @@ Select r such that Modifies(r, "x") with r.stmt# = 2
 5000
 17 - Test assign stmt num
 assign a; variable v; procedure p;
-Select a Pattern a(v,_"1+1"_) with v.varName = "i"
+Select a pattern a(v,_"1+1"_) with v.varName = "i"
 3
 5000
 18 - Test non existing stmt num
 stmt s; variable v;
-Select s such that Uses(s, v) with s.stmt# = 100;
+Select s such that Uses(s, v) with s.stmt# = 100
 
 5000
 19 - Test non equal strings
@@ -99,17 +99,17 @@ Select s with 5 = 7
 
 5000
 21 - Test 2 synonyms (int)
-stms s; constant c;
-Select s with s.stmtNum# = c.value
+stmt s; constant c;
+Select s with s.stmt# = c.value
 1, 2
 5000
 22 - Test 2 synonyms (string)
 procedure p; variable v;
-Select v with v.procName = v.varName
+Select v with p.procName = v.varName
 x
 5000
 23 - Test 2 synonyms (unmatched types)
 procedure p; stmt s;
-Select s with s.stmtNum = p.procName;
+Select s with s.stmt# = p.procName
 
 5000

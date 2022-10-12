@@ -76,7 +76,7 @@ string SpaAlgo::InfixToPostfix(string& infix)
 	}
 
 	string postfix = postfix_tokens[0];
-	for (int i = 1; i < postfix_tokens.size(); ++i) {
+	for (size_t i = 1; i < postfix_tokens.size(); ++i) {
 		postfix += (SpaAlgo::DELIM + postfix_tokens[i]);
 	}
 
