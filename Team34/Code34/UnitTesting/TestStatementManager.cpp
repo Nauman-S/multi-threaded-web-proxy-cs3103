@@ -103,5 +103,35 @@ namespace UnitTesting
 			statement_manager_.AddReadStatement("test", 2);
 			Assert::AreEqual(2, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
 		};
+
+		TEST_METHOD(TestGetCallsProcedureFromStatement)
+		{
+			std::shared_ptr<Procedure> empty_ptr = std::make_shared<Procedure>();
+			Assert::AreEqual(*empty_ptr, *statement_manager_.GetCallsProcedureFromStatement(1));
+			statement_manager_.AddCallsStatement("test", 1);
+			Assert::AreEqual(Procedure("test"), *statement_manager_.GetCallsProcedureFromStatement(1));
+			statement_manager_.AddCallsStatement("test2", 2);
+			Assert::AreEqual(Procedure("test2"), *statement_manager_.GetCallsProcedureFromStatement(2));
+		}
+
+		TEST_METHOD(TestGetPrintVariableFromStatement)
+		{
+			std::shared_ptr<Variable> empty_ptr = std::make_shared<Variable>();
+			Assert::AreEqual(*empty_ptr, *statement_manager_.GetPrintVariableFromStatement(1));
+			statement_manager_.AddPrintStatement("test_print_var", 1);
+			Assert::AreEqual(Variable("test_print_var"), *statement_manager_.GetPrintVariableFromStatement(1));
+			statement_manager_.AddPrintStatement("test_print_var2", 2);
+			Assert::AreEqual(Variable("test_print_var2"), *statement_manager_.GetPrintVariableFromStatement(2));
+		}
+
+		TEST_METHOD(TestGetReadVariableFromStatement)
+		{
+			std::shared_ptr<Variable> empty_ptr = std::make_shared<Variable>();
+			Assert::AreEqual(*empty_ptr, *statement_manager_.GetReadVariableFromStatement(1));
+			statement_manager_.AddReadStatement("test_read_var", 1);
+			Assert::AreEqual(Variable("test_read_var"), *statement_manager_.GetReadVariableFromStatement(1));
+			statement_manager_.AddReadStatement("test_read_var2", 2);
+			Assert::AreEqual(Variable("test_read_var2"), *statement_manager_.GetReadVariableFromStatement(2));
+		}
 	};
 }
