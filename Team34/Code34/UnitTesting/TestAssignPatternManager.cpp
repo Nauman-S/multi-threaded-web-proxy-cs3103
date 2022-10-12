@@ -19,12 +19,12 @@ private:
 public:
     TEST_METHOD(TestIsAssignPatternMatch) {
         PostfixConverter converter;
-        std::string infix = "a + b * c % d / (e + f % g) + aa * bb % cc";
+        std::string infix = "a + b * c % d / ( e + f % g ) + aa * bb % cc";
         Expr expr = Expr(infix, converter.InfixToPostfix(infix));
         assign_pattern_manager_.AddPattern(1, expr);
 
         // Test Exact expr matching
-        infix = "a + b * c % d / (e + f % g) + aa * bb % cc";
+        infix = "a + b * c % d / ( e + f % g ) + aa * bb % cc";
         ExactExprSpec exact_expr_valid = ExactExprSpec(infix, converter.InfixToPostfix(infix));
         Assert::IsTrue(assign_pattern_manager_.IsPatternMatch(1, std::make_shared<ExactExprSpec>(exact_expr_valid)));
 
@@ -37,7 +37,7 @@ public:
         PartialExprSpec partial_expr_valid = PartialExprSpec(infix, converter.InfixToPostfix(infix));
         Assert::IsTrue(assign_pattern_manager_.IsPatternMatch(1, std::make_shared<PartialExprSpec>(partial_expr_valid)));
 
-        infix = "e+f % g";
+        infix = "e + f % g";
         partial_expr_valid = PartialExprSpec(infix, converter.InfixToPostfix(infix));
         Assert::IsTrue(assign_pattern_manager_.IsPatternMatch(1, std::make_shared<PartialExprSpec>(partial_expr_valid)));
 
