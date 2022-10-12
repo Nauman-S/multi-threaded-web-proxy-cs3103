@@ -1,0 +1,18 @@
+procedure noNest {
+  x = 2;
+  y = 3;
+  z = 3 + x;
+  x = 5 + 2;
+  z = 1 + x;
+  z = y;
+}
+
+procedure SingleIf {
+  x = 2;
+  if (x == 1) then {
+    a = 1;
+    x = 4;
+  } else {
+    z = 3 + x;
+  }
+}
