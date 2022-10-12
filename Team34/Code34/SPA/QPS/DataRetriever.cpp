@@ -1263,12 +1263,14 @@ DataRetriever::GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
     string& pivot_val) {
     shared_ptr<unordered_set<string>> str_set{ nullptr };
     shared_ptr<unordered_set<StmtNum>> stmt_set{ nullptr };
+    bool need_filter{ false };
     if (syn_ref_type == RefType::kReadRef) {
         if (attr_type == AttrType::kVarName) {
             stmt_set = pkb_ptr_->GetReadStatementFromVariable(pivot_val);
         }
         else if (attr_type == AttrType::kStmtNum) {
             stmt_set = pkb_ptr_->GetStatementsByType(RefType::kReadRef);
+            need_filter = true;
         }
     }
     else if (syn_ref_type == RefType::kPrintRef) {
@@ -1277,6 +1279,7 @@ DataRetriever::GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
         }
         else if (attr_type == AttrType::kStmtNum) {
             stmt_set = pkb_ptr_->GetStatementsByType(RefType::kPrintRef);
+            need_filter = true;
         }
     }
     else if (syn_ref_type == RefType::kCallRef) {
@@ -1285,11 +1288,15 @@ DataRetriever::GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
         }
         else if (attr_type == AttrType::kStmtNum) {
             stmt_set = pkb_ptr_->GetStatementsByType(RefType::kCallRef);
+            need_filter = true;
         }
     }
 
     if (stmt_set != nullptr) {
         str_set = IntSetToStrSet(stmt_set);
+    }
+    if (need_filter) {
+        str_set = FilterSetByValue(str_set, pivot_val);
     }
     return str_set;
 }

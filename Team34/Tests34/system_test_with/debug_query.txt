@@ -1,5 +1,5 @@
-3 - Test call proc name 
-procedure p; call c;
-Select c with c.procName = "printPrime"
-8
+12 - Test stmt num
+call c;
+Select c with c.stmt# = 9
+9
 5000
