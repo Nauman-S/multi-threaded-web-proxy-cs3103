@@ -2,9 +2,12 @@
 
 #include <unordered_set>
 
+
 #include "../Clause.h"
 #include "../ClauseGroup.h"
 #include "../../Utils/algo/UnionFind.h"
+#include "../PriorityManager.h"
+
 
 using std::string;
 using std::vector;
@@ -57,9 +60,8 @@ void OptimizedClauseGrouper::Group() {
 	}
 
 
-
 	for (auto& iterator = rep_to_clauses.begin(); iterator != rep_to_clauses.end(); ++iterator) {
-		vector<shared_ptr<Clause>> optimized_clauses = iterator->second;
+		vector<shared_ptr<Clause>> optimized_clauses = OptimizeOrderWithinGroup(iterator->second);
 		shared_ptr<ClauseGroup> optimized_clause_group = std::make_shared<ClauseGroup>(optimized_clauses);
 		shared_ptr<unordered_set<string>> syns_in_group = optimized_clause_group->GetSynSet();
 
@@ -80,5 +82,64 @@ void OptimizedClauseGrouper::Group() {
 		}
 
 	}
+}
 
+vector<shared_ptr<Clause>> OptimizedClauseGrouper::OptimizeOrderWithinGroup(vector<shared_ptr<Clause>> clauses) {
+	unordered_set<shared_ptr<Clause>> origin_clause_set(clauses.begin(), clauses.end());
+	vector<shared_ptr<Clause>> optimized_clauses;
+	PriorityManager priority_manager;
+
+	unordered_set<string> used_syns;
+
+	shared_ptr<Clause> smallest_clause = clauses.at(0);
+
+	for (shared_ptr<Clause> clause : origin_clause_set) {
+		if (clause->GetPriority(priority_manager) < smallest_clause->GetPriority(priority_manager)) {
+			smallest_clause = clause;
+		}
+	}
+	optimized_clauses.push_back(smallest_clause);
+	origin_clause_set.erase(smallest_clause);
+	auto synonyms = smallest_clause->GetSynonyms();
+	used_syns.insert(synonyms->begin(),
+		synonyms->end());
+
+
+	auto priority_compare = [&priority_manager](shared_ptr<Clause> a, shared_ptr<Clause> b) { return a->GetPriority(priority_manager) < b->GetPriority(priority_manager); };
+	std::set<shared_ptr<Clause>, decltype(priority_compare)> waiting_clauses(priority_compare);
+	
+	while (origin_clause_set.size() > 0) {
+		vector<shared_ptr<Clause>> added_clauses;
+		for (shared_ptr<Clause> clause : origin_clause_set) {
+			shared_ptr<vector<string>> syns_in_clause = clause->GetSynonyms();
+			for (string& syn : *syns_in_clause) {
+				if (used_syns.count(syn) > 0) {
+					added_clauses.push_back(clause);
+					break;
+				}
+			}
+		}
+
+		for (shared_ptr<Clause> clause : added_clauses) {
+			origin_clause_set.erase(clause);
+			waiting_clauses.insert(clause);
+		}
+
+		
+		smallest_clause = *waiting_clauses.begin();
+		waiting_clauses.erase(smallest_clause);
+		optimized_clauses.push_back(smallest_clause);
+		synonyms = smallest_clause->GetSynonyms();
+		used_syns.insert(synonyms->begin(),
+			synonyms->end());
+	}
+
+	while (waiting_clauses.size() > 0) {
+		// TODO: replicated code, need to refactor£»
+		smallest_clause = *waiting_clauses.begin();
+		waiting_clauses.erase(smallest_clause);
+		optimized_clauses.push_back(smallest_clause);
+	}
+
+	return optimized_clauses;
 }

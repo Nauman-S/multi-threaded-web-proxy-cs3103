@@ -1,3 +1,8 @@
+5 - failed cases
+assign a; while w; 
+Select a such that Follows (w, a) pattern a ("x", _)
+1, 2, 3, 4, 5, 6, 7, 13
+5000
 32 - Check Next* pairs and filter (a = stmt 23)
 assign a, b; stmt s;
 Select s such that Next*(s, a) pattern b(_,_"j%k"_)
