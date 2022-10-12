@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\AttrType.h" />
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\ClauseGroup.h" />
     <ClInclude Include="QPS\ClauseType.h" />

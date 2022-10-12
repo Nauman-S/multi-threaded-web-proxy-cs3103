@@ -36,7 +36,7 @@
 #include "../pattern/IfPattern.h"
 #include "../pattern/WhilePattern.h"
 #include "../with_clause/With.h"
-
+#include "../AttrType.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -668,17 +668,17 @@ shared_ptr<With> QueryBuilder::ParseWithClause() {
 	return std::make_shared<With>(lhs_ref, rhs_ref, lhs_val_type, rhs_val_type);
 }
 
-std::pair<shared_ptr<Ref>, ValType> QueryBuilder::ParseWithRef() {
+std::pair<shared_ptr<Ref>, AttrType> QueryBuilder::ParseWithRef() {
 	if (lexer_->HasInteger()) {
 		int integer = lexer_->MatchInteger();
-		return { std::make_shared<TempRef>(ValType::kInt, std::to_string(integer)), ValType::kInt };
+		return { std::make_shared<TempRef>(ValType::kInt, std::to_string(integer)), AttrType::kInt };
 	}
 
 	if (lexer_->HasQuotationMarks()) {
 		lexer_->MatchQuotationMarks();
 		string identity = lexer_->MatchIdentity();
 		lexer_->MatchQuotationMarks();
-		return { std::make_shared<TempRef>(ValType::kString, identity), ValType::kString };
+		return { std::make_shared<TempRef>(ValType::kString, identity), AttrType::kStr };
 	}
 
 	// parse attribute reference
@@ -689,9 +689,9 @@ std::pair<shared_ptr<Ref>, ValType> QueryBuilder::ParseWithRef() {
 	shared_ptr<Ref> synonym = GetDeclaredSyn(ref_name);
 
 	ValidateAttrName(synonym, attr_name);
-	ValType val_type = GetValTypeFromAttrName(attr_name);
+	AttrType attr_type = GetAttrTypeFromName(attr_name);
 
-	return { synonym, val_type};
+	return { synonym, attr_type };
 }
 
 void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
@@ -731,15 +731,15 @@ void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
 	
 }
 
-ValType QueryBuilder::GetValTypeFromAttrName(string attr_name) {
-	const std::unordered_map<string, ValType> attr_name_to_val_type_map = {
-		{"procName", ValType::kProcName},
-		{"varName", ValType::kVarName},
-		{"value", ValType::kConst},
-		{"stmt#", ValType::kLineNum}
+AttrType QueryBuilder::GetAttrTypeFromName(string attr_name) {
+	const std::unordered_map<string, AttrType> attr_name_to_type_map = {
+		{"procName", AttrType::kProcName},
+		{"varName", AttrType::kVarName},
+		{"value", AttrType::kConst},
+		{"stmt#", AttrType::kStmtNum}
 	};
 
-	return attr_name_to_val_type_map.at(attr_name);
+	return attr_name_to_type_map.at(attr_name);
 }
 
 
