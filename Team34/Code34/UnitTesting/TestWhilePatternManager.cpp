@@ -14,7 +14,7 @@ namespace UnitTesting
 	private:
 		WhilePatternManager while_pattern_manager_;
 	public:
-		TEST_METHOD(GetAllWhileStatmentsFromVar)
+		TEST_METHOD(TestGetAllWhileStatmentsFromVar)
 		{
 			while_pattern_manager_.AddPattern(1, "x");
 			while_pattern_manager_.AddPattern(2, "y");
@@ -24,7 +24,7 @@ namespace UnitTesting
 			Assert::AreEqual(2, int(while_pattern_manager_.GetAllStatmentsFromVar("x")->size()));
 		}
 
-		TEST_METHOD(GetAllWhileStatements)
+		TEST_METHOD(TestGetAllWhileStatements)
 		{
 			while_pattern_manager_.AddPattern(1, "x");
 			while_pattern_manager_.AddPattern(2, "y");
@@ -33,13 +33,26 @@ namespace UnitTesting
 			Assert::AreEqual(2, int(while_pattern_manager_.GetAllStatements()->size()));
 		}
 
-		TEST_METHOD(GetAllWhilePatterns)
+		TEST_METHOD(TestGetAllWhilePatterns)
 		{
 			while_pattern_manager_.AddPattern(1, "x");
 			while_pattern_manager_.AddPattern(2, "y");
 			Assert::AreEqual(2, int(while_pattern_manager_.GetAllPatterns()->size()));
 			while_pattern_manager_.AddPattern(2, "x");
 			Assert::AreEqual(3, int(while_pattern_manager_.GetAllPatterns()->size()));
+		}
+
+		TEST_METHOD(TestClearWhilePatternStore)
+		{
+			while_pattern_manager_.AddPattern(1, "x");
+			Assert::AreEqual(1, int(while_pattern_manager_.GetAllPatterns()->size()));
+			Assert::AreEqual(1, int(while_pattern_manager_.GetAllStatements()->size()));
+			Assert::AreEqual(1, int(while_pattern_manager_.GetAllStatmentsFromVar("x")->size()));
+
+			while_pattern_manager_.Clear();
+			Assert::AreEqual(0, int(while_pattern_manager_.GetAllPatterns()->size()));
+			Assert::AreEqual(0, int(while_pattern_manager_.GetAllStatements()->size()));
+			Assert::AreEqual(0, int(while_pattern_manager_.GetAllStatmentsFromVar("x")->size()));
 		}
 	};
 }

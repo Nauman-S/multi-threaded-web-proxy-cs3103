@@ -197,5 +197,43 @@ namespace UnitTesting
 			statement_manager_.AddReadStatement("test_read_var2", 2);
 			Assert::AreEqual(Variable("test_read_var2"), *statement_manager_.GetReadVariableFromStatement(2));
 		}
+
+		TEST_METHOD(TestClearStatementStore)
+		{
+			statement_manager_.Clear();
+			statement_manager_.AddStatement(1, RefType::kAssignRef);
+			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
+
+			statement_manager_.AddStatement(2, RefType::kCallRef);
+			statement_manager_.AddCallsStatement("test", 2);
+			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kCallRef)->size()));
+			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			Assert::AreEqual(Procedure("test"), *statement_manager_.GetCallsProcedureFromStatement(2));
+
+			statement_manager_.AddStatement(3, RefType::kPrintRef);
+			statement_manager_.AddPrintStatement("x", 3);
+			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kPrintRef)->size()));
+			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("x")->size()));
+			Assert::AreEqual(1, int(statement_manager_.GetPrintVariableFromStatement(3)->size()));
+
+			statement_manager_.AddStatement(4, RefType::kReadRef);
+			statement_manager_.AddReadStatement("y", 4);
+			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kReadRef)->size()));
+			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("y")->size()));
+			Assert::AreEqual(1, int(statement_manager_.GetReadVariableFromStatement(4)->size()));
+
+			statement_manager_.Clear();
+			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kCallRef)->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			std::shared_ptr<Procedure> empty_ptr = std::make_shared<Procedure>();
+			Assert::AreEqual(*empty_ptr, *statement_manager_.GetCallsProcedureFromStatement(2));
+			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kPrintRef)->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetPrintStatementFromVariable("x")->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetPrintVariableFromStatement(3)->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kReadRef)->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetReadStatementFromVariable("y")->size()));
+			Assert::AreEqual(0, int(statement_manager_.GetReadVariableFromStatement(4)->size()));
+		}
 	};
 }
