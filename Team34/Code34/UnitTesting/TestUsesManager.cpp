@@ -54,11 +54,14 @@ namespace UnitTesting
 		{
 			uses_manager_.SetUses(1, "x");
 			std::shared_ptr<std::unordered_set<StmtNum>> stmts = uses_manager_.GetAllStatements();
+			Assert::IsTrue(stmts->find(1) != stmts->end());
 			Assert::AreEqual(1, int(stmts->size()));
+
 			uses_manager_.SetUses(1, "y");
 			uses_manager_.SetUses(2, "z");
 			stmts = uses_manager_.GetAllStatements();
-			// stmts should contain [1, 2]
+			Assert::IsTrue(stmts->find(1) != stmts->end());
+			Assert::IsTrue(stmts->find(2) != stmts->end());
 			Assert::AreEqual(2, int(stmts->size()));
 		};
 
@@ -66,10 +69,15 @@ namespace UnitTesting
 		{
 			uses_manager_.SetUses(1, "x");
 			std::shared_ptr<std::unordered_set<Variable>> vars = uses_manager_.GetAllSVariables();
+			Assert::IsTrue(vars->find("x") != vars->end());
 			Assert::AreEqual(1, int(vars->size()));
+
 			uses_manager_.SetUses(1, "y");
 			uses_manager_.SetUses(2, "z");
 			vars = uses_manager_.GetAllSVariables();
+			Assert::IsTrue(vars->find("x") != vars->end());
+			Assert::IsTrue(vars->find("y") != vars->end());
+			Assert::IsTrue(vars->find("z") != vars->end());
 			Assert::AreEqual(3, int(vars->size()));
 		};
 
@@ -88,11 +96,14 @@ namespace UnitTesting
 		{
 			uses_manager_.SetUses("proc1", "x");
 			std::shared_ptr<std::unordered_set<Procedure>> procs = uses_manager_.GetAllProcedures();
+			Assert::IsTrue(procs->find("proc1") != procs->end());
 			Assert::AreEqual(1, int(procs->size()));
+
 			uses_manager_.SetUses("proc1", "y");
 			uses_manager_.SetUses("proc2", "z");
 			procs = uses_manager_.GetAllProcedures();
-			// procs should contain ["proc1", "proc2"]
+			Assert::IsTrue(procs->find("proc1") != procs->end());
+			Assert::IsTrue(procs->find("proc2") != procs->end());
 			Assert::AreEqual(2, int(procs->size()));
 		};
 
@@ -101,7 +112,8 @@ namespace UnitTesting
 			uses_manager_.SetUses(1, "x");
 			uses_manager_.SetUses(1, "y");
 			std::shared_ptr<std::unordered_set<Variable>> vars = uses_manager_.GetVarByStmtNum(1);
-			// vars should contain ["x", "y"]
+			Assert::IsTrue(vars->find("x") != vars->end());
+			Assert::IsTrue(vars->find("y") != vars->end());
 			Assert::AreEqual(2, int(vars->size()));
 		};
 
@@ -110,7 +122,8 @@ namespace UnitTesting
 			uses_manager_.SetUses("proc1", "x");
 			uses_manager_.SetUses("proc1", "y");
 			std::shared_ptr<std::unordered_set<Variable>> vars = uses_manager_.GetVarByProcName("proc1");
-			// vars should contain ["x", "y"]
+			Assert::IsTrue(vars->find("x") != vars->end());
+			Assert::IsTrue(vars->find("y") != vars->end());
 			Assert::AreEqual(2, int(vars->size()));
 		};
 
@@ -119,7 +132,8 @@ namespace UnitTesting
 			uses_manager_.SetUses(1, "x");
 			uses_manager_.SetUses(2, "x");
 			std::shared_ptr<std::unordered_set<StmtNum>> stmts = uses_manager_.GetStmtNumByVar("x");
-			// stmts should contain [1, 2]
+			Assert::IsTrue(stmts->find(1) != stmts->end());
+			Assert::IsTrue(stmts->find(2) != stmts->end());
 			Assert::AreEqual(2, int(stmts->size()));
 		};
 
@@ -128,7 +142,8 @@ namespace UnitTesting
 			uses_manager_.SetUses("proc1", "x");
 			uses_manager_.SetUses("proc2", "x");
 			std::shared_ptr<std::unordered_set<Procedure>> procs = uses_manager_.GetProcNameByVar("x");
-			// procs should contain ["proc1", "proc2"]
+			Assert::IsTrue(procs->find("proc1") != procs->end());
+			Assert::IsTrue(procs->find("proc2") != procs->end());
 			Assert::AreEqual(2, int(procs->size()));
 		};
 	};
