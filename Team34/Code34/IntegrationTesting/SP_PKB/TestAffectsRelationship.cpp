@@ -100,5 +100,31 @@ namespace IntegrationTesting
 			// Result: 15, 16, 17
 			Assert::AreEqual(3, int(read->GetEffectStmtsFromStmt(16)->size()));
 		}
+
+		TEST_METHOD(TestGetCauseStmtsFromStmtNoNesting)
+		{
+			// Result: 1
+			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(3)->size()));
+			// Result: 4
+			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(5)->size()));
+			// Result: 3
+			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(6)->size()));
+		}
+
+		TEST_METHOD(TestGetCauseStmtsFromStmtOnIfStatement)
+		{
+			// Result: 7
+			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(11)->size()));
+			// Result: 7, 10
+			Assert::AreEqual(2, int(read->GetCauseStmtsFromStmt(12)->size()));
+		}
+
+		TEST_METHOD(TestGetCauseStmtsFromStmtOnWhileLoop)
+		{
+			// Result: 13, 15, 16
+			Assert::AreEqual(3, int(read->GetCauseStmtsFromStmt(15)->size()));
+			// Result: 13, 16
+			Assert::AreEqual(2, int(read->GetCauseStmtsFromStmt(16)->size()));
+		}
 	};
 }

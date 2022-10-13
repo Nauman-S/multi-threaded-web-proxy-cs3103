@@ -101,7 +101,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromSt
 				{
 					cause_stmts->insert(*parent);
 				}
-				else if (!IsDirectlyModified(*var, *parent))
+				if (!IsDirectlyModified(*var, *parent))
 				{
 					visited.insert(*parent);
 					queue.push(*parent);
