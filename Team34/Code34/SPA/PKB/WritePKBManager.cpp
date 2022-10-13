@@ -132,5 +132,17 @@ void WritePKBManager::AddWhilePattern(StmtNum stmt_num, Variable var)
 // Utility APIs
 void WritePKBManager::ResetPKB()
 {
-
+	pkb.variable_manager_.Clear();
+	pkb.constant_manager_.Clear();
+	pkb.procedure_manager_.Clear();
+	pkb.statement_manager_.Clear();
+	pkb.parent_manager_.Clear();
+	pkb.follows_manager_.Clear();
+	pkb.modifies_manager_.Clear();
+	pkb.uses_manager_.Clear();
+	pkb.calls_manager_.Clear();
+	pkb.next_manager_.Clear();
+	pkb.assign_pattern_manager_.Clear();
+	pkb.if_pattern_manager_.Clear();
+	pkb.while_pattern_manager_.Clear();
 }

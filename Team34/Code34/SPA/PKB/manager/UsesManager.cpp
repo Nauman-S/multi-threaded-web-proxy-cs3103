@@ -63,3 +63,9 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> UsesManager::GetAll
 {
 	return uses_pv_store_.GetAllRelations();
 }
+
+void UsesManager::Clear()
+{
+	uses_pv_store_.Clear();
+	uses_sv_store_.Clear();
+}

@@ -16,3 +16,8 @@ bool PatternWithExprStore::IsPatternMatch(StmtNum stmt_num, std::shared_ptr<Expr
 	}
 	return false;
 }
+
+void PatternWithExprStore::Clear()
+{
+	statement_map_.clear();
+}

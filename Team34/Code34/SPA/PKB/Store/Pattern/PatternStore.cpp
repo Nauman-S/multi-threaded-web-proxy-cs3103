@@ -31,3 +31,10 @@ std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> PatternStore::GetAllP
 {
 	return std::make_shared<std::vector<std::pair<StmtNum, Variable>>>(all_sv_pairs_);
 }
+
+void PatternStore::Clear()
+{
+	var_to_stmt_map_.clear();
+	all_statements_.clear();
+	all_sv_pairs_.clear();
+}
