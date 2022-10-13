@@ -41,8 +41,8 @@ void TestWrapper::parse(std::string filename) {
 	SourceLexer lexer = SourceLexer(filename);
 	const std::shared_ptr<vector<SourceToken>> tokens = lexer.GetAllTokens();
 	SourceValidator validator = SourceValidator();
-
-	if (validator.Validate(tokens)) {
+	validator.SetTokens(tokens);
+	if (validator.Validate()) {
  		SourceParser parser = SourceParser();
 		std::shared_ptr<ProgramNode> root = parser.Parse();
 		DesignExtractor extractor;

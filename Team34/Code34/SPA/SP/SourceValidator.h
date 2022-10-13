@@ -11,7 +11,8 @@ using namespace std;
 
 class SourceValidator {
 public:
-    bool Validate(shared_ptr<vector<SourceToken>>);
+	void SetTokens(shared_ptr<vector<SourceToken>>);
+    bool Validate();
 
  private:
     int idx = 0;
@@ -19,16 +20,17 @@ public:
 	vector<string> variable_names;
     map<string, float> variable_map;
     vector<pair<string, string>> calls;
-	bool ValidateProcedure(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateStatement(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateRead(std::shared_ptr<vector<SourceToken>>);
-	bool ValidatePrint(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateCall(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateIf(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateWhile(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateAssign(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateExpression(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>>);
-	bool ValidateRelation(std::shared_ptr<vector<SourceToken>>);
+	shared_ptr<vector<SourceToken>> tokens;
+	bool ValidateProcedure();
+	bool ValidateStatement();
+	bool ValidateRead();
+	bool ValidatePrint();
+	bool ValidateCall();
+	bool ValidateIf();
+	bool ValidateWhile();
+	bool ValidateAssign();
+	bool ValidateExpression();
+	bool ValidateArithmeticExpression();
+	bool ValidateRelation();
     void IncrementIdx();
 };
