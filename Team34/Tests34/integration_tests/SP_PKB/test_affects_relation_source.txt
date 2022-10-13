@@ -26,3 +26,39 @@ procedure SingleLoop {
   }
   z = x;
 }
+
+procedure ModifiedByRead {
+  x = 2;
+  y = 3;
+  z = 4;
+  read z;
+  a = 3 + x + y + z;
+  b = 3 + y + z;
+}
+
+procedure ModifiedByCalls {
+  x = 2;
+  y = 2;
+  call ModifiesX;
+  a = x + y; 
+}
+
+procedure ModifiesX {
+  x = 1;
+}
+
+procedure IfWhileProcedure {
+  x = a + b;
+  y = 3;
+  if (x == 2) then {
+    z = 1 + y;
+  } else {
+    z = 3 + x;
+  }
+  x = a;
+  while (x == 0) {
+    x = 1;
+    z = 3 + a;
+    a = 3;
+  }
+}
