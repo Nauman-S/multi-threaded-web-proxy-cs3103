@@ -69,7 +69,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == true);
 		};
@@ -91,7 +92,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -177,7 +179,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -218,7 +221,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -233,7 +237,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -276,7 +281,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightRound, ")"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -319,7 +325,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -384,7 +391,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -447,9 +455,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -510,9 +518,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -529,7 +537,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -545,9 +554,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kName, "x"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -578,7 +587,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -603,7 +613,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -627,9 +638,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -666,7 +677,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -810,7 +822,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -861,7 +874,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -1004,7 +1018,8 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = false;
 			Assert::IsTrue(actual == expected);
 		};
@@ -1045,9 +1060,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightRound, ")"),
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
@@ -1110,9 +1125,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
-
 			});
-			bool actual = validator.Validate(stub);
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
