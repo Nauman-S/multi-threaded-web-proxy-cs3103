@@ -20,7 +20,8 @@ namespace UnitTesting
 		{
 			SourceParser parser = SourceParser();
             SourceLexer lexer = SourceLexer(base_dir + "/multiple_proc.txt");
-			std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
+			parser.SetTokens(lexer.GetAllTokens());
+			std::shared_ptr<ProgramNode> root = parser.Parse();
 			string actual = root->Stringify();
 			string expected = "ProgramProcedureReadxReadzCallSecondProcedureAssignxx0Assignii5\
 WhileCondition0iAssignxx2xyCallThirdAssignii1iifCondition1xAssignxx1xAssignzz1AssignzzzxiAssignyy2z\
@@ -31,7 +32,8 @@ AssignxxxyzProcedureAssignzz5AssignvvzPrintv";
         TEST_METHOD(BasicStmt) {
             SourceParser parser = SourceParser();
             SourceLexer lexer = SourceLexer(base_dir + "/basic_stmt.txt");
-            std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
+			parser.SetTokens(lexer.GetAllTokens());
+            std::shared_ptr<ProgramNode> root = parser.Parse();
             string actual = root->Stringify();
             string expected = "ProgramProcedureReadxWhileCondition2xAssignyy12345ifConditionyx\
 Callproc2PrintzProcedurePrintx";

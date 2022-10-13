@@ -3,12 +3,10 @@
 #include "StmtRef.h"
 #include "../../Utils/type/RefType.h"
 
-class WhileRef :
-    public StmtRef
-{
+class WhileRef : public StmtRef {
+public:
     using StmtRef::StmtRef;
 
-public:
     const RefType GetRefType() override { return RefType::kWhileRef; }
 };
 

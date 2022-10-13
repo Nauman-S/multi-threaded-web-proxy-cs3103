@@ -2,8 +2,14 @@
 #include "../../Utils/type/RefType.h"
 
 class TempRef : public Ref {
-	using Ref::Ref;
-
 public:
-	const RefType GetRefType() override { return RefType::kUnknown; }
+    using Ref::Ref;
+
+    TempRef(ValType val_type, std::string val)
+        : Ref{ val_type, val, AttrType::kConst } {
+    };
+
+    const RefType GetRefType() override { return RefType::kUnknown; }
+
+    bool IsAttrTypeDefault() override { return true; }
 };

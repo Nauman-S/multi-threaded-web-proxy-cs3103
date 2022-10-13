@@ -9,14 +9,8 @@
 using namespace std;
 
 bool SourceValidator::Validate(std::shared_ptr<vector<SourceToken>> tokens) {
-	int idx = 0;
-	vector<string> procedure_names;
-	vector<string> variable_names;
-    // cyclic call have not done
-	map<string, float> variable_map;
-	vector<pair<string, string>> calls;
-	while (idx < (int) tokens->size()) {
-		if (!ValidateProcedure(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
+	while (idx < (int)tokens->size()) {
+		if (!ValidateProcedure(tokens)) {
 			return false;
 		}
 	}
@@ -32,7 +26,7 @@ bool SourceValidator::Validate(std::shared_ptr<vector<SourceToken>> tokens) {
 	return true;
 }
 
-bool SourceValidator::ValidateProcedure(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
+bool SourceValidator::ValidateProcedure(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (!tokens->at(idx++).IsProcedure()) {
 		return false;
 	}
@@ -48,7 +42,7 @@ bool SourceValidator::ValidateProcedure(std::shared_ptr<vector<SourceToken>> tok
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
 	}
-	if (!ValidateStatement(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
+	if (!ValidateStatement(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightCurly) {
@@ -57,37 +51,42 @@ bool SourceValidator::ValidateProcedure(std::shared_ptr<vector<SourceToken>> tok
 	return true;
 }
 
-bool SourceValidator::ValidateStatement(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
+bool SourceValidator::ValidateStatement(std::shared_ptr<vector<SourceToken>> tokens) {
 	while (tokens->at(idx).GetType() != SourceTokenType::kRightCurly) {
 		int tmp = idx;
-		if (ValidateAssign(tokens, idx, procedure_names, variable_names, variable_map)) {
+		if (ValidateAssign(tokens)) {
 			continue;
 		}
 		else {
 			idx = tmp;
 		}
 		if (tokens->at(idx).IsRead()) {
-			if (!ValidateRead(tokens, ++idx, procedure_names, variable_names)) {
+			IncrementIdx();
+			if (!ValidateRead(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsPrint()) {
-			if (!ValidatePrint(tokens, ++idx, variable_names)) {
+			IncrementIdx();
+			if (!ValidatePrint(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsCall()) {
-			if (!ValidateCall(tokens, ++idx, procedure_names, calls)) {
+			IncrementIdx();
+			if (!ValidateCall(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsIf()) {
-			if (!ValidateIf(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
+			IncrementIdx();
+			if (!ValidateIf(tokens)) {
 				return false;
 			}
 		}
 		else if (tokens->at(idx).IsWhile()) {
-			if (!ValidateWhile(tokens, ++idx, procedure_names, variable_names, variable_map, calls)) {
+			IncrementIdx();
+			if (!ValidateWhile(tokens)) {
 				return false;
 			}
 		}
@@ -98,7 +97,7 @@ bool SourceValidator::ValidateStatement(std::shared_ptr<vector<SourceToken>> tok
 	return true;
 }
 
-bool SourceValidator::ValidateRead(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names) {
+bool SourceValidator::ValidateRead(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
@@ -114,7 +113,7 @@ bool SourceValidator::ValidateRead(std::shared_ptr<vector<SourceToken>> tokens, 
 	return true;
 }
 
-bool SourceValidator::ValidatePrint(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& variable_names) {
+bool SourceValidator::ValidatePrint(std::shared_ptr<vector<SourceToken>> tokens) {
 	/*
 	if (!count(variable_names.begin(), variable_names.end(), tokens->at(idx).GetStringVal())) {
 		return false;
@@ -130,7 +129,7 @@ bool SourceValidator::ValidatePrint(std::shared_ptr<vector<SourceToken>> tokens,
 	return true;
 }
 
-bool SourceValidator::ValidateCall(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<pair<string, string>>& calls) {
+bool SourceValidator::ValidateCall(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
@@ -141,11 +140,11 @@ bool SourceValidator::ValidateCall(std::shared_ptr<vector<SourceToken>> tokens, 
 	return true;
 }
 
-bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
+bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
-	if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+	if (!ValidateExpression(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightRound) {
@@ -157,7 +156,7 @@ bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens, in
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
 	}
-	if (!ValidateStatement(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
+	if (!ValidateStatement(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightCurly) {
@@ -169,7 +168,7 @@ bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens, in
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
 	}
-	if (!ValidateStatement(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
+	if (!ValidateStatement(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightCurly) {
@@ -178,11 +177,11 @@ bool SourceValidator::ValidateIf(std::shared_ptr<vector<SourceToken>> tokens, in
 	return true;
 }
 
-bool SourceValidator::ValidateWhile(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map, vector<pair<string, string>>& calls) {
+bool SourceValidator::ValidateWhile(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 		return false;
 	}
-	if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
+	if (!ValidateExpression(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightRound) {
@@ -191,7 +190,7 @@ bool SourceValidator::ValidateWhile(std::shared_ptr<vector<SourceToken>> tokens,
 	if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
 		return false;
 	}
-	if (!ValidateStatement(tokens, idx, procedure_names, variable_names, variable_map, calls)) {
+	if (!ValidateStatement(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kRightCurly) {
@@ -200,7 +199,7 @@ bool SourceValidator::ValidateWhile(std::shared_ptr<vector<SourceToken>> tokens,
 	return true;
 }
 
-bool SourceValidator::ValidateAssign(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& procedure_names, vector<string>& variable_names, map<string, float>& variable_map) {
+bool SourceValidator::ValidateAssign(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx).GetType() != SourceTokenType::kName) {
 		return false;
 	}
@@ -213,7 +212,7 @@ bool SourceValidator::ValidateAssign(std::shared_ptr<vector<SourceToken>> tokens
 	if (tokens->at(idx++).GetType() != SourceTokenType::kEqual) {
 		return false;
 	}
-	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
+	if (!ValidateArithmeticExpression(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx++).GetType() != SourceTokenType::kSemiColon) {
@@ -222,14 +221,13 @@ bool SourceValidator::ValidateAssign(std::shared_ptr<vector<SourceToken>> tokens
 	return true;
 }
 
-bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
+bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> tokens) {
 	if (tokens->at(idx).GetType() == SourceTokenType::kNegate) {
-		idx += 1;
+		IncrementIdx();
 		if (tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 			return false;
 		}
-		if (!ValidateExpression(tokens, idx, variable_names, variable_map)) {
-			cout << "H" << endl;
+		if (!ValidateExpression(tokens)) {
 			return false;
 		}
 		if (tokens->at(idx++).GetType() != SourceTokenType::kRightRound) {
@@ -239,9 +237,9 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 	}
 	else if (tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
 		int temp = idx;
-		idx += 1;
+		IncrementIdx();
 		bool flag = true;
-		if (flag && !ValidateExpression(tokens, idx, variable_names, variable_map)) {
+		if (flag && !ValidateExpression(tokens)) {
 			flag = false;
 		}
 		if (flag && tokens->at(idx++).GetType() != SourceTokenType::kRightRound) {
@@ -250,11 +248,11 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 		if (flag && tokens->at(idx).GetType() != SourceTokenType::kLogicalAnd && tokens->at(idx).GetType() != SourceTokenType::kLogicalOr) {
 			flag = false;
 		}
-		idx += 1;
+		IncrementIdx();
 		if (flag && tokens->at(idx++).GetType() != SourceTokenType::kLeftRound) {
 			flag = false;
 		}
-		if (flag && !ValidateExpression(tokens, idx, variable_names, variable_map)) {
+		if (flag && !ValidateExpression(tokens)) {
 			flag = false;
 		}
 		if (flag && tokens->at(idx++).GetType() != SourceTokenType::kRightRound) {
@@ -265,18 +263,18 @@ bool SourceValidator::ValidateExpression(std::shared_ptr<vector<SourceToken>> to
 		}
 		else {
 			idx = temp;
-			return ValidateRelation(tokens, idx, variable_names, variable_map);
+			return ValidateRelation(tokens);
 		}
 	}
 	else {
-		return ValidateRelation(tokens, idx, variable_names, variable_map);
+		return ValidateRelation(tokens);
 	}
 }
 
-bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
+bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<SourceToken>> tokens) {
 	int cnt = 0;
 	string expected = "var";
-	while (tokens->at(idx).GetType() == SourceTokenType::kName || tokens->at(idx).GetType() == SourceTokenType::kInteger || tokens->at(idx).GetType() == SourceTokenType::kLeftRound || tokens->at(idx).GetType() == SourceTokenType::kRightRound || tokens->at(idx).GetType()== SourceTokenType::kAdd || tokens->at(idx).GetType() == SourceTokenType::kMinus || tokens->at(idx).GetType() == SourceTokenType::kMultiply || tokens->at(idx).GetType() == SourceTokenType::kDivide || tokens->at(idx).GetType() == SourceTokenType::kModulo) {
+	while (tokens->at(idx).GetType() == SourceTokenType::kName || tokens->at(idx).GetType() == SourceTokenType::kInteger || tokens->at(idx).GetType() == SourceTokenType::kLeftRound || tokens->at(idx).GetType() == SourceTokenType::kRightRound || tokens->at(idx).GetType() == SourceTokenType::kAdd || tokens->at(idx).GetType() == SourceTokenType::kMinus || tokens->at(idx).GetType() == SourceTokenType::kMultiply || tokens->at(idx).GetType() == SourceTokenType::kDivide || tokens->at(idx).GetType() == SourceTokenType::kModulo) {
 		if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kName) {
 			/*
 			if (!count(variable_names.begin(), variable_names.end(), tokens->at(idx).GetStringVal())) {
@@ -315,7 +313,7 @@ bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<Source
 		else {
 			return false;
 		}
-		idx += 1;
+		IncrementIdx();
 	}
 	if (cnt != 0) {
 		return false;
@@ -323,16 +321,18 @@ bool SourceValidator::ValidateArithmeticExpression(std::shared_ptr<vector<Source
 	return true;
 }
 
-bool SourceValidator::ValidateRelation(std::shared_ptr<vector<SourceToken>> tokens, int& idx, vector<string>& variable_names, map<string, float>& variable_map) {
-	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
+bool SourceValidator::ValidateRelation(std::shared_ptr<vector<SourceToken>> tokens) {
+	if (!ValidateArithmeticExpression(tokens)) {
 		return false;
 	}
 	if (tokens->at(idx).GetType() != SourceTokenType::kLesser && tokens->at(idx).GetType() != SourceTokenType::kLesserEqual && tokens->at(idx).GetType() != SourceTokenType::kGreater && tokens->at(idx).GetType() != SourceTokenType::kGreaterEqual && tokens->at(idx).GetType() != SourceTokenType::kNotEqual && tokens->at(idx).GetType() != SourceTokenType::kDoubleEqual) {
 		return false;
 	}
-	idx += 1;
-	if (!ValidateArithmeticExpression(tokens, idx, variable_names, variable_map)) {
+	IncrementIdx();
+	if (!ValidateArithmeticExpression(tokens)) {
 		return false;
 	}
 	return true;
 }
+
+void SourceValidator::IncrementIdx() { idx += 1; }
