@@ -62,9 +62,9 @@ namespace UnitTesting
 			Assert::IsTrue(next_3->find(7) != next_3->end());
 			Assert::AreEqual(2, int(next_3->size()));
 
-			std::shared_ptr<std::unordered_set<StmtNum>> next_3 = next_manager_.GetNextStmtsFromStmt(4);
-			Assert::IsTrue(next_3->find(3) != next_3->end());
-			Assert::AreEqual(1, int(next_3->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> next_4 = next_manager_.GetNextStmtsFromStmt(4);
+			Assert::IsTrue(next_4->find(3) != next_4->end());
+			Assert::AreEqual(1, int(next_4->size()));
 
 			std::shared_ptr<std::unordered_set<StmtNum>> next_7 = next_manager_.GetNextStmtsFromStmt(7);
 			Assert::IsTrue(next_7->find(8) != next_7->end());
@@ -107,7 +107,7 @@ namespace UnitTesting
 
 			std::shared_ptr<std::unordered_set<StmtNum>> prev_3 = next_manager_.GetPrevStmtsFromStmt(3);
 			Assert::IsTrue(prev_3->find(2) != prev_3->end());
-			Assert::IsTrue(prev_3->find(3) != prev_3->end());
+			Assert::IsTrue(prev_3->find(4) != prev_3->end());
 			Assert::AreEqual(2, int(prev_3->size()));
 
 			std::shared_ptr<std::unordered_set<StmtNum>> prev_4 = next_manager_.GetPrevStmtsFromStmt(4);
