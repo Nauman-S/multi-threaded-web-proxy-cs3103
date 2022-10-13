@@ -28,5 +28,5 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
 private:
-	FollowsRelationStore<StmtNum> follows_store_;
+	FollowsRelationStore follows_store_;
 };
