@@ -18,36 +18,65 @@ namespace UnitTesting
 		{
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
 			statement_manager_.AddStatement(1, RefType::kCallRef);
-			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
-			Assert::AreEqual(0, int(statement_manager_.GetStatementsByType(RefType::kCallRef)->size()));
-			Assert::AreEqual(1, int(statement_manager_.GetAllStatements()->size()));
+
+			std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = statement_manager_.GetStatementsByType(RefType::kAssignRef);
+			Assert::IsTrue(assign_stmts->find(1) != assign_stmts->end());
+			Assert::AreEqual(1, int(assign_stmts->size()));
+
+			std::shared_ptr<std::unordered_set<StmtNum>> call_stmts = statement_manager_.GetStatementsByType(RefType::kCallRef);
+			Assert::AreEqual(0, int(call_stmts->size()));
+
+			std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = statement_manager_.GetAllStatements();
+			Assert::IsTrue(all_stmts->find(1) != all_stmts->end());
+			Assert::AreEqual(1, int(all_stmts->size()));
 		};
 
 		TEST_METHOD(TestAddCallsStatement)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::AreEqual(0, int(call_stmts->size()));
+
 			statement_manager_.AddCallsStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::IsTrue(call_stmts->find(1) != call_stmts->end());
+			Assert::AreEqual(1, int(call_stmts->size()));
+
 			statement_manager_.AddCallsStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::IsTrue(call_stmts->find(1) != call_stmts->end());
+			Assert::AreEqual(1, int(call_stmts->size()));
 		}
 
 		TEST_METHOD(TestAddPrintStatement)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::AreEqual(0, int(print_stmts->size()));
+
 			statement_manager_.AddPrintStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::IsTrue(print_stmts->find(1) != print_stmts->end());
+			Assert::AreEqual(1, int(print_stmts->size()));
+
 			statement_manager_.AddPrintStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::IsTrue(print_stmts->find(1) != print_stmts->end());
+			Assert::AreEqual(1, int(print_stmts->size()));
 		}
 
 		TEST_METHOD(TestAddReadStatement)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::AreEqual(0, int(read_stmts->size()));
+			
 			statement_manager_.AddReadStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::IsTrue(read_stmts->find(1) != read_stmts->end());
+			Assert::AreEqual(1, int(read_stmts->size()));
+
 			statement_manager_.AddReadStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::IsTrue(read_stmts->find(1) != read_stmts->end());
+			Assert::AreEqual(1, int(read_stmts->size()));
 		}
 
 		TEST_METHOD(TestGetStatementType)
@@ -63,9 +92,15 @@ namespace UnitTesting
 		TEST_METHOD(TestGetStatementsByType)
 		{
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
-			Assert::AreEqual(1, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = statement_manager_.GetStatementsByType(RefType::kAssignRef);
+			Assert::IsTrue(assign_stmts->find(1) != assign_stmts->end());
+			Assert::AreEqual(1, int(assign_stmts->size()));
+
 			statement_manager_.AddStatement(2, RefType::kAssignRef);
-			Assert::AreEqual(2, int(statement_manager_.GetStatementsByType(RefType::kAssignRef)->size()));
+			assign_stmts = statement_manager_.GetStatementsByType(RefType::kAssignRef);
+			Assert::IsTrue(assign_stmts->find(1) != assign_stmts->end());
+			Assert::IsTrue(assign_stmts->find(2) != assign_stmts->end());
+			Assert::AreEqual(2, int(assign_stmts->size()));
 		};
 
 		TEST_METHOD(TestGetAllStatements)
@@ -74,34 +109,63 @@ namespace UnitTesting
 			statement_manager_.AddStatement(1, RefType::kAssignRef);
 			statement_manager_.AddStatement(2, RefType::kCallRef);
 			statement_manager_.AddStatement(3, RefType::kPrintRef);
-			Assert::AreEqual(3, int(statement_manager_.GetAllStatements()->size()));
+
+			std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = statement_manager_.GetAllStatements();
+			Assert::IsTrue(all_stmts->find(1) != all_stmts->end());
+			Assert::IsTrue(all_stmts->find(2) != all_stmts->end());
+			Assert::IsTrue(all_stmts->find(3) != all_stmts->end());
+			Assert::AreEqual(3, int(all_stmts->size()));
 		};
 
 		TEST_METHOD(TestGetCallsStatementFromProcedure)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::AreEqual(0, int(call_stmts->size()));
+
 			statement_manager_.AddCallsStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::IsTrue(call_stmts->find(1) != call_stmts->end());
+			Assert::AreEqual(1, int(call_stmts->size()));
+
 			statement_manager_.AddCallsStatement("test", 2);
-			Assert::AreEqual(2, int(statement_manager_.GetCallsStatementFromProcedure("test")->size()));
+			call_stmts = statement_manager_.GetCallsStatementFromProcedure("test");
+			Assert::IsTrue(call_stmts->find(1) != call_stmts->end());
+			Assert::IsTrue(call_stmts->find(2) != call_stmts->end());
+			Assert::AreEqual(2, int(call_stmts->size()));
 		};
 
 		TEST_METHOD(TestGetPrintStatementFromProcedure)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::AreEqual(0, int(print_stmts->size()));
+
 			statement_manager_.AddPrintStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::IsTrue(print_stmts->find(1) != print_stmts->end());
+			Assert::AreEqual(1, int(print_stmts->size()));
+
 			statement_manager_.AddPrintStatement("test", 2);
-			Assert::AreEqual(2, int(statement_manager_.GetPrintStatementFromVariable("test")->size()));
+			print_stmts = statement_manager_.GetPrintStatementFromVariable("test");
+			Assert::IsTrue(print_stmts->find(1) != print_stmts->end());
+			Assert::IsTrue(print_stmts->find(2) != print_stmts->end());
+			Assert::AreEqual(2, int(print_stmts->size()));
 		};
 
 		TEST_METHOD(TestGetReadStatementFromProcedure)
 		{
-			Assert::AreEqual(0, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			std::shared_ptr<std::unordered_set<StmtNum>> read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::AreEqual(0, int(read_stmts->size()));
+
 			statement_manager_.AddReadStatement("test", 1);
-			Assert::AreEqual(1, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::IsTrue(read_stmts->find(1) != read_stmts->end());
+			Assert::AreEqual(1, int(read_stmts->size()));
+
 			statement_manager_.AddReadStatement("test", 2);
-			Assert::AreEqual(2, int(statement_manager_.GetReadStatementFromVariable("test")->size()));
+			read_stmts = statement_manager_.GetReadStatementFromVariable("test");
+			Assert::IsTrue(read_stmts->find(1) != read_stmts->end());
+			Assert::IsTrue(read_stmts->find(2) != read_stmts->end());
+			Assert::AreEqual(2, int(read_stmts->size()));
 		};
 
 		TEST_METHOD(TestGetCallsProcedureFromStatement)
