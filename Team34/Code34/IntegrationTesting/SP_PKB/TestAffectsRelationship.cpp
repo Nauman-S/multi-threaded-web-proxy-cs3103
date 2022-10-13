@@ -81,67 +81,82 @@ namespace IntegrationTesting
 
 		TEST_METHOD(TestGetEffectStmtsFromStmtNoNesting)
 		{
-			// Result: 3
-			Assert::AreEqual(1, int(read->GetEffectStmtsFromStmt(1)->size()));
-			// Result: 6
-			Assert::AreEqual(1, int(read->GetEffectStmtsFromStmt(2)->size()));
-			// Result: -
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_1 = read->GetEffectStmtsFromStmt(1);
+			Assert::IsTrue(effect_stmts_1->find(3) != effect_stmts_1->end());
+
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_2 = read->GetEffectStmtsFromStmt(2);
+			Assert::IsTrue(effect_stmts_2->find(6) != effect_stmts_2->end());
 			Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(3)->size()));
-			// Result: 5
-			Assert::AreEqual(1, int(read->GetEffectStmtsFromStmt(4)->size()));
-			// Result: -
+
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_4 = read->GetEffectStmtsFromStmt(4);
+			Assert::IsTrue(effect_stmts_4->find(5) != effect_stmts_4->end());
+
 			Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(5)->size()));
-			// Result: -
+
 			Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(6)->size()));	
 		}
 
 		TEST_METHOD(TestGetEffectStmtsFromStmtOnIfStatement)
 		{
-			// Result: 11, 12
-			Assert::AreEqual(2, int(read->GetEffectStmtsFromStmt(7)->size()));
-			// Result: -
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_7 = read->GetEffectStmtsFromStmt(7);
+			Assert::IsTrue(effect_stmts_7->find(11) != effect_stmts_7->end());
+			Assert::IsTrue(effect_stmts_7->find(12) != effect_stmts_7->end());
+
 			Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(9)->size()));
-			// Result: 12
-			Assert::AreEqual(1, int(read->GetEffectStmtsFromStmt(10)->size()));
+
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_10 = read->GetEffectStmtsFromStmt(10);
+
+			Assert::IsTrue(effect_stmts_7->find(12) != effect_stmts_7->end());
 		}
 
 		TEST_METHOD(TestGetEffectStmtsFromStmtOnWhileLoop)
 		{
-			// Result: 15, 16, 17
-			Assert::AreEqual(3, int(read->GetEffectStmtsFromStmt(13)->size()));
-			// Result: 15
-			Assert::AreEqual(1, int(read->GetEffectStmtsFromStmt(15)->size()));
-			// Result: 15, 16, 17
-			Assert::AreEqual(3, int(read->GetEffectStmtsFromStmt(16)->size()));
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_13 = read->GetEffectStmtsFromStmt(13);
+			Assert::IsTrue(effect_stmts_13->find(15) != effect_stmts_13->end());
+			Assert::IsTrue(effect_stmts_13->find(16) != effect_stmts_13->end());
+			Assert::IsTrue(effect_stmts_13->find(17) != effect_stmts_13->end());
+
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_15 = read->GetEffectStmtsFromStmt(15);
+			Assert::IsTrue(effect_stmts_15->find(15) != effect_stmts_15->end());
+
+			shared_ptr<unordered_set<StmtNum>> effect_stmts_16 = read->GetEffectStmtsFromStmt(16);
+			Assert::IsTrue(effect_stmts_16->find(15) != effect_stmts_16->end());
+			Assert::IsTrue(effect_stmts_16->find(16) != effect_stmts_16->end());
+			Assert::IsTrue(effect_stmts_16->find(17) != effect_stmts_16->end());
 		}
 
 		TEST_METHOD(TestGetCauseStmtsFromStmtNoNesting)
 		{
-			// Result: 1
-			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(3)->size()));
-			// Result: 4
-			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(5)->size()));
-			// Result: 3
-			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(6)->size()));
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_3 = read->GetCauseStmtsFromStmt(3);
+			Assert::IsTrue(cause_stmts_3->find(1) != cause_stmts_3->end());
+
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_5 = read->GetCauseStmtsFromStmt(5);
+			Assert::IsTrue(cause_stmts_5->find(4) != cause_stmts_5->end());
+
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_6 = read->GetCauseStmtsFromStmt(6);
+			Assert::IsTrue(cause_stmts_6->find(2) != cause_stmts_6->end());
 		}
 
 		TEST_METHOD(TestGetCauseStmtsFromStmtOnIfStatement)
 		{
-			// Result: 7
-			Assert::AreEqual(1, int(read->GetCauseStmtsFromStmt(11)->size()));
-			// Result: 7, 10
-			Assert::AreEqual(2, int(read->GetCauseStmtsFromStmt(12)->size()));
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_11 = read->GetCauseStmtsFromStmt(11);
+			Assert::IsTrue(cause_stmts_11->find(7) != cause_stmts_11->end());
+
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_12 = read->GetCauseStmtsFromStmt(12);
+			Assert::IsTrue(cause_stmts_12->find(7) != cause_stmts_12->end());
+			Assert::IsTrue(cause_stmts_12->find(10) != cause_stmts_12->end());
 		}
 
 		TEST_METHOD(TestGetCauseStmtsFromStmtOnWhileLoop)
 		{
-			shared_ptr<unordered_set<StmtNum>> actual_stmt_15 = read->GetCauseStmtsFromStmt(15);
-			unordered_set<StmtNum> expected = {13, 15, 16};
-			Assert::IsTrue(*actual_stmt_15 == expected);
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_15 = read->GetCauseStmtsFromStmt(15);
+			Assert::IsTrue(cause_stmts_15->find(13) != cause_stmts_15->end());
+			Assert::IsTrue(cause_stmts_15->find(15) != cause_stmts_15->end());
+			Assert::IsTrue(cause_stmts_15->find(16) != cause_stmts_15->end());
 
-			shared_ptr<unordered_set<StmtNum>> actual_stmt_16 = read->GetCauseStmtsFromStmt(16);
-			expected = {13, 16};
-			Assert::IsTrue(*actual_stmt_16 == expected);
+			shared_ptr<unordered_set<StmtNum>> cause_stmts_16 = read->GetCauseStmtsFromStmt(16);
+			Assert::IsTrue(cause_stmts_16->find(13) != cause_stmts_16->end());
+			Assert::IsTrue(cause_stmts_16->find(16) != cause_stmts_16->end());
 		}
 
 		TEST_METHOD(TestGetAllEffectStmtsNoNesting)
