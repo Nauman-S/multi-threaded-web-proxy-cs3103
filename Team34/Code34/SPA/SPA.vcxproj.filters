@@ -115,6 +115,7 @@
     <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
+    <ClCompile Include="QPS\reference\Ref.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />

@@ -66,6 +66,8 @@ private:
 	std::vector<shared_ptr<With>> ParseWithClauses();
 	shared_ptr<With> ParseWithClause();
 	std::pair<shared_ptr<Ref>, AttrType> ParseWithRef();
+
+	AttrType ParseAttr(shared_ptr<Ref> syn);
 	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
 	AttrType GetAttrTypeFromName(string);
 

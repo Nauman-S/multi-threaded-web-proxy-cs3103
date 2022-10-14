@@ -5,7 +5,7 @@
 
 class ProcRef : public Ref {
 private:
-    const AttrType default_attr_type_{ AttrType::kProcName };
+    static const AttrType default_attr_type_{ AttrType::kProcName };
 
 public:
     using Ref::Ref;
