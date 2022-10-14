@@ -391,5 +391,24 @@ namespace UnitTesting
 			next_manager_.SetOptimisedCFGEdge(6, 8);
 			Assert::AreEqual(27, int(next_manager_.GetAllNextTRelations()->size()));
 		}
+
+		TEST_METHOD(TestClearNextStore)
+		{
+			next_manager_.SetNext(1, 2);
+			Assert::AreEqual(1, int(next_manager_.GetAllNextRelations()->size()));
+			Assert::AreEqual(1, int(next_manager_.GetNextStmtsFromStmt(1)->size()));
+			Assert::AreEqual(1, int(next_manager_.GetPrevStmtsFromStmt(2)->size()));
+
+			next_manager_.SetCodeBlock(1, 2);
+			next_manager_.SetCodeBlock(3, 4);
+			next_manager_.SetOptimisedCFGEdge(1, 3);
+			Assert::AreEqual(6, int(next_manager_.GetAllNextTRelations()->size()));
+
+			next_manager_.Clear();
+			Assert::AreEqual(0, int(next_manager_.GetAllNextRelations()->size()));
+			Assert::AreEqual(0, int(next_manager_.GetNextStmtsFromStmt(1)->size()));
+			Assert::AreEqual(0, int(next_manager_.GetPrevStmtsFromStmt(2)->size()));
+			Assert::AreEqual(0, int(next_manager_.GetAllNextTRelations()->size()));
+		}
 	};
 }

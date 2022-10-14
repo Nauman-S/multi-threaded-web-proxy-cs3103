@@ -90,3 +90,15 @@ std::shared_ptr<Variable> StatementManager::GetReadVariableFromStatement(StmtNum
 {
 	return std::make_shared<Variable>(read_variables_[stmt_num]);
 }
+
+void StatementManager::Clear()
+{
+	statement_store_.Clear();
+	statements_.clear();
+	calls_statements_.clear();
+	calls_procedures_.clear();
+	print_statements_.clear();
+	print_variables_.clear();
+	read_statements_.clear();
+	read_variables_.clear();
+}

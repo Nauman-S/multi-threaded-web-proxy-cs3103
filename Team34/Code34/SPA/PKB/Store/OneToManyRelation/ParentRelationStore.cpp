@@ -13,3 +13,9 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentRelationStore::G
 {
 	return std::make_shared<std::vector<std::pair<StmtNum, StmtNum>>>(all_transitive_relations_);
 }
+
+void ParentRelationStore::Clear()
+{
+	OneToManyRelationStore::Clear();
+	all_transitive_relations_.clear();
+}

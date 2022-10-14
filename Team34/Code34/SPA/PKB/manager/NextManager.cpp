@@ -71,3 +71,8 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextManager::GetAllNex
 {
 	return next_store_.GetAllTransitiveRelations();
 }
+
+void NextManager::Clear()
+{
+	next_store_.Clear();
+}

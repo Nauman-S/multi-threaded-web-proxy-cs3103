@@ -146,5 +146,25 @@ namespace UnitTesting
 			Assert::IsTrue(procs->find("proc2") != procs->end());
 			Assert::AreEqual(2, int(procs->size()));
 		};
+
+		TEST_METHOD(TestClearUsesStore)
+		{
+			uses_manager_.SetUses("proc1", "x");
+			uses_manager_.SetUses(1, "y");
+			Assert::AreEqual(1, int(uses_manager_.GetAllPVUses()->size()));
+			Assert::AreEqual(1, int(uses_manager_.GetAllSVUses()->size()));
+			Assert::AreEqual(1, int(uses_manager_.GetProcNameByVar("x")->size()));
+			Assert::AreEqual(1, int(uses_manager_.GetVarByProcName("proc1")->size()));
+			Assert::AreEqual(1, int(uses_manager_.GetVarByStmtNum(1)->size()));
+			Assert::AreEqual(1, int(uses_manager_.GetStmtNumByVar("y")->size()));
+
+			uses_manager_.Clear();
+			Assert::AreEqual(0, int(uses_manager_.GetAllPVUses()->size()));
+			Assert::AreEqual(0, int(uses_manager_.GetAllSVUses()->size()));
+			Assert::AreEqual(0, int(uses_manager_.GetProcNameByVar("x")->size()));
+			Assert::AreEqual(0, int(uses_manager_.GetVarByProcName("proc1")->size()));
+			Assert::AreEqual(0, int(uses_manager_.GetVarByStmtNum(1)->size()));
+			Assert::AreEqual(0, int(uses_manager_.GetStmtNumByVar("y")->size()));
+		}
 	};
 }
