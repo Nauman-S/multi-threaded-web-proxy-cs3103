@@ -22,6 +22,8 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+
+	void Clear();
 private:
 	ManyToManyRelationStore<Procedure, Variable> modifies_pv_store_;
 	ManyToManyRelationStore<StmtNum, Variable> modifies_sv_store_;

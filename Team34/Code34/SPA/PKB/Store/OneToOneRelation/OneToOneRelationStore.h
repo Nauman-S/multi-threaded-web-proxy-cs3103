@@ -19,7 +19,7 @@ public:
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
-	
+	void Clear();
 protected:
 	std::unordered_map<S, T> left_to_right_map_;
 	std::unordered_map<T, S> right_to_left_map_;
@@ -103,4 +103,12 @@ template <typename S, typename T>
 inline std::shared_ptr<std::vector<std::pair<S, T>>> OneToOneRelationStore<S, T>::GetAllRelations()
 {
 	return std::make_shared<std::vector<std::pair<S, T>>>(all_relations_);
+}
+
+template<typename S, typename T>
+inline void OneToOneRelationStore<S, T>::Clear()
+{
+	left_to_right_map_.clear();
+	right_to_left_map_.clear();
+	all_relations_.clear();
 }

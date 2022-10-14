@@ -13,3 +13,9 @@ std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> CallsRelationStore
 {
 	return std::make_shared<std::vector<std::pair<Procedure, Procedure>>>(all_transitive_relations_);
 }
+
+void CallsRelationStore::Clear()
+{
+	ManyToManyTransitiveRelationStore::Clear();
+	all_transitive_relations_.clear();
+}

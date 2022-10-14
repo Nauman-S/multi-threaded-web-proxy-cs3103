@@ -157,5 +157,21 @@ namespace UnitTesting
 			parent_manager_.SetParentT(1, 3);
 			Assert::AreEqual(3, int(parent_manager_.GetAllParentTRelations()->size()));
 		}
+
+		TEST_METHOD(TestClearParentStore)
+		{
+			parent_manager_.SetParentT(1, 2);
+			Assert::AreEqual(1, int(parent_manager_.GetAllParentTRelations()->size()));
+			parent_manager_.SetParent(1, 2);
+			Assert::AreEqual(1, int(parent_manager_.GetAllParentRelations()->size()));
+			Assert::AreEqual(1, int(parent_manager_.GetParentFromStmt(2)->size()));
+			Assert::AreEqual(1, int(parent_manager_.GetChildrenFromStmt(1)->size()));
+
+			parent_manager_.Clear();
+			Assert::AreEqual(0, int(parent_manager_.GetAllParentTRelations()->size()));
+			Assert::AreEqual(0, int(parent_manager_.GetAllParentRelations()->size()));
+			Assert::AreEqual(0, int(parent_manager_.GetParentFromStmt(2)->size()));
+			Assert::AreEqual(0, int(parent_manager_.GetChildrenFromStmt(1)->size()));
+		}
 	};
 }

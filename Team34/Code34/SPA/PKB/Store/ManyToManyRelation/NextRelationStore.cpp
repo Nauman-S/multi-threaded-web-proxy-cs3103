@@ -23,6 +23,14 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> NextRelationStore::Get
 	return all_transitive_relations;
 }
 
+void NextRelationStore::Clear()
+{
+	ManyToManyTransitiveRelationStore::Clear();
+	code_block_map_.clear();
+	code_block_set_.clear();
+	optimised_cfg_.clear();
+}
+
 void NextRelationStore::OptimisedCFGTraversal(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations)
 {
 	for (auto node = code_block_set_.begin(); node != code_block_set_.end(); ++node)
