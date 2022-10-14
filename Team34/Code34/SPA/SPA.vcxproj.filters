@@ -15,6 +15,7 @@
     <ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
     <ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
     <ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
+    <ClCompile Include="PKB\store\OneToOneRelation\FollowsRelationStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />

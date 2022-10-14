@@ -42,23 +42,23 @@ void WritePKBManager::AddReadStatement(Variable var, StmtNum stmt_num)
 // APIs related to Parent relation
 void WritePKBManager::SetParent(StmtNum parent, StmtNum child)
 {
-	return pkb.parent_manager_.SetParent(parent, child);
+	pkb.parent_manager_.SetParent(parent, child);
 }
 
 // APIs related to Parent* relation
 void WritePKBManager::SetParentT(StmtNum parent, StmtNum child)
 {
-	return pkb.parent_manager_.SetParentT(parent, child);
+	pkb.parent_manager_.SetParentT(parent, child);
 }
 
 void WritePKBManager::SetFollows(StmtNum left, StmtNum right)
 {
-	return pkb.follows_manager_.SetFollows(left, right);
+	pkb.follows_manager_.SetFollows(left, right);
 }
 
 void WritePKBManager::SetFollowsT(StmtNum left, StmtNum right)
 {
-	return pkb.follows_manager_.SetFollowsT(left, right);
+	pkb.follows_manager_.SetFollowsT(left, right);
 }
 
 // APIs related to Uses relation
@@ -127,4 +127,22 @@ void WritePKBManager::AddIfPattern(StmtNum stmt_num, Variable var)
 void WritePKBManager::AddWhilePattern(StmtNum stmt_num, Variable var)
 {
 	pkb.while_pattern_manager_.AddPattern(stmt_num, var);
+}
+
+// Utility APIs
+void WritePKBManager::ResetPKB()
+{
+	pkb.variable_manager_.Clear();
+	pkb.constant_manager_.Clear();
+	pkb.procedure_manager_.Clear();
+	pkb.statement_manager_.Clear();
+	pkb.parent_manager_.Clear();
+	pkb.follows_manager_.Clear();
+	pkb.modifies_manager_.Clear();
+	pkb.uses_manager_.Clear();
+	pkb.calls_manager_.Clear();
+	pkb.next_manager_.Clear();
+	pkb.assign_pattern_manager_.Clear();
+	pkb.if_pattern_manager_.Clear();
+	pkb.while_pattern_manager_.Clear();
 }

@@ -9,6 +9,7 @@ public:
 	void SetCodeBlock(StmtNum start, StmtNum end);
 	void SetOptimisedCFGEdge(StmtNum prev_start, StmtNum next_start);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllTransitiveRelations();
+	void Clear();
 private:
 	void OptimisedCFGTraversal(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations);
 	void PopulateNextTPairsWithinBlock(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_transitive_relations,

@@ -34,5 +34,14 @@ namespace UnitTesting
 			variable_manager_.AddEntity("c");
 			Assert::AreEqual(3, int(variable_manager_.GetAllEntities()->size()));
 		};
+
+		TEST_METHOD(TestClearVariableStore)
+		{
+			variable_manager_.AddEntity("a");
+			Assert::AreEqual(1, int(variable_manager_.GetAllEntities()->size()));
+
+			variable_manager_.Clear();
+			Assert::AreEqual(0, int(variable_manager_.GetAllEntities()->size()));
+		}
 	};
 }

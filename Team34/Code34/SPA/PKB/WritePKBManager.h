@@ -67,4 +67,7 @@ public:
 
 	// APIs related to While Pattern relation
 	void AddWhilePattern(StmtNum stmt_num, Variable var);
+
+	// Utility APIs
+	void ResetPKB();
 };

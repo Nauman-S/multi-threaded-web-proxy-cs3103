@@ -142,5 +142,21 @@ namespace UnitTesting
 			procs = modifies_manager_.GetProcNameByVar("x");
 			Assert::AreEqual(2, int(procs->size()));
 		};
+
+		TEST_METHOD(TestClearModifiesStore)
+		{
+			modifies_manager_.SetModifies("proc1", "x");
+			modifies_manager_.SetModifies(1, "x");
+			Assert::AreEqual(1, int(modifies_manager_.GetProcNameByVar("x")->size()));
+			Assert::AreEqual(1, int(modifies_manager_.GetVarByProcName("proc1")->size()));
+			Assert::AreEqual(1, int(modifies_manager_.GetStmtNumByVar("x")->size()));
+			Assert::AreEqual(1, int(modifies_manager_.GetVarByStmtNum(1)->size()));
+
+			modifies_manager_.Clear();
+			Assert::AreEqual(0, int(modifies_manager_.GetProcNameByVar("x")->size()));
+			Assert::AreEqual(0, int(modifies_manager_.GetVarByProcName("proc1")->size()));
+			Assert::AreEqual(0, int(modifies_manager_.GetStmtNumByVar("x")->size()));
+			Assert::AreEqual(0, int(modifies_manager_.GetVarByStmtNum(1)->size()));
+		}
 	};
 }

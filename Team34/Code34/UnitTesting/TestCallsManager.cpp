@@ -189,5 +189,21 @@ namespace UnitTesting
 			calls_manager_.SetCallsT("one", "three");
 			Assert::AreEqual(3, int(calls_manager_.GetAllCallsTRelations()->size()));
 		}
+
+		TEST_METHOD(TestClearCallsStore)
+		{
+			calls_manager_.SetCallsT("one", "two");
+			Assert::AreEqual(1, int(calls_manager_.GetAllCallsTRelations()->size()));
+			calls_manager_.SetCalls("one", "two");
+			Assert::AreEqual(1, int(calls_manager_.GetAllCallsRelations()->size()));
+			Assert::AreEqual(1, int(calls_manager_.GetCallerFromCallee("two")->size()));
+			Assert::AreEqual(1, int(calls_manager_.GetCalleeFromCaller("one")->size()));
+
+			calls_manager_.Clear();
+			Assert::AreEqual(0, int(calls_manager_.GetAllCallsTRelations()->size()));
+			Assert::AreEqual(0, int(calls_manager_.GetAllCallsRelations()->size()));
+			Assert::AreEqual(0, int(calls_manager_.GetCallerFromCallee("two")->size()));
+			Assert::AreEqual(0, int(calls_manager_.GetCalleeFromCaller("one")->size()));
+		}
 	};
 }

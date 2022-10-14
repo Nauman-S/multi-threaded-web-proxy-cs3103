@@ -64,3 +64,8 @@ std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> CallsManager::GetA
 {
 	return calls_store_.GetAllTransitiveRelations();
 }
+
+void CallsManager::Clear()
+{
+	calls_store_.Clear();
+}

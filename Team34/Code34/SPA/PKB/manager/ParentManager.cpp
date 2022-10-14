@@ -72,3 +72,8 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ParentManager::GetAllP
 {
 	return parent_store_.GetAllTransitiveRelations();
 }
+
+void ParentManager::Clear()
+{
+	parent_store_.Clear();
+}
