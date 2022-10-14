@@ -28,6 +28,7 @@ private:
 
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
+	std::shared_ptr<Ref> ParseSynonym(std::string&);
 
 	shared_ptr<Query> ParseSelectStatement();	
 	std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();

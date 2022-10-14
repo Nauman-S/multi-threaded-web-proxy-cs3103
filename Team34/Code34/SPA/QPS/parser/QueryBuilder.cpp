@@ -85,27 +85,13 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 
 	std::vector<shared_ptr<Ref>> synonyms;
 
-	std::string syn_name = lexer_->MatchIdentity();
-	shared_ptr<Ref> syn = EntityRef::CreateReference(design_entity_, syn_name);
-
-	if (lexer_->HasFullStop()) {
-		AttrType attr_type = ParseAttr(syn);
-		syn = EntityRef::CreateReference(design_entity_, syn_name, attr_type);
-	}
-
-	synonyms.push_back(syn);
+	std::shared_ptr<Ref> curr_syn = ParseSynonym(design_entity_);
+	synonyms.push_back(curr_syn);
 
 	while (lexer_->HasComma()) {
 		lexer_->MatchComma();
-		std::string syn_name = lexer_->MatchIdentity();
 
-		shared_ptr<Ref> curr_syn = EntityRef::CreateReference(design_entity_, syn_name);
-
-		if (lexer_->HasFullStop()) {
-			AttrType attr_type = ParseAttr(curr_syn);
-			curr_syn = EntityRef::CreateReference(design_entity_, syn_name, attr_type);
-		} 
-
+		curr_syn = ParseSynonym(design_entity_);
 		synonyms.push_back(curr_syn);
 	}
 
@@ -116,6 +102,16 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 		throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
 	}
 	return synonyms;
+}
+
+std::shared_ptr<Ref> QueryBuilder::ParseSynonym(std::string& design_entity) {
+	std::string syn_name = lexer_->MatchIdentity();
+	shared_ptr<Ref> syn = EntityRef::CreateReference(design_entity, syn_name);
+
+	if (lexer_->HasFullStop()) {
+		AttrType attr_type = ParseAttr(syn);
+		syn = EntityRef::CreateReference(design_entity, syn_name, attr_type);
+	}
 }
 
 AttrType QueryBuilder::ParseAttr(shared_ptr<Ref> syn) {
