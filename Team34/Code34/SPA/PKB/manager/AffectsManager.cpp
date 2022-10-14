@@ -39,8 +39,16 @@ bool AffectsManager::CheckAffects(StmtNum cause, StmtNum effect) {
 
 bool AffectsManager::IsEmpty()
 {
-	// TODO
-	return false;
+	std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt)
+	{
+		std::shared_ptr<std::unordered_set<StmtNum>> all_effects_stmts = GetEffectStmtsFromStmt(*stmt);
+		if (all_effects_stmts->size() > 0) 
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromStmt(StmtNum stmt)
