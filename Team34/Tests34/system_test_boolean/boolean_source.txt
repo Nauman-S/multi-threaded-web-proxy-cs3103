@@ -2,7 +2,8 @@ procedure Example {
   x = 2;
   z = 3;
   i = 5;
-  a = x;
+  read a;
+  a = a + 1;
   y = b;
   while (i!=0) {
     x = x - 1;
@@ -29,6 +30,7 @@ procedure p {
 
 procedure q {
   if (x==1) then {
+    print z;
     z = x + 1; }
   else {
     x = z + x; } }
