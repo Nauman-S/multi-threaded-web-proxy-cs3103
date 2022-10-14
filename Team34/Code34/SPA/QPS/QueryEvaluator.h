@@ -17,12 +17,9 @@
 class QueryEvaluator {
 protected:
     Query query_;
-    // std::unordered_map<Ref, std::vector<std::string>> syn_domains_;
     shared_ptr<Table> result_table_;
     std::vector<Clause> clauses_;
     DataRetriever data_retriever_;
-
-    std::shared_ptr<Table> EvaluateGroup(std::vector<std::shared_ptr<Clause>>);
 
     std::shared_ptr<Table> EvaluateByGroup(
         shared_ptr<ClauseGrouper> clause_grouper);
