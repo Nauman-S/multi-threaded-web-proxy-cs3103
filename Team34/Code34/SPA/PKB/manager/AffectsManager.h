@@ -34,4 +34,5 @@ private:
 	bool IsAssignStmt(StmtNum);
 	bool IsReadStmt(StmtNum);
 	bool IsCallStmt(StmtNum);
+	void GenerateAffectsPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations, StmtNum lhs, std::shared_ptr<std::unordered_set<StmtNum>> rhs); 
 };

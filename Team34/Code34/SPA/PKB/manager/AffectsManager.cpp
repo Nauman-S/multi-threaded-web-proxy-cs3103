@@ -144,8 +144,14 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmts()
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAllAffectsRelations()
 {
-	// TODO: discuss implementation
-	return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations = std::make_shared<std::vector<std::pair<StmtNum, StmtNum>>>();
+	std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+	for (auto iter = assign_stmts->begin(); iter != assign_stmts->end(); ++iter)
+	{
+		std::shared_ptr < std::unordered_set<StmtNum>> all_cause_stmts = GetCauseStmtsFromStmt(*iter);
+		GenerateAffectsPairs(all_affects_relations, *iter, all_cause_stmts);
+	}
+	return all_affects_relations;
 }
 
 // APIs related to Affects* relation
@@ -249,4 +255,12 @@ bool AffectsManager::IsReadStmt(StmtNum stmt)
 bool AffectsManager::IsCallStmt(StmtNum stmt)
 {
 	return IsStatementType(stmt, RefType::kCallRef);
+}
+
+void AffectsManager::GenerateAffectsPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations, StmtNum lhs, std::shared_ptr<std::unordered_set<StmtNum>> rhs)
+{
+	for (auto iter = rhs->begin(); iter != rhs->end(); ++iter)
+	{
+		all_affects_relations->push_back(std::make_pair(lhs, *iter));
+	}
 }
