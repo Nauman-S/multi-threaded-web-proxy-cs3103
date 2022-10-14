@@ -20,13 +20,11 @@ using std::string;
 
 QueryEvaluator::QueryEvaluator(Query query) {
 	query_ = query;
-	query_result_ = QueryResult();
 	data_retriever_ = DataRetriever();
 };
 
 QueryEvaluator::QueryEvaluator(Query query, DataRetriever data_retriever) {
 	query_ = query;
-	query_result_ = QueryResult();
 	data_retriever_ = data_retriever;
 }
 
@@ -48,7 +46,6 @@ bool QueryEvaluator::Evaluate() {
 	shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<OptimizedClauseGrouper>(clauses, query_.GetSelectSynonyms());
 
 	result_table_ = EvaluateByGroup(clause_grouper);
-	//result_table_ = EvaluateGroup(clauses);
 
 	if (result_table_->IsEmpty()) {
 		return false;
