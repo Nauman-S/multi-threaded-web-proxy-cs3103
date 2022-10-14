@@ -31,16 +31,8 @@ QueryEvaluator::QueryEvaluator(Query query, DataRetriever data_retriever) {
 
 bool QueryEvaluator::Evaluate() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = query_.GetSelectTuple();
-
-	shared_ptr<std::vector<shared_ptr<Rel>>> relations = query_.GetRelations();
-	shared_ptr<std::vector<shared_ptr<Pattern>>> patterns = query_.GetPatterns();
-	shared_ptr<std::vector<shared_ptr<With>>> with_clauses = query_.GetWithClauses();
 	
-	std::vector<shared_ptr<Clause>> clauses;
-	clauses.insert(clauses.end(), relations->begin(), relations->end());
-	clauses.insert(clauses.end(), patterns->begin(), patterns->end());
-	clauses.insert(clauses.end(), with_clauses->begin(), with_clauses->end());
-
+	std::vector<shared_ptr<Clause>> clauses = *query_.GetAllClauses();
 
 	//shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<SimpleClauseGrouper>(clauses, query_.GetSelectSynonyms());
 	shared_ptr<ClauseGrouper> clause_grouper = std::make_shared<OptimizedClauseGrouper>(clauses, query_.GetSelectSynonyms());
