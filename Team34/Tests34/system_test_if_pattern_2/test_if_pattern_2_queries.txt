@@ -1,0 +1,50 @@
+1 - Test wildcard
+if ifs;
+Select ifs pattern ifs(_,_,_)
+6, 8
+5000
+2 - Test var name
+if ifs;
+Select ifs pattern ifs("x",_,_)
+6, 8
+5000
+3 - Test var name
+if ifs;
+Select ifs pattern ifs("y",_,_)
+8
+5000
+4 - Test syntax error
+if ifs;
+Select ifs pattern ifs(2,_,_)
+SyntaxError
+5000
+5 - Test semantic error
+if ifs; variable v;
+Select ifs pattern ifs(v,_,_) such that Next* (7, v)
+SemanticError
+5000
+6 - Test Next
+if ifs; assign a;
+Select ifs such that Next(a, ifs) pattern ifs(_,_,_)
+8
+5000
+7 - Test Next*
+if ifs; print p;
+Select ifs such that Next*(ifs, p) pattern ifs(_,_,_)
+6, 8
+5000
+8 - Test Follows
+if ifs; assign a;
+Select ifs such that Follows(a, ifs) pattern ifs(_,_,_)
+8
+5000
+9 - Test And
+if ifs; assign a; variable v; print p;
+Select ifs such that Follows*(a, ifs) and Uses(p, v) pattern ifs(v,_,_)
+8
+5000
+10 - Test with
+if ifs; assign a; variable v; procedure p; while w;
+Select ifs pattern ifs(v,_,_) such that Uses(p, v) and Modifies(w, v) with p.procName = "proc2" 
+8
+5000
