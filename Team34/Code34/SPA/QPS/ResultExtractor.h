@@ -11,7 +11,6 @@
 
 class ResultExtractor {
 private:
-	std::shared_ptr<QueryResult> query_result_;
 	std::shared_ptr<Table> result_table_;
 	std::vector<std::string> select_synonyms_;
 
@@ -26,6 +25,5 @@ public:
 	std::vector<std::string> GetMultiSynResult();
 
 	std::vector<std::string> FormatResult(std::shared_ptr<std::unordered_set<std::string>> result_set);
-
 };
 

@@ -113,18 +113,14 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	lexer_->MatchKeyword("Select");
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = ParseReturnValues();
-
 	shared_ptr<vector<shared_ptr<Rel>>> relations = std::make_shared<vector<shared_ptr<Rel>>>();
 	shared_ptr<vector<shared_ptr<Pattern>>> patterns = std::make_shared<vector<shared_ptr<Pattern>>>();
 	shared_ptr<vector<shared_ptr<With>>> with_clauses = std::make_shared<vector<shared_ptr<With>>>();
 	
-	
 	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords() || lexer_->HasWithKeyword()) {
-			
 		if (lexer_->HasPatternKeyword()) {
 			vector<shared_ptr<Pattern>> curr_patterns = ParsePatterns();
 			patterns->insert(patterns->end(), curr_patterns.begin(), curr_patterns.end());
-
 		}
 		else if (lexer_->HasSuchThatKeywords()) {
 			vector<shared_ptr<Rel>> curr_relations = ParseRelations();
@@ -150,7 +146,6 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 		query = shared_ptr<Query>(new Query(select_tuple, relations, patterns, with_clauses));
 	}
 	return query;
-
 }
 
 shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {

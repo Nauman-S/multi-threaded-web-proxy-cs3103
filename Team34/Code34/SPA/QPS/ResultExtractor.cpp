@@ -17,9 +17,7 @@ using std::unordered_map;
 using std::vector;
 
 vector<std::string> ResultExtractor::GetFormattedResult() {
-	vector< std::string > results;
-	// assert the number of syns in tuple > 0;
-	assert(select_synonyms_.size() > 0 && "Size of tuple must be greater than 0");
+	vector<std::string> results;
 	if (result_table_->IsEmpty()) {
 		return results;
 	}
@@ -48,9 +46,7 @@ vector<std::string> ResultExtractor::GetMultiSynResult() {
 
 vector<std::string> ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_set) {
 	std::vector<string> result_vector(result_set->begin(), result_set->end());
-
 	std::sort(result_vector.begin(), result_vector.end());
-
 	return result_vector;
 }
 

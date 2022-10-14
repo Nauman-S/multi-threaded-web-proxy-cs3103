@@ -11,7 +11,6 @@ class Table {
 private:
 	std::vector<std::string> fields_;
 
-	//std::vector<std::unordered_map<std::string, std::string>> rows_;
 	std::unordered_map<std::string, int> field_to_index_map_;
 
 	std::vector<std::vector<std::string>> rows_;
@@ -39,6 +38,7 @@ private:
 
 protected:
 	bool is_empty_;
+
 public:
 	Table()
 		: is_empty_{ false } {};
@@ -54,8 +54,7 @@ public:
 	Table(std::shared_ptr<ResWrapper>);
 
 	int GetNumOfRows() { return rows_.size(); };
-
-	int GetNumOfCols() { return fields_.size(); };
+	unsigned GetNumOfCols() { return fields_.size(); };
 
 	std::vector<std::vector<std::string>> GetRows() {
 		return rows_;
@@ -63,7 +62,7 @@ public:
 
 	virtual std::shared_ptr<Table> Join(std::shared_ptr<Table> that);
 
-	virtual bool IsEmpty() { return rows_.size() == 0; }
+	virtual bool IsEmpty() { return GetNumOfRows() == 0; }
 
 	virtual bool IsWildcard() { return false; }
 
