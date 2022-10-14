@@ -82,6 +82,13 @@ namespace IntegrationTesting
 			Assert::IsFalse(read->CheckAffects(16, 14));
 		}
 
+		TEST_METHOD(TestCheckAffectsOnIfWhileProcedure)
+		{
+			Assert::IsTrue(read->CheckAffects(29, 33));
+			Assert::IsTrue(read->CheckAffects(30, 32));
+			Assert::IsTrue(read->CheckAffects(38, 37));
+		}
+
 		TEST_METHOD(TestGetEffectStmtsFromStmtNoNesting)
 		{
 			shared_ptr<unordered_set<StmtNum>> effect_stmts_1 = read->GetEffectStmtsFromStmt(1);
@@ -255,6 +262,12 @@ namespace IntegrationTesting
             parser_re.SetTokens(lexer.GetAllTokens());
 			std::shared_ptr<ProgramNode> root = parser_re.Parse();
 			extractor.PopulatePKB(root);
+		}
+
+		TEST_METHOD(TestGetAllAffectsRelations)
+		{
+			std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects = read->GetAllAffectsRelations();
+			Assert::AreEqual(20, int(all_affects->size()));
 		}
 	};
 }
