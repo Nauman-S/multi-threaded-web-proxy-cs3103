@@ -74,4 +74,6 @@ public:
 
 	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonyms(std::vector<std::string> synonyms);
 
+	std::shared_ptr<std::vector<std::vector<std::string>>> ExtractSynonyms(std::vector<std::string> synonyms);
+
 };

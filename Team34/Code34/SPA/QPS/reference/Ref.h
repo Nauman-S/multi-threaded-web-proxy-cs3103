@@ -6,6 +6,8 @@
 #include "../../Utils/type/RefType.h"
 #include "../AttrType.h"
 
+class DataRetriever;
+
 class Ref {
 protected:
     ValType val_type_;
@@ -24,5 +26,7 @@ public:
     virtual const RefType GetRefType() = 0;
 
     virtual bool IsAttrTypeDefault() = 0;
+
+    virtual std::string GetAttrValue(DataRetriever& data_retriever, std::string& value);
 };
 

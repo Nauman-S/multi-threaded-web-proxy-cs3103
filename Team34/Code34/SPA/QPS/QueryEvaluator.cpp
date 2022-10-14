@@ -27,7 +27,6 @@ QueryEvaluator::QueryEvaluator(Query query, DataRetriever data_retriever) {
 	data_retriever_ = data_retriever;
 }
 
-
 bool QueryEvaluator::Evaluate() {
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = query_.GetSelectTuple();
 	
@@ -175,8 +174,8 @@ vector<std::string> QueryEvaluator::ExtractResult() {
 		return result;
 	}
 
-	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms());
-	result = result_extractor.GetFormattedResult();
+	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms(), query_.GetSelectTuple());
+	result = result_extractor.GetFormattedResult(data_retriever_);
 
 	return result;
 }

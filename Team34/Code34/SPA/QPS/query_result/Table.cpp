@@ -189,3 +189,18 @@ shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonyms(std::vec
 	}
 	return result_set;
 }
+
+shared_ptr<vector<vector<string>>> Table::ExtractSynonyms(std::vector<std::string> synonyms) {
+	shared_ptr<vector<vector<string>>> result_rows = std::make_shared<vector<vector<string>>>();
+	for (auto& row : rows_) {
+		vector<string> curr_row;
+		for (string& synonym : synonyms) {
+			int index = field_to_index_map_.at(synonym);
+			curr_row.push_back(row.at(index));
+		}
+	
+		result_rows->push_back(curr_row);
+	}
+	return result_rows;
+}
+

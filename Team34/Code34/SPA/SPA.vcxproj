@@ -201,6 +201,7 @@
     <ClCompile Include="QPS\reference\PrintRef.cpp" />
     <ClCompile Include="QPS\reference\ProcRef.cpp" />
     <ClCompile Include="QPS\reference\ReadRef.cpp" />
+    <ClCompile Include="QPS\reference\Ref.cpp" />
     <ClCompile Include="QPS\reference\StmtRef.cpp" />
     <ClCompile Include="QPS\reference\VarRef.cpp" />
     <ClCompile Include="QPS\reference\WhileRef.cpp" />

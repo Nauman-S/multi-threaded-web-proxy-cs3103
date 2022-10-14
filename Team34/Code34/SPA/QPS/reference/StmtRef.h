@@ -8,7 +8,7 @@
 class StmtRef : public IntValueableRef {
 
 protected:
-    const AttrType default_attr_type_{ AttrType::kStmtNum };
+    static const AttrType default_attr_type_{ AttrType::kStmtNum };
 
 public:
     using IntValueableRef::IntValueableRef;
