@@ -28,3 +28,73 @@ while w, w2; assign a;
 Select <w2, w> such that Modifies (w, "x") pattern a (_, _"x"_)
 16 16, 16 6, 6 16, 6 6
 5000
+7 - select tuple of one with next and pattern
+assign a1, a2;
+Select <a1> such that Next(a1, a2) pattern a1 (_, _"x"_)
+4, 9, 10, 20, 21
+5000
+8 - select tuple of two with two patterns
+if ifs; while w;
+Select <ifs, w> pattern ifs("x",_,_) pattern w("i",_)
+15 16, 15 6, 24 16, 24 6, 8 16, 8 6
+5000
+9 - select tuple of two with two patterns and Parent
+if ifs; while w;
+Select <ifs, w> such that Parent(ifs, w) pattern ifs("x",_,_) pattern w("i",_)
+15 16
+5000
+10 - select tuple of two with two patterns Modifies and with
+if ifs; while w; procedure p; variable x;
+Select <ifs, w> such that Modifies(p, x) with p.procName = "p" pattern ifs(x,_,_) pattern w(x,_)
+8 6, 15 16, 15 6, 24 16, 24 6, 8 16
+5000
+11 - select tuple of two with two patterns and Next
+if ifs; while w;
+Select <ifs, w> such that Next(ifs, w) pattern ifs("x",_,_) pattern w("i",_)
+15 16
+5000
+12 - select tuple of two with calls
+procedure p1, p2;
+Select <p1, p2> such that Calls(p1, p2)
+Example p, Example q, p q
+5000
+13 - select tuple of two with calls and with
+procedure p1, p2;
+Select <p1, p2> such that Calls*(p1, p2) with p1.procName = "Example"
+Example p, Example q
+5000
+14 - select tuple of two with follows and pattern
+procedure p; call c; assign a;
+Select <c, a> such that Follows(c, a) pattern a (_, _"x"_) 
+18 19
+5000
+15 - select tuple of two with follows* and pattern and with
+procedure p; call c; assign a;
+Select <c, a> such that Follows*(c, a) pattern a (_, _"i"_) with c.procName = "q"
+12 13
+5000
+16 - select tuple of two with follows* and no wildcard pattern and with
+procedure p; call c; assign a;
+Select <c, a> such that Follows*(c, a) pattern a ("i", _"i"_) with c.procName = "q"
+12 13
+5000
+17 - select tuple of two with multiple Uses
+if ifs; while w; assign a; variable v1, v2;
+Select <v1, v2> such that Uses(ifs, v1) and Uses(w, v2) and Uses(a, v1) and Uses(a, v2)
+i i, i x, i z, x i, x x, x z, y y, y z, z i, z x, z y, z z
+5000
+18 - select tuple of three with Follows and Parent
+assign a1, a2; while w;
+Select <a1, a2, w> such that Follows(a1, w) and Parent(w, a2)
+5 11 6, 5 13 6, 5 7 6
+5000
+19 - select tuple of two with pattern right wildcard
+assign a1, a2;
+Select <a1, a2> such that Next(a1, a2) pattern a1("x",_) pattern a2("z",_) 
+1 2, 20 21
+5000
+20 - select tuple of two with random things
+procedure p1, p2; variable v1, v2;
+Select <p1, p2> such that Calls*(p1, p2) and Modifies(p2, v1) with p1.procName="Example"
+Example p, Example q
+5000
