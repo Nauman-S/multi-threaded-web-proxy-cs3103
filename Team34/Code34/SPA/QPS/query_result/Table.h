@@ -39,7 +39,6 @@ private:
 protected:
 	bool is_empty_;
 
-	unsigned GetNumOfRows() { return rows_.size(); };
 public:
 	Table()
 		: is_empty_{ false } {};
@@ -54,7 +53,7 @@ public:
 
 	Table(std::shared_ptr<ResWrapper>);
 
-	
+	int GetNumOfRows() { return rows_.size(); };
 	unsigned GetNumOfCols() { return fields_.size(); };
 
 	std::vector<std::vector<std::string>> GetRows() {
