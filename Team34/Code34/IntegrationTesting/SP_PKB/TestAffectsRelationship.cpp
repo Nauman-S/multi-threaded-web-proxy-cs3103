@@ -24,14 +24,17 @@ namespace IntegrationTesting
 		inline static string base_dir = "../../Tests34/integration_tests/SP_PKB/";
 
 		shared_ptr<ReadPKBManager> read = ReadPKBManager::GetInstance();
+        inline static shared_ptr<WritePKBManager> write = WritePKBManager::GetInstance();
 	public:
 		
 		TEST_CLASS_INITIALIZE(Initialization)
 		{
+            write->ResetPKB();
 			DesignExtractor extractor;
 			SourceParser parser;
 			SourceLexer lexer = SourceLexer(base_dir + "test_affects_relation_source.txt");
-			std::shared_ptr<ProgramNode> root = parser.Parse(lexer.GetAllTokens());
+            parser.SetTokens(lexer.GetAllTokens());
+			std::shared_ptr<ProgramNode> root = parser.Parse();
 			extractor.PopulatePKB(root);
 		}
 
@@ -221,6 +224,37 @@ namespace IntegrationTesting
 			Assert::IsTrue(actual->find(29) != actual->end());
 			Assert::IsTrue(actual->find(30) != actual->end());
 			Assert::IsTrue(actual->find(38) != actual->end());
+		}
+
+		TEST_METHOD(TestIsEmpty)
+		{
+			DesignExtractor extractor;
+			SourceParser parser;
+
+			// Test source file with no affects relation
+            write->ResetPKB();
+			SourceLexer lexer_empty_affects = SourceLexer(base_dir + "no_affects_relation_source.txt");
+            parser.SetTokens(lexer_empty_affects.GetAllTokens());
+			std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse();
+			extractor.PopulatePKB(root_empty_affects);
+            Assert::IsTrue(read->IsAffectsStoreEmpty());
+
+			// Test source file with some affects relation
+            write->ResetPKB();
+			SourceLexer lexer_has_affects = SourceLexer(base_dir + "some_affects_relation_source.txt");
+			SourceParser parser_some;
+            parser_some.SetTokens(lexer_has_affects.GetAllTokens());
+			std::shared_ptr<ProgramNode> root_has_affects = parser_some.Parse();
+			extractor.PopulatePKB(root_has_affects);
+            Assert::IsFalse(read->IsAffectsStoreEmpty());
+
+			// Repopulate PKB in event of random order test
+            write->ResetPKB();
+			SourceLexer lexer = SourceLexer(base_dir + "test_affects_relation_source.txt");
+			SourceParser parser_re;
+            parser_re.SetTokens(lexer.GetAllTokens());
+			std::shared_ptr<ProgramNode> root = parser_re.Parse();
+			extractor.PopulatePKB(root);
 		}
 	};
 }

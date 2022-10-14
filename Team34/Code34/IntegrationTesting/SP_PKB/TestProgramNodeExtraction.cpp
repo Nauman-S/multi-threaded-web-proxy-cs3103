@@ -44,6 +44,7 @@ namespace IntegrationTesting
 
 		TEST_METHOD(TestEntityPopulation)
 		{
+            this->write->ResetPKB();
 			EntityExtractor entity_extractor(this->write);
 			this->common_root->Extract(entity_extractor);
 			
@@ -123,6 +124,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestUsesRelationPopulation) {
+            this->write->ResetPKB();
 			UsesModifiesExtractor extractor(this->write);
 			this->common_root->Extract(extractor);
 
@@ -157,6 +159,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestModifiesRelationPopulation) {
+            this->write->ResetPKB();
 			UsesModifiesExtractor extractor(this->write);
 			this->common_root->Extract(extractor);
 
@@ -185,6 +188,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestParentsRelationPopulation) {
+            this->write->ResetPKB();
 			ParentsExtractor extractor(this->write);
 			this->common_root->Extract(extractor);
 
@@ -217,6 +221,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestFollowsRelationPopulation) {
+            this->write->ResetPKB();
 			FollowsExtractor extractor(this->write);
 			this->common_root->Extract(extractor);
 
@@ -239,6 +244,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestCallsRelationPopulation) {
+            this->write->ResetPKB();
 			string calls_test_file = this->base_dir + "calls_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(calls_test_file);
@@ -272,6 +278,7 @@ namespace IntegrationTesting
 		}
 
 		TEST_METHOD(TestNextRelationPopulation) {
+            this->write->ResetPKB();
 			string next_test_file = this->base_dir + "next_extraction_test_source.txt";
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(next_test_file);
