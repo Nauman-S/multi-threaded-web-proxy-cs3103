@@ -44,6 +44,7 @@ void TestWrapper::parse(std::string filename) {
 	validator.SetTokens(tokens);
 	if (validator.Validate()) {
  		SourceParser parser = SourceParser();
+		parser.SetTokens(tokens);
 		std::shared_ptr<ProgramNode> root = parser.Parse();
 		DesignExtractor extractor;
 		extractor.PopulatePKB(root);

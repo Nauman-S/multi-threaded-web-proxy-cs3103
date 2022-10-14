@@ -63,7 +63,6 @@
     <ClInclude Include="QPS\pattern\AssignPattern.h" />
     <ClInclude Include="QPS\Query.h" />
     <ClInclude Include="QPS\QueryEvaluator.h" />
-    <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />
@@ -189,7 +188,6 @@
     <ClCompile Include="QPS\pattern\WhilePattern.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
     <ClCompile Include="QPS\QueryEvaluator.cpp" />
-    <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\Table.cpp" />

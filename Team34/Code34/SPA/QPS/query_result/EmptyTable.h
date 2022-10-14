@@ -9,7 +9,4 @@ public:
 	EmptyTable::EmptyTable() {
 		is_empty_ = true;
 	}
-
-
-
 };
