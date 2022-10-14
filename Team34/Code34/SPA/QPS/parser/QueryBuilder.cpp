@@ -112,6 +112,7 @@ std::shared_ptr<Ref> QueryBuilder::ParseSynonym(std::string& design_entity) {
 		AttrType attr_type = ParseAttr(syn);
 		syn = EntityRef::CreateReference(design_entity, syn_name, attr_type);
 	}
+	return syn;
 }
 
 AttrType QueryBuilder::ParseAttr(shared_ptr<Ref> syn) {
