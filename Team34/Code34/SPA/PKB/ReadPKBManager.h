@@ -39,6 +39,9 @@ public:
 	virtual std::shared_ptr<Procedure> GetCallsProcedureFromStatement(StmtNum stmt_num);
 	virtual std::shared_ptr<Variable> GetPrintVariableFromStatement(StmtNum stmt_num);
 	virtual std::shared_ptr<Variable> GetReadVariableFromStatement(StmtNum stmt_num);
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> GetAllCallsStatementProcedurePairs();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllPrintStatementVariablePairs();
+	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllReadStatementVariablePairs();
 
 	// APIs related to Parent relation
 	virtual bool CheckParent(StmtNum parent, StmtNum child);

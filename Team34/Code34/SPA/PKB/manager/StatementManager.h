@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <cassert>
+#include <vector>
 
 #include "../../Utils/type/RefType.h"
 #include "../../Utils/type/TypeDef.h"
@@ -25,9 +26,14 @@ public:
 	std::shared_ptr<Procedure> GetCallsProcedureFromStatement(StmtNum stmt_num);
 	std::shared_ptr<Variable> GetPrintVariableFromStatement(StmtNum stmt_num);
 	std::shared_ptr<Variable> GetReadVariableFromStatement(StmtNum stmt_num);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> GetAllCallsStatementProcedurePairs();
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllPrintStatementVariablePairs();
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllReadStatementVariablePairs();
 
 	void Clear();
 private:
+	std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> GenerateStatementProcedurePairs(std::unordered_map<StmtNum, Procedure>& map);
+	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GenerateStatementVariablePairs(std::unordered_map<StmtNum, Variable>& map);
 	ManyToOneRelationStore<StmtNum, RefType> statement_store_;
 	std::unordered_set<StmtNum> statements_;
 	std::unordered_map<Procedure, std::unordered_set<StmtNum>> calls_statements_;
