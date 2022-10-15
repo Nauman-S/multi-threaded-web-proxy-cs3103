@@ -34,9 +34,12 @@ protected:  // attributes
     std::shared_ptr<ReadPKBManager> pkb_ptr_;
 
 public:  // public API
-    DataRetriever() { pkb_ptr_ = ReadPKBManager::GetInstance(); };
+    DataRetriever() {
+        pkb_ptr_ = ReadPKBManager::GetInstance();
+    };
 
-    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb } {};
+    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) :pkb_ptr_{ pkb } {
+    };
 
     std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
 
@@ -160,6 +163,17 @@ protected:  // helper methods
             std::string& filter_val);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetAllWithClause(With& with);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+        JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1,
+            std::shared_ptr<std::unordered_set<std::string>> set2);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+        JoinWithClauseSetAndTable(std::shared_ptr<std::unordered_set<std::string>> set1,
+            std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+        JoinWithClauseTables(
+            std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1,
+            std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2);
+
 
     // type conversion helpers
     std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(

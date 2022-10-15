@@ -20,5 +20,7 @@ public:
     const RefType GetRefType() override { return RefType::kStmtRef; }
 
     bool IsAttrTypeDefault() override { return attr_type_ == default_attr_type_; }
+
+    AttrType GetDefaultAttrType() override { return default_attr_type_; }
 };
 

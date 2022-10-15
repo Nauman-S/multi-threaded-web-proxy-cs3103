@@ -25,14 +25,14 @@ std::shared_ptr<vector<SourceToken>> SourceLexer::GetAllTokens() {
 }
 
 const std::map<std::string, SourceTokenType> SourceLexer::keywords_ = {
-	{"procedure", SourceTokenType::kProcedure},
-	{"read", SourceTokenType::kRead},
-	{"print", SourceTokenType::kPrint},
-	{"call", SourceTokenType::kCall},
-	{"while", SourceTokenType::kWhile},
-	{"if", SourceTokenType::kIf},
-	{"then", SourceTokenType::kThen},
-	{"else", SourceTokenType::kElse},
+    {"procedure", SourceTokenType::kProcedure},
+    {"read", SourceTokenType::kRead},
+    {"print", SourceTokenType::kPrint},
+    {"call", SourceTokenType::kCall},
+    {"while", SourceTokenType::kWhile},
+    {"if", SourceTokenType::kIf},
+    {"then", SourceTokenType::kThen},
+    {"else", SourceTokenType::kElse},
 };
 
 const std::map<std::string, SourceTokenType> SourceLexer::allowed_tokens_ = {
@@ -64,7 +64,7 @@ const std::map<std::string, SourceTokenType> SourceLexer::allowed_tokens_ = {
 // Set of characters that is part of a possible multi character token
 // For example, & in &&, | in ||, > in >=, etc...
 const std::set<string> SourceLexer::multi_char_tokens_starter_ = {
-	"&", "|", ">", "<", "=", "!"
+    "&", "|", ">", "<", "=", "!"
 };
 
 SourceToken SourceLexer::ConstructSourceToken() {
@@ -74,21 +74,20 @@ SourceToken SourceLexer::ConstructSourceToken() {
     }
 
     SourceTokenType type;
-    if (token.type_ == TokenType::kName) {
+    if (token.GetType() == TokenType::kName) {
         type = SourceTokenType::kName;
     }
-    else if (token.type_ == TokenType::kInteger) {
+    else if (token.GetType() == TokenType::kInteger) {
         type = SourceTokenType::kInteger;
     }
-    else if (IsValidToken(token.literal_value_)) {
-        type = GetValidTokenType(token.literal_value_);
+    else if (IsValidToken(token.GetStringValue())) {
+        type = GetValidTokenType(token.GetStringValue());
     }
     else {
-        // TODO: Decide to throw exception or to return self-defined type for parser to handle
         type = SourceTokenType::kInvalidToken;
     }
 
-    return SourceToken(type, token.literal_value_);
+    return SourceToken(type, token.GetStringValue());
 };
 
 bool SourceLexer::HasNextToken() {
@@ -124,15 +123,14 @@ Token SourceLexer::GetNextToken() {
 // the given token with the next, if the combination results in
 // a valid token. We will always choose the token that consumes
 // a greater number of characters (maximal-munch)
-Token SourceLexer::CombineMultiToken(Token token) {
+Token SourceLexer::CombineMultiToken(Token& token) {
     if (!HasNextToken()) {
         return token;
     }
 
     Token followed_token = GetNextToken();
-    string combined_literal = token.literal_value_ + followed_token.literal_value_;
+    string combined_literal = token.GetStringValue() + followed_token.GetStringValue();
     if (IsValidToken(combined_literal)) {
-        // TODO: Refactoring of base tokenizer class (change token type to general char type)
         return Token(combined_literal, TokenType::kParseStart);
     }
     else {
@@ -142,13 +140,13 @@ Token SourceLexer::CombineMultiToken(Token token) {
     }
 }
 
-bool SourceLexer::IsMultiTokenStarter(const Token& token) {
-    return multi_char_tokens_starter_.find(token.literal_value_) != multi_char_tokens_starter_.end();
+bool SourceLexer::IsMultiTokenStarter(Token& token) {
+    return multi_char_tokens_starter_.find(token.GetStringValue()) != multi_char_tokens_starter_.end();
 }
 
-bool SourceLexer::IsKeyword(const Token& token) {
-    bool is_identifier = token.type_ == TokenType::kName;
-    bool matches_keyword = keywords_.find(token.literal_value_) != keywords_.end();
+bool SourceLexer::IsKeyword(Token& token) {
+    bool is_identifier = token.GetType() == TokenType::kName;
+    bool matches_keyword = keywords_.find(token.GetStringValue()) != keywords_.end();
     return is_identifier && matches_keyword;
 }
 

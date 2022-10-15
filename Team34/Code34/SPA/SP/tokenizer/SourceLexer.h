@@ -24,10 +24,10 @@ private:
     SourceToken ConstructSourceToken();
     bool HasNextToken();
     Token GetNextToken();
-    Token CombineMultiToken(Token);
+    Token CombineMultiToken(Token&);
 
-    bool IsMultiTokenStarter(const Token&);
-    bool IsKeyword(const Token&);
+    bool IsMultiTokenStarter(Token&);
+    bool IsKeyword(Token&);
     bool IsValidToken(const std::string&);
     SourceTokenType GetKeywordType(const std::string&);
     SourceTokenType GetValidTokenType(const std::string&);
@@ -35,6 +35,6 @@ private:
     static const std::map<std::string, SourceTokenType> keywords_;
     static const std::map<std::string, SourceTokenType> allowed_tokens_;
     // Set of character that signifies start of possible multi char token
-    const static std::set<std::string> multi_char_tokens_starter_;
+    static const std::set<std::string> multi_char_tokens_starter_;
 };
 

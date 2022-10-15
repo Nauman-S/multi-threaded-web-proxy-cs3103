@@ -1,0 +1,181 @@
+procedure Alpha {
+    read w;
+    read p;
+    w = w * p + 2;
+    f = z * 24 - 1;
+
+    while (! ((w == 24) && (f <= temp))) {
+        f = f + 1;
+        w = w + 1;
+        temp = w;
+        w = f;
+        f =w;
+
+        f = f%24;
+        w = w%24;
+    }
+
+    print f;
+    read j;
+    while (j <= 10) {
+        print w;
+        w = w % j;
+
+        if ( j > 20 ) then {
+            j = j % 20;
+        } else {
+            j = j - 1;
+            while (w != 24) {
+                while (j < j+27) {
+                    if (j == w * 25) then {
+                        call Bravo;
+                    } else {
+                        print w;
+                        print f;
+                    }
+                }
+            }
+        }
+    }
+}
+
+procedure Bravo {
+    read phi;
+    read m;
+    call Charlie;
+    if (m < 24) then {
+        call Foxtrot;
+    } else {
+        while (m > (29*( 56 % (phi) ) ) ) {
+            if ( m > phi) then {
+                call Hotel;
+            } else {
+                read l;
+            }
+        }
+    }
+    print l;
+    call Charlie;
+}
+
+procedure Delta {
+    read t;
+    read o;
+    read g;
+    read phi;
+    while (t < o) {
+        g = 2 * (phi + t) * o + p;
+        while (o < g) {
+            phi = phi + 1;
+            while (g < phi) {
+                call Bravo;
+                phi = phi * 24;
+                o = o * 23;
+                call Echo;
+            }
+        }
+    }
+}
+
+procedure Golf {
+    i = 56;
+    if (p < (i + 24 * 66) ) then {
+        if ( (h > i) && (p < q) ) then {
+            if (temp > 67) then {
+                if (i > s) then {
+                    print p;
+                    print q;
+                    read z;
+                    p = q * z;
+                    call Hotel;
+                    i = 26;
+                    i = i + 10;
+                } else {
+                    i = 1;
+                    read z;
+                }
+            } else {
+                print z;
+                call Hotel;
+                call Echo;
+            }
+        } else {
+            call Echo;
+        }
+    } else {
+        print p;
+    }
+
+}
+
+
+
+procedure Charlie {
+    s = 24;
+    print s;
+    z = z * 2;
+    x = x + 2 * s;
+    while (s != 0) {
+        x = x + 2 * s;
+        s = 56;
+    }
+    if (s > 56) then {
+        if (s > 34) then {
+            s = 24;
+        } else {
+            if (s > 25) then {
+                if (s > 79) then {
+                    s = 45;
+                    z = z + 2;
+                } else {
+                    z = s;
+                }
+            } else {
+                print s;
+                print f;
+            }
+        }
+    } else {
+        s = 78;
+    }
+}
+
+procedure Echo {
+    x = j;
+    while (j!=0) {
+        j = j+ 10;
+    }
+
+    if ( j  == 20 ) then {
+        j = j + 10;
+    } else {
+        l = 25;
+    }
+
+    call Foxtrot;
+    l = j + 10 * (p + q) / x;
+    y = y - 10;
+    p = p * q + l;
+}
+
+procedure Foxtrot {
+    p = 25;
+    z = 25;
+    while (z != 0) {
+        z = 2* z + 2 * y;
+        p = p + 25;
+    }
+
+    if (p == 25) then {
+        p = z;
+    } else {
+        p = 1;
+        qwerty = qwerty + 1;
+    }
+
+    l = p + 34;
+    print l;
+    x = x;
+}
+procedure Hotel {
+}

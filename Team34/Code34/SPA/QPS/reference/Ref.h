@@ -27,6 +27,8 @@ public:
 
     virtual bool IsAttrTypeDefault() = 0;
 
+    virtual AttrType GetDefaultAttrType() = 0;
+
     virtual std::string GetAttrValue(DataRetriever& data_retriever, std::string& value);
 };
 
