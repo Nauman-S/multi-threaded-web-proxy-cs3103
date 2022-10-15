@@ -36,3 +36,12 @@ procedure printPrime {
 procedure x {
     read z;                              // 18
 }
+
+procedure i {
+    print dummy;             // 19
+}
+
+procedure z {
+    print dummy;            // 20
+     call i;                               // 21
+}
