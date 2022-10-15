@@ -79,6 +79,21 @@ std::shared_ptr<Variable> ReadPKBManager::GetReadVariableFromStatement(StmtNum s
 	return pkb.statement_manager_.GetReadVariableFromStatement(stmt_num);
 }
 
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>> ReadPKBManager::GetAllCallsStatementProcedurePairs()
+{
+	return pkb.statement_manager_.GetAllCallsStatementProcedurePairs();
+}
+
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> ReadPKBManager::GetAllPrintStatementVariablePairs()
+{
+	return pkb.statement_manager_.GetAllPrintStatementVariablePairs();
+}
+
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> ReadPKBManager::GetAllReadStatementVariablePairs()
+{
+	return pkb.statement_manager_.GetAllReadStatementVariablePairs();
+}
+
 // APIs related to Parent relation
 bool ReadPKBManager::CheckParent(StmtNum parent, StmtNum child)
 {
