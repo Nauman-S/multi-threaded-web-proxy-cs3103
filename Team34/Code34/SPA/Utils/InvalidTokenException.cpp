@@ -1,10 +1,10 @@
 #include "InvalidTokenException.h"
 
-InvalidTokenException::InvalidTokenException(char unidentifiable_character) : SyntaxError(std::to_string(unidentifiable_character)) {
-	this->unidentifiable_character = unidentifiable_character;
+InvalidTokenException::InvalidTokenException(std::string invalid_token) : SyntaxError(invalid_token) {
+    this->invalid_token_ = invalid_token;
 }
 
-const char* InvalidTokenException::what() const throw ()
+std::string InvalidTokenException::what() const throw ()
 {
-	return "Invalid token encountered : " + unidentifiable_character;
+    return "Invalid token encountered : " + this->invalid_token_;
 }

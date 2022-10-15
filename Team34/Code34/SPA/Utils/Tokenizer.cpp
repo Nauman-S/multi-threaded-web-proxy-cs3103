@@ -78,7 +78,9 @@ void Tokenizer::MoveToNextToken(int* current_index_) {
         ConsumeSpecialCharacter();
     }
     else {
-        throw InvalidTokenException(current_char);
+        std::string val;
+        val.push_back(current_char);
+        throw InvalidTokenException(val);
     }
 }
 
