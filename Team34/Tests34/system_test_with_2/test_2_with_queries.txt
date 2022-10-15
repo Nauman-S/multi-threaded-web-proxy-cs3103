@@ -43,3 +43,13 @@ call c,c2; procedure p , q; variable v; assign a;
 Select BOOLEAN such that Calls(p,q) such that Uses (c, v) pattern a(v,_"y"_) such that Modifies (q, v) and Next*(c,c2) with c2.stmt#=24
 TRUE
 40000
+13 - print.varName, single return
+print p,q; procedure proc1,proc2;assign a;variable v;
+Select q such that Follows*(p,q) with q.varName = "f" such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
+26, 86
+40000
+25 - print.stmt#, single return
+print p,q; procedure proc1,proc2;assign a;variable v;
+Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
+85
+40000
