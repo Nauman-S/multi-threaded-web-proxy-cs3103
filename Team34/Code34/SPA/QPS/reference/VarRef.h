@@ -18,5 +18,7 @@ public:
 
     bool IsAttrTypeDefault() override { return attr_type_ == default_attr_type_; }
 
+    AttrType GetDefaultAttrType() override { return default_attr_type_; }
+
     inline std::string TestString() { return "This is a VarRef"; }
 };
