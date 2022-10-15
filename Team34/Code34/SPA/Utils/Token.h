@@ -51,6 +51,8 @@ public:
     TokenType type_;
 
     Token(std::string, TokenType);
+    std::string& GetStringValue();
+    TokenType GetType();
 
     static bool IsName(std::string);
     static bool IsInteger(std::string);

@@ -22,7 +22,8 @@
 
 /*
 * Extractor class to extract all entities from the AST.
-* Includes variable, procedure and statements.
+* Includes variable, constants, procedures, statements
+* and patterns.
 */
 class EntityExtractor : public NodeExtractor {
 public:
