@@ -1,5 +1,15 @@
-1 - select all variable
-variable v;
-Select v
-w, p, f, z, temp, j, phi, m, l, g, o, t, h, q, s, i, x, y
-10000
+1 - procedure.procName , single return
+procedure p, q;
+Select p such that Calls (p, q) with q.procName = "Echo" such that Modifies (p, "z")
+Golf, Delta
+40000
+2 - procedure.procName, multiple return
+procedure p; variable v; constant c;procedure q; assign a;
+Select <q, v, c> such that Calls*(p,q) and Uses(q, v) with p.procName = "Golf" and v.varName="qwerty" with c.value = a.stmt# and a.stmt# = 20
+Echo qwerty 20,  Foxtrot qwerty 20
+40000
+3 - procedure.procName, boolean return
+procedure p,q,x,y,z; assign a1;
+Select BOOLEAN such that Calls(p,q) and Calls (q,x) and Calls(q,y) and Calls (q,z) with q.procName="Bravo" pattern a1("x",_) and a1( _ , _"x + 2"_)
+FALSE
+40000

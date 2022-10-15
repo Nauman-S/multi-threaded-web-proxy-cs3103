@@ -149,12 +149,13 @@ procedure Echo {
     if ( j  == 20 ) then {
         j = j + 10;
     } else {
-        z = 25;
+        l = 25;
     }
 
-    z = j + 10 * (p + q) / x;
+    call Foxtrot;
+    l = j + 10 * (p + q) / x;
     y = y - 10;
-    p = p * q + z;
+    p = p * q + l;
 }
 
 procedure Foxtrot {
@@ -169,6 +170,7 @@ procedure Foxtrot {
         p = z;
     } else {
         p = 1;
+        qwerty = qwerty + 1;
     }
 
     l = p + 34;
