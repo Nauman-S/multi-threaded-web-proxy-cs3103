@@ -12,4 +12,6 @@ public:
     const RefType GetRefType() override { return RefType::kUnknown; }
 
     bool IsAttrTypeDefault() override { return true; }
+
+    AttrType GetDefaultAttrType() override { return AttrType::kConst; }
 };

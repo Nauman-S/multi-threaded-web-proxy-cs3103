@@ -1307,7 +1307,7 @@ DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
     string& filter_val) {
     shared_ptr<unordered_set<string>> str_set{ nullptr };
 
-    unordered_set<RefType> single_attr_type_ref_types = {
+    unordered_set<RefType>single_attr_type_ref_types{
         RefType::kProcRef,  RefType::kVarRef, RefType::kConstRef,
         RefType::kStmtRef,  RefType::kIfRef,  RefType::kWhileRef,
         RefType::kAssignRef };
@@ -1325,16 +1325,50 @@ DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     With& with) {
-    auto set1 = GetWithClauseBySingleAttrTypeRefType(with.LhsRefType());
-    auto set2 = GetWithClauseBySingleAttrTypeRefType(with.RhsRefType());
 
-    auto table = make_shared<vector<pair<string, string>>>();
+    shared_ptr<unordered_set<string>> set1{ nullptr };
+    shared_ptr<vector<pair<string, string>>> table1{ nullptr };
+    if (with.IsLhsAttrTypeDefault()) {
+        set1 = GetWithClauseBySingleAttrTypeRefType(with.LhsRefType());
+    }
+    else {
+        // plug in get table
+    }
+
+    shared_ptr<unordered_set<string>> set2{ nullptr };
+    shared_ptr<vector<pair<string, string>>> table2{ nullptr };
+    if (with.IsRhsAttrTypeDefault()) {
+        set2 = GetWithClauseBySingleAttrTypeRefType(with.RhsRefType());
+    }
+    else {
+        // plug in get table
+    }
+
+    auto joined_table = make_shared<vector<pair<string, string>>>();
+    if (set1 != nullptr && set2 != nullptr) {
+        joined_table = JoinWithClauseSets(set1, set2);
+    }
+    else if (set1 != nullptr && table2 != nullptr) {
+        joined_table = JoinWithClauseSetAndTable(set1, table2);
+    }
+    else if (table1 != nullptr && set1 != nullptr) {
+        joined_table = JoinWithClauseSetAndTable(set2, table1);
+    }
+    else if (table1 != nullptr && table2 != nullptr) {
+        joined_table = JoinWithClauseTables(table1, table2);
+    }
+
+    return joined_table;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1, std::shared_ptr<std::unordered_set<std::string>> set2) {
     if (set1->size() > set2->size()) {
         auto temp_ptr = set1;
         set1 = set2;
         set2 = temp_ptr;
     }
 
+    auto table = make_shared<vector<pair<string, string>>>();
     for (auto& value : *set1) {
         if (set2->find(value) != set2->end()) {
             table->push_back(make_pair(value, value));
@@ -1342,6 +1376,33 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     }
 
     return table;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(std::shared_ptr<std::unordered_set<std::string>> set1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
+    auto joined_table = make_shared<vector<pair<string, string>>>();
+    for (auto& [default_value, join_value] : *table2) {
+        if (set1->find(join_value) != set1->end()) {
+            joined_table->push_back(make_pair(default_value, default_value));
+        }
+    }
+
+    return joined_table;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseTables(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
+    unordered_set<string> key_set;
+    for (auto& [val, key] : *table1) {
+        key_set.insert(key);
+    }
+
+    auto joined_table = make_shared<vector<pair<string, string>>>();
+    for (auto& [default_value, key_value] : *table2) {
+        if (key_set.find(key_value) != key_set.end()) {
+            joined_table->push_back(make_pair(default_value, default_value));
+        }
+    }
+
+    return joined_table;
 }
 
 std::shared_ptr<Procedure> DataRetriever::MapCallsStmtNumToProcName(std::string& stmt_num_str) {

@@ -45,6 +45,10 @@ public:
 
     AttrType RhsAttrType() { return rhs_attr_type_; }
 
+    bool IsLhsAttrTypeDefault() { return lhs_ref_ptr_->GetDefaultAttrType() == lhs_attr_type_; }
+
+    bool IsRhsAttrTypeDefault() { return rhs_ref_ptr_->GetDefaultAttrType() == rhs_attr_type_; }
+
     std::string LhsValue() { return lhs_ref_ptr_->GetName(); }
 
     std::string RhsValue() { return rhs_ref_ptr_->GetName(); }
