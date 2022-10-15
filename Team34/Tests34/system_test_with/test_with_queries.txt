@@ -106,12 +106,12 @@ Select s with s.stmt# = c.value
 22 - Test 2 synonyms (proc.procName = var.varName)
 procedure p; variable v;
 Select v with p.procName = v.varName
-x
+x, i, z
 5000
 23 - Test 2 synonyms (proc.procName = call.procName)
 call cl; procedure p;
 Select <cl,p> with p.procName = cl.procName
-6 checkPrime, 8 printPrime, 9 x, 11 x, 16 x
+6 checkPrime, 8 printPrime, 9 x, 11 x, 16 x, 21 i
 5000
 24 - Test 2 synonyms (proc.procName = print.varName)
 print pr; procedure p;
@@ -121,7 +121,7 @@ Select <pr,p> with p.procName = pr.varName
 25 - Test 2 synonyms (print.varName = var.varName)
 print pr; variable v;
 Select <pr,v> with v.varName = pr.varName
-17 i
+17 i, 19 dummy, 20 dummy
 5000
 26 - Test 2 synonyms (call.procName = print.varName)
 print pr; call cl;
@@ -136,7 +136,7 @@ Select <rd,v> with v.varName = rd.varName
 28 - Test 2 synonyms (read.varName = call.procName)
 read rd; call cl;
 Select <rd,cl> with cl.procName = rd.varName
-1 9, 1 11, 1 16
+1 1, 1 9, 1 11, 1 16
 5000
 29 - Test 2 synonyms (var.varName = call.procName)
 variable v; call cl;
