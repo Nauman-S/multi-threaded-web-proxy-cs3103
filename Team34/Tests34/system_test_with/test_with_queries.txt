@@ -103,13 +103,88 @@ stmt s; constant c;
 Select s with s.stmt# = c.value
 1, 2
 5000
-22 - Test 2 synonyms (string)
+22 - Test 2 synonyms (proc.procName = var.varName)
 procedure p; variable v;
 Select v with p.procName = v.varName
 x
 5000
-23 - Test 2 synonyms (unmatched types)
+23 - Test 2 synonyms (proc.procName = call.procName)
+call cl; procedure p;
+Select <cl,p> with p.procName = cl.procName
+6 checkPrime, 8 printPrime, 9 x, 11 x, 16 x
+5000
+24 - Test 2 synonyms (proc.procName = print.varName)
+print pr; procedure p;
+Select <pr,p> with p.procName = pr.varName
+17 i
+5000
+25 - Test 2 synonyms (print.varName = var.varName)
+print pr; variable v;
+Select <pr,v> with v.varName = pr.varName
+17 i
+5000
+26 - Test 2 synonyms (call.procName = print.varName)
+print pr; call cl;
+Select <cl,pr> with cl.procName = pr.varName
+21 17
+5000
+27 - Test 2 synonyms (read.varName = var.varName)
+read rd; variable v;
+Select <rd,v> with v.varName = rd.varName
+1 x,  18 z
+5000
+28 - Test 2 synonyms (read.varName = call.procName)
+read rd; call cl;
+Select <rd,cl> with cl.procName = rd.varName
+1 9, 1 11, 1 16
+5000
+29 - Test 2 synonyms (var.varName = call.procName)
+variable v; call cl;
+Select <cl,v> with cl.procName = v.varName
+9 x, 11 x, 16 x, 21 i
+5000
+30 - Test 2 synonyms (read.varName = proc.procName)
+read rd; procedure p;
+Select <rd,p> with p.procName = rd.varName
+1 x, 18 z
+5000
+31 - Test 2 synonyms (read.varName = print.varName)
+read rd; print pr;
+Select <rd,pr> with pr.varName = rd.varName
+
+5000
+32 - Test 2 synonyms (unmatched types)
 procedure p; stmt s;
 Select s with s.stmt# = p.procName
+
+5000
+33 - Test 2 synonyms (unmatched types)
+read r; stmt s; 
+Select s with s.stmt# = r.varName
+
+5000
+34 - Test 2 synonyms (unmatched types)
+call c; stmt s; 
+Select s with s.stmt# = c.procName
+
+5000
+35 - Test 2 synonyms (unmatched types)
+print pr; stmt s; 
+Select s with s.stmt# = pr.varName
+
+5000
+36 - Test 2 synonyms (unmatched types)
+print pr; const c; 
+Select c with c.value = pr.varName
+
+5000
+37 - Test 2 synonyms (unmatched types)
+call cl; const c; 
+Select c with c.value = cl.procName
+
+5000
+38 - Test 2 synonyms (unmatched types)
+read rd; const c; 
+Select c with c.value = rd.varName
 
 5000
