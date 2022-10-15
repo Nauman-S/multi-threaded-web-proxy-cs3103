@@ -200,7 +200,7 @@ namespace UnitTesting
 
 		TEST_METHOD(TestGetAllCallsStatementProcedurePairs)
 		{
-			std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
+			std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>> all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
 			Assert::AreEqual(0, int(all_calls_pairs->size()));
 			statement_manager_.AddCallsStatement("test1", 1);
 			all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
@@ -213,7 +213,7 @@ namespace UnitTesting
 
 		TEST_METHOD(TestGetAllPrintStatementVariablePairs)
 		{
-			std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
+			std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
 			Assert::AreEqual(0, int(all_print_pairs->size()));
 			statement_manager_.AddPrintStatement("x", 1);
 			all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
@@ -226,7 +226,7 @@ namespace UnitTesting
 
 		TEST_METHOD(TestGetAllReadStatementVariablePairs)
 		{
-			std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();
+			std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();
 			Assert::AreEqual(0, int(all_read_pairs->size()));
 			statement_manager_.AddReadStatement("x", 1);
 			all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();

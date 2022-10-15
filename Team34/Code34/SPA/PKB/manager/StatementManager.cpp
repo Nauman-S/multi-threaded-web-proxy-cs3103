@@ -91,15 +91,15 @@ std::shared_ptr<Variable> StatementManager::GetReadVariableFromStatement(StmtNum
 	return std::make_shared<Variable>(read_variables_[stmt_num]);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> StatementManager::GetAllCallsStatementProcedurePairs()
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>> StatementManager::GetAllCallsStatementProcedurePairs()
 {
 	return GenerateStatementProcedurePairs(calls_procedures_);
 }
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> StatementManager::GetAllPrintStatementVariablePairs()
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> StatementManager::GetAllPrintStatementVariablePairs()
 {
 	return GenerateStatementVariablePairs(print_variables_);
 }
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> StatementManager::GetAllReadStatementVariablePairs()
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> StatementManager::GetAllReadStatementVariablePairs()
 {
 	return GenerateStatementVariablePairs(read_variables_);
 }
@@ -116,22 +116,22 @@ void StatementManager::Clear()
 	read_variables_.clear();
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> StatementManager::GenerateStatementProcedurePairs(std::unordered_map<StmtNum, Procedure>& map)
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>> StatementManager::GenerateStatementProcedurePairs(std::unordered_map<StmtNum, Procedure>& map)
 {
-	std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> pairs = std::make_shared<std::vector<std::pair<StmtNum, Procedure>>>();
+	std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>> pairs = std::make_shared<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Procedure>>>>();
 	for (auto iter = map.begin(); iter != map.end(); ++iter)
 	{
-		pairs->push_back(std::make_pair(iter->first, iter->second));
+		pairs->push_back(std::make_pair(std::make_shared<StmtNum>(iter->first), std::make_shared<Procedure>(iter->second)));
 	}
 	return pairs;
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> StatementManager::GenerateStatementVariablePairs(std::unordered_map<StmtNum, Variable>& map)
+std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> StatementManager::GenerateStatementVariablePairs(std::unordered_map<StmtNum, Variable>& map)
 {
-	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> pairs = std::make_shared<std::vector<std::pair<StmtNum, Variable>>>();
+	std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>> pairs = std::make_shared<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<Variable>>>>();
 	for (auto iter = map.begin(); iter != map.end(); ++iter)
 	{
-		pairs->push_back(std::make_pair(iter->first, iter->second));
+		pairs->push_back(std::make_pair(std::make_shared<StmtNum>(iter->first), std::make_shared<Variable>(iter->second)));
 	}
 	return pairs;
 }
