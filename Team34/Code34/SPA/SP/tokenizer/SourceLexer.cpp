@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "..\..\Utils\Token.h"
+#include "..\..\Utils\InvalidTokenException.h"
 #include "SourceToken.h"
 
 using namespace std;
@@ -84,7 +85,7 @@ SourceToken SourceLexer::ConstructSourceToken() {
         type = GetValidTokenType(token.GetStringValue());
     }
     else {
-        type = SourceTokenType::kInvalidToken;
+        throw InvalidTokenException(token.GetStringValue());
     }
 
     return SourceToken(type, token.GetStringValue());
