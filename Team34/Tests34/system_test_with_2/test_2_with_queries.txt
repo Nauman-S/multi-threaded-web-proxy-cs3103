@@ -1,0 +1,55 @@
+1 - procedure.procName , single return
+procedure p, q;
+Select p such that Calls (p, q) with q.procName = "Echo" such that Modifies (p, "z")
+Golf, Delta
+40000
+2 - procedure.procName, multiple return
+procedure p; variable v; constant c;procedure q; assign a;
+Select <q, v, c> such that Calls*(p,q) and Uses(q, v) with p.procName = "Golf" and v.varName="qwerty" with c.value = a.stmt# and a.stmt# = 20
+Echo qwerty 20,  Foxtrot qwerty 20
+40000
+3 - procedure.procName, boolean return
+procedure p,q,x,y,z; assign a1;
+Select BOOLEAN such that Calls(p,q) and Calls (q,x) and Calls(q,y) and Calls (q,z) with q.procName="Bravo" pattern a1("x",_) and a1( _ , _"x + 2"_)
+FALSE
+40000
+4 - call.procName, single return
+while w1, w2;call c;
+Select w1 such that Parent* (w1, w2) and Parent*(w2 , c) with c.procName="Bravo"
+21, 15, 42, 44
+40000
+28 - call.stmt#, multiple return
+while w1, w2;call c;
+Select w1 such that Parent* (w1, w2) and Parent*(w2 , c) with c.stmt#=24 
+21, 15
+40000
+5 - call.procName, Multiple return
+call c1,c2; if ifs; assign a;
+Select <c1,c2,ifs> such that Next(c1,c2) such that Parent* (ifs, c2) pattern a (_, "j-1") such that Next* (1, a) with c2.procName="Echo"
+66 67 54, 66 67 53, 66 67 52
+40000
+29 - call.stmt#, Multiple return
+call c1,c2; if ifs; assign a;
+Select <c1,c2,ifs> such that Next(c1,c2) such that Parent* (ifs, c2) pattern a (_, "j-1") such that Next* (1, a) with c2.stmt#=67
+66 67 54, 66 67 53, 66 67 52
+40000
+6 - call.procName, BOOLEAN return
+call c,c2; procedure p , q; variable v; assign a;
+Select BOOLEAN such that Calls(p,q) such that Uses (c, v) pattern a(v,_"y"_) such that Modifies (q, v) and Next*(c,c2) with c2.procName = "Bravo"
+TRUE
+40000
+30 - call.procName, BOOLEAN return
+call c,c2; procedure p , q; variable v; assign a;
+Select BOOLEAN such that Calls(p,q) such that Uses (c, v) pattern a(v,_"y"_) such that Modifies (q, v) and Next*(c,c2) with c2.stmt#=24
+TRUE
+40000
+13 - print.varName, single return
+print p,q; procedure proc1,proc2;assign a;variable v;
+Select q such that Follows*(p,q) with q.varName = "f" such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
+26, 86
+40000
+25 - print.stmt#, single return
+print p,q; procedure proc1,proc2;assign a;variable v;
+Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
+85
+40000
