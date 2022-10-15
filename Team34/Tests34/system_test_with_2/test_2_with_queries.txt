@@ -1,0 +1,5 @@
+1 - select all variable
+variable v;
+Select v
+w, p, f, z, temp, j, phi, m, l, g, o, t, h, q, s, i, x, y
+10000
