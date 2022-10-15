@@ -25,6 +25,8 @@ public:
 	std::shared_ptr<Procedure> GetCallsProcedureFromStatement(StmtNum stmt_num);
 	std::shared_ptr<Variable> GetPrintVariableFromStatement(StmtNum stmt_num);
 	std::shared_ptr<Variable> GetReadVariableFromStatement(StmtNum stmt_num);
+
+	void Clear();
 private:
 	ManyToOneRelationStore<StmtNum, RefType> statement_store_;
 	std::unordered_set<StmtNum> statements_;

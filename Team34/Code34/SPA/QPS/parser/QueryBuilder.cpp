@@ -56,7 +56,7 @@ shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
 }
 
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
-	std::vector<shared_ptr<Ref>> synonyms;
+	std::vector<shared_ptr<Ref>> all_synonyms;
 	std::vector<shared_ptr<Ref>> curr_synonyms;
 
 	std::unordered_set<string> used_names;
@@ -67,7 +67,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 		for (auto& syn : curr_synonyms) {
 			if (!used_names.count(syn->GetName())) {
 				used_names.insert(syn->GetName());
-				synonyms.push_back(syn);
+				all_synonyms.push_back(syn);
 			}
 			else {
 				throw SemanticError("The synonym " + syn->GetName() + " is already declared");
@@ -75,7 +75,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 		}
 	}
 
-	return synonyms;
+	return all_synonyms;
 }
 
 
@@ -83,48 +83,56 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
 
-	std::vector<shared_ptr<Ref>> curr_synonyms;
+	std::vector<shared_ptr<Ref>> synonyms;
 
-	if (lexer_->HasIdentity()) {
-		std::string synonym_ = lexer_->MatchIdentity();
-		curr_synonyms.push_back(EntityRef::CreateReference(design_entity_, synonym_));
+	std::shared_ptr<Ref> curr_syn = ParseSynonym(design_entity_);
+	synonyms.push_back(curr_syn);
 
-		while (lexer_->HasComma()) {
-			lexer_->MatchComma();
-			std::string synonym_ = lexer_->MatchIdentity();
-			curr_synonyms.push_back(EntityRef::CreateReference(design_entity_, synonym_));
-		}
+	while (lexer_->HasComma()) {
+		lexer_->MatchComma();
 
-		if (this->lexer_->HasEndOfDeclarationStatement()) {
-			this->lexer_->MatchEndOfDeclarationStatement();
-		}
-		else {
-			throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
-		}
-		return curr_synonyms;
+		curr_syn = ParseSynonym(design_entity_);
+		synonyms.push_back(curr_syn);
+	}
 
+	if (this->lexer_->HasEndOfDeclarationStatement()) {
+		this->lexer_->MatchEndOfDeclarationStatement();
 	}
 	else {
-		throw SyntaxError("Declaration Statement - Missing Synonym");
+		throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
 	}
+	return synonyms;
+}
 
+std::shared_ptr<Ref> QueryBuilder::ParseSynonym(std::string& design_entity) {
+	std::string syn_name = lexer_->MatchIdentity();
+	shared_ptr<Ref> syn = EntityRef::CreateReference(design_entity, syn_name);
+
+	if (lexer_->HasFullStop()) {
+		AttrType attr_type = ParseAttr(syn);
+		syn = EntityRef::CreateReference(design_entity, syn_name, attr_type);
+	}
+	return syn;
+}
+
+AttrType QueryBuilder::ParseAttr(shared_ptr<Ref> syn) {
+	lexer_->MatchFullStop();
+	string attr_name = lexer_->MatchAttrName();
+	ValidateAttrName(syn, attr_name);
+	return GetAttrTypeFromName(attr_name);
 }
 
 shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 	lexer_->MatchKeyword("Select");
 	shared_ptr<vector<shared_ptr<Ref>>> select_tuple = ParseReturnValues();
-
 	shared_ptr<vector<shared_ptr<Rel>>> relations = std::make_shared<vector<shared_ptr<Rel>>>();
 	shared_ptr<vector<shared_ptr<Pattern>>> patterns = std::make_shared<vector<shared_ptr<Pattern>>>();
 	shared_ptr<vector<shared_ptr<With>>> with_clauses = std::make_shared<vector<shared_ptr<With>>>();
 	
-	
 	while (lexer_->HasPatternKeyword() || lexer_->HasSuchThatKeywords() || lexer_->HasWithKeyword()) {
-			
 		if (lexer_->HasPatternKeyword()) {
 			vector<shared_ptr<Pattern>> curr_patterns = ParsePatterns();
 			patterns->insert(patterns->end(), curr_patterns.begin(), curr_patterns.end());
-
 		}
 		else if (lexer_->HasSuchThatKeywords()) {
 			vector<shared_ptr<Rel>> curr_relations = ParseRelations();
@@ -150,7 +158,6 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
 		query = shared_ptr<Query>(new Query(select_tuple, relations, patterns, with_clauses));
 	}
 	return query;
-
 }
 
 shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
@@ -683,13 +690,9 @@ std::pair<shared_ptr<Ref>, AttrType> QueryBuilder::ParseWithRef() {
 
 	// parse attribute reference
 	string ref_name = lexer_->MatchIdentity();
-	lexer_->MatchFullStop();
-	string attr_name = lexer_->MatchAttrName();
-
 	shared_ptr<Ref> synonym = GetDeclaredSyn(ref_name);
-
-	ValidateAttrName(synonym, attr_name);
-	AttrType attr_type = GetAttrTypeFromName(attr_name);
+	
+	AttrType attr_type = ParseAttr(synonym);
 
 	return { synonym, attr_type };
 }

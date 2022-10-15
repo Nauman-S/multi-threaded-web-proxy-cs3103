@@ -52,6 +52,11 @@ public:  // public API
 
     std::shared_ptr<ResWrapper> retrieve(With& with);
 
+    // Attribute selecting
+    std::shared_ptr<Procedure> MapCallsStmtNumToProcName(std::string& stmt_num_str);
+    std::shared_ptr<Variable> MapReadStmtNumToVarName(std::string& stmt_num_str);
+    std::shared_ptr<Variable> MapPrintStmtNumToVarName(std::string& stmt_num_str);
+
 protected:  // helper methods
     // Stmt-Var relations
     bool CheckSVRel(StmtVarRel& rel);                 // (stmt_num, var_name)
@@ -155,11 +160,6 @@ protected:  // helper methods
             std::string& filter_val);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetAllWithClause(With& with);
-
-    // Attribute selecting
-    std::shared_ptr<Procedure> MapCallsStmtNumToProcName(std::string& stmt_num_str);
-    std::shared_ptr<Variable> MapReadStmtNumToVarName(std::string& stmt_num_str);
-    std::shared_ptr<Variable> MapPrintStmtNumToVarName(std::string& stmt_num_str);
 
     // type conversion helpers
     std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(

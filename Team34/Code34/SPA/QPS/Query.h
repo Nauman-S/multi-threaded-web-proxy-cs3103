@@ -55,6 +55,8 @@ public:
         return with_clauses_;
     }
 
+    shared_ptr<vector<shared_ptr<Clause>>> GetAllClauses();
+
     bool IsBoolean() {
         return is_boolean_;
     }

@@ -5,7 +5,7 @@
 
 class VarRef : public Ref {
 private:
-    const AttrType default_attr_type_{ AttrType::kVarName };
+    static const AttrType default_attr_type_{ AttrType::kVarName };
 
 public:
     using Ref::Ref;

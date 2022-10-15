@@ -64,3 +64,9 @@ std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> ModifiesManager::Ge
 {
 	return modifies_pv_store_.GetAllRelations();
 }
+
+void ModifiesManager::Clear()
+{
+	modifies_pv_store_.Clear();
+	modifies_sv_store_.Clear();
+}

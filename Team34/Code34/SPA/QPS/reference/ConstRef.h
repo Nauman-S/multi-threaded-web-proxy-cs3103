@@ -5,7 +5,7 @@
 
 class ConstRef : public IntValueableRef {
 private:
-    const AttrType default_attr_type_{ AttrType::kConst };
+    static const AttrType default_attr_type_{ AttrType::kConst };
 
 public:
     using IntValueableRef::IntValueableRef;

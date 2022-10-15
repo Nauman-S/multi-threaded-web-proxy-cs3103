@@ -15,6 +15,7 @@
     <ClCompile Include="PKB\store\ManyToManyRelation\CallsRelationStore.cpp" />
     <ClCompile Include="PKB\store\ManyToManyRelation\NextRelationStore.cpp" />
     <ClCompile Include="PKB\store\OneToManyRelation\ParentRelationStore.cpp" />
+    <ClCompile Include="PKB\store\OneToOneRelation\FollowsRelationStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternStore.cpp" />
     <ClCompile Include="PKB\store\Pattern\PatternWithExprStore.cpp" />
     <ClCompile Include="PKB\PKB.cpp" />
@@ -26,7 +27,6 @@
     <ClCompile Include="QPS\parser\SemanticError.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
     <ClCompile Include="QPS\pattern\AssignPattern.cpp" />
-    <ClCompile Include="QPS\query_result\QueryResult.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
@@ -116,6 +116,7 @@
     <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
+    <ClCompile Include="QPS\reference\Ref.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -162,7 +163,6 @@
     <ClInclude Include="QPS\parser\SemanticError.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
     <ClInclude Include="QPS\pattern\AssignPattern.h" />
-    <ClInclude Include="QPS\query_result\QueryResult.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
     <ClInclude Include="QPS\query_result\ResWrapper.h" />
     <ClInclude Include="QPS\query_result\SetRes.h" />

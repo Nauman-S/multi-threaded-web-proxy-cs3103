@@ -92,23 +92,21 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 		}
 	}
 
-	
 	return std::make_shared<Table>(new_fields, new_rows);
 }
 
 shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_fields) {
-	vector<string> that_fields = that->fields_;
 	vector<string> new_fields = fields_;
-
 
 	// remove the common fields to avoid duplicates
 	// https://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
+	vector<string> that_fields_except_common = that->fields_;
 	for (string common_field : common_fields) {
-		that_fields.erase(std::remove(that_fields.begin(), that_fields.end(), common_field), that_fields.end());
+		that_fields_except_common.erase(std::remove(that_fields_except_common.begin(), that_fields_except_common.end(), common_field), that_fields_except_common.end());
 	}
 	
-	// new fields are in the sequence of (fields in this table + fields except common fields in that table )
-	new_fields.insert(new_fields.end(), that_fields.begin(), that_fields.end());
+	// new fields are in the sequence of (fields in this table + fields except common fields in that table)
+	new_fields.insert(new_fields.end(), that_fields_except_common.begin(), that_fields_except_common.end());
 
 	vector<vector<string>> new_rows;
 
@@ -119,37 +117,33 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 		hashkey_to_rows.insert({ hashkey, this_row });
 	}
 
+	unsigned that_col_nums = that->GetNumOfCols();
 	for (vector<string>& that_row : that->rows_) {
 		string hashkey = that->ComputeHashkey(common_fields, that_row);
-		if (hashkey_to_rows.count(hashkey) == 0)
-		{
+		if (hashkey_to_rows.count(hashkey) == 0) {
 			continue;
 		}
 
 		//https://stackoverflow.com/questions/9046922/unordered-multimap-iterating-the-result-of-find-yields-elements-with-differe
-		auto hashkey_to_row_entries = hashkey_to_rows.equal_range(hashkey);
-
-		for (auto hashkey_to_row_entry = hashkey_to_row_entries.first; hashkey_to_row_entry != hashkey_to_row_entries.second; ++hashkey_to_row_entry) {
+		auto& hashkey_to_row_entries = hashkey_to_rows.equal_range(hashkey);
+		for (auto& hashkey_to_row_entry = hashkey_to_row_entries.first; hashkey_to_row_entry != hashkey_to_row_entries.second; ++hashkey_to_row_entry) {
 			string hashkey = hashkey_to_row_entry->first;
-			vector<string>& row = hashkey_to_row_entry->second;
-
-			vector<string> new_row = row;
+			vector<string> matched_rows = hashkey_to_row_entry->second;
 			
-			for (unsigned field_idx = 0; field_idx < that_row.size(); field_idx++) {
+			for (unsigned field_idx = 0; field_idx < that_col_nums; field_idx++) {
 				string& that_field = that->GetFieldAtIndex(field_idx);
 				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
 					continue;
 				}
-				new_row.push_back(that_row.at(field_idx));
+				matched_rows.push_back(that_row.at(field_idx));
 			}
-			new_rows.push_back(new_row);
+			new_rows.push_back(matched_rows);
 		}
 
 	}
 	if (new_rows.size() == 0) {
 		return std::make_shared<EmptyTable>();
 	}
-
 
 	return std::make_shared<Table>(new_fields, new_rows);
 }
@@ -169,7 +163,7 @@ bool Table::ContainsSynonyms(std::vector<std::string> synonyms) {
 	return false;
 }
 
-shared_ptr < std::unordered_set<std::string>> Table::GetDomainBySynonym(std::string synonym) {
+shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonym(std::string synonym) {
 	int index = field_to_index_map_.at(synonym);
 
 	shared_ptr <std::unordered_set<std::string>> set = std::make_shared< std::unordered_set<std::string>>();
@@ -189,10 +183,24 @@ shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonyms(std::vec
 			row_result += (row.at(index) + " ");
 		}
 
-		// remove the extra space
+		// remove the extra trailing space
 		row_result.pop_back();
-
 		result_set->insert(row_result);
 	}
 	return result_set;
 }
+
+shared_ptr<vector<vector<string>>> Table::ExtractSynonyms(std::vector<std::string> synonyms) {
+	shared_ptr<vector<vector<string>>> result_rows = std::make_shared<vector<vector<string>>>();
+	for (auto& row : rows_) {
+		vector<string> curr_row;
+		for (string& synonym : synonyms) {
+			int index = field_to_index_map_.at(synonym);
+			curr_row.push_back(row.at(index));
+		}
+	
+		result_rows->push_back(curr_row);
+	}
+	return result_rows;
+}
+

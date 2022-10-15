@@ -1183,16 +1183,16 @@ namespace UnitTesting
 		TEST_METHOD(Invalid_MultipleClauseTypes) {
 			const std::string query_string_ = "procedure p; call c; Select p with c.procName = p.procName and such that Calls(p,p)";
 
-			bool syntatic_error_thrown = false;
+			bool semantic_error_thrown = false;
 			try {
 				query_builder_->GetQuery(query_string_);
 			}
-			catch (const SyntaxError&) {
-				syntatic_error_thrown = true;
+			catch (const SemanticError&) {
+				semantic_error_thrown = true;
 			}
 			catch (...) {
 			}
-			Assert::IsTrue(syntatic_error_thrown);
+			Assert::IsTrue(semantic_error_thrown);
 		}
 
 		TEST_METHOD(Valid_WhilePatternMultipleReturn) {
@@ -1259,16 +1259,16 @@ namespace UnitTesting
 		TEST_METHOD(Invalid_IfsPattern) {
 			const std::string query_string_ = "procedure p; call c; if ifs;variable v; Select p with c.procName = p.procName and such that Calls(p,p) pattern ifs(v,_,v)";
 
-			bool syntatic_error_thrown = false;
+			bool semantic_error_thrown = false;
 			try {
 				query_builder_->GetQuery(query_string_);
 			}
-			catch (const SyntaxError&) {
-				syntatic_error_thrown = true;
+			catch (const SemanticError&) {
+				semantic_error_thrown = true;
 			}
 			catch (...) {
 			}
-			Assert::IsTrue(syntatic_error_thrown);
+			Assert::IsTrue(semantic_error_thrown);
 		}
 	};
 }

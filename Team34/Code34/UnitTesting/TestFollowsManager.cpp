@@ -164,5 +164,21 @@ namespace UnitTesting
 			follows_manager_.SetFollowsT(1, 3);
 			Assert::AreEqual(3, int(follows_manager_.GetAllFollowsTRelations()->size()));
 		}
+
+		TEST_METHOD(TestClearFollowsStore)
+		{
+			follows_manager_.SetFollowsT(1, 2);
+			Assert::AreEqual(1, int(follows_manager_.GetAllFollowsTRelations()->size()));
+			follows_manager_.SetFollows(1, 2);
+			Assert::AreEqual(1, int(follows_manager_.GetAllFollowsRelations()->size()));
+			Assert::AreEqual(1, int(follows_manager_.GetPredecessorStmtFromStmt(2)->size()));
+			Assert::AreEqual(1, int(follows_manager_.GetSuccessorStmtFromStmt(1)->size()));
+
+			follows_manager_.Clear();
+			Assert::AreEqual(0, int(follows_manager_.GetAllFollowsTRelations()->size()));
+			Assert::AreEqual(0, int(follows_manager_.GetAllFollowsRelations()->size()));
+			Assert::AreEqual(0, int(follows_manager_.GetPredecessorStmtFromStmt(2)->size()));
+			Assert::AreEqual(0, int(follows_manager_.GetSuccessorStmtFromStmt(1)->size()));
+		}
 	};
 }
