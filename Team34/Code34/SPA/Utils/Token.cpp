@@ -44,6 +44,14 @@ const map<char, TokenType> Token::allowed_special_char_{
 
 Token::Token(std::string value, TokenType type) : literal_value_(value), type_(type) {}
 
+std::string& Token::GetStringValue() { 
+    return this->literal_value_; 
+}
+
+TokenType Token::GetType() { 
+    return this->type_; 
+}
+
 bool Token::IsName(string token_string) {
     return regex_match(token_string, Token::name_regex_);
 }
