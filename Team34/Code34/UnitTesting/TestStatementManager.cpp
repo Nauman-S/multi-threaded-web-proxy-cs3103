@@ -198,6 +198,45 @@ namespace UnitTesting
 			Assert::AreEqual(Variable("test_read_var2"), *statement_manager_.GetReadVariableFromStatement(2));
 		}
 
+		TEST_METHOD(TestGetAllCallsStatementProcedurePairs)
+		{
+			std::shared_ptr<std::vector<std::pair<StmtNum, Procedure>>> all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
+			Assert::AreEqual(0, int(all_calls_pairs->size()));
+			statement_manager_.AddCallsStatement("test1", 1);
+			all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
+			Assert::AreEqual(1, int(all_calls_pairs->size()));
+			statement_manager_.AddCallsStatement("test1", 2);
+			statement_manager_.AddCallsStatement("test2", 3);
+			all_calls_pairs = statement_manager_.GetAllCallsStatementProcedurePairs();
+			Assert::AreEqual(3, int(all_calls_pairs->size()));
+		}
+
+		TEST_METHOD(TestGetAllPrintStatementVariablePairs)
+		{
+			std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
+			Assert::AreEqual(0, int(all_print_pairs->size()));
+			statement_manager_.AddPrintStatement("x", 1);
+			all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
+			Assert::AreEqual(1, int(all_print_pairs->size()));
+			statement_manager_.AddPrintStatement("x", 2);
+			statement_manager_.AddPrintStatement("y", 3);
+			all_print_pairs = statement_manager_.GetAllPrintStatementVariablePairs();
+			Assert::AreEqual(3, int(all_print_pairs->size()));
+		}
+
+		TEST_METHOD(TestGetAllReadStatementVariablePairs)
+		{
+			std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();
+			Assert::AreEqual(0, int(all_read_pairs->size()));
+			statement_manager_.AddReadStatement("x", 1);
+			all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();
+			Assert::AreEqual(1, int(all_read_pairs->size()));
+			statement_manager_.AddReadStatement("x", 2);
+			statement_manager_.AddReadStatement("y", 3);
+			all_read_pairs = statement_manager_.GetAllReadStatementVariablePairs();
+			Assert::AreEqual(3, int(all_read_pairs->size()));
+		}
+
 		TEST_METHOD(TestClearStatementStore)
 		{
 			statement_manager_.Clear();
