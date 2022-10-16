@@ -74,7 +74,6 @@ void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& result
     if (this->is_valid_source_) {
         QueryBuilder q_builder;
         Query query;
-
         try {
             std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
             query = *query_ptr;
