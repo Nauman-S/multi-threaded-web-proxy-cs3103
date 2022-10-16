@@ -163,12 +163,17 @@ protected:  // helper methods
             std::string& filter_val);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetAllWithClause(With& with);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> 
+        GetWithClauseAttrPairs(RefType syn_ref_type);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1,
             std::shared_ptr<std::unordered_set<std::string>> set2);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseSetAndTable(std::shared_ptr<std::unordered_set<std::string>> set1,
             std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> 
+        JoinWithClauseSetAndTable(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, 
+            std::shared_ptr<std::unordered_set<std::string>> set2);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseTables(
             std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1,
@@ -176,13 +181,16 @@ protected:  // helper methods
 
 
     // type conversion helpers
-    std::shared_ptr<std::unordered_set<std::string>> IntSetToStrSet(
-        std::shared_ptr<std::unordered_set<int>> set);
+    std::shared_ptr<std::unordered_set<std::string>> StmtSetToStrSet(
+        std::shared_ptr<std::unordered_set<StmtNum>> set);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
-        IntStrToStrStrTable(
-            std::shared_ptr<std::vector<std::pair<int, std::string>>> table);
+        StmtNameTableToStrStrTable(
+            std::shared_ptr<std::vector<std::pair<StmtNum, std::string>>> table);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
-        IntIntToStrStrTable(std::shared_ptr<std::vector<std::pair<int, int>>> table);
+        StmtptrNameptrTableToStrStrTable(
+            std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<std::string>>>> table);
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+        StmtStmtTableToStrStrTable(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> table);
 
     // type checking helpers
     bool IsSameSynonymsInvalid(StmtStmtRel& rel);
