@@ -5,41 +5,33 @@
 
 using namespace std;
 
-// SIMPLE grammar rules:
-// - LETTER: 'A'-'Z' | 'a'-'z'
-// - DIGIT: 0-9
-// - NAME: LETTER (LETTER | DIGIT)*
-// - INTEGER: DIGIT+
-const regex Token::name_regex_ = regex("[a-zA-Z][a-zA-Z0-9]*");
-const regex Token::integer_regex_ = regex("\\d+");
-
 // Complete map of all possible allowed special characters besides LETTER and DIGIT
 const map<char, TokenType> Token::allowed_special_char_{
     // Operators, or part of an operator
-    {'=', kEqual},
-    {'!', kNegate},
-    {'&', kAmpersand},
-    {'|', kPipe},
-    {'>', kGreater},
-    {'<', kLesser},
-    {'+', kAdd},
-    {'-', kMinus},
-    {'*', kMultiply},
-    {'/', kkDivide},
-    {'%', kModulo},
+    {'=', TokenType::kEqual},
+    {'!', TokenType::kNegate},
+    {'&', TokenType::kAmpersand},
+    {'|', TokenType::kPipe},
+    {'>', TokenType::kGreater},
+    {'<', TokenType::kLesser},
+    {'+', TokenType::kAdd},
+    {'-', TokenType::kMinus},
+    {'*', TokenType::kMultiply},
+    {'/', TokenType::kkDivide},
+    {'%', TokenType::kModulo},
 
     // Structural delimiters
-    {'(', kLeftRound},
-    {')', kRightRound},
-    {'{', kLeftCurly},
-    {'}', kRightCurly},
-    {';', kSemiColon},
-    {',', kComma},
-    {'_', kUnderscore},
-    {'\"', kDoubleQuote},
-    {'\'', kSingleQuote},
-    {'.', kFullStop},
-    {'#', kHashtag}
+    {'(', TokenType::kLeftRound},
+    {')', TokenType::kRightRound},
+    {'{', TokenType::kLeftCurly},
+    {'}', TokenType::kRightCurly},
+    {';', TokenType::kSemiColon},
+    {',', TokenType::kComma},
+    {'_', TokenType::kUnderscore},
+    {'\"', TokenType::kDoubleQuote},
+    {'\'', TokenType::kSingleQuote},
+    {'.', TokenType::kFullStop},
+    {'#', TokenType::kHashtag}
 };
 
 Token::Token(std::string value, TokenType type) : literal_value_(value), type_(type) {}
@@ -50,14 +42,6 @@ std::string& Token::GetStringValue() {
 
 TokenType Token::GetType() { 
     return this->type_; 
-}
-
-bool Token::IsName(string token_string) {
-    return regex_match(token_string, Token::name_regex_);
-}
-
-bool Token::IsInteger(std::string token_string) {
-    return regex_match(token_string, Token::integer_regex_);
 }
 
 bool Token::IsValidToken(char c) {

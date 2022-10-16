@@ -12,7 +12,7 @@ namespace UnitTesting
 	TEST_CLASS(TestSourceLexer)
 	{
 	public:
-		string base_dir = "../../Tests34/unit_tests/";
+		string base_dir = "../../Tests34/unit_tests/lexer/";
 		TEST_METHOD(TestNoSpaceSource)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "no_space_source.txt");

@@ -7,16 +7,6 @@ enum class SourceTokenType {
     kName,
     kInteger,
 
-    // Keywords (inherently a kName token)
-    kProcedure,
-    kRead,
-    kPrint,
-    kCall,
-    kWhile,
-    kIf,
-    kThen,
-    kElse,
-
     // Operators
     kEqual,
     kDoubleEqual,
@@ -40,16 +30,9 @@ enum class SourceTokenType {
     kLeftCurly,
     kRightCurly,
     kSemiColon,
-
-    // Self-defined tokens
-    kInvalidToken,
 };
 
 class SourceToken {
-private:
-    SourceTokenType type_;
-    std::string str_val_;
-
 public:
     SourceToken(SourceTokenType, std::string);
 
@@ -67,5 +50,9 @@ public:
     bool IsElse();
 
     bool operator==(const SourceToken&);
+
+private:
+    SourceTokenType type_;
+    std::string str_val_;
 };
 

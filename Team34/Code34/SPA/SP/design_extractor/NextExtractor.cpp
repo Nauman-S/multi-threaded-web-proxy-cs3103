@@ -1,7 +1,5 @@
 #include "NextExtractor.h"
 
-#include <cassert>
-
 #include "../ast/ProgramNode.h"
 #include "../ast/ProcedureASTNode.h"
 

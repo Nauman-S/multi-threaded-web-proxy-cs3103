@@ -143,7 +143,6 @@
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
     <ClInclude Include="Utils\InvalidTokenException.h" />
-    <ClInclude Include="Utils\StringTokenizer.h" />
     <ClInclude Include="Utils\Token.h" />
     <ClInclude Include="Utils\Tokenizer.h" />
     <ClInclude Include="Utils\type\RefType.h" />
@@ -261,7 +260,6 @@
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
     <ClCompile Include="Utils\InvalidTokenException.cpp" />
-    <ClCompile Include="Utils\StringTokenizer.cpp" />
     <ClCompile Include="Utils\Token.cpp" />
     <ClCompile Include="Utils\Tokenizer.cpp" />
   </ItemGroup>
