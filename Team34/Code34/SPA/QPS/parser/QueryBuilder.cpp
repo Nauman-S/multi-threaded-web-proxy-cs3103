@@ -61,7 +61,6 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 	std::unordered_set<string> used_names;
 
-
 	while (this->lexer_->HasDesignEntity()) {
 		curr_synonyms = ParseDeclarationStatement();
 		for (auto& syn : curr_synonyms) {
@@ -81,17 +80,17 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 
 
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
-	std::string design_entity_ = this->lexer_->MatchDesignEntityKeyword();
+	std::string design_entity = this->lexer_->MatchDesignEntityKeyword();
 
 	std::vector<shared_ptr<Ref>> synonyms;
 
-	std::shared_ptr<Ref> curr_syn = ParseSynonym(design_entity_);
+	std::shared_ptr<Ref> curr_syn = ParseSynonym(design_entity);
 	synonyms.push_back(curr_syn);
 
 	while (lexer_->HasComma()) {
 		lexer_->MatchComma();
 
-		curr_syn = ParseSynonym(design_entity_);
+		curr_syn = ParseSynonym(design_entity);
 		synonyms.push_back(curr_syn);
 	}
 

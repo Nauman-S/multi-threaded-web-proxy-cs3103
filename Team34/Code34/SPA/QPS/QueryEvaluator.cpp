@@ -73,6 +73,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateByGroup(shared_ptr<ClauseGrouper>
 	}
 
 	shared_ptr<Table> table = EvaluateSelectSynGroups(clause_grouper->GetClauseGroupsWithSelectSyn());
+
 	return table;
 }
 

@@ -14,22 +14,21 @@
 #include "manager/IfPatternManager.h"
 #include "manager/WhilePatternManager.h"
 
-class PKB
-{
+class PKB {
 public:
-	VariableManager variable_manager_;
-	ConstantManager constant_manager_;
-	ProcedureManager procedure_manager_;
-	StatementManager statement_manager_;
-	ParentManager parent_manager_;
-	FollowsManager follows_manager_;
-	ModifiesManager modifies_manager_;
-	UsesManager uses_manager_;
-	CallsManager calls_manager_;
-	NextManager next_manager_;
-	AssignPatternManager assign_pattern_manager_;
-	IfPatternManager if_pattern_manager_;
-	WhilePatternManager while_pattern_manager_;
+    VariableManager variable_manager_;
+    ConstantManager constant_manager_;
+    ProcedureManager procedure_manager_;
+    StatementManager statement_manager_;
+    ParentManager parent_manager_;
+    FollowsManager follows_manager_;
+    ModifiesManager modifies_manager_;
+    UsesManager uses_manager_;
+    CallsManager calls_manager_;
+    NextManager next_manager_;
+    AssignPatternManager assign_pattern_manager_;
+    IfPatternManager if_pattern_manager_;
+    WhilePatternManager while_pattern_manager_;
 };
 
 extern PKB pkb;
