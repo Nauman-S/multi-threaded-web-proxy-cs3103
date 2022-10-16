@@ -8,8 +8,7 @@
 
 #include "../../../Utils/type/TypeDef.h"
                                                                                                                                                                                                                                                     
-class PatternStore
-{
+class PatternStore {
 public:
 	void AddPattern(StmtNum stmt_num, Variable var);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllStatmentsFromVar(Variable var);

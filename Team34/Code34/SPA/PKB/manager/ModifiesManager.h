@@ -6,8 +6,7 @@
 #include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ModifiesManager
-{
+class ModifiesManager {
 public:
 	void SetModifies(StmtNum stmt_num, Variable var);
 	void SetModifies(Procedure proc_name, Variable var);

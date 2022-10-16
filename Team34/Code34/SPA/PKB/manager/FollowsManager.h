@@ -8,8 +8,7 @@
 #include "../store/OneToOneRelation/FollowsRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class FollowsManager
-{
+class FollowsManager {
 public:
 	// Follows Relation methods
 	void SetFollows(StmtNum left, StmtNum right);

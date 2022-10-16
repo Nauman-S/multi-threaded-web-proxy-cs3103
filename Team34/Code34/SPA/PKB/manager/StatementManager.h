@@ -10,8 +10,7 @@
 #include "../../Utils/type/TypeDef.h"
 #include "../../PKB/store/ManyToOneRelation/ManyToOneRelationStore.h"
 
-class StatementManager
-{
+class StatementManager {
 public:
 	void AddStatement(StmtNum stmt_num, RefType type);
 	void AddCallsStatement(Procedure proc, StmtNum stmt_num);

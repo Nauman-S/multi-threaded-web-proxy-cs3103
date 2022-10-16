@@ -8,8 +8,7 @@
 #include "../../../Utils/expression/ExprSpec.h"
 #include "../../../Utils/expression/Expr.h"
 
-class PatternWithExprStore
-{
+class PatternWithExprStore {
 public:
 	void AddPattern(StmtNum stmt_num, Expr expr);
 	bool IsPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr);

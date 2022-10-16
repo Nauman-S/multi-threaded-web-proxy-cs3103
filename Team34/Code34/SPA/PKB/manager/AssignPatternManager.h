@@ -2,6 +2,5 @@
 
 #include "../store/Pattern/PatternWithExprStore.h"
 
-class AssignPatternManager : public PatternWithExprStore
-{
+class AssignPatternManager : public PatternWithExprStore {
 };
