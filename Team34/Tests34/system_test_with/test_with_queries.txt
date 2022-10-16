@@ -136,7 +136,7 @@ Select <rd,v> with v.varName = rd.varName
 28 - Test 2 synonyms (read.varName = call.procName)
 read rd; call cl;
 Select <rd,cl> with cl.procName = rd.varName
-1 1, 1 9, 1 11, 1 16
+1 9, 1 11, 1 16
 5000
 29 - Test 2 synonyms (var.varName = call.procName)
 variable v; call cl;
@@ -174,17 +174,17 @@ Select s with s.stmt# = pr.varName
 
 5000
 36 - Test 2 synonyms (unmatched types)
-print pr; const c; 
+print pr; constant c; 
 Select c with c.value = pr.varName
 
 5000
 37 - Test 2 synonyms (unmatched types)
-call cl; const c; 
+call cl; constant c; 
 Select c with c.value = cl.procName
 
 5000
 38 - Test 2 synonyms (unmatched types)
-read rd; const c; 
+read rd; constant c; 
 Select c with c.value = rd.varName
 
 5000

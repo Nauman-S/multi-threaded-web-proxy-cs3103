@@ -40,6 +40,7 @@ using std::pair;
 using std::shared_ptr;
 using std::string;
 using std::unordered_map;
+using std::unordered_multimap;
 using std::unordered_set;
 using std::vector;
 
@@ -1292,7 +1293,7 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     else if (set1 != nullptr && table2 != nullptr) {
         joined_table = JoinWithClauseSetAndTable(set1, table2);
     }
-    else if (table1 != nullptr && set1 != nullptr) {
+    else if (table1 != nullptr && set2 != nullptr) {
         joined_table = JoinWithClauseSetAndTable(table1, set2);
     }
     else if (table1 != nullptr && table2 != nullptr) {
@@ -1367,15 +1368,16 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
 }
 
 std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseTables(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
-    unordered_set<string> key_set;
+    unordered_multimap<string, string> key_mulmap;
     for (auto& [val, key] : *table1) {
-        key_set.insert(key);
+        key_mulmap.insert({ key,val });
     }
 
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, key_value] : *table2) {
-        if (key_set.find(key_value) != key_set.end()) {
-            joined_table->push_back(make_pair(default_value, default_value));
+        if (auto& entry_itrs = key_mulmap.equal_range(key_value); entry_itrs.first != entry_itrs.second) {
+            std::for_each(entry_itrs.first, entry_itrs.second, 
+                [&](auto& entry) {joined_table->push_back(make_pair(entry.second, default_value)); });
         }
     }
 
@@ -1416,7 +1418,7 @@ DataRetriever::StmtNameTableToStrStrTable(
     return res;
 }
 
-std::shared_ptr<std::vector<std::pair<std::string, std::string>>> 
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
 DataRetriever::StmtptrNameptrTableToStrStrTable(
     std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<std::string>>>> table) {
 
@@ -1441,7 +1443,7 @@ DataRetriever::StmtStmtTableToStrStrTable(
     return res;
 }
 
-bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel & rel) {
+bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel& rel) {
     auto rel_type = rel.GetRelType();
     if (rel_type == ClauseType::kNextTRel ||
         rel_type == ClauseType::kAffectsRel ||
@@ -1453,7 +1455,7 @@ bool DataRetriever::IsSameSynonymsInvalid(StmtStmtRel & rel) {
     return true;
 }
 
-bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel & rel) {
+bool DataRetriever::IsSameSynonymsInvalid(ProcProcRel& rel) {
     // So far all Proc-Proc relation cannot have same synonyms on both sides.
     return true;
 }
