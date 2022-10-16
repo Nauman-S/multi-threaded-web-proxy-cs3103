@@ -1,6 +1,5 @@
 #include "Token.h"
 
-#include <regex>
 #include <map>
 
 using namespace std;

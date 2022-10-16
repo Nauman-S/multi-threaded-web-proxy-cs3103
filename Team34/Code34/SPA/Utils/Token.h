@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <regex>
 #include <map>
 
 enum class TokenType {
@@ -42,9 +41,6 @@ enum class TokenType {
 
 class Token {
 public:
-    std::string literal_value_;
-    TokenType type_;
-
     Token(std::string, TokenType);
     std::string& GetStringValue();
     TokenType GetType();
@@ -53,6 +49,9 @@ public:
     static TokenType GetTokenTypeByChar(char);
 
 private:
+    std::string literal_value_;
+    TokenType type_;
+
     const static std::map<char, TokenType> allowed_special_char_;
 };
 
