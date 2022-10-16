@@ -44,7 +44,6 @@ inline bool ManyToManyRelationStore<S, T>::CheckRelation(S s, T t)
 	auto iter = t_to_s_map_.find(t);
 	if (iter != t_to_s_map_.end())
 	{
-		// found T type key
 		return t_to_s_map_[t].find(s) != t_to_s_map_[t].end();
 	}
 	return false;
