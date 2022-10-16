@@ -64,7 +64,6 @@ string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 }
 
 shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
-	//if (GetNumOfRows() == 0) return that;
 	if (that->IsWildcard()) return shared_ptr<Table>(this);
 
 	vector<string> common_fields = GetCommonFields(that);
