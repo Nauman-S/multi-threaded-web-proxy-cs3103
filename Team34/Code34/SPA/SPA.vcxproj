@@ -57,7 +57,6 @@
     <ClInclude Include="QPS\DataRetriever.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
-    <ClInclude Include="QPS\parser\QueryParser.h" />
     <ClInclude Include="QPS\parser\SemanticError.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
     <ClInclude Include="QPS\pattern\AssignPattern.h" />
@@ -177,7 +176,6 @@
     <ClCompile Include="QPS\DataRetriever.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
-    <ClCompile Include="QPS\parser\QueryParser.cpp" />
     <ClCompile Include="QPS\parser\SemanticError.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
     <ClCompile Include="QPS\pattern\AssignPattern.cpp" />
