@@ -115,8 +115,6 @@
     <ClInclude Include="SP\ast\ReadStatementASTNode.h" />
     <ClInclude Include="SP\ast\StatementASTNode.h" />
     <ClInclude Include="SP\ast\WhileStatementASTNode.h" />
-    <ClInclude Include="SP\cfg\CFGBuilder.h" />
-    <ClInclude Include="SP\cfg\ControlFlowNode.h" />
     <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
@@ -239,8 +237,6 @@
     <ClCompile Include="SP\ast\ReadStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\StatementASTNode.cpp" />
     <ClCompile Include="SP\ast\WhileStatementASTNode.cpp" />
-    <ClCompile Include="SP\cfg\CFGBuilder.cpp" />
-    <ClCompile Include="SP\cfg\ControlFlowNode.cpp" />
     <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />

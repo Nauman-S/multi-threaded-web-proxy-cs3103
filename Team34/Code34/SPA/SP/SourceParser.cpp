@@ -121,7 +121,6 @@ shared_ptr<IfStatementASTNode> SourceParser::ParseIfStatement(Procedure& proc) {
 }
 
 shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(Procedure& proc) {
-	// (...)
 	shared_ptr<ConditionExpression> cond (new ConditionExpression());
 	StmtNum line_index = line_idx;
 	vector<Variable> vars = {};
@@ -197,7 +196,6 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(Procedure&
 }
 
 shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(Procedure& proc) {
-	// while ()
 	shared_ptr<WhileStatementASTNode> w_node (new WhileStatementASTNode());
 	vector<shared_ptr<StatementASTNode>> children = {};
 	StmtNum line_index = line_idx;
@@ -227,7 +225,6 @@ shared_ptr<WhileStatementASTNode> SourceParser::ParseWhileStatement(Procedure& p
 }
 
 shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(Procedure& proc) {
-	// read x
 	shared_ptr<ReadStatementASTNode> r_node (new ReadStatementASTNode());
 	StmtNum line_index = line_idx;
 	r_node->SetLineIndex(line_index);
@@ -245,7 +242,6 @@ shared_ptr<ReadStatementASTNode> SourceParser::ParseReadStatement(Procedure& pro
 }
 
 shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(Procedure& proc) {
-	// read x
 	shared_ptr<PrintStatementASTNode> p_node (new PrintStatementASTNode());
 	StmtNum line_index = line_idx;
 	p_node->SetLineIndex(line_index);
@@ -263,7 +259,6 @@ shared_ptr<PrintStatementASTNode> SourceParser::ParsePrintStatement(Procedure& p
 }
 
 shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(Procedure& proc) {
-	// call p
 	shared_ptr<CallStatementASTNode> p_node(new CallStatementASTNode());
 	StmtNum line_index = line_idx;
 	p_node->SetLineIndex(line_index);
