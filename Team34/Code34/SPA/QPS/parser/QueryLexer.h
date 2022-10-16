@@ -101,7 +101,9 @@ public:
 
     string GenerateErrorMessage(string expected, string actual);
 
-    std::string PeekNextToken(int number_tokens_);
+	std::string PeekNextToken(int number_tokens_);
+
+	bool IsCurrentTokenOfType(TokenType);
 };
 #endif
 

@@ -29,13 +29,13 @@ void QueryLexer::FeedQuery(const std::string& query_string) {
 }
 
 bool QueryLexer::HasDesignEntity() {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        if (this->design_entities_.find(sval_) != this->design_entities_.end()) {
-            return true;
-        }
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		if (this->design_entities_.find(sval_) != this->design_entities_.end()) {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::string QueryLexer::MatchDesignEntityKeyword() {
@@ -46,7 +46,7 @@ std::string QueryLexer::MatchDesignEntityKeyword() {
 }
 
 bool QueryLexer::HasIdentity() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kName;
+	return IsCurrentTokenOfType(TokenType::kName);
 }
 
 std::string QueryLexer::MatchIdentity() {
@@ -57,7 +57,7 @@ std::string QueryLexer::MatchIdentity() {
 }
 
 bool QueryLexer::HasEndOfDeclarationStatement() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kSemiColon;
+	return IsCurrentTokenOfType(TokenType::kSemiColon);
 }
 
 std::string QueryLexer::MatchEndOfDeclarationStatement() {
@@ -67,11 +67,11 @@ std::string QueryLexer::MatchEndOfDeclarationStatement() {
 }
 
 bool QueryLexer::HasKeyword(std::string keyword_) {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        return this->keywords_.find(sval_) != this->keywords_.end() && sval_.compare(keyword_) == 0;
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		return this->keywords_.find(sval_) != this->keywords_.end() && sval_.compare(keyword_) == 0;
+	}
+	return false;
 }
 
 void QueryLexer::MatchKeyword(std::string keyword_) {
@@ -81,30 +81,30 @@ void QueryLexer::MatchKeyword(std::string keyword_) {
 
 
 bool QueryLexer::HasReferenceKeyword() {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        if (this->relation_keywords_.find(sval_) != this->relation_keywords_.end()) {
-            return true;
-        }
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		if (this->relation_keywords_.find(sval_) != this->relation_keywords_.end()) {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::string QueryLexer::MatchReferenceKeyword() {
-    if (!HasReferenceKeyword()) throw SyntaxError(GenerateErrorMessage("ReferenceKeyword", tokenizer_->GetTokenSval().value_or("INTEGER")));
-    std::string sval_ = this->tokenizer_->GetTokenSval().value();
-    this->tokenizer_->NextToken();
-    if (this->tokenizer_->GetToken().type_ == TokenType::kMultiply) {
-        sval_.push_back('*');
-        this->tokenizer_->NextToken();
-    }
+	if (!HasReferenceKeyword()) throw SyntaxError(GenerateErrorMessage("ReferenceKeyword", tokenizer_->GetTokenSval().value_or("INTEGER")));
+	std::string sval_ = this->tokenizer_->GetTokenSval().value();
+	this->tokenizer_->NextToken();
+	if (IsCurrentTokenOfType(TokenType::kMultiply)) {
+		sval_.push_back('*');
+		this->tokenizer_->NextToken();
+	}
 
     return sval_;
 }
 
 
 bool QueryLexer::HasLeftBrace() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kLeftRound;
+	return IsCurrentTokenOfType(TokenType::kLeftRound);
 }
 
 void QueryLexer::MatchLeftBrace() {
@@ -113,7 +113,7 @@ void QueryLexer::MatchLeftBrace() {
 }
 
 bool QueryLexer::HasRightBrace() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kRightRound;
+	return IsCurrentTokenOfType(TokenType::kRightRound);
 }
 
 void QueryLexer::MatchRightBrace() {
@@ -122,7 +122,7 @@ void QueryLexer::MatchRightBrace() {
 }
 
 bool QueryLexer::HasLeftAngle() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kLesser;
+	return IsCurrentTokenOfType(TokenType::kLesser);
 }
 
 void QueryLexer::MatchLeftAngle() {
@@ -131,7 +131,7 @@ void QueryLexer::MatchLeftAngle() {
 }
 
 bool QueryLexer::HasRightAngle() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kGreater;
+	return IsCurrentTokenOfType(TokenType::kGreater);
 }
 
 void QueryLexer::MatchRightAngle() {
@@ -140,7 +140,7 @@ void QueryLexer::MatchRightAngle() {
 }
 
 bool QueryLexer::HasUnderScore() {
-    return tokenizer_->GetToken().type_ == TokenType::kUnderscore;
+	return IsCurrentTokenOfType(TokenType::kUnderscore);
 }
 
 void QueryLexer::MatchUnderScore() {
@@ -149,7 +149,7 @@ void QueryLexer::MatchUnderScore() {
 }
 
 bool QueryLexer::HasFullStop() {
-    return tokenizer_->GetToken().type_ == TokenType::kFullStop;
+	return IsCurrentTokenOfType(TokenType::kFullStop);
 }
 
 void QueryLexer::MatchFullStop() {
@@ -158,7 +158,7 @@ void QueryLexer::MatchFullStop() {
 }
 
 bool QueryLexer::HasEqualSign() {
-    return tokenizer_->GetToken().type_ == TokenType::kEqual;
+	return IsCurrentTokenOfType(TokenType::kEqual);
 }
 
 void QueryLexer::MatchEqualSign() {
@@ -167,7 +167,7 @@ void QueryLexer::MatchEqualSign() {
 }
 
 bool QueryLexer::HasQuotationMarks() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kDoubleQuote || this->tokenizer_->GetToken().type_ == TokenType::kSingleQuote;
+	return IsCurrentTokenOfType(TokenType::kDoubleQuote) || IsCurrentTokenOfType(TokenType::kSingleQuote);
 }
 
 void QueryLexer::MatchQuotationMarks() {
@@ -176,7 +176,7 @@ void QueryLexer::MatchQuotationMarks() {
 }
 
 bool QueryLexer::HasComma() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kComma;
+	return IsCurrentTokenOfType(TokenType::kComma);
 }
 
 void QueryLexer::MatchComma() {
@@ -185,7 +185,7 @@ void QueryLexer::MatchComma() {
 }
 
 bool QueryLexer::HasHashtag() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kHashtag;
+	return IsCurrentTokenOfType(TokenType::kHashtag);
 }
 
 void QueryLexer::MatchHashtag() {
@@ -194,32 +194,34 @@ void QueryLexer::MatchHashtag() {
 }
 
 bool QueryLexer::HasInteger() {
-    return this->tokenizer_->GetToken().type_ == TokenType::kInteger;
+	return IsCurrentTokenOfType(TokenType::kInteger);
 }
 
 bool QueryLexer::HasOperator() {
-    return this->operators_.find(this->tokenizer_->GetToken().type_) != this->operators_.end();
+	Token& token = this->tokenizer_->GetToken();
+	return this->operators_.find(token.GetType()) != this->operators_.end();
 }
 
 std::string QueryLexer::MatchOperator() {
-    std::string operator_string_;
-    if (tokenizer_->GetToken().type_ == TokenType::kAdd) {
-        operator_string_ = "+";
-    }
-    else if (tokenizer_->GetToken().type_ == TokenType::kMinus) {
-        operator_string_ = "-";
-    }
-    else if (tokenizer_->GetToken().type_ == TokenType::kkDivide) {
-        operator_string_ = "/";
-    }
-    else if (tokenizer_->GetToken().type_ == TokenType::kMultiply) {
-        operator_string_ = "*";
-    }
-    else if (tokenizer_->GetToken().type_ == TokenType::kModulo) {
-        operator_string_ = "%";
-    }
-    this->tokenizer_->NextToken();
-    return operator_string_;
+	std::string operator_string_;
+	Token& token = this->tokenizer_->GetToken();
+		if (token.GetType() == TokenType::kAdd) {
+			operator_string_ = "+";
+		}
+		else if (token.GetType() == TokenType::kMinus) {
+			operator_string_ = "-";
+		}
+		else if (token.GetType() == TokenType::kkDivide) {
+			operator_string_ = "/";
+		}
+		else if (token.GetType() == TokenType::kMultiply) {
+			operator_string_ = "*";
+		}
+		else if (token.GetType() == TokenType::kModulo) {
+			operator_string_ = "%";
+		} 
+		this->tokenizer_->NextToken();
+		return operator_string_;
 }
 int QueryLexer::MatchInteger() {
     if (!HasInteger()) throw SyntaxError(GenerateErrorMessage("INTEGER", tokenizer_->GetTokenSval().value_or("INTEGER")));
@@ -229,11 +231,11 @@ int QueryLexer::MatchInteger() {
 }
 
 bool QueryLexer::HasPatternKeyword() {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        return sval_.compare("pattern") == 0;
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		return sval_.compare("pattern") == 0;
+	}
+	return false;
 }
 
 void QueryLexer::MatchPatternKeyword() {
@@ -242,11 +244,11 @@ void QueryLexer::MatchPatternKeyword() {
 }
 
 bool QueryLexer::HasWithKeyword() {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        return sval_.compare("with") == 0;
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		return sval_.compare("with") == 0;
+	}
+	return false;
 }
 
 void QueryLexer::MatchWithKeyword() {
@@ -256,11 +258,11 @@ void QueryLexer::MatchWithKeyword() {
 
 
 bool QueryLexer::HasAndKeyword() {
-    if (this->tokenizer_->GetToken().type_ == TokenType::kName) {
-        std::string sval_ = this->tokenizer_->GetTokenSval().value();
-        return sval_.compare("and") == 0;
-    }
-    return false;
+	if (IsCurrentTokenOfType(TokenType::kName)) {
+		std::string sval_ = this->tokenizer_->GetTokenSval().value();
+		return sval_.compare("and") == 0;
+	}
+	return false;
 }
 
 void QueryLexer::MatchAndKeyword() {
@@ -270,11 +272,11 @@ void QueryLexer::MatchAndKeyword() {
 
 
 bool QueryLexer::HasBooleanKeyword() {
-    if (this->tokenizer_->GetToken().type_ != TokenType::kName) {
-        return false;
-    }
-    std::string sval_ = tokenizer_->GetTokenSval().value();
-    return sval_.compare("BOOLEAN") == 0;
+	if (!IsCurrentTokenOfType(TokenType::kName)) {
+		return false;
+	}
+	std::string sval_ = tokenizer_->GetTokenSval().value();
+	return sval_.compare("BOOLEAN") == 0;
 }
 
 void QueryLexer::MatchBooleanKeyword() {
@@ -284,7 +286,7 @@ void QueryLexer::MatchBooleanKeyword() {
 
 
 bool QueryLexer::HasMoreTokens() {
-    return this->tokenizer_->GetToken().type_ != TokenType::kParseEnd;
+	return !IsCurrentTokenOfType(TokenType::kParseEnd);
 }
 
 bool QueryLexer::HasSuchThatKeywords() {
@@ -326,3 +328,7 @@ std::string QueryLexer::PeekNextToken(int number_tokens_) {
     return this->tokenizer_->PeekNextToken(number_tokens_);
 }
 
+bool QueryLexer::IsCurrentTokenOfType(TokenType type) {
+	Token& token = this->tokenizer_->GetToken();
+	return token.GetType() == type;
+}
