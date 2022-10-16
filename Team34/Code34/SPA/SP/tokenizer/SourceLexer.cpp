@@ -25,17 +25,6 @@ std::shared_ptr<vector<SourceToken>> SourceLexer::GetAllTokens() {
     return results;
 }
 
-const std::map<std::string, SourceTokenType> SourceLexer::keywords_ = {
-    {"procedure", SourceTokenType::kProcedure},
-    {"read", SourceTokenType::kRead},
-    {"print", SourceTokenType::kPrint},
-    {"call", SourceTokenType::kCall},
-    {"while", SourceTokenType::kWhile},
-    {"if", SourceTokenType::kIf},
-    {"then", SourceTokenType::kThen},
-    {"else", SourceTokenType::kElse},
-};
-
 const std::map<std::string, SourceTokenType> SourceLexer::allowed_tokens_ = {
     // Operators
     {"=", SourceTokenType::kEqual},
@@ -145,19 +134,10 @@ bool SourceLexer::IsMultiTokenStarter(Token& token) {
     return multi_char_tokens_starter_.find(token.GetStringValue()) != multi_char_tokens_starter_.end();
 }
 
-bool SourceLexer::IsKeyword(Token& token) {
-    bool is_identifier = token.GetType() == TokenType::kName;
-    bool matches_keyword = keywords_.find(token.GetStringValue()) != keywords_.end();
-    return is_identifier && matches_keyword;
-}
-
 bool SourceLexer::IsValidToken(const string& literal_value) {
     return allowed_tokens_.find(literal_value) != allowed_tokens_.end();
 }
 
-SourceTokenType SourceLexer::GetKeywordType(const string& literal_value) {
-    return keywords_.at(literal_value);
-}
 SourceTokenType SourceLexer::GetValidTokenType(const string& literal_value) {
     return allowed_tokens_.at(literal_value);
 }

@@ -8,8 +8,19 @@
 
 class Tokenizer
 {
-private:
+public:
+    ~Tokenizer();
 
+    void FeedLine(const std::string& string);
+    bool HasNextToken();
+    void NextToken();
+    std::string PeekNextToken(int number_tokens_);
+
+    Token GetToken();
+    std::optional<std::string> GetTokenSval();
+    std::optional<int> Tokenizer::GetTokenIval();
+
+private:
     std::optional<int> ival = {};
     std::optional<std::string> sval = {};
 
@@ -19,24 +30,11 @@ private:
 
     Token current_token = Token("", TokenType::kParseStart);
 
+    void MoveToNextToken(int* current_index_);
     void ConsumeAlphanumericToken(int* current_index_);
     void ConsumeIntegerToken(int* current_index_);
     void ConsumeEndOfParsingToken();
     void ConsumeSpecialCharacter();
     void SkipIgnoredChars(int* current_index_);
     bool IsIgnoredChar(char);
-public:
-    ~Tokenizer();
-
-    void FeedLine(const std::string& string);
-    void NextToken();
-    void MoveToNextToken(int* current_index_);
-    bool HasNextToken();
-    std::string PeekNextToken(int number_tokens_);
-
-    Token GetToken();
-
-    std::optional<std::string> GetTokenSval();
-
-    std::optional<int> Tokenizer::GetTokenIval();
 };
