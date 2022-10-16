@@ -40,6 +40,7 @@ using std::pair;
 using std::shared_ptr;
 using std::string;
 using std::unordered_map;
+using std::unordered_multimap;
 using std::unordered_set;
 using std::vector;
 
@@ -357,7 +358,7 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     }
 
     if (stmt_set != nullptr) {
-        str_set = IntSetToStrSet(stmt_set);
+        str_set = StmtSetToStrSet(stmt_set);
     }
 
     string syn = ref_ptr->GetName();
@@ -472,7 +473,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByVar(StmtVarRel& rel) {
         set = pkb_ptr_->GetModifiesStmtNumByVar(var_name, stmt_type);
     }
 
-    return IntSetToStrSet(set);
+    return StmtSetToStrSet(set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(
@@ -488,7 +489,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetStmtByWildcard(
         stmt_set = pkb_ptr_->GetAllModifiesStatements(stmt_type);
     }
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(
@@ -506,7 +507,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(
         table = FilterStmtTableByLhsType(table, lhs_stmt_type);
     }
 
-    return IntStrToStrStrTable(table);
+    return StmtNameTableToStrStrTable(table);
 }
 
 bool DataRetriever::CheckPVRel(ProcVarRel& rel) {
@@ -869,7 +870,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(
     }
     */
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(
@@ -897,7 +898,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByWildcard(
     }
     */
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(
@@ -938,7 +939,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByRhsStmt(
     }
     */
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(
@@ -966,7 +967,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(
     }
     */
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(
@@ -1006,7 +1007,7 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(
     */
     table = FilterStmtTableByTypes(table, lhs_stmt_type, rhs_stmt_type);
 
-    return IntIntToStrStrTable(table);
+    return StmtStmtTableToStrStrTable(table);
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
@@ -1077,7 +1078,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByVar(
         stmt_set = pkb_ptr_->FilterByAssignPatternMatch(var_name, expr_spec_ptr);
     }
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
@@ -1092,7 +1093,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetAssignPatternStmtByWildcard(
         stmt_set = pkb_ptr_->FilterByAssignPatternMatch(expr_spec_ptr);
     }
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(
@@ -1101,7 +1102,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllAssignPattern(
     shared_ptr<vector<pair<StmtNum, Variable>>> stmt_var_table =
         pkb_ptr_->GetAssignPatternMatch(expr_spec_ptr);
 
-    return IntStrToStrStrTable(stmt_var_table);
+    return StmtNameTableToStrStrTable(stmt_var_table);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByVar(
@@ -1110,7 +1111,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByVar(
     shared_ptr<unordered_set<StmtNum>> stmt_set =
         pkb_ptr_->GetAllIfPatternStatmentsFromVar(var_name);
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByWildcard(
@@ -1118,7 +1119,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetIfPatternStmtByWildcard(
     shared_ptr<unordered_set<StmtNum>> stmt_set =
         pkb_ptr_->GetAllIfPatternStatements();
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllIfPattern(
@@ -1126,7 +1127,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllIfPattern(
     shared_ptr<vector<pair<StmtNum, Variable>>> table =
         pkb_ptr_->GetAllIfPatterns();
 
-    return IntStrToStrStrTable(table);
+    return StmtNameTableToStrStrTable(table);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(
@@ -1135,7 +1136,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByVar(
     shared_ptr<unordered_set<StmtNum>> stmt_set =
         pkb_ptr_->GetAllWhilePatternStatmentsFromVar(var_name);
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByWildcard(
@@ -1143,7 +1144,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetWhilePatternStmtByWildcard(
     shared_ptr<unordered_set<StmtNum>> stmt_set =
         pkb_ptr_->GetAllWhilePatternStatements();
 
-    return IntSetToStrSet(stmt_set);
+    return StmtSetToStrSet(stmt_set);
 }
 
 shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(
@@ -1151,7 +1152,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWhilePattern(
     shared_ptr<vector<pair<StmtNum, Variable>>> table =
         pkb_ptr_->GetAllWhilePatterns();
 
-    return IntStrToStrStrTable(table);
+    return StmtNameTableToStrStrTable(table);
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
@@ -1191,7 +1192,7 @@ DataRetriever::GetWithClauseBySingleAttrTypeRefType(RefType syn_ref_type) {
     }
 
     if (stmt_set != nullptr) {
-        str_set = IntSetToStrSet(stmt_set);
+        str_set = StmtSetToStrSet(stmt_set);
     }
     return str_set;
 }
@@ -1232,7 +1233,7 @@ DataRetriever::GetWithClauseByMultipleAttrTypeRefType(RefType syn_ref_type,
     }
 
     if (stmt_set != nullptr) {
-        str_set = IntSetToStrSet(stmt_set);
+        str_set = StmtSetToStrSet(stmt_set);
     }
     if (need_filter) {
         str_set = FilterSetByValue(str_set, pivot_val);
@@ -1265,22 +1266,24 @@ DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     With& with) {
 
+    auto lhs_ref_type = with.LhsRefType();
+    auto rhs_ref_type = with.RhsRefType();
     shared_ptr<unordered_set<string>> set1{ nullptr };
     shared_ptr<vector<pair<string, string>>> table1{ nullptr };
     if (with.IsLhsAttrTypeDefault()) {
-        set1 = GetWithClauseBySingleAttrTypeRefType(with.LhsRefType());
+        set1 = GetWithClauseBySingleAttrTypeRefType(lhs_ref_type);
     }
     else {
-        // plug in get table
+        table1 = GetWithClauseAttrPairs(lhs_ref_type);
     }
 
     shared_ptr<unordered_set<string>> set2{ nullptr };
     shared_ptr<vector<pair<string, string>>> table2{ nullptr };
     if (with.IsRhsAttrTypeDefault()) {
-        set2 = GetWithClauseBySingleAttrTypeRefType(with.RhsRefType());
+        set2 = GetWithClauseBySingleAttrTypeRefType(rhs_ref_type);
     }
     else {
-        // plug in get table
+        table2 = GetWithClauseAttrPairs(rhs_ref_type);
     }
 
     auto joined_table = make_shared<vector<pair<string, string>>>();
@@ -1290,14 +1293,39 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllWithClause(
     else if (set1 != nullptr && table2 != nullptr) {
         joined_table = JoinWithClauseSetAndTable(set1, table2);
     }
-    else if (table1 != nullptr && set1 != nullptr) {
-        joined_table = JoinWithClauseSetAndTable(set2, table1);
+    else if (table1 != nullptr && set2 != nullptr) {
+        joined_table = JoinWithClauseSetAndTable(table1, set2);
     }
     else if (table1 != nullptr && table2 != nullptr) {
         joined_table = JoinWithClauseTables(table1, table2);
     }
 
     return joined_table;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::GetWithClauseAttrPairs(RefType syn_ref_type) {
+
+    shared_ptr<vector<pair<shared_ptr<StmtNum>, shared_ptr<Procedure>>>> stmt_proc_table{ nullptr };
+    shared_ptr<vector<pair<shared_ptr<StmtNum>, shared_ptr<Variable>>>> stmt_var_table{ nullptr };
+    if (syn_ref_type == RefType::kCallRef) {
+        stmt_proc_table = pkb_ptr_->GetAllCallsStatementProcedurePairs();
+    }
+    else if (syn_ref_type == RefType::kReadRef) {
+        stmt_var_table = pkb_ptr_->GetAllReadStatementVariablePairs();
+    }
+    else if (syn_ref_type == RefType::kPrintRef) {
+        stmt_var_table = pkb_ptr_->GetAllPrintStatementVariablePairs();
+    }
+
+    auto res_table = make_shared<vector<pair<string, string>>>();
+    if (stmt_proc_table != nullptr) {
+        res_table = StmtptrNameptrTableToStrStrTable(stmt_proc_table);
+    }
+    else {
+        res_table = StmtptrNameptrTableToStrStrTable(stmt_var_table);
+    }
+
+    return res_table;
 }
 
 std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1, std::shared_ptr<std::unordered_set<std::string>> set2) {
@@ -1321,7 +1349,18 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, join_value] : *table2) {
         if (set1->find(join_value) != set1->end()) {
-            joined_table->push_back(make_pair(default_value, default_value));
+            joined_table->push_back(make_pair(join_value, default_value));
+        }
+    }
+
+    return joined_table;
+}
+
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::unordered_set<std::string>> set2) {
+    auto joined_table = make_shared<vector<pair<string, string>>>();
+    for (auto& [default_value, join_value] : *table1) {
+        if (set2->find(join_value) != set2->end()) {
+            joined_table->push_back(make_pair(default_value, join_value));
         }
     }
 
@@ -1329,15 +1368,16 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
 }
 
 std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseTables(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
-    unordered_set<string> key_set;
+    unordered_multimap<string, string> key_mulmap;
     for (auto& [val, key] : *table1) {
-        key_set.insert(key);
+        key_mulmap.insert({ key,val });
     }
 
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, key_value] : *table2) {
-        if (key_set.find(key_value) != key_set.end()) {
-            joined_table->push_back(make_pair(default_value, default_value));
+        if (auto& entry_itrs = key_mulmap.equal_range(key_value); entry_itrs.first != entry_itrs.second) {
+            std::for_each(entry_itrs.first, entry_itrs.second, 
+                [&](auto& entry) {joined_table->push_back(make_pair(entry.second, default_value)); });
         }
     }
 
@@ -1356,7 +1396,7 @@ std::shared_ptr<Variable> DataRetriever::MapPrintStmtNumToVarName(std::string& s
     return pkb_ptr_->GetPrintVariableFromStatement(std::stoi(stmt_num_str));
 }
 
-shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(
+shared_ptr<unordered_set<string>> DataRetriever::StmtSetToStrSet(
     shared_ptr<unordered_set<int>> set) {
     auto res = make_shared<unordered_set<string>>();
     for (auto iter = set->begin(); iter != set->end(); ++iter) {
@@ -1367,7 +1407,7 @@ shared_ptr<unordered_set<string>> DataRetriever::IntSetToStrSet(
 }
 
 std::shared_ptr<vector<pair<string, string>>>
-DataRetriever::IntStrToStrStrTable(
+DataRetriever::StmtNameTableToStrStrTable(
     std::shared_ptr<vector<pair<int, string>>> table) {
     auto res = make_shared<vector<pair<string, string>>>();
     for (auto iter = table->begin(); iter != table->end(); ++iter) {
@@ -1378,8 +1418,21 @@ DataRetriever::IntStrToStrStrTable(
     return res;
 }
 
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+DataRetriever::StmtptrNameptrTableToStrStrTable(
+    std::shared_ptr<std::vector<std::pair<std::shared_ptr<StmtNum>, std::shared_ptr<std::string>>>> table) {
+
+    auto res = make_shared<vector<pair<string, string>>>();
+    for (auto iter = table->begin(); iter != table->end(); ++iter) {
+        auto& [k1, k2] = *iter;
+        res->push_back(std::make_pair(std::to_string(*k1), *k2));
+    }
+
+    return res;
+}
+
 std::shared_ptr<vector<pair<string, string>>>
-DataRetriever::IntIntToStrStrTable(
+DataRetriever::StmtStmtTableToStrStrTable(
     std::shared_ptr<vector<pair<int, int>>> table) {
     auto res = make_shared<vector<pair<string, string>>>();
     for (auto iter = table->begin(); iter != table->end(); ++iter) {
