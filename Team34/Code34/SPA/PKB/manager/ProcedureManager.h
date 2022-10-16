@@ -7,6 +7,5 @@
 #include "../store/Entity/EntityStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ProcedureManager: public EntityStore<Procedure>
-{
+class ProcedureManager: public EntityStore<Procedure> {
 };

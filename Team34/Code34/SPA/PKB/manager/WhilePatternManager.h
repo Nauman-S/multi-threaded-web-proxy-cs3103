@@ -2,6 +2,5 @@
 
 #include "../store/Pattern/PatternStore.h"
 
-class WhilePatternManager : public PatternStore
-{
+class WhilePatternManager : public PatternStore {
 };

@@ -11,8 +11,7 @@
 #include "../../Utils/type/TypeDef.h"
 #include "../../Utils/type/RefType.h"
 
-class NextManager
-{
+class NextManager {
 public:
 	// Next Relation Methods
 	void SetNext(StmtNum prev, StmtNum next);

@@ -10,8 +10,7 @@
 #include "../store/OneToManyRelation/ParentRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ParentManager
-{
+class ParentManager {
 public:
 	// Parent Relation methods
 	void SetParent(StmtNum parent, StmtNum child);

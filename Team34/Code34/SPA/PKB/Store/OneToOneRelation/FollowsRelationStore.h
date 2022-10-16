@@ -3,8 +3,7 @@
 #include "OneToOneTransitiveRelationStore.h"
 #include "../../../Utils/type/TypeDef.h"
 
-class FollowsRelationStore : public OneToOneTransitiveRelationStore<StmtNum>
-{
+class FollowsRelationStore : public OneToOneTransitiveRelationStore<StmtNum> {
 public:
 	void SetTransitiveRelation(StmtNum left, StmtNum right);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllTransitiveRelations();

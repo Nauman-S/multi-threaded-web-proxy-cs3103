@@ -3,8 +3,7 @@
 #include "ManyToManyTransitiveRelationStore.h"
 #include "../../../Utils/type/TypeDef.h"
 
-class NextRelationStore : public ManyToManyTransitiveRelationStore<StmtNum>
-{
+class NextRelationStore : public ManyToManyTransitiveRelationStore<StmtNum> {
 public:
 	void SetCodeBlock(StmtNum start, StmtNum end);
 	void SetOptimisedCFGEdge(StmtNum prev_start, StmtNum next_start);

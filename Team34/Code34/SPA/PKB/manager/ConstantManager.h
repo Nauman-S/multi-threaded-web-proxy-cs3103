@@ -7,6 +7,5 @@
 #include "../store/Entity/EntityStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ConstantManager : public EntityStore<Constant>
-{
+class ConstantManager : public EntityStore<Constant> {
 };

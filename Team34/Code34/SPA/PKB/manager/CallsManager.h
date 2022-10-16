@@ -10,8 +10,7 @@
 #include "../store/ManyToManyRelation/CallsRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class CallsManager
-{
+class CallsManager {
 public:
 	// Calls Relation methods
 	void SetCalls(Procedure caller, Procedure callee);

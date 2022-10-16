@@ -7,6 +7,5 @@
 #include "../store/Entity/EntityStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class VariableManager : public EntityStore<Variable>
-{
+class VariableManager : public EntityStore<Variable> {
 };

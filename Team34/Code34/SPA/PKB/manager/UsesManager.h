@@ -7,8 +7,7 @@
 #include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class UsesManager
-{
+class UsesManager {
 public:
 	void SetUses(StmtNum stmt_num, Variable var);
 	void SetUses(Procedure proc_name, Variable var);
