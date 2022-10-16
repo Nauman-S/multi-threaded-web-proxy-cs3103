@@ -2,8 +2,10 @@
 
 void PatternWithExprStore::AddPattern(StmtNum stmt_num, Expr expr)
 {
-	assert(statement_map_.find(stmt_num) == statement_map_.end());
-	statement_map_[stmt_num] = std::make_shared<Expr>(expr);
+	if (statement_map_.find(stmt_num) == statement_map_.end())
+	{
+		statement_map_[stmt_num] = std::make_shared<Expr>(expr);
+	}	
 }
 
 bool PatternWithExprStore::IsPatternMatch(StmtNum stmt_num, std::shared_ptr<ExprSpec> expr)
