@@ -25,23 +25,14 @@ void Tokenizer::FeedLine(const std::string& string) {
     }
 }
 
-Token Tokenizer::GetToken() {
-    return this->current_token;
-}
-
 bool Tokenizer::HasNextToken() {
     this->SkipIgnoredChars(&this->current_index);
     return this->current_index < this->last_index;
 }
 
-std::optional<std::string> Tokenizer::GetTokenSval() {
-    return this->sval;
+void Tokenizer::NextToken() {
+    MoveToNextToken(&this->current_index);
 }
-
-std::optional<int> Tokenizer::GetTokenIval() {
-    return this->ival;
-}
-
 
 std::string Tokenizer::PeekNextToken(int number_tokens_) {
     Token current_token_store_ = this->current_token;
@@ -56,6 +47,18 @@ std::string Tokenizer::PeekNextToken(int number_tokens_) {
     this->ival = current_ival_store_;
     this->sval = current_sval_store_;
     return peeked_token_;
+}
+
+Token Tokenizer::GetToken() {
+    return this->current_token;
+}
+
+std::optional<std::string> Tokenizer::GetTokenSval() {
+    return this->sval;
+}
+
+std::optional<int> Tokenizer::GetTokenIval() {
+    return this->ival;
 }
 
 void Tokenizer::MoveToNextToken(int* current_index_) {
@@ -78,12 +81,10 @@ void Tokenizer::MoveToNextToken(int* current_index_) {
         ConsumeSpecialCharacter();
     }
     else {
-        throw InvalidTokenException(current_char);
+        std::string val;
+        val.push_back(current_char);
+        throw InvalidTokenException(val);
     }
-}
-
-void Tokenizer::NextToken() {
-    MoveToNextToken(&this->current_index);
 }
 
 void Tokenizer::ConsumeAlphanumericToken(int* current_index_) {
