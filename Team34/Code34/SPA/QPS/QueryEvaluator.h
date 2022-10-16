@@ -9,7 +9,6 @@
 #include "Query.h"
 #include "clause_grouper/ClauseGrouper.h"
 #include "pattern/Pattern.h"
-#include "query_result/QueryResult.h"
 #include "query_result/Table.h"
 #include "reference/Ref.h"
 #include "relation/Rel.h"
