@@ -7,8 +7,7 @@
 #include "../../Utils/type/TypeDef.h"
 #include "../../Utils/type/RefType.h"
 
-class AffectsManager
-{
+class AffectsManager {
 public:
 	// Affects Relation methods
 	bool CheckAffects(StmtNum cause, StmtNum effect);

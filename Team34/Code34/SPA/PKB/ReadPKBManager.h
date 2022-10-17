@@ -127,6 +127,7 @@ public:
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
+
 	// APIs related to Affects relation
 	virtual bool CheckAffects(StmtNum cause, StmtNum effect);
 	virtual bool IsAffectsStoreEmpty();
@@ -141,11 +142,6 @@ public:
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmtsFromStmt(StmtNum stmt);
 	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmtsFromStmt(StmtNum stmt);
 	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsTRelations();
-
-	// APIs related to Assign Pattern relation
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(Variable var, std::shared_ptr<ExprSpec> expr);
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
 
     // APIs related to Assign Pattern relation
     virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr);
