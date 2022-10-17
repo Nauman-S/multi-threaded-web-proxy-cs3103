@@ -11,8 +11,7 @@ using std::stack;
 using std::vector;
 
 
-std::shared_ptr<std::vector<std::string>> PostfixConverter::Split(std::string& str, char delim)
-{
+std::shared_ptr<std::vector<std::string>> PostfixConverter::Split(std::string& str, char delim) {
 	std::istringstream iss(str);
 	std::string token;
 	auto res = std::make_shared<std::vector<std::string>>();
@@ -23,8 +22,7 @@ std::shared_ptr<std::vector<std::string>> PostfixConverter::Split(std::string& s
 	return res;
 }
 
-std::string PostfixConverter::InfixToPostfix(std::string& infix)
-{
+std::string PostfixConverter::InfixToPostfix(std::string& infix) {
 	if (infix == "") {
 		return "";
 	}
