@@ -14,120 +14,120 @@
 
 #include "../../Utils/type/RefType.h"
 
-EntityExtractor::EntityExtractor(std::shared_ptr<WritePKBManager> manager): NodeExtractor(manager) {}
+EntityExtractor::EntityExtractor(std::shared_ptr<WritePKBManager> manager) : NodeExtractor(manager) {}
 
 void EntityExtractor::ExtractProgramNode(const ProgramNode& program) {
-	std::vector<std::shared_ptr<ProcedureASTNode>> children = program.GetChildren();
-	for (shared_ptr<ProcedureASTNode> child : children) {
-		child->Extract(*this);
-	}
+    std::vector<std::shared_ptr<ProcedureASTNode>> children = program.GetChildren();
+    for (shared_ptr<ProcedureASTNode> child : children) {
+        child->Extract(*this);
+    }
 }
 
 void EntityExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
-	this->write_manager_->AddProcedure(proc.GetProc());
+    this->write_manager_->AddProcedure(proc.GetProc());
 
-	std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
-	for (std::shared_ptr<StatementASTNode> child : children) {
-		child->Extract(*this);
-	}
+    std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
+    for (std::shared_ptr<StatementASTNode> child : children) {
+        child->Extract(*this);
+    }
 }
 
 void EntityExtractor::ExtractAssignmentNode(const AssignStatementASTNode& assign) {
-	Variable lhs = assign.GetLeft();
-	this->write_manager_->AddVariable(lhs);
+    Variable lhs = assign.GetLeft();
+    this->write_manager_->AddVariable(lhs);
 
-	std::vector<Variable> rhs = assign.GetRightVars();
-	for (Variable var : rhs) {
-		this->write_manager_->AddVariable(var);
-	}
-	std::vector<Constant> consts = assign.GetRightCons();
-	for (Constant con : consts) {
-		this->write_manager_->AddConstant(con);
-	}
+    std::vector<Variable> rhs = assign.GetRightVars();
+    for (Variable var : rhs) {
+        this->write_manager_->AddVariable(var);
+    }
+    std::vector<Constant> consts = assign.GetRightCons();
+    for (Constant con : consts) {
+        this->write_manager_->AddConstant(con);
+    }
 
-	StmtNum line_no = assign.GetLineIndex();
+    StmtNum line_no = assign.GetLineIndex();
 
-	std::string infix = assign.GetInfix();
-	Expr expr = Expr(infix, this->postfix_converter_.InfixToPostfix(infix));
-	this->write_manager_->AddAssignPattern(line_no, expr);
+    std::string infix = assign.GetInfix();
+    Expr expr = Expr(infix, this->postfix_converter_.InfixToPostfix(infix));
+    this->write_manager_->AddAssignPattern(line_no, expr);
 
-	this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
+    this->write_manager_->AddStatement(line_no, RefType::kAssignRef);
 }
 
 void EntityExtractor::ExtractCallNode(const CallStatementASTNode& call) {
-	StmtNum line_no = call.GetLineIndex();
-	Procedure called_proc = call.GetProcedure();
-	this->write_manager_->AddCallsStatement(called_proc, line_no);
-	this->write_manager_->AddStatement(line_no, RefType::kCallRef);
+    StmtNum line_no = call.GetLineIndex();
+    Procedure called_proc = call.GetProcedure();
+    this->write_manager_->AddCallsStatement(called_proc, line_no);
+    this->write_manager_->AddStatement(line_no, RefType::kCallRef);
 }
 
 void EntityExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {
-	Variable var = print.GetVariable();
-	this->write_manager_->AddVariable(var);
+    Variable var = print.GetVariable();
+    this->write_manager_->AddVariable(var);
 
-	StmtNum line_no = print.GetLineIndex();
-	this->write_manager_->AddPrintStatement(var, line_no);
-	this->write_manager_->AddStatement(line_no, RefType::kPrintRef);
+    StmtNum line_no = print.GetLineIndex();
+    this->write_manager_->AddPrintStatement(var, line_no);
+    this->write_manager_->AddStatement(line_no, RefType::kPrintRef);
 }
 
 void EntityExtractor::ExtractReadNode(const ReadStatementASTNode& read) {
-	Variable var = read.GetReadVariable();
-	this->write_manager_->AddVariable(var);
+    Variable var = read.GetReadVariable();
+    this->write_manager_->AddVariable(var);
 
-	StmtNum line_no = read.GetLineIndex();
-	this->write_manager_->AddReadStatement(var, line_no);
-	this->write_manager_->AddStatement(line_no, RefType::kReadRef);
+    StmtNum line_no = read.GetLineIndex();
+    this->write_manager_->AddReadStatement(var, line_no);
+    this->write_manager_->AddStatement(line_no, RefType::kReadRef);
 }
 
 void EntityExtractor::ExtractIfNode(const IfStatementASTNode& if_stmt) {
-	StmtNum line_no = if_stmt.GetLineIndex();
-	std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
-	// Add variable pattern for if statements
-	std::vector<Variable> vars = cond->GetVariables();
-	for (Variable var : vars) {
-		this->write_manager_->AddIfPattern(line_no, var);
-	}
-	cond->Extract(*this);
+    StmtNum line_no = if_stmt.GetLineIndex();
+    std::shared_ptr<ConditionExpression> cond = if_stmt.GetCondition();
+    // Add variable pattern for if statements
+    std::vector<Variable> vars = cond->GetVariables();
+    for (Variable var : vars) {
+        this->write_manager_->AddIfPattern(line_no, var);
+    }
+    cond->Extract(*this);
 
-	std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
-	for (std::shared_ptr<StatementASTNode> then_child : then_children) {
-		then_child->Extract(*this);
-	}
+    std::vector<std::shared_ptr<StatementASTNode>> then_children = if_stmt.GetIfChildren();
+    for (std::shared_ptr<StatementASTNode> then_child : then_children) {
+        then_child->Extract(*this);
+    }
 
-	std::vector<std::shared_ptr<StatementASTNode>> else_children = if_stmt.GetElseChildren();
-	for (std::shared_ptr<StatementASTNode> else_child : else_children) {
-		else_child->Extract(*this);
-	}
+    std::vector<std::shared_ptr<StatementASTNode>> else_children = if_stmt.GetElseChildren();
+    for (std::shared_ptr<StatementASTNode> else_child : else_children) {
+        else_child->Extract(*this);
+    }
 
-	this->write_manager_->AddStatement(line_no, RefType::kIfRef);
+    this->write_manager_->AddStatement(line_no, RefType::kIfRef);
 }
 
 void EntityExtractor::ExtractWhileNode(const WhileStatementASTNode& while_stmt) {
-	StmtNum line_no = while_stmt.GetLineIndex();
-	std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
-	// Add variable pattern for while statements
-	std::vector<Variable> vars = cond->GetVariables();
-	for (Variable var : vars) {
-		this->write_manager_->AddWhilePattern(line_no, var);
-	}
-	cond->Extract(*this);
+    StmtNum line_no = while_stmt.GetLineIndex();
+    std::shared_ptr<ConditionExpression> cond = while_stmt.GetCondition();
+    // Add variable pattern for while statements
+    std::vector<Variable> vars = cond->GetVariables();
+    for (Variable var : vars) {
+        this->write_manager_->AddWhilePattern(line_no, var);
+    }
+    cond->Extract(*this);
 
-	std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
-	for (std::shared_ptr<StatementASTNode> child : children) {
-		child->Extract(*this);
-	}
+    std::vector<std::shared_ptr<StatementASTNode>> children = while_stmt.GetChildren();
+    for (std::shared_ptr<StatementASTNode> child : children) {
+        child->Extract(*this);
+    }
 
-	this->write_manager_->AddStatement(line_no, RefType::kWhileRef);
+    this->write_manager_->AddStatement(line_no, RefType::kWhileRef);
 }
 
 void EntityExtractor::ExtractConditionExpression(const ConditionExpression& cond) {
-	std::vector<Variable> vars = cond.GetVariables();
-	for (Variable var : vars) {
-		this->write_manager_->AddVariable(var);
-	}
+    std::vector<Variable> vars = cond.GetVariables();
+    for (Variable var : vars) {
+        this->write_manager_->AddVariable(var);
+    }
 
-	std::vector<Constant> consts = cond.GetConstants();
-	for (Constant con : consts) {
-		this->write_manager_->AddConstant(con);
-	}
+    std::vector<Constant> consts = cond.GetConstants();
+    for (Constant con : consts) {
+        this->write_manager_->AddConstant(con);
+    }
 }

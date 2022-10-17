@@ -27,20 +27,20 @@
 */
 class EntityExtractor : public NodeExtractor {
 public:
-	EntityExtractor(std::shared_ptr<WritePKBManager>);
+    EntityExtractor(std::shared_ptr<WritePKBManager>);
 
-	virtual void ExtractProgramNode(const ProgramNode&) override;
-	virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
+    virtual void ExtractProgramNode(const ProgramNode&) override;
+    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-	virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
-	virtual void ExtractCallNode(const CallStatementASTNode&) override;
-	virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
-	virtual void ExtractReadNode(const ReadStatementASTNode&) override;
+    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    virtual void ExtractCallNode(const CallStatementASTNode&) override;
+    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
+    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
 
-	virtual void ExtractIfNode(const IfStatementASTNode&) override;
-	virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
-	virtual void ExtractConditionExpression(const ConditionExpression&) override;
+    virtual void ExtractIfNode(const IfStatementASTNode&) override;
+    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
+    virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
-	PostfixConverter postfix_converter_;
+    PostfixConverter postfix_converter_;
 };

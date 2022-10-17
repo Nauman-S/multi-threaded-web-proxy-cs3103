@@ -20,20 +20,20 @@
 
 class FollowsExtractor : public NodeExtractor {
 public:
-	FollowsExtractor(std::shared_ptr<WritePKBManager>);
+    FollowsExtractor(std::shared_ptr<WritePKBManager>);
 
-	virtual void ExtractProgramNode(const ProgramNode&) override;
-	virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
+    virtual void ExtractProgramNode(const ProgramNode&) override;
+    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-	virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
-	virtual void ExtractCallNode(const CallStatementASTNode&) override;
-	virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
-	virtual void ExtractReadNode(const ReadStatementASTNode&) override;
+    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    virtual void ExtractCallNode(const CallStatementASTNode&) override;
+    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
+    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
 
-	virtual void ExtractIfNode(const IfStatementASTNode&) override;
-	virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
-	virtual void ExtractConditionExpression(const ConditionExpression&) override;
+    virtual void ExtractIfNode(const IfStatementASTNode&) override;
+    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
+    virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
-	void AddFollowsRelation(const std::vector<std::shared_ptr<StatementASTNode>>);
+    void AddFollowsRelation(const std::vector<std::shared_ptr<StatementASTNode>>);
 };

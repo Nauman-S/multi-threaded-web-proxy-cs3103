@@ -8,12 +8,12 @@ using namespace std;
 
 class ReadStatementASTNode : public StatementASTNode {
 public:
-	void SetVariable(Variable&);
-	virtual Variable GetReadVariable() const;
+    void SetVariable(Variable&);
+    virtual Variable GetReadVariable() const;
 
-	virtual void Extract(NodeExtractor&) override;
-	virtual string Stringify() override;
+    virtual void Extract(NodeExtractor&) override;
+    virtual string Stringify() override;
 
 protected:
-	Variable var;
+    Variable var;
 };

@@ -7,8 +7,8 @@
 
 using namespace std;
 
-class ASTNode: public Extractable {
+class ASTNode : public Extractable {
 public:
-	virtual void Extract(NodeExtractor&) = 0;
-	virtual string Stringify() = 0;
+    virtual void Extract(NodeExtractor&) = 0;
+    virtual string Stringify() = 0;
 };
