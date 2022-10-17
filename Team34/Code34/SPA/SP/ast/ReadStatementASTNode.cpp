@@ -1,21 +1,23 @@
 #include "ReadStatementASTNode.h"
+
 #include <iostream>
+
 using namespace std;
 
 void ReadStatementASTNode::SetVariable(Variable& v) {
-	var = v;
+    var = v;
 }
 
 Variable ReadStatementASTNode::GetReadVariable() const {
-	return var;
+    return var;
 }
 
 void ReadStatementASTNode::Extract(NodeExtractor& extractor) {
-	extractor.ExtractReadNode(*this);
+    extractor.ExtractReadNode(*this);
 }
 
 string ReadStatementASTNode::Stringify() {
-	string tp = "Read";
-	string var_s = var;
-	return tp + var_s;
+    string tp = "Read";
+    string var_s = var;
+    return tp + var_s;
 }

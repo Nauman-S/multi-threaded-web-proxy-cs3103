@@ -14,7 +14,7 @@ public:
     void SetTokens(shared_ptr<vector<SourceToken>>);
     bool Validate();
 
- private:
+private:
     int idx = 0;
     vector<string> procedure_names;
     vector<string> variable_names;
