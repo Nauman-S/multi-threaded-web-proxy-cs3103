@@ -128,20 +128,20 @@ public:
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
 
-	// APIs related to Affects relation
-	virtual bool CheckAffects(StmtNum cause, StmtNum effect);
-	virtual bool IsAffectsStoreEmpty();
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetEffectStmtsFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCauseStmtsFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmts();
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmts();
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsRelations();
+    // APIs related to Affects relation
+    virtual bool CheckAffects(StmtNum cause, StmtNum effect);
+    virtual bool IsAffectsStoreEmpty();
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetEffectStmtsFromStmt(StmtNum stmt);
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCauseStmtsFromStmt(StmtNum stmt);
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmts();
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmts();
+    virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsRelations();
 
-	// APIs related to Affects* relation
-	virtual bool CheckAffectsT(StmtNum cause, StmtNum effect);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmtsFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmtsFromStmt(StmtNum stmt);
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsTRelations();
+    // APIs related to Affects* relation
+    virtual bool CheckAffectsT(StmtNum cause, StmtNum effect);
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmtsFromStmt(StmtNum stmt);
+    virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmtsFromStmt(StmtNum stmt);
+    virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsTRelations();
 
     // APIs related to Assign Pattern relation
     virtual std::shared_ptr<std::unordered_set<StmtNum>> FilterByAssignPatternMatch(std::shared_ptr<ExprSpec> expr);

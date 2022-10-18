@@ -436,60 +436,49 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAll
 }
 
 // APIs related to Affects relation
-bool ReadPKBManager::CheckAffects(StmtNum cause, StmtNum effect)
-{
-	return pkb.affects_manager_.CheckAffects(cause, effect);
+bool ReadPKBManager::CheckAffects(StmtNum cause, StmtNum effect) {
+    return pkb.affects_manager_.CheckAffects(cause, effect);
 }
 
-bool ReadPKBManager::IsAffectsStoreEmpty()
-{
-	return pkb.affects_manager_.IsEmpty();
+bool ReadPKBManager::IsAffectsStoreEmpty() {
+    return pkb.affects_manager_.IsEmpty();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt)
-{
-	return pkb.affects_manager_.GetEffectStmtsFromStmt(stmt);
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.GetEffectStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt)
-{
-	return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts()
-{
-	return pkb.affects_manager_.GetAllEffectStmts();
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts() {
+    return pkb.affects_manager_.GetAllEffectStmts();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts()
-{
-	return pkb.affects_manager_.GetAllCauseStmts();
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts() {
+    return pkb.affects_manager_.GetAllCauseStmts();
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsRelations()
-{
-	return pkb.affects_manager_.GetAllAffectsRelations();
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsRelations() {
+    return pkb.affects_manager_.GetAllAffectsRelations();
 }
 
 // APIs related to Affects* relation
-bool ReadPKBManager::CheckAffectsT(StmtNum cause, StmtNum effect)
-{
-	return pkb.affects_manager_.CheckAffectsT(cause, effect);
+bool ReadPKBManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
+    return pkb.affects_manager_.CheckAffectsT(cause, effect);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt)
-{
-	return pkb.affects_manager_.GetAllEffectStmtsFromStmt(stmt);
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.GetAllEffectStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt)
-{
-	return pkb.affects_manager_.GetAllCauseStmtsFromStmt(stmt);
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.GetAllCauseStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsTRelations()
-{
-	return pkb.affects_manager_.GetAllAffectsTRelations();
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllAffectsTRelations() {
+    return pkb.affects_manager_.GetAllAffectsTRelations();
 }
 
 // Utility functions
