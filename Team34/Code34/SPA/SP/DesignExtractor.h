@@ -7,6 +7,6 @@
 
 class DesignExtractor {
 public:
-	void PopulatePKB(std::shared_ptr<ProgramNode>);
+    void PopulatePKB(std::shared_ptr<ProgramNode>);
 };
 

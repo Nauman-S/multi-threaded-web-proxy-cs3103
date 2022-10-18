@@ -5,11 +5,10 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/OneToOneTransitiveRelationStore.h"
+#include "../store/OneToOneRelation/FollowsRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class FollowsManager
-{
+class FollowsManager {
 public:
 	// Follows Relation methods
 	void SetFollows(StmtNum left, StmtNum right);
@@ -27,6 +26,8 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations();
+
+	void Clear();
 private:
-	OneToOneTransitiveRelationStore<StmtNum> follows_store_;
+	FollowsRelationStore follows_store_;
 };

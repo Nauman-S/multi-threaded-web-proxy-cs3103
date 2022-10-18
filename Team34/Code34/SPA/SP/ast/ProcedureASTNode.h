@@ -10,17 +10,16 @@
 
 class ProcedureASTNode : public ASTNode {
 public:
-	Procedure GetProc();
+    Procedure GetProc() const;
+    std::vector<std::shared_ptr<StatementASTNode>> GetChildren() const;
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetChildren();
+    void SetProc(Procedure&);
+    void SetChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
 
-	void SetProc(Procedure&);
-
-	void SetChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
-
-	virtual void Extract(NodeExtractor&) override;
+    virtual void Extract(NodeExtractor&) override;
+    virtual string Stringify() override;
 
 protected:
-	Procedure proc;
-	std::vector<std::shared_ptr<StatementASTNode>> children;
+    Procedure proc;
+    std::vector<std::shared_ptr<StatementASTNode>> children;
 };

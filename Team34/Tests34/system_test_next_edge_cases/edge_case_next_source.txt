@@ -1,0 +1,78 @@
+procedure NoNesting {
+    x = 1;
+    read a;
+    print y;
+    x = 3 + 5;
+}
+
+procedure SingleNesting {
+    if (x == 2) then {
+        y = 1;
+        x = 5;
+    } else {
+        z = 2;
+    }
+    x = 1;
+    x = 3 + 5;
+    while (x == 2) {
+        x = 5;
+        x = 2;
+        z = 1;
+    }
+}
+
+procedure IfInsideWhile {
+    x = 2;
+    while (x == 1) {
+        if (x == 2) then {
+            x = 3;
+        } else {
+            x = 5;
+        }
+    }
+    x = 5;
+}
+
+procedure WhileInsideIf {
+    x = 5;
+    if (x == 2) then {
+        x = 5;
+        x = 2;
+        while (x == 3) {
+            x = 5;
+        }
+    } else {
+        while (x == 2) {
+            x = 3;
+        }
+        y = 5;
+    }
+}
+
+procedure DeepNesting {
+    while (x == 1) {
+        if (x == 2) then {
+            x = 3;
+            while (x == 2) {
+                x = 5;
+                if (x == 2) then {
+                    y = 1;
+                    x = 5;
+                } else {
+                    z = 2;
+                }
+            }
+        } else {
+            x = 5;
+            if (x == 2) then {
+                y = 1;
+                x = 5;
+            } else {
+                z = 2;
+            }
+            while (x == 2) {
+                x = 1;
+            }
+        }
+    }
+}

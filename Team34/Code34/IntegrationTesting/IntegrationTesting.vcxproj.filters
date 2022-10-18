@@ -26,10 +26,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestFrontEnd.cpp">
+    <ClCompile Include="SP_PKB\TestProgramNodeExtraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SP_PKB\TestProgramNodeExtraction.cpp">
+    <ClCompile Include="QPS\TestQPSComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

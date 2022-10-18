@@ -5,33 +5,30 @@
 #include <vector>
 #include <memory>
 
-#include "query_result/QueryResult.h"
 #include "query_result/Table.h"
 #include "reference/Ref.h"
+#include "DataRetriever.h"
 
 class ResultExtractor {
 private:
-	std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple_;
-	std::shared_ptr<QueryResult> query_result_;
 	std::shared_ptr<Table> result_table_;
+	std::vector<std::string> select_synonyms_;
+	std::shared_ptr<std::vector<std::shared_ptr<Ref>>> tuple_;
+
 
 public:
-	ResultExtractor(std::shared_ptr<QueryResult> query_result, std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple)
-		: query_result_{ query_result }, select_tuple_{select_tuple} {};
+	ResultExtractor(std::shared_ptr<Table> result_table, std::vector<std::string> select_synonyms,
+		std::shared_ptr<std::vector<std::shared_ptr<Ref>>> tuple)
+		: result_table_{ result_table }, select_synonyms_{ select_synonyms }, tuple_{ tuple } {};
 
-	ResultExtractor(std::shared_ptr<Table> result_table, std::shared_ptr<std::vector<std::shared_ptr<Ref>>> select_tuple)
-		: result_table_{ result_table }, select_tuple_{ select_tuple } {};
+	std::vector<std::string> GetFormattedResult(DataRetriever&);
 
+	std::vector<std::string> GetSingleSynResult(DataRetriever&);
 
-	std::vector<std::string> GetFormattedResult();
+	std::vector<std::string> GetMultiSynResult(DataRetriever&);
 
-	std::vector<std::string> GetSingleSynResult();
+	//std::shared_ptr<std::unordered_set<std::string>> 
 
-	std::vector<std::string> GetMultiSynResult();
-
-	std::shared_ptr<std::unordered_set<std::string>> CombineResult(std::shared_ptr<std::unordered_set<std::string>> result_set1, std::shared_ptr<std::unordered_set<std::string>> result_set2);
-
-	std::vector<std::string> FormatResult(std::shared_ptr<std::unordered_set<std::string>> result_set, RefType ref_type);
-
+	std::vector<std::string> FormatResult(std::shared_ptr<std::unordered_set<std::string>> result_set);
 };
 

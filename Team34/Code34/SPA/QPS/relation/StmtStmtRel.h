@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "Rel.h"
-#include "RelType.h"
+#include "../ClauseType.h"
 #include "../reference/StmtRef.h"
 #include "../reference/ValType.h"
 #include "../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
 class DataRetriever;  // To avoid cyclic include of visitor pattern
+
 
 class StmtStmtRel :
     public Rel
@@ -25,7 +26,7 @@ public:
 
     std::string RhsValue() override;
 
-    RelType GetRelType() override { return RelType::kStmtStmtRel; }
+    ClauseType GetRelType() override { return ClauseType::kStmtStmtRel; }
 
     RefType LhsRefType() override;
 
@@ -35,10 +36,13 @@ public:
 
     std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
 
+    int CountSynonyms() override;
+
+    std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
+
     virtual std::optional<int> LhsValueAsInt();
 
     virtual std::optional<int> RhsValueAsInt();
 
-    
 };
 

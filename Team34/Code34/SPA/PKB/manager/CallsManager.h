@@ -7,11 +7,10 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/ManyToManyTransitiveRelationStore.h"
+#include "../store/ManyToManyRelation/CallsRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class CallsManager
-{
+class CallsManager {
 public:
 	// Calls Relation methods
 	void SetCalls(Procedure caller, Procedure callee);
@@ -29,6 +28,8 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCalleeFromCaller(Procedure caller);
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCallerFromCallee(Procedure callee);
 	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsTRelations();
+
+	void Clear();
 private:
-	ManyToManyTransitiveRelationStore<Procedure> calls_store_;
+	CallsRelationStore calls_store_;
 };

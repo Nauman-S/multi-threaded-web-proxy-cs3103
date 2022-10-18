@@ -3,12 +3,14 @@
 #include "StmtRef.h"
 #include "../../Utils/type/RefType.h"
 
-class PrintRef :
-    public StmtRef
-{
+class DataRetriever;
+
+class PrintRef : public StmtRef {
+public:
     using StmtRef::StmtRef;
 
-public:
     const RefType GetRefType() override { return RefType::kPrintRef; }
+
+    std::string GetAttrValue(DataRetriever& data_retriever, std::string& value) override;
 };
 

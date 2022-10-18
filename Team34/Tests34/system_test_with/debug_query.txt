@@ -1,0 +1,5 @@
+29 - Test 2 synonyms (var.varName = call.procName)
+variable v; call cl;
+Select <cl,v> with cl.procName = v.varName
+9 x, 11 x, 16 x, 21 i
+5000

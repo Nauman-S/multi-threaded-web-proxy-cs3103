@@ -1,33 +1,28 @@
 #pragma once
 
 # include <vector>
+# include <string>
 # include "StatementASTNode.h"
 #include "../../Utils/type/TypeDef.h"
 
 class AssignStatementASTNode : public StatementASTNode {
 public:
-	void SetLeft(Variable&);
+    void SetLeft(Variable&);
+    void SetInfix(string&);
+    void SetRightVars(std::vector<Variable>&);
+    void SetRightCons(std::vector<Constant>&);
 
-	void SetInfix(string&);
+    Variable GetLeft() const;
+    std::string GetInfix() const;
+    std::vector<Variable> GetRightVars() const;
+    std::vector<Constant> GetRightCons() const;
 
-	void SetRightVars(std::vector<Variable>&);
-
-	void SetRightCons(std::vector<Constant>&);
-
-	Variable GetLeft();
-
-	std::string GetInfix();
-
-	std::vector<Variable> GetRightVars();
-
-	std::vector<Constant> GetRightCons();
-
-	virtual void Extract(NodeExtractor&) override;
-
+    virtual void Extract(NodeExtractor&) override;
+    virtual string Stringify() override;
 
 protected:
-	Variable left;
-	std::vector<Variable> right_vars;
-	std::vector<Constant> right_cons;
-	std::string infix;
+    Variable left;
+    std::vector<Variable> right_vars;
+    std::vector<Constant> right_cons;
+    std::string infix;
 };

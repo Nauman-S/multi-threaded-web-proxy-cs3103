@@ -4,6 +4,6 @@
 
 class Extractable {
 public:
-	virtual void Extract(NodeExtractor&) = 0;
+    virtual void Extract(NodeExtractor&) = 0;
 };
 

@@ -1,7 +1,7 @@
 Write-Output "AutoTester Script has begun"
 $autotester_file = "..\Code34\Debug\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
-$port = 8000
+$port = 2333
 
 if ($condition) {
     Write-Output "AutoTester binary is found"
@@ -48,5 +48,5 @@ while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
   taskkill /pid $pidNumber /f
   $foundProcesses = netstat -ano | findstr :$port
 }
-Start-Process "http://localhost:8000"
+Start-Process "http://localhost:2333"
 & python -m http.server $port

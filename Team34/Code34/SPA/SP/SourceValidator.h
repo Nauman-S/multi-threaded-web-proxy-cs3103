@@ -1,23 +1,36 @@
 #pragma once
+
 #include <vector>
 #include <string>
 #include <map>
+#include <memory>
+
 #include "./tokenizer/SourceToken.h"
 
 using namespace std;
 
 class SourceValidator {
 public:
-	bool Validate(vector<SourceToken>);
-	bool ValidateProcedure(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateStatement(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateRead(vector<SourceToken>, int&, vector<string>&, vector<string>&);
-	bool ValidatePrint(vector<SourceToken>, int&, vector<string>&);
-	bool ValidateCall(vector<SourceToken>, int&, vector<string>&, vector<pair<string, string>>&);
-	bool ValidateIf(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateWhile(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&, vector<pair<string, string>>&);
-	bool ValidateAssign(vector<SourceToken>, int&, vector<string>&, vector<string>&, map<string, float>&);
-	bool ValidateExpression(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
-	bool ValidateArithmeticExpression(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
-	bool ValidateRelation(vector<SourceToken>, int&, vector<string>&, map<string, float>&);
+    void SetTokens(shared_ptr<vector<SourceToken>>);
+    bool Validate();
+
+private:
+    int idx = 0;
+    vector<string> procedure_names;
+    vector<string> variable_names;
+    map<string, float> variable_map;
+    vector<pair<string, string>> calls;
+    shared_ptr<vector<SourceToken>> tokens;
+    bool ValidateProcedure();
+    bool ValidateStatement();
+    bool ValidateRead();
+    bool ValidatePrint();
+    bool ValidateCall();
+    bool ValidateIf();
+    bool ValidateWhile();
+    bool ValidateAssign();
+    bool ValidateExpression();
+    bool ValidateArithmeticExpression();
+    bool ValidateRelation();
+    void IncrementIdx();
 };

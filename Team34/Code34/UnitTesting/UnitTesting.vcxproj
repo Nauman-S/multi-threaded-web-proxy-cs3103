@@ -167,7 +167,10 @@
     <ClCompile Include="QPS\parser\TestQueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp" />
     <ClCompile Include="QPS\TestDataRetriever.cpp" />
+    <ClCompile Include="SP\TestNextExtractor.cpp" />
     <ClCompile Include="SP\TestSourceLexer.cpp" />
+    <ClCompile Include="SP\TestSourceParser.cpp" />
+    <ClCompile Include="SP\TestSourceValidator.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
     <ClCompile Include="TestQueryEvaluator.cpp" />
     <ClCompile Include="TestStatementManager.cpp" />
@@ -181,12 +184,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestAST.cpp" />
     <ClCompile Include="TestParentManager.cpp" />
     <ClCompile Include="TestFollowsManager.cpp" />
     <ClCompile Include="TestCallsManager.cpp" />
+    <ClCompile Include="TestNextManager.cpp" />
     <ClCompile Include="TestConstantManager.cpp" />
     <ClCompile Include="TestVariableManager.cpp" />
+    <ClCompile Include="Utils\algo\TestDisjointSetUnion.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

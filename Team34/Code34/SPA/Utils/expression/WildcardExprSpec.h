@@ -3,11 +3,9 @@
 #include "ExprSpec.h"
 #include "Expr.h"
 
-class WildcardExprSpec :
-    public ExprSpec
-{
+class WildcardExprSpec : public ExprSpec {
 public:
-    WildcardExprSpec() : ExprSpec{ "" } {};
+    WildcardExprSpec() : ExprSpec{ "", "" } {};
 
     bool IsMatch(Expr& expr) override { return true; };
 

@@ -1,0 +1,100 @@
+1 - Check Next relation across procedure
+
+Select BOOLEAN such that Next(4,5)
+FALSE
+5000
+2 - Check Next relation across procedure
+
+Select BOOLEAN such that Next(11,15)
+FALSE
+5000
+3 - Check Next relation for no nesting
+stmt s;
+Select s such that Next(1,s)
+2
+5000
+4 - Check Next relation for no nesting
+stmt s;
+Select s such that Next(3,s)
+4
+5000
+5 - Check Next* relation for no nesting
+stmt s;
+Select s such that Next*(1,s)
+2, 3, 4
+5000
+5 - Check Next relation for single nest if statement
+stmt s;
+Select s such that Next(5,s)
+6, 8
+5000
+6 - Check Next relation for single nest if statement
+
+Select BOOLEAN such that Next(7,8)
+FALSE
+5000
+7 - Check Next relation for single nest while statement
+stmt s;
+Select s such that Next(11,s)
+12
+5000
+8 - Check Next relation for single nest while statement
+stmt s;
+Select s such that Next(14,s)
+11
+5000
+8 - Check Next* relation for single nest while statement
+stmt s;
+Select s such that Next*(11,s)
+11, 12, 13, 14
+5000
+9 - Check Next relation for if inside while
+stmt s;
+Select s such that Next(s, 16)
+15, 18, 19
+5000
+10 - Check Next relation for if inside while
+
+Select BOOLEAN such that Next(18, 20)
+FALSE
+5000
+11 - Check Next relation for if inside while
+
+Select BOOLEAN such that Next(19, 20)
+FALSE
+5000
+12 - Check Next relation for while inside if
+stmt s;
+Select s such that Next(26, s)
+25
+5000
+13 - Check Next* relation for while inside if
+stmt s;
+Select s such that Next*(25, s)
+25, 26
+5000
+13 - Check Next* relation for while inside if
+stmt s;
+Select s such that Next*(27, s)
+27, 28, 29
+5000
+14 - Check Next relation for multi nested whiles
+stmt s;
+Select s such that Next(s, 33)
+32, 37, 38
+5000
+14 - Check Next* relation for multi nested whiles
+stmt s;
+Select s such that Next*(33, s)
+30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
+5000
+15 - Check Next* relation for multi nested ifs
+stmt s;
+Select s such that Next(s, 44)
+42, 43, 45
+5000
+16 - Check Next relation for parent of nested if and while
+stmt s;
+Select s such that Next(s, 30)
+33, 44
+5000

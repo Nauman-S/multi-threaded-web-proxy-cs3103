@@ -4,11 +4,10 @@
 #include <vector>
 #include <unordered_set>
 
-#include "../store/ManyToManyRelationStore.h"
+#include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class UsesManager
-{
+class UsesManager {
 public:
 	void SetUses(StmtNum stmt_num, Variable var);
 	void SetUses(Procedure proc_name, Variable var);
@@ -23,6 +22,8 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVUses();
 	std::shared_ptr <std::vector<std::pair<Procedure, Variable>>> GetAllPVUses();
+
+	void Clear();
 private:
 	ManyToManyRelationStore<Procedure, Variable> uses_pv_store_;
 	ManyToManyRelationStore<StmtNum, Variable> uses_sv_store_;

@@ -24,28 +24,30 @@
 
 #include "../Utils/type/TypeDef.h"
 
+using namespace std;
+
 class SourceParser {
 public:
-	std::shared_ptr<ProgramNode> Parse(std::string&);
-
-	std::shared_ptr<ProcedureASTNode> ParseProcedure(std::vector<SourceToken>, int&, int&);
-
-	std::shared_ptr<StatementASTNode> ParseStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<CallStatementASTNode> ParseCallStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<ReadStatementASTNode> ParseReadStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<PrintStatementASTNode> ParsePrintStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<IfStatementASTNode> ParseIfStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<WhileStatementASTNode> ParseWhileStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<AssignStatementASTNode> ParseAssignStatement(std::vector<SourceToken>, int&, int&, Procedure&);
-
-	std::shared_ptr<ConditionExpression> ParseConditionExpression(std::vector<SourceToken>, int&, int&, Procedure&);
+    shared_ptr<ProgramNode> Parse();
+    void SetTokens(shared_ptr<vector<SourceToken>>);
 
 private:
-	std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
+    int token_idx = 0;
+    int line_idx = 1;
+
+    shared_ptr<vector<SourceToken>> tokens;
+    void IncrementTokenIdx();
+    void IncrementLineIdex();
+
+    shared_ptr<ProcedureASTNode> ParseProcedure();
+    shared_ptr<StatementASTNode> ParseStatement(Procedure&);
+    shared_ptr<CallStatementASTNode> ParseCallStatement(Procedure&);
+    shared_ptr<ReadStatementASTNode> ParseReadStatement(Procedure&);
+    shared_ptr<PrintStatementASTNode> ParsePrintStatement(Procedure&);
+    shared_ptr<IfStatementASTNode> ParseIfStatement(Procedure&);
+    shared_ptr<WhileStatementASTNode> ParseWhileStatement(Procedure&);
+    shared_ptr<AssignStatementASTNode> ParseAssignStatement(Procedure&);
+    shared_ptr<ConditionExpression> ParseConditionExpression(Procedure&);
+
+    std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };

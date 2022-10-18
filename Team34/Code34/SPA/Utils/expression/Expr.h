@@ -2,18 +2,17 @@
 
 #include <string>
 
-using std::string;
-
-class Expr
-{
+class Expr {
 protected:
-	string infix_expr_;
-	string post_expr_;
+    std::string infix_expr_;
+    std::string post_expr_;
 
 public:
-	explicit Expr(string infix_expr);
+    Expr(std::string& infix_str, std::string& postfix_str)
+        : infix_expr_{ infix_str }, post_expr_{ postfix_str } {
+    };
 
-	string& GetInfix() { return infix_expr_; }
-	string& GetPostfix() { return post_expr_; }
+    std::string& GetInfix() { return infix_expr_; }
+    std::string& GetPostfix() { return post_expr_; }
 };
 

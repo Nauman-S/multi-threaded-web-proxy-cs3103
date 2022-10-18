@@ -8,23 +8,20 @@
 
 class IfStatementASTNode : public StatementASTNode {
 public:
-	void SetIfChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+    void SetIfChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+    std::vector<std::shared_ptr<StatementASTNode>> GetIfChildren() const;
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetIfChildren();
+    void SetElseChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+    std::vector<std::shared_ptr<StatementASTNode>> GetElseChildren() const;
 
-	void SetElseChildren(std::vector<std::shared_ptr<StatementASTNode>>&);
+    void SetConditionExpression(std::shared_ptr<ConditionExpression>);
+    std::shared_ptr<ConditionExpression> GetCondition() const;
 
-	std::vector<std::shared_ptr<StatementASTNode>> GetElseChildren();
-
-	void SetConditionExpression(std::shared_ptr<ConditionExpression>);
-
-	std::shared_ptr<ConditionExpression> GetCondition();
-
-	virtual void Extract(NodeExtractor&) override;
-
+    virtual void Extract(NodeExtractor&) override;
+    virtual string Stringify() override;
 
 protected:
-	std::shared_ptr<ConditionExpression> condition;
-	std::vector<std::shared_ptr<StatementASTNode>> ifChildren;
-	std::vector<std::shared_ptr<StatementASTNode>> elseChildren;
+    std::shared_ptr<ConditionExpression> condition;
+    std::vector<std::shared_ptr<StatementASTNode>> ifChildren;
+    std::vector<std::shared_ptr<StatementASTNode>> elseChildren;
 };

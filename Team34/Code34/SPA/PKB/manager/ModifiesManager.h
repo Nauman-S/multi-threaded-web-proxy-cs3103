@@ -3,11 +3,10 @@
 #include <vector>
 #include <unordered_set>
 
-#include "../store/ManyToManyRelationStore.h"
+#include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ModifiesManager
-{
+class ModifiesManager {
 public:
 	void SetModifies(StmtNum stmt_num, Variable var);
 	void SetModifies(Procedure proc_name, Variable var);
@@ -22,6 +21,8 @@ public:
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllProcedures();
 	std::shared_ptr<std::vector<std::pair<StmtNum, Variable>>> GetAllSVModifies();
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies();
+
+	void Clear();
 private:
 	ManyToManyRelationStore<Procedure, Variable> modifies_pv_store_;
 	ManyToManyRelationStore<StmtNum, Variable> modifies_sv_store_;

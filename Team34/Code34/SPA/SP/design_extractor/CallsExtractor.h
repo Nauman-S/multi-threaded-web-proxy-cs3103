@@ -21,30 +21,29 @@
 
 class CallsExtractor : public NodeExtractor {
 public:
-	CallsExtractor();
+    CallsExtractor(std::shared_ptr<WritePKBManager>);
 
-	virtual void ExtractProgramNode(ProgramNode&) override;
-	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
+    virtual void ExtractProgramNode(const ProgramNode&) override;
+    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-	virtual void ExtractAssignmentNode(AssignStatementASTNode&) override;
-	virtual void ExtractCallNode(CallStatementASTNode&) override;
-	virtual void ExtractPrintNode(PrintStatementASTNode&) override;
-	virtual void ExtractReadNode(ReadStatementASTNode&) override;
+    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    virtual void ExtractCallNode(const CallStatementASTNode&) override;
+    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
+    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
 
-	virtual void ExtractIfNode(IfStatementASTNode&) override;
-	virtual void ExtractWhileNode(WhileStatementASTNode&) override;
-	virtual void ExtractConditionExpression(ConditionExpression&) override;
+    virtual void ExtractIfNode(const IfStatementASTNode&) override;
+    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
+    virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
-	std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
-	std::vector<Procedure> procedure_calls_stack_;
+    std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
+    std::vector<Procedure> procedure_calls_stack_;
 
-	std::set<std::pair<Procedure, Procedure>> added_calls_;
-	std::set<std::pair<Procedure, Procedure>> added_calls_T_;
+    std::set<std::pair<Procedure, Procedure>> added_calls_;
+    std::set<std::pair<Procedure, Procedure>> added_calls_T_;
 
-	// Cached add of calls relation
-	void AddToCalls(Procedure, Procedure);
-	// Cached add of calls* relation
-	void AddToCallsT(Procedure, Procedure);
+    // Cached add of calls relation
+    void AddToCalls(Procedure, Procedure);
+    // Cached add of calls* relation
+    void AddToCallsT(Procedure, Procedure);
 };

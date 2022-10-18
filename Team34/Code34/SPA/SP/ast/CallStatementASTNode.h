@@ -5,13 +5,12 @@
 
 class CallStatementASTNode : public StatementASTNode {
 public:
-	void SetProcedure(Procedure& p);
+    void SetProcedure(Procedure& p);
+    Procedure GetProcedure() const;
 
-	Procedure GetProcedure();
-
-	virtual void Extract(NodeExtractor&) override;
-
+    virtual void Extract(NodeExtractor&) override;
+    virtual string Stringify() override;
 
 protected:
-	Procedure proc;
+    Procedure proc;
 };

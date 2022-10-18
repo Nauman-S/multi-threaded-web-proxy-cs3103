@@ -26,9 +26,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestAST.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="QPS\parser\TestQueryBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -56,6 +53,9 @@
     <ClCompile Include="TestCallsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestNextManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TestStatementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,6 +78,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestQueryEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\algo\TestDisjointSetUnion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\TestSourceValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\TestNextExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SP\TestSourceParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

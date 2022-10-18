@@ -21,25 +21,24 @@
 class ParentsExtractor : public NodeExtractor {
 public:
 
-	ParentsExtractor();
+    ParentsExtractor(std::shared_ptr<WritePKBManager>);
 
-	virtual void ExtractProgramNode(ProgramNode&) override;
-	virtual void ExtractProcedureNode(ProcedureASTNode&) override;
+    virtual void ExtractProgramNode(const ProgramNode&) override;
+    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-	virtual void ExtractAssignmentNode(AssignStatementASTNode&) override;
-	virtual void ExtractCallNode(CallStatementASTNode&) override;
-	virtual void ExtractPrintNode(PrintStatementASTNode&) override;
-	virtual void ExtractReadNode(ReadStatementASTNode&) override;
+    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    virtual void ExtractCallNode(const CallStatementASTNode&) override;
+    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
+    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
 
-	virtual void ExtractIfNode(IfStatementASTNode&) override;
-	virtual void ExtractWhileNode(WhileStatementASTNode&) override;
-	virtual void ExtractConditionExpression(ConditionExpression&) override;
+    virtual void ExtractIfNode(const IfStatementASTNode&) override;
+    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
+    virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
-	std::unique_ptr<WritePKBManager> write_manager_;
-	// Keeps track of parent statements in previous level as we go down
-	// in nesting level
-	std::vector<StmtNum> previous_parents_;
+    // Keeps track of parent statements in previous level as we go down
+    // in nesting level
+    std::vector<StmtNum> previous_parents_;
 
-	void AddIndirectParents(StmtNum);
+    void AddIndirectParents(StmtNum);
 };

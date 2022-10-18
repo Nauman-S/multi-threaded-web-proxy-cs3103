@@ -1,47 +1,63 @@
 #pragma once
 
-#include <string>
 #include <memory>
+#include <string>
 
+#include "../../Utils/type/RefType.h"
+#include "../../Utils/type/TypeDef.h"
+#include "../AttrType.h"
 #include "../Clause.h"
-#include "../reference/Ref.h"
-#include "../../Utils/type/RefType.h" 
-#include "../reference/ValType.h"
+#include "../PriorityManager.h"
 #include "../query_result/ResWrapper.h"
+#include "../reference/Ref.h"
+#include "../reference/ValType.h"
 class DataRetriever;
 
-class With
-	:public Clause
-{
+class With : public Clause {
 protected:
-	// either one of the reference shuold be synonym
-	std::shared_ptr<Ref> lhs_ref_ptr_;
-	std::shared_ptr<Ref> rhs_ref_ptr_;
-	ValType req_lhs_val_type_;
-	ValType req_rhs_val_type_;
-	bool is_valid_;
+    // either one of the reference shuold be synonym
+    std::shared_ptr<Ref> lhs_ref_ptr_;
+    std::shared_ptr<Ref> rhs_ref_ptr_;
+    AttrType lhs_attr_type_;
+    AttrType rhs_attr_type_;
+    bool is_valid_;
 
 public:
+    With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2,
+        AttrType lhs_attr_type, AttrType rhs_attr_type)
+        : lhs_ref_ptr_{ ref1 },
+        rhs_ref_ptr_{ ref2 },
+        lhs_attr_type_{ lhs_attr_type },
+        rhs_attr_type_{ rhs_attr_type },
+        is_valid_{ true } {
+    };
 
-	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2)
-		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, is_valid_{ true }, req_lhs_val_type_(ValType::kInt), req_rhs_val_type_{ ValType::kInt } {};
+    RefType LhsRefType() { return lhs_ref_ptr_->GetRefType(); }
 
-	With(std::shared_ptr<Ref> ref1, std::shared_ptr<Ref> ref2, ValType lhs_type, ValType rhs_type)
-		: lhs_ref_ptr_{ ref1 }, rhs_ref_ptr_{ ref2 }, req_lhs_val_type_(lhs_type), req_rhs_val_type_{rhs_type}, is_valid_{ true } {};
+    RefType RhsRefType() { return rhs_ref_ptr_->GetRefType(); }
 
-	RefType LhsRefType() { return lhs_ref_ptr_->GetRefType(); }
+    std::pair<ValType, ValType> ValTypes() {
+        return std::make_pair(lhs_ref_ptr_->GetValType(),
+            rhs_ref_ptr_->GetValType());
+    }
 
-	RefType RhsRefType() { return rhs_ref_ptr_->GetRefType(); }
+    AttrType LhsAttrType() { return lhs_attr_type_; }
 
-	std::pair<ValType, ValType> ValTypes() { return std::make_pair(lhs_ref_ptr_->GetValType(), rhs_ref_ptr_->GetValType()); }
+    AttrType RhsAttrType() { return rhs_attr_type_; }
 
-	ValType RequiredLhsValType() { return req_lhs_val_type_; }
+    bool IsLhsAttrTypeDefault() { return lhs_ref_ptr_->GetDefaultAttrType() == lhs_attr_type_; }
 
-	ValType RequiredRhsValType() { return req_rhs_val_type_; }
+    bool IsRhsAttrTypeDefault() { return rhs_ref_ptr_->GetDefaultAttrType() == rhs_attr_type_; }
 
-	std::string LhsValue() { return lhs_ref_ptr_->GetName(); }
+    std::string LhsValue() { return lhs_ref_ptr_->GetName(); }
 
-	std::string RhsValue() { return rhs_ref_ptr_->GetName(); }
+    std::string RhsValue() { return rhs_ref_ptr_->GetName(); }
 
-	std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+    std::shared_ptr<ResWrapper> GetMatch(DataRetriever& retriever) override;
+
+    int CountSynonyms() override;
+
+    Priority GetPriority(PriorityManager& pm) override;
+
+    std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 };

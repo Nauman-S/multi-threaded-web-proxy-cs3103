@@ -12,11 +12,11 @@ namespace UnitTesting
 	TEST_CLASS(TestSourceLexer)
 	{
 	public:
-		string base_dir = "../../Tests34/unit_tests/";
+		string base_dir = "../../Tests34/unit_tests/lexer/";
 		TEST_METHOD(TestNoSpaceSource)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "no_space_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc1"),
@@ -27,16 +27,16 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 
 		TEST_METHOD(TestMultiSpaceSource)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "multi_space_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "PROC"),
@@ -47,16 +47,16 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 
 		TEST_METHOD(TestMultiCharacterTokens)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "multi_token_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
@@ -99,16 +99,16 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 
 		TEST_METHOD(TestIfStatementSource)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "if_stmt_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
@@ -135,16 +135,16 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 
 		TEST_METHOD(TestKeywordVariables)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "keyword_token_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
@@ -161,16 +161,16 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 
 		TEST_METHOD(TestArithmeticExpression)
 		{
 			SourceLexer lexer = SourceLexer(base_dir + "complex_arithmetic_source.txt");
-			vector<SourceToken> actual = lexer.GetAllTokens();
+			shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();
 			vector<SourceToken> expected = {
 				SourceToken(SourceTokenType::kName, "procedure"),
 				SourceToken(SourceTokenType::kName, "proc"),
@@ -203,9 +203,9 @@ namespace UnitTesting
 				SourceToken(SourceTokenType::kSemiColon, ";"),
 				SourceToken(SourceTokenType::kRightCurly, "}"),
 			};
-			Assert::IsTrue(actual.size() == expected.size());
-			for (unsigned int i = 0; i < actual.size(); i++) {
-				Assert::IsTrue(actual.at(i) == expected.at(i));
+			Assert::IsTrue(actual->size() == expected.size());
+			for (unsigned int i = 0; i < actual->size(); i++) {
+				Assert::IsTrue(actual->at(i) == expected.at(i));
 			}
 		}
 	};

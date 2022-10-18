@@ -1,22 +1,17 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "QueryLexer.h"
-
 #include "..\reference\Ref.h"
 #include "..\reference\StmtRef.h"
 #include "..\relation\Rel.h"
 #include "..\reference\VarRef.h"
 #include "..\pattern\Pattern.h"
 #include "..\Query.h"
-
-
-
-#ifndef QUERYBUILDER_H
-#define QUERYBUILDER_H
-
-#include <memory>
+#include "../../Utils/algo/PostfixConverter.h"
+#include "../AttrType.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -25,13 +20,15 @@ class QueryBuilder
 {
 private:
 	shared_ptr<QueryLexer> lexer_;
-	vector<shared_ptr<Ref>> synonyms_;
-	//std::vector<shared_ptr<Rel>> relations_;
+	vector<shared_ptr<Ref>> declared_synonyms_;
+	PostfixConverter postfix_converter_;
+	
 
 	std::unordered_set<RefType> stmt_ref_types = std::unordered_set<RefType>({ RefType::kAssignRef, RefType::kCallRef, RefType::kIfRef, RefType::kPrintRef, RefType::kReadRef, RefType::kWhileRef });
 
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
+	std::shared_ptr<Ref> ParseSynonym(std::string&);
 
 	shared_ptr<Query> ParseSelectStatement();	
 	std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();
@@ -69,24 +66,23 @@ private:
 
 	std::vector<shared_ptr<With>> ParseWithClauses();
 	shared_ptr<With> ParseWithClause();
-	std::pair<shared_ptr<Ref>, ValType> ParseWithRef();
-	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
-	ValType GetValTypeFromAttrName(string);
+	std::pair<shared_ptr<Ref>, AttrType> ParseWithRef();
 
-	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> synonyms_);
+	AttrType ParseAttr(shared_ptr<Ref> syn);
+	void ValidateAttrName(shared_ptr<Ref> synonym, string ref_name);
+	AttrType GetAttrTypeFromName(string);
+
+	shared_ptr<VarRef> GetRhsVarRef(std::vector<shared_ptr<Ref>> select_synonyms_);
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType attr_name);
-
+	bool ContainsSynonym(string syn_name);
 	
 
 public:
-
 	QueryBuilder();
 	std::shared_ptr<Query> GetQuery(const std::string& query_string);
 };
-
-#endif
 
 
 

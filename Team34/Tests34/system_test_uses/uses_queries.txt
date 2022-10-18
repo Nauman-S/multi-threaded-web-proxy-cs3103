@@ -1,3 +1,8 @@
+5- Call stmt uses
+call c;
+Select c such that Uses(c, "var3")
+2
+5000
 5 - test follows with same synonyms
 stmt s; 
 Select s such that Follows (s, s)
@@ -27,11 +32,6 @@ main, parentTest123
 variable v;
 Select v such that Uses (8,v)
 var1, var2
-5000
-5- Call stmt uses
-call c;
-Select c such that Uses(c, "var3")
-2
 5000
 6 - uses procedure
 variable v;

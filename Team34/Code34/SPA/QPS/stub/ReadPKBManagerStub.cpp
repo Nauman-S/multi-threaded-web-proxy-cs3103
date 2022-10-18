@@ -18,6 +18,136 @@ using std::pair;
 	func2 uses y
 	statement 5 uses y
 */
+
+const std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetAllVariables()
+{
+	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
+	res->insert("x");
+	res->insert("y");
+	res->insert("z");
+
+	return res;
+}
+
+bool ReadPKBManagerStub::IsVariable(Variable var) {
+
+	return var == "z" || var == "y" || var == "x";
+}
+
+bool ReadPKBManagerStub::IsProcedure(Procedure proc) {
+	return proc == "Foo1" || proc == "bar" || proc == "Nine";
+}
+const std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllProcedures() {
+	std::shared_ptr<std::unordered_set<Procedure>> procs = std::make_shared<std::unordered_set<Procedure>>();
+	procs->insert("Foo1");
+	procs->insert("bar");
+	procs->insert("Nine");
+
+	return procs;
+}
+
+bool ReadPKBManagerStub::CheckCalls(Procedure caller, Procedure callee) {
+	if (caller == "Foo1" && callee == "bar") {
+		return true;
+	}
+	else if (caller == "bar" && callee == "Nine") {
+		return true;
+	}
+	return false;
+}
+
+bool ReadPKBManagerStub::IsCallsStoreEmpty() {
+	return false;
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetCalleeFromCaller(Procedure caller) {
+	std::shared_ptr<std::unordered_set<Procedure>> callee = std::make_shared<std::unordered_set<Procedure>>();
+	if (caller == "Foo1") {
+		callee->insert("bar");
+	}
+	else if (caller == "bar") {
+		callee->insert("Nine");
+	}
+	
+	return callee;
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetCallerFromCallee(Procedure callee) {
+	std::shared_ptr<std::unordered_set<Procedure>> caller = std::make_shared<std::unordered_set<Procedure>>();
+	if (callee == "bar") {
+		caller->insert("Foo1");
+	}
+	else if (callee == "Nine") {
+		caller->insert("bar");
+	}
+
+	return caller;
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCallers() {
+	std::shared_ptr<std::unordered_set<Procedure>> caller = std::make_shared<std::unordered_set<Procedure>>();
+	caller->insert("Foo1");
+	caller->insert("bar");
+	return caller;
+}
+
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCallees() {
+	std::shared_ptr<std::unordered_set<Procedure>> callee = std::make_shared<std::unordered_set<Procedure>>();
+	callee->insert("bar");
+	callee->insert("Nine");
+	return callee;
+}
+
+std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManagerStub::GetAllCallsRelations() {
+	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> calls_relations = std::make_shared<std::vector<std::pair<Procedure, Procedure>>>();
+	calls_relations->push_back(std::make_pair("Foo1", "bar"));
+	calls_relations->push_back(std::make_pair("bar", "nine"));
+
+	return calls_relations;
+}
+
+bool ReadPKBManagerStub::CheckCallsT(Procedure caller, Procedure callee) {
+	if (caller == "Foo1" ) {
+		return callee == "bar" || callee == "Nine";
+	}
+	else if (caller == "bar") {
+		return callee == "Nine";
+	}
+	return false;
+}
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCalleeFromCaller(Procedure caller) {
+	std::shared_ptr<std::unordered_set<Procedure>> callee = std::make_shared<std::unordered_set<Procedure>>();
+	if (caller == "Foo1") {
+		callee->insert("bar");
+		callee->insert("Nine");
+		return callee;
+	}
+	else if (caller == "bar") {
+		callee->insert("Nine");
+		return callee;
+	}
+	return callee;
+}
+std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCallerFromCallee(Procedure callee) {
+	std::shared_ptr<std::unordered_set<Procedure>> caller = std::make_shared<std::unordered_set<Procedure>>();
+	if (callee == "Nine") {
+		caller->insert("Foo1");
+		caller->insert("bar");
+	}
+	else if (callee == "bar") {
+		caller->insert("Foo1");
+	}
+	return caller;
+}
+std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManagerStub::GetAllCallsTRelations() {
+	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> calls_relations = std::make_shared<std::vector<std::pair<Procedure, Procedure>>>();
+	calls_relations->push_back(std::make_pair("Foo1", "bar"));
+	calls_relations->push_back(std::make_pair("bar", "nine"));
+	calls_relations->push_back(std::make_pair("Foo1", "nine"));
+
+	return calls_relations;
+}
+
 std::shared_ptr<RefType> ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
 {
 	if (stmt_num == 2 || stmt_num == 4 || stmt_num == 5 || stmt_num == 6) {
@@ -29,8 +159,81 @@ std::shared_ptr<RefType> ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
 	else if (stmt_num == 3) {
 		return std::make_shared<RefType>(RefType::kIfRef);
 	}
+	else if (stmt_num == 7 || stmt_num == 8 || stmt_num == 9) {
+		return std::make_shared<RefType>(RefType::kCallRef);
+	}
 
 	return nullptr;
+}
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetStatementsByType(RefType type) {
+	std::shared_ptr<std::unordered_set<StmtNum>> statements = std::make_shared <std::unordered_set<StmtNum>> ();
+	if (type == RefType::kWhileRef) {
+		statements->insert(1);
+		return statements;
+	}
+	else if (type == RefType::kAssignRef) {
+		statements->insert(2);
+		statements->insert(4);
+		statements->insert(5);
+		statements->insert(6);
+		return statements;
+	}
+	else if (type == RefType::kCallRef) {
+		statements->insert(7);
+		statements->insert(8);
+		statements->insert(9);
+		return statements;
+	}
+	else if (type == RefType::kIfRef) {
+		statements->insert(3);
+		return statements;
+	}
+	else if (type == RefType::kStmtRef) {
+		statements->insert(1);
+		statements->insert(2);
+		statements->insert(3);
+		statements->insert(4);
+		statements->insert(5);
+		statements->insert(6);
+		statements->insert(7);
+		statements->insert(8);
+		statements->insert(9);
+		return statements;
+	}
+
+	return statements;
+ }
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllStatements() {
+	std::shared_ptr<std::unordered_set<StmtNum>> statements = std::make_shared <std::unordered_set<StmtNum>>();
+	statements->insert(1);
+	statements->insert(2);
+	statements->insert(3);
+	statements->insert(4);
+	statements->insert(5);
+	statements->insert(6);
+	statements->insert(7);
+	statements->insert(8);
+	statements->insert(9);
+	return statements;
+}
+ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetCallsStatementFromProcedure(Procedure proc) {
+	 std::shared_ptr<std::unordered_set<StmtNum>> statements = std::make_shared <std::unordered_set<StmtNum>>();
+	 if (proc == "main") {
+		 statements->insert(1);
+		 statements->insert(2);
+		 statements->insert(3);
+		 statements->insert(4);
+		 statements->insert(5);
+		 statements->insert(6);
+	 }
+	 else if (proc == "Foo1") {
+		 statements->insert(7);
+	 }
+	 else if (proc == "") {
+		 statements->insert(8);
+		 statements->insert(9);
+	 }
+	 return statements;
 }
 
 bool ReadPKBManagerStub::CheckUses(StmtNum stmt_num, Variable var)

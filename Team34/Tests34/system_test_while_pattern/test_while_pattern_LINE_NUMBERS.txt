@@ -1,0 +1,27 @@
+procedure buyFood {
+    while(((chocoNum < maxNum) || (appleNum > maxNum)) && (orangeNum + bananaNum <= maxNum)) {  // 1
+        print apple;                                   // 2
+        while(i + j < k) {                             // 3 
+            if(a < b) then {                           // 4
+                    a = b * 2 + 3;                     // 5
+            } else {
+                while (b < c + 999) {                  // 6
+                    b = c * 2 % a;                     // 7
+                }
+                while (alpha + beta < gamma) {         // 8
+                    print gamma;                       // 9
+                    call eatFood;                      // 10
+                }
+            }
+        }
+    }
+}
+
+procedure eatFood {
+    while(foodNum > 0) {                               // 11
+        print eat;                                     // 12
+    }
+    while(1 < 2) {                                     // 13
+        print x;                                       // 14
+    }
+}

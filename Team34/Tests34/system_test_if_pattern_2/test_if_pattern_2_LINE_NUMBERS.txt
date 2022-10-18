@@ -1,0 +1,22 @@
+procedure proc1 {
+    read x1;    // 1
+    x1 = x1 + 1;    // 2
+    if (1 == 2) then {    // 3
+        print x1;    // 4
+    } else {
+        call proc2;    // 5
+    }
+}
+
+procedure proc2 {
+    if (!(x == 1)) then {    // 6
+        x = 2 + 1;    // 7
+        if ((!(x == 2)) || (y - 3 > 0)) then {    // 8
+            print y;    // 9
+        } else {
+            while (x == 2) {    // 10
+                y = x - 1;    // 11
+            }
+        }
+    }
+}

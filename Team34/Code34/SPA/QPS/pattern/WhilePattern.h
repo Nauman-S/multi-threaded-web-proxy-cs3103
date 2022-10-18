@@ -3,12 +3,13 @@
 #include <memory>
 #include <string>
 
+#include "Pattern.h"
 #include "../reference/Ref.h"
 #include "../reference/WhileRef.h"
 #include "../reference/VarRef.h"
 #include "../reference/ValType.h"
-#include "Pattern.h"
-#include "PatternType.h"
+#include "../ClauseType.h"
+#include "../PriorityManager.h"
 
 
 class WhilePattern
@@ -33,7 +34,13 @@ public:
 
 	ValType VarValType() override { return var_ref_->GetValType(); }
 
-	PatternType GetPatternType() override { return PatternType::kWhilePattern; }
+	ClauseType GetPatternType() override { return ClauseType::kWhilePattern; }
 
 	std::shared_ptr<ExprSpec> GetExprSpec() override { return nullptr; }
+
+	int CountSynonyms() override;
+
+	Priority GetPriority(PriorityManager& pm) override;
+
+	std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 };

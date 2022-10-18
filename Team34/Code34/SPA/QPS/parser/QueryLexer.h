@@ -8,101 +8,102 @@ using std::string;
 
 #ifndef QUERYLEXER_H
 #define QUERYLEXER_H
-class QueryLexer
-{
+class QueryLexer {
 private:
 
-	Tokenizer* tokenizer_;
-	std::unordered_set<std::string> design_entities_;
-	std::unordered_set<std::string> relation_keywords_;
-	std::unordered_set<std::string> keywords_;
-	std::unordered_set<std::string> attr_names_;
-	std::unordered_set <char> delimiters_;
-	std::unordered_set <TokenType> operators_;
+    Tokenizer* tokenizer_;
+    std::unordered_set<std::string> design_entities_;
+    std::unordered_set<std::string> relation_keywords_;
+    std::unordered_set<std::string> keywords_;
+    std::unordered_set<std::string> attr_names_;
+    std::unordered_set <char> delimiters_;
+    std::unordered_set <TokenType> operators_;
 
-	void InitializeKeywords();
+    void InitializeKeywords();
 
 public:
 
-	QueryLexer();
-	~QueryLexer();
-	void FeedQuery(const std::string& query_string_);
+    QueryLexer();
+    ~QueryLexer();
+    void FeedQuery(const std::string& query_string_);
 
-	bool HasDesignEntity();
-	std::string MatchDesignEntityKeyword();
+    bool HasDesignEntity();
+    std::string MatchDesignEntityKeyword();
 
-	bool HasIdentity();
-	std::string MatchIdentity();
+    bool HasIdentity();
+    std::string MatchIdentity();
 
-	bool HasEndOfDeclarationStatement();
-	std::string MatchEndOfDeclarationStatement();
+    bool HasEndOfDeclarationStatement();
+    std::string MatchEndOfDeclarationStatement();
 
-	bool HasKeyword(std::string keyword_);
-	void MatchKeyword(std::string keyword_);
+    bool HasKeyword(std::string keyword_);
+    void MatchKeyword(std::string keyword_);
 
 
-	bool HasReferenceKeyword();
-	std::string MatchReferenceKeyword();
+    bool HasReferenceKeyword();
+    std::string MatchReferenceKeyword();
 
-	bool HasLeftBrace();
-	void MatchLeftBrace();
+    bool HasLeftBrace();
+    void MatchLeftBrace();
 
-	bool HasRightBrace();
-	void MatchRightBrace();
+    bool HasRightBrace();
+    void MatchRightBrace();
 
-	bool HasLeftAngle();
-	void MatchLeftAngle();
+    bool HasLeftAngle();
+    void MatchLeftAngle();
 
-	bool HasRightAngle();
-	void MatchRightAngle();
+    bool HasRightAngle();
+    void MatchRightAngle();
 
-	bool HasComma();
-	void MatchComma();
+    bool HasComma();
+    void MatchComma();
 
-	bool HasHashtag();
-	void MatchHashtag();
+    bool HasHashtag();
+    void MatchHashtag();
 
-	bool HasInteger();
-	int MatchInteger();
+    bool HasInteger();
+    int MatchInteger();
 
-	bool HasUnderScore();
-	void MatchUnderScore();
+    bool HasUnderScore();
+    void MatchUnderScore();
 
-	bool HasFullStop();
-	void MatchFullStop();
+    bool HasFullStop();
+    void MatchFullStop();
 
-	bool HasEqualSign();
-	void MatchEqualSign();
+    bool HasEqualSign();
+    void MatchEqualSign();
 
-	bool HasPatternKeyword();
-	void MatchPatternKeyword();
+    bool HasPatternKeyword();
+    void MatchPatternKeyword();
 
-	bool HasWithKeyword();
-	void MatchWithKeyword();
+    bool HasWithKeyword();
+    void MatchWithKeyword();
 
-	bool HasAndKeyword();
-	void MatchAndKeyword();
+    bool HasAndKeyword();
+    void MatchAndKeyword();
 
-	bool HasBooleanKeyword();
-	void MatchBooleanKeyword();
+    bool HasBooleanKeyword();
+    void MatchBooleanKeyword();
 
-	bool HasMoreTokens();
+    bool HasMoreTokens();
 
-	bool HasQuotationMarks();
-	void MatchQuotationMarks();
+    bool HasQuotationMarks();
+    void MatchQuotationMarks();
 
-	bool HasOperator();
-	std::string MatchOperator();
+    bool HasOperator();
+    std::string MatchOperator();
 
-	bool HasSuchThatKeywords();
-	void MatchSuchThatKeywords();
+    bool HasSuchThatKeywords();
+    void MatchSuchThatKeywords();
 
-	bool HasAttrName();
-	std::string MatchAttrName();
+    bool HasAttrName();
+    std::string MatchAttrName();
 
-	string GenerateErrorMessage(string expected, string actual);
+    string GenerateErrorMessage(string expected, string actual);
 
 	std::string PeekNextToken(int number_tokens_);
+
+	bool IsCurrentTokenOfType(TokenType);
 };
 #endif
 

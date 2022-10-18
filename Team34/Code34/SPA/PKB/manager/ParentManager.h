@@ -7,11 +7,10 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../store/OneToManyTransitiveRelationStore.h"
+#include "../store/OneToManyRelation/ParentRelationStore.h"
 #include "../../Utils/type/TypeDef.h"
 
-class ParentManager
-{
+class ParentManager {
 public:
 	// Parent Relation methods
 	void SetParent(StmtNum parent, StmtNum child);
@@ -29,6 +28,8 @@ public:
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations();
+
+	void Clear();
 private:
-	OneToManyTransitiveRelationStore<StmtNum> parent_store_;
+	ParentRelationStore parent_store_;
 };

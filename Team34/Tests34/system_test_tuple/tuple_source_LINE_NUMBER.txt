@@ -1,0 +1,34 @@
+procedure Example {
+  x = 2;    //1
+  z = 3;    //2
+  i = 5;    //3
+  a = x;    //4
+  y = b;    //5
+  while (i!=0) {    //6
+    x = x - 1;    //7
+    if (x==1) then {    //8
+      z = x + 1; }    //9
+    else {
+      y = z + x; }    //10
+    z = z + x + i;    //11
+    call q;    //12
+    i = i - 1; }    //13
+  call p; }    //14
+
+procedure p {
+  if (x<0) then {    //15
+    while (i>0) {    //16
+      x = z * 3 + 2 * y;    //17
+      call q;    //18
+      i = x - 1; }    //19
+    x = x + 1;    //20
+    z = x + z; }    //21
+  else {
+    z = 1; }    //22
+  z = z + x + i; }    //23
+
+procedure q {
+  if (x==1) then {    //24
+    z = x + 1; }    //25
+  else {
+    x = z + x; } }    //26
