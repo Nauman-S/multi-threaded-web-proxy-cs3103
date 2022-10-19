@@ -91,45 +91,45 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetEffectStmtsFromStmtNoNesting)
         {
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_1 = read->GetEffectStmtsFromStmt(1);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_1 = read->GetEffectStmtsFromStmt(1, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_1->find(3) != effect_stmts_1->end());
 
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_2 = read->GetEffectStmtsFromStmt(2);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_2 = read->GetEffectStmtsFromStmt(2, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_2->find(6) != effect_stmts_2->end());
-            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(3)->size()));
+            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(3, RefType::kAssignRef)->size()));
 
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_4 = read->GetEffectStmtsFromStmt(4);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_4 = read->GetEffectStmtsFromStmt(4, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_4->find(5) != effect_stmts_4->end());
 
-            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(5)->size()));
+            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(5, RefType::kAssignRef)->size()));
 
-            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(6)->size()));	
+            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(6, RefType::kAssignRef)->size()));
         }
 
         TEST_METHOD(TestGetEffectStmtsFromStmtOnIfStatement)
         {
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_7 = read->GetEffectStmtsFromStmt(7);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_7 = read->GetEffectStmtsFromStmt(7, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_7->find(11) != effect_stmts_7->end());
             Assert::IsTrue(effect_stmts_7->find(12) != effect_stmts_7->end());
 
-            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(9)->size()));
+            Assert::AreEqual(0, int(read->GetEffectStmtsFromStmt(9, RefType::kAssignRef)->size()));
 
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_10 = read->GetEffectStmtsFromStmt(10);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_10 = read->GetEffectStmtsFromStmt(10, RefType::kAssignRef);
 
             Assert::IsTrue(effect_stmts_7->find(12) != effect_stmts_7->end());
         }
 
         TEST_METHOD(TestGetEffectStmtsFromStmtOnWhileLoop)
         {
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_13 = read->GetEffectStmtsFromStmt(13);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_13 = read->GetEffectStmtsFromStmt(13, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_13->find(15) != effect_stmts_13->end());
             Assert::IsTrue(effect_stmts_13->find(16) != effect_stmts_13->end());
             Assert::IsTrue(effect_stmts_13->find(17) != effect_stmts_13->end());
 
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_15 = read->GetEffectStmtsFromStmt(15);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_15 = read->GetEffectStmtsFromStmt(15, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_15->find(15) != effect_stmts_15->end());
 
-            shared_ptr<unordered_set<StmtNum>> effect_stmts_16 = read->GetEffectStmtsFromStmt(16);
+            shared_ptr<unordered_set<StmtNum>> effect_stmts_16 = read->GetEffectStmtsFromStmt(16, RefType::kAssignRef);
             Assert::IsTrue(effect_stmts_16->find(15) != effect_stmts_16->end());
             Assert::IsTrue(effect_stmts_16->find(16) != effect_stmts_16->end());
             Assert::IsTrue(effect_stmts_16->find(17) != effect_stmts_16->end());
@@ -137,41 +137,41 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetCauseStmtsFromStmtNoNesting)
         {
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_3 = read->GetCauseStmtsFromStmt(3);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_3 = read->GetCauseStmtsFromStmt(3, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_3->find(1) != cause_stmts_3->end());
 
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_5 = read->GetCauseStmtsFromStmt(5);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_5 = read->GetCauseStmtsFromStmt(5, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_5->find(4) != cause_stmts_5->end());
 
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_6 = read->GetCauseStmtsFromStmt(6);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_6 = read->GetCauseStmtsFromStmt(6, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_6->find(2) != cause_stmts_6->end());
         }
 
         TEST_METHOD(TestGetCauseStmtsFromStmtOnIfStatement)
         {
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_11 = read->GetCauseStmtsFromStmt(11);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_11 = read->GetCauseStmtsFromStmt(11, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_11->find(7) != cause_stmts_11->end());
 
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_12 = read->GetCauseStmtsFromStmt(12);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_12 = read->GetCauseStmtsFromStmt(12, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_12->find(7) != cause_stmts_12->end());
             Assert::IsTrue(cause_stmts_12->find(10) != cause_stmts_12->end());
         }
 
         TEST_METHOD(TestGetCauseStmtsFromStmtOnWhileLoop)
         {
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_15 = read->GetCauseStmtsFromStmt(15);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_15 = read->GetCauseStmtsFromStmt(15, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_15->find(13) != cause_stmts_15->end());
             Assert::IsTrue(cause_stmts_15->find(15) != cause_stmts_15->end());
             Assert::IsTrue(cause_stmts_15->find(16) != cause_stmts_15->end());
 
-            shared_ptr<unordered_set<StmtNum>> cause_stmts_16 = read->GetCauseStmtsFromStmt(16);
+            shared_ptr<unordered_set<StmtNum>> cause_stmts_16 = read->GetCauseStmtsFromStmt(16, RefType::kAssignRef);
             Assert::IsTrue(cause_stmts_16->find(13) != cause_stmts_16->end());
             Assert::IsTrue(cause_stmts_16->find(16) != cause_stmts_16->end());
         }
 
         TEST_METHOD(TestGetAllEffectStmtsNoNesting)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(3) != actual->end());
             Assert::IsTrue(actual->find(5) != actual->end());
             Assert::IsTrue(actual->find(6) != actual->end());
@@ -180,14 +180,14 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllEffectStmtsSingleIf)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(11) != actual->end());
             Assert::IsTrue(actual->find(12) != actual->end());
         }
 
         TEST_METHOD(TestGetAllEffectStmtsSingleWhile)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(15) != actual->end());
             Assert::IsTrue(actual->find(16) != actual->end());
             Assert::IsTrue(actual->find(17) != actual->end());
@@ -195,7 +195,7 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllEffectStmtsIfWhile)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllEffectStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(32) != actual->end());
             Assert::IsTrue(actual->find(33) != actual->end());
             Assert::IsTrue(actual->find(33) != actual->end());
@@ -205,7 +205,7 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllCauseStmtsNoNesting)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(1) != actual->end());
             Assert::IsTrue(actual->find(2) != actual->end());
             Assert::IsTrue(actual->find(4) != actual->end());
@@ -213,13 +213,13 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllCauseStmtsSingleIf)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(7) != actual->end());
         }
 
         TEST_METHOD(TestGetAllCauseStmtsSingleWhile)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(13) != actual->end());
             Assert::IsTrue(actual->find(15) != actual->end());
             Assert::IsTrue(actual->find(16) != actual->end());
@@ -227,11 +227,12 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllCauseStmtsIfWhile)
         {
-            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts();
+            shared_ptr<unordered_set<StmtNum>> actual = read->GetAllCauseStmts(RefType::kAssignRef);
             Assert::IsTrue(actual->find(29) != actual->end());
             Assert::IsTrue(actual->find(30) != actual->end());
             Assert::IsTrue(actual->find(38) != actual->end());
         }
+
 
         TEST_METHOD(TestIsEmpty)
         {

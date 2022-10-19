@@ -444,19 +444,31 @@ bool ReadPKBManager::IsAffectsStoreEmpty() {
     return pkb.affects_manager_.IsEmpty();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt) {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type) {
+    if (effect_stmt_type != RefType::kStmtRef && effect_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetEffectStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt) {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type) {
+    if (cause_stmt_type != RefType::kStmtRef && cause_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts() {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts(RefType effect_stmt_type) {
+    if (effect_stmt_type != RefType::kStmtRef && effect_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetAllEffectStmts();
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts() {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmts(RefType cause_stmt_type) {
+    if (cause_stmt_type != RefType::kStmtRef && cause_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetAllCauseStmts();
 }
 
@@ -469,11 +481,17 @@ bool ReadPKBManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
     return pkb.affects_manager_.CheckAffectsT(cause, effect);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt) {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type) {
+    if (effect_stmt_type != RefType::kStmtRef && effect_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetAllEffectStmtsFromStmt(stmt);
 }
 
-std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt) {
+std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type) {
+    if (cause_stmt_type != RefType::kStmtRef && cause_stmt_type != RefType::kAssignRef) {
+        return std::make_shared<std::unordered_set<StmtNum>>();
+    }
     return pkb.affects_manager_.GetAllCauseStmtsFromStmt(stmt);
 }
 
