@@ -47,54 +47,16 @@ bool AffectsManager::IsEmpty() {
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromStmt(StmtNum stmt) {
     std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
-    Variable& modified_var = GetModifiedVarInAssign(stmt);
-    std::unordered_set<StmtNum> visited;
-    std::queue<StmtNum> queue;
-    queue.push(stmt);
-    while (!queue.empty()) {
-        StmtNum stmt = queue.front();
-        queue.pop();
-        std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = pkb.next_manager_.GetNextStmtsFromStmt(stmt);
-        for (auto child = next_stmts->begin(); child != next_stmts->end(); ++child) {
-            if (visited.find(*child) != visited.end()) {
-                continue;
-            }
-            if (IsAssignStatementUsingVariable(modified_var, *child)) {
-                effect_stmts->insert(*child);
-            }
-            if (!IsDirectlyModified(modified_var, *child)) {
-                visited.insert(*child);
-                queue.push(*child);
-            }
-        }
-    }
+    Variable modified_var = GetModifiedVarInAssign(stmt);
+    AddEffectsStmtsIfUsingVar(effect_stmts, modified_var, stmt);
     return effect_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromStmt(StmtNum stmt) {
     std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = std::make_shared<std::unordered_set<StmtNum>>();
-    std::shared_ptr <std::unordered_set<Variable>> used_var = pkb.uses_manager_.GetVarByStmtNum(stmt);
-    for (auto var = used_var->begin(); var != used_var->end(); ++var) {
-        std::unordered_set<StmtNum> visited;
-        std::queue<StmtNum> queue;
-        queue.push(stmt);
-        while (!queue.empty()) {
-            StmtNum stmt = queue.front();
-            queue.pop();
-            std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetPrevStmtsFromStmt(stmt);
-            for (auto parent = prev_stmts->begin(); parent != prev_stmts->end(); ++parent) {
-                if (visited.find(*parent) != visited.end()) {
-                    continue;
-                }
-                if (IsAssignStatementModifyingVariable(*var, *parent)) {
-                    cause_stmts->insert(*parent);
-                }
-                if (!IsDirectlyModified(*var, *parent)) {
-                    visited.insert(*parent);
-                    queue.push(*parent);
-                }
-            }
-        }
+    std::shared_ptr <std::unordered_set<Variable>> used_vars = pkb.uses_manager_.GetVarByStmtNum(stmt);
+    for (auto used_var = used_vars->begin(); used_var != used_vars->end(); ++used_var) {
+        AddCauseStmtsIfModifyingVar(cause_stmts, *used_var, stmt);
     }
     return cause_stmts;
 }
@@ -138,10 +100,8 @@ bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
     std::shared_ptr<std::unordered_set<Variable>> modified_vars = pkb.modifies_manager_.GetVarByStmtNum(cause);
     std::shared_ptr<std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(effect);
     for (auto iter = modified_vars->begin(); iter != modified_vars->end(); ++iter) {
-        if (uses_vars->find(*iter) != uses_vars->end()) {
-            if (pkb.next_manager_.CheckNextT(cause, effect)) {
-                return true;
-            }
+        if (uses_vars->find(*iter) != uses_vars->end() && pkb.next_manager_.CheckNextT(cause, effect)) {
+            return true;
         }
     }
     return false;
@@ -184,6 +144,52 @@ bool AffectsManager::IsDirectlyModified(Variable var, StmtNum stmt) {
     }
 
     return pkb.modifies_manager_.CheckModifies(stmt, var);
+}
+
+void AffectsManager::AddEffectsStmtsIfUsingVar(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt) {
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum stmt = queue.front();
+        queue.pop();
+        std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = pkb.next_manager_.GetNextStmtsFromStmt(stmt);
+        for (auto child = next_stmts->begin(); child != next_stmts->end(); ++child) {
+            if (visited.find(*child) != visited.end()) {
+                continue;
+            }
+            if (IsAssignStatementUsingVariable(modified_var, *child)) {
+                effect_stmts->insert(*child);
+            }
+            if (!IsDirectlyModified(modified_var, *child)) {
+                visited.insert(*child);
+                queue.push(*child);
+            }
+        }
+    }
+}
+
+void AffectsManager::AddCauseStmtsIfModifyingVar(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var,StmtNum stmt) {
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum stmt = queue.front();
+        queue.pop();
+        std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetPrevStmtsFromStmt(stmt);
+        for (auto parent = prev_stmts->begin(); parent != prev_stmts->end(); ++parent) {
+            if (visited.find(*parent) != visited.end()) {
+                continue;
+            }
+            if (IsAssignStatementModifyingVariable(used_var, *parent)) {
+                cause_stmts->insert(*parent);
+            }
+            if (!IsDirectlyModified(used_var, *parent)) {
+                visited.insert(*parent);
+                queue.push(*parent);
+            }
+        }
+    }
 }
 
 bool AffectsManager::IsAssignStatementModifyingVariable(Variable var, StmtNum stmt) {

@@ -26,6 +26,8 @@ public:
 private:
     bool IsPossibleAffectPair(StmtNum, StmtNum);
     bool IsDirectlyModified(Variable, StmtNum);
+    void AffectsManager::AddEffectsStmtsIfUsingVar(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt);
+    void AddCauseStmtsIfModifyingVar(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var, StmtNum stmt);
     bool IsAssignStatementModifyingVariable(Variable var, StmtNum stmt);
     bool IsAssignStatementUsingVariable(Variable var, StmtNum stmt);
     Variable GetModifiedVarInAssign(StmtNum);
