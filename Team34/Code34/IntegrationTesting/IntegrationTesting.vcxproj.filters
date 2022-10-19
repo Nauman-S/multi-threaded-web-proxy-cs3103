@@ -32,5 +32,8 @@
     <ClCompile Include="QPS\TestQPSComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SP_PKB\TestAffectsRelationship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

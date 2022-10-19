@@ -784,7 +784,7 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel) {
     else if (type == ClauseType::kAffectsRel) {
 
     }
-    else if (type == ClauseType::kAffectsTRel) {
+    /* else if (type == ClauseType::kAffectsTRel) {
 
     }
     */
