@@ -106,13 +106,43 @@ bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmtsFromStmt(StmtNum stmt) {
-    // TODO: get all stmts that modify and BFS to find all stmts that Uses the same variable
-    return std::shared_ptr<std::unordered_set<StmtNum>>();
+    std::shared_ptr<std::unordered_set<StmtNum>> all_effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return all_effect_stmts;
+    }
+
+    Variable modified_var = GetModifiedVarInAssign(stmt);
+    std::shared_ptr<std::unordered_set<StmtNum>> all_next_stmts = pkb.next_manager_.GetAllNextStmtsFromStmt(stmt);
+    for (auto iter = all_next_stmts->begin(); iter != all_next_stmts->end(); ++iter) {
+        if (!IsAssignStmt(*iter)) {
+            continue;
+        }
+        std::shared_ptr <std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(*iter);
+        if (uses_vars->find(modified_var) != uses_vars->end()) {
+            all_effect_stmts->insert(*iter);
+        }
+    }
+    return all_effect_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmtsFromStmt(StmtNum stmt) {
-    // TODO: get all stmts that uses and reverse BFS to find all stmts that Modifies the same variable
-    return std::shared_ptr<std::unordered_set<StmtNum>>();
+    std::shared_ptr<std::unordered_set<StmtNum>> all_cause_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return all_cause_stmts;
+    }
+
+    std::shared_ptr<std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(stmt);
+    std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
+    for (auto iter = all_prev_stmts->begin(); iter != all_prev_stmts->end(); ++iter) {
+        if (!IsAssignStmt(*iter)) {
+            continue;
+        }
+        Variable modified_var = GetModifiedVarInAssign(*iter);
+        if (uses_vars->find(modified_var) != uses_vars->end()) {
+            all_cause_stmts->insert(*iter);
+        }
+    }
+    return all_cause_stmts;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAllAffectsTRelations() {
