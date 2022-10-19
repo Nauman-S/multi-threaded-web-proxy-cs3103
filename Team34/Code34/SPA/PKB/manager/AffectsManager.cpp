@@ -155,9 +155,6 @@ void AffectsManager::AddEffectsStmtsBFS(std::shared_ptr<std::unordered_set<StmtN
         std::for_each(next_stmts->begin(), next_stmts->end(), [&](StmtNum stmt) {
             AddEffectsStmtsIfUsingVar(stmt, visited, queue, effect_stmts, modified_var);
         });
-        for (auto child = next_stmts->begin(); child != next_stmts->end(); ++child) {
-            
-        }
     }
 }
 
@@ -186,9 +183,6 @@ void AffectsManager::AddCauseStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum
         std::for_each(prev_stmts->begin(), prev_stmts->end(), [&](StmtNum stmt) {
             AddCauseStmtsIfModifyingVar(stmt, visited, queue, cause_stmts, used_var);
         });
-        for (auto parent = prev_stmts->begin(); parent != prev_stmts->end(); ++parent) {
-            
-        }
     }
 }
 
