@@ -169,7 +169,7 @@ void AffectsManager::AddEffectsStmtsIfUsingVar(std::shared_ptr<std::unordered_se
     }
 }
 
-void AffectsManager::AddCauseStmtsIfModifyingVar(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var,StmtNum stmt) {
+void AffectsManager::AddCauseStmtsIfModifyingVar(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var, StmtNum stmt) {
     std::unordered_set<StmtNum> visited;
     std::queue<StmtNum> queue;
     queue.push(stmt);
