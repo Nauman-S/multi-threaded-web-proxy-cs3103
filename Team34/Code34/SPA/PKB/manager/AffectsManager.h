@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_set>
 #include <vector>
+#include <queue>
 
 #include "../../Utils/type/TypeDef.h"
 #include "../../Utils/type/RefType.h"
@@ -26,8 +27,10 @@ public:
 private:
     bool IsPossibleAffectPair(StmtNum, StmtNum);
     bool IsDirectlyModified(Variable, StmtNum);
-    void AffectsManager::AddEffectsStmtsIfUsingVar(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt);
-    void AddCauseStmtsIfModifyingVar(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var, StmtNum stmt);
+    void AddEffectsStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt);
+    void AddEffectsStmtsIfUsingVar(StmtNum stmt, std::unordered_set<StmtNum>& visited, std::queue<StmtNum>& queue, std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var);
+    void AddCauseStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var, StmtNum stmt);
+    void AddCauseStmtsIfModifyingVar(StmtNum stmt, std::unordered_set<StmtNum>& visited, std::queue<StmtNum>& queue, std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var);
     bool IsAssignStatementModifyingVariable(Variable var, StmtNum stmt);
     bool IsAssignStatementUsingVariable(Variable var, StmtNum stmt);
     Variable GetModifiedVarInAssign(StmtNum);
