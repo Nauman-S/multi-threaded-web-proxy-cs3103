@@ -33,6 +33,7 @@
 
 # Executables
 *.exe
+!AutoTester.exe
 *.out
 *.app
 
