@@ -25,6 +25,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with: # This is so the Pipe loads the LFS-tracked files
+          lfs: true
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -54,6 +56,4 @@ jobs:
 
     - name: Run executable
       run: ./${{env.AUTO_TESTER_FILE_PATH}}
-      with: # This is so the Pipe loads the LFS-tracked files
-          lfs: true
 
