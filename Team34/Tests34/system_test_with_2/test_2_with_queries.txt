@@ -54,14 +54,14 @@ Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2
 85
 40000
 14 - variable.varName, Single Return
-print p; assign a; while w1, w2; variable v;
-Select v.varName pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) and pattern w1(v,_)
-name
+assign a; while w1, w2; variable v;
+Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
+none
 40000
 15 - variable.varName, Multiple
-variable v;
-Select <v.varName, v.varName> such that  Modifies("Echo",v) pattern a(v, _"    j + 10  "_)
-name
+variable v; assign a;
+Select v.varName such that  Modifies("Echo",v) pattern a(v, _"   j +   10  "_)
+j
 40000
 16 - variable.varName, BOOLEAN
 procedure p,q; variable v;
