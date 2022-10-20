@@ -1,7 +1,7 @@
 name: build and run VS tests
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" , "ns-system-test"]
   pull_request:
     branches: [ "master" ]
 
@@ -9,6 +9,7 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: ./Team34/Code34
   UNIT_TESTING_FILE_PATH: Team34\Code34\Release\UnitTesting.dll
+  POWER_SHELL_FILE_PATH: Team34\Tests34\auto_testing.ps1
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -45,3 +46,7 @@ jobs:
       id: run_vstest
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: vstest.console.exe /Platform:x86 ${{env.UNIT_TESTING_FILE_PATH}}
+
+    - name: PowerShell script
+      run: |
+          ./${{POWER_SHELL_FILE_PATH}} -gui 0

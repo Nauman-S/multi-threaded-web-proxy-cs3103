@@ -1,3 +1,7 @@
+param (
+    [bool]$gui = $true
+)
+
 Write-Output "AutoTester Script has begun"
 $autotester_file = "..\Code34\Debug\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
@@ -48,5 +52,8 @@ while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
   taskkill /pid $pidNumber /f
   $foundProcesses = netstat -ano | findstr :$port
 }
-Start-Process "http://localhost:2333"
-& python -m http.server $port
+
+if ($gui) {
+    Start-Process "http://localhost:2333"
+    & python -m http.server $port
+}
