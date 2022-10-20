@@ -1,7 +1,7 @@
 name: build and run VS tests
 on:
   push:
-    branches: [ "master" , "ns-system-test"]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -50,7 +50,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: vstest.console.exe /Platform:x86 ${{env.UNIT_TESTING_FILE_PATH}}
 
-    - name: PowerShell script
+    - name: Run System Tests
       working-directory: ${{env.AUTO_TESTING_DIRECTORY}}
       run: |
           ./auto_testing.ps1 -gui 0 -autotester_file ${{env.AUTO_TESTER_FILE_PATH}}
