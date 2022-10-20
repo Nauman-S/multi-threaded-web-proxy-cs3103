@@ -57,6 +57,7 @@ jobs:
     - name: Run executable
       run: ./${{env.AUTO_TESTER_FILE_PATH}}
 
-    - name: Run executable
-      run: dir Team34/Code34
+    - name: Run dir
+      working-directory: Team34/Code34
+      run: dir 
 
