@@ -95,6 +95,14 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAll
 
 // APIs related to Affects* relation
 bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
+    // 1. Check if possible affects pair
+    // 2. Maintain a set of variable
+    // 3. Initialise set with modified var (LHS) of cause statement
+    // 4. On BFS, whenever reach an assignment, we will check whether uses any variable in set
+    //      If yes: this statement is a 'pitstop', add LHS to the set
+    // 5. On BFS, whenever reach call | read | assign, we will check modified var and delete from set
+
+
     std::shared_ptr<std::unordered_set<Variable>> modified_vars = pkb.modifies_manager_.GetVarByStmtNum(cause);
     std::shared_ptr<std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(effect);
     for (auto iter = modified_vars->begin(); iter != modified_vars->end(); ++iter) {
