@@ -39,23 +39,22 @@ foreach($folder in $directories) {
     }
 }
 
-$foundProcesses = netstat -ano | findstr :$port
-$activePortPattern = ":$port\s.+LISTENING\s+\d+$"
-$pidNumberPattern = "\d+$"
-
-while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
-  $matchesInfo = $foundProcesses | Select-String -Pattern $activePortPattern
-  $firstMatch = $matchesInfo.Matches.Get(0).Value
-
-  $pidNumber = [regex]::match($firstMatch, $pidNumberPattern).Value
-
-  taskkill /pid $pidNumber /f
-  $foundProcesses = netstat -ano | findstr :$port
-}
-
 if ($gui) {
-    Write-Output "Starting python server"
+    $foundProcesses = netstat -ano | findstr :$port
+    $activePortPattern = ":$port\s.+LISTENING\s+\d+$"
+    $pidNumberPattern = "\d+$"
+
+    while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
+    $matchesInfo = $foundProcesses | Select-String -Pattern $activePortPattern
+    $firstMatch = $matchesInfo.Matches.Get(0).Value
+
+    $pidNumber = [regex]::match($firstMatch, $pidNumberPattern).Value
+
+    taskkill /pid $pidNumber /f
+    $foundProcesses = netstat -ano | findstr :$port
+    }
     Start-Process "http://localhost:2333"
     & python -m http.server $port
 }
+
 Exit 0
