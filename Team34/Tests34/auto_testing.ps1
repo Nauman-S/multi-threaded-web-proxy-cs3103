@@ -54,6 +54,8 @@ while ($foundProcesses | Select-String -Pattern $activePortPattern -Quiet) {
 }
 
 if ($gui) {
+    Write-Output "Starting python server"
     Start-Process "http://localhost:2333"
     & python -m http.server $port
 }
+Exit
