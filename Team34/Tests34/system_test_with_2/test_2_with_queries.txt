@@ -1,3 +1,8 @@
+14 - variable.varName, Single Return
+assign a; while w1, w2; variable v;
+Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
+none
+40000
 1 - procedure.procName , single return
 procedure p, q;
 Select p such that Calls (p, q) with q.procName = "Echo" such that Modifies (p, "z")
@@ -52,11 +57,6 @@ Select q such that Follows*(p,q) with q.varName = "f" such that Calls (proc1, pr
 print p,q; procedure proc1,proc2;assign a;variable v;
 Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
 85
-40000
-14 - variable.varName, Single Return
-assign a; while w1, w2; variable v;
-Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
-none
 40000
 15 - variable.varName, Multiple
 variable v; assign a;
