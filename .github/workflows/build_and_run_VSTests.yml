@@ -53,7 +53,7 @@ jobs:
           ./${{env.POWER_SHELL_FILE_PATH}} -gui 0
 
     - name: Run executable
-      with:
-        script: |
-            ./${{env.AUTO_TESTER_FILE_PATH}}
+      run: ./${{env.AUTO_TESTER_FILE_PATH}}
+      with: # This is so the Pipe loads the LFS-tracked files
+          lfs: true
 
