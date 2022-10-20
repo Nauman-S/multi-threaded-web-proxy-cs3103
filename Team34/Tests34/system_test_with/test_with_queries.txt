@@ -188,3 +188,38 @@ read rd; constant c;
 Select c with c.value = rd.varName
 
 5000
+39 - Test procedure proc name
+procedure p1;
+Select p1.procName with p1.procName = "findPrimes"
+findPrimes
+5000
+40 - Test call proc name and select stmt num
+procedure p; call c;
+Select c.stmt# with c.procName = "printPrime"
+8
+5000
+41 - Test call proc name and select procName
+procedure p; call c;
+Select c.procName with c.procName = "printPrime"
+printPrime
+5000
+42 - Test call proc name 
+procedure p; call c;
+Select <c, c.procName> with "checkPrime" = c.procName
+6 checkPrime
+5000
+43 - Test variable var name
+variable v;
+Select v.varName with v.varName = "x"
+x
+5000
+44 - Test print stmt# and varName
+print p;
+Select <p.stmt#, p, p.varName> with p.varName = "dummy"
+19 19 dummy, 20 20 dummy
+5000
+45 - Test print varName only to check deduplication
+print p;
+Select p.varName with p.varName = "dummy"
+dummy
+5000

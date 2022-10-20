@@ -19,5 +19,8 @@ public:
     bool IsAttrTypeDefault() override { return attr_type_ == default_attr_type_; }
 
     AttrType GetDefaultAttrType() override { return default_attr_type_; }
+
+    std::shared_ptr<Ref> Clone() override { return std::make_shared<ConstRef>(*this);
+    }
 };
 

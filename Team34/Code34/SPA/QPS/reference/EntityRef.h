@@ -23,5 +23,5 @@ public:
 	std::shared_ptr<Ref> static EntityRef::CreateReference(std::string design_entity_, std::string synonym_);
 
 	std::shared_ptr<Ref> static EntityRef::CreateReference(std::string design_entity_, std::string synonym_, AttrType attr_type);
-private:
+
 };

@@ -14,4 +14,6 @@ public:
     bool IsAttrTypeDefault() override { return true; }
 
     AttrType GetDefaultAttrType() override { return AttrType::kConst; }
+
+    std::shared_ptr<Ref> Clone() override { return std::make_shared<TempRef>(*this); }
 };

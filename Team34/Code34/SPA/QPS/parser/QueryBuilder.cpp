@@ -84,13 +84,13 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
 
     std::vector<shared_ptr<Ref>> synonyms;
 
-    std::shared_ptr<Ref> curr_syn = ParseSynonym(design_entity);
+    std::shared_ptr<Ref> curr_syn = ParseDeclaredSynonym(design_entity);
     synonyms.push_back(curr_syn);
 
     while (lexer_->HasComma()) {
         lexer_->MatchComma();
 
-        curr_syn = ParseSynonym(design_entity);
+        curr_syn = ParseDeclaredSynonym(design_entity);
         synonyms.push_back(curr_syn);
     }
 
@@ -103,14 +103,9 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
     return synonyms;
 }
 
-std::shared_ptr<Ref> QueryBuilder::ParseSynonym(std::string& design_entity) {
+std::shared_ptr<Ref> QueryBuilder::ParseDeclaredSynonym(std::string& design_entity) {
     std::string syn_name = lexer_->MatchIdentity();
     shared_ptr<Ref> syn = EntityRef::CreateReference(design_entity, syn_name);
-
-    if (lexer_->HasFullStop()) {
-        AttrType attr_type = ParseAttr(syn);
-        syn = EntityRef::CreateReference(design_entity, syn_name, attr_type);
-    }
     return syn;
 }
 
@@ -167,18 +162,18 @@ shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
         return select_tuple;
     }
     else if (lexer_->HasIdentity()) {
-        syn_name = lexer_->MatchIdentity();
-        select_tuple->push_back(GetDeclaredSyn(syn_name));
+        
+        shared_ptr<Ref> select_syn = ParseSelectSyn();
+        select_tuple->push_back(select_syn);
+        return select_tuple;
     }
     else if (lexer_->HasLeftAngle()) {
         lexer_->MatchLeftAngle();
-        syn_name = lexer_->MatchIdentity();
-        select_tuple->push_back(GetDeclaredSyn(syn_name));
+        select_tuple->push_back(ParseSelectSyn());
 
         while (lexer_->HasComma()) {
             lexer_->MatchComma();
-            syn_name = lexer_->MatchIdentity();
-            select_tuple->push_back(GetDeclaredSyn(syn_name));
+            select_tuple->push_back(ParseSelectSyn());
         }
         lexer_->MatchRightAngle();
     }
@@ -187,7 +182,6 @@ shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
     }
     return select_tuple;
 }
-
 
 std::vector<shared_ptr<Rel>> QueryBuilder::ParseRelations() {
     std::vector<shared_ptr<Rel>> relations;
@@ -468,6 +462,16 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
     throw SemanticError("Synonym " + name + " is not declared before use.");
 }
 
+shared_ptr<Ref> QueryBuilder::ParseSelectSyn() {
+    string syn_name = lexer_->MatchIdentity();
+    shared_ptr<Ref> select_syn = GetDeclaredSyn(syn_name) -> Clone();
+    
+    if (lexer_->HasFullStop()) {
+        AttrType attr_type = ParseAttr(select_syn);
+        select_syn->SetAttrType(attr_type);
+    }
+    return select_syn;
+}
 
 shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> declared_synonyms_) {
     if (this->lexer_->HasComma()) {
