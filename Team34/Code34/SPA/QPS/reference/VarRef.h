@@ -21,4 +21,6 @@ public:
     AttrType GetDefaultAttrType() override { return default_attr_type_; }
 
     inline std::string TestString() { return "This is a VarRef"; }
+
+    std::shared_ptr<Ref> Clone() override { return std::make_shared<VarRef>(*this); }
 };
