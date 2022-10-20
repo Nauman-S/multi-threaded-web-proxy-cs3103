@@ -10,7 +10,7 @@ env:
   SOLUTION_FILE_PATH: ./Team34/Code34
   UNIT_TESTING_FILE_PATH: Team34\Code34\Release\UnitTesting.dll
   POWER_SHELL_FILE_PATH: Team34\Tests34\auto_testing.ps1
-  AUTO_TESTER_FILE_PATH: Team34/Code34/Release/Debug/Autotester.exe
+  AUTO_TESTER_FILE_PATH: Team34/Code34/Release/Autotester.exe
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -56,8 +56,4 @@ jobs:
 
     - name: Run executable
       run: ./${{env.AUTO_TESTER_FILE_PATH}}
-
-    - name: Run dir
-      working-directory: Team34/Code34
-      run: dir 
 
