@@ -3,7 +3,7 @@ param (
 )
 
 Write-Output "AutoTester Script has begun"
-$autotester_file = "..\Code34\Debug\AutoTester.exe"
+$autotester_file = ".\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
 $port = 2333
 
