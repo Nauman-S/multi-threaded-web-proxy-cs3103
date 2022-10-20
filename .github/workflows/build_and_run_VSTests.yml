@@ -49,4 +49,4 @@ jobs:
 
     - name: PowerShell script
       run: |
-          ./${{POWER_SHELL_FILE_PATH}} -gui 0
+          ./${{env.POWER_SHELL_FILE_PATH}} -gui 0
