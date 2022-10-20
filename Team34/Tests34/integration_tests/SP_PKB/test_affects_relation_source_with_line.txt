@@ -1,0 +1,64 @@
+procedure noNest {
+1.  x = 2;
+2.  y = 3;
+3.  z = 3 + x;
+4.  x = 5 + 2;
+5.  z = 1 + x;
+6.  z = y;
+}
+
+procedure SingleIf {
+7.  x = 2;
+8.  if (x == 1) then {
+9.     a = 1;
+10.    x = 4;
+  } else {
+11.    z = 3 + x;
+  }
+12. y = x;
+}
+
+procedure SingleLoop {
+13.  x = 1;
+14.  while (x < 10) {
+15.    y = x + y;
+16.    x = x + 1;
+  }
+17.  z = x;
+}
+
+procedure ModifiedByRead {
+18.  x = 2;
+19.  y = 3;
+20.  z = 4;
+21.  read z;
+22.  a = 3 + x + y + z;
+23.  b = 3 + y + z;
+}
+
+procedure ModifiedByCalls {
+24.  x = 2;
+25.  y = 2;
+26.  call ModifiesX;
+27.  a = x + y; 
+}
+
+procedure ModifiesX {
+28.  x = 1;
+}
+
+procedure IfWhileProcedure {
+29.  x = a + b;
+30.  y = 3;
+31.  if (x == 2) then {
+32.    z = 1 + y;
+  } else {
+33.    z = 3 + x;
+  }
+34.  x = a;
+35.  while (x == 0) {
+36.    x = 1;
+37.    z = 3 + a;
+38.    a = 3;
+  }
+}

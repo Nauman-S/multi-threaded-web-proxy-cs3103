@@ -12,5 +12,7 @@ public:
     const RefType GetRefType() override { return RefType::kPrintRef; }
 
     std::string GetAttrValue(DataRetriever& data_retriever, std::string& value) override;
+
+    std::shared_ptr<Ref> Clone() override { return std::make_shared<PrintRef>(*this); }
 };
 

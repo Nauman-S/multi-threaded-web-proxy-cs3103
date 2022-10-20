@@ -28,7 +28,7 @@ private:
 
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatements();
 	std::vector<shared_ptr<Ref>>  ParseDeclarationStatement();
-	std::shared_ptr<Ref> ParseSynonym(std::string&);
+	std::shared_ptr<Ref> ParseDeclaredSynonym(std::string&);
 
 	shared_ptr<Query> ParseSelectStatement();	
 	std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();
@@ -76,6 +76,7 @@ private:
 
 	shared_ptr<Ref> GetDeclaredSyn(string name);
 	shared_ptr<Ref> GetDeclaredSyn(string name, RefType attr_name);
+	shared_ptr<Ref> ParseSelectSyn();
 	bool ContainsSynonym(string syn_name);
 	
 

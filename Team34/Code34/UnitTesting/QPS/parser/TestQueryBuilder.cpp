@@ -1270,5 +1270,54 @@ namespace UnitTesting
 			}
 			Assert::IsTrue(semantic_error_thrown);
 		}
+
+		TEST_METHOD(Valid_Select_Single_Attr_Proc) {
+			const std::string query_string_ = "procedure p1; Select p1.procName with p1.procName = \"findPrimes\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kProcRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetAttrType() == AttrType::kProcName);
+		}
+
+		TEST_METHOD(Valid_Select_Single_Attr_Var) {
+			const std::string query_string_ = "procedure p1; variable v; Select v.varName with p1.procName = \"findPrimes\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kVarRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetAttrType() == AttrType::kVarName);
+		}
+
+		TEST_METHOD(Valid_Select_Single_Attr_Call_ProcName) {
+			const std::string query_string_ = "procedure p1; call c; Select c.procName with p1.procName = \"findPrimes\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kCallRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetAttrType() == AttrType::kProcName);
+		}
+
+		TEST_METHOD(Valid_Select_Single_Attr_Call_StmtNum) {
+			const std::string query_string_ = "procedure p1; call c; Select c.stmt# with p1.procName = \"findPrimes\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kCallRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetAttrType() == AttrType::kStmtNum);
+		}
+
+		TEST_METHOD(Valid_Select_Multiple_Attr) {
+			const std::string query_string_ = "procedure p1; call c; Select <c.stmt#, p1.procName> with p1.procName = \"findPrimes\"";
+			shared_ptr<Query> query_ = query_builder_->GetQuery(query_string_);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetRefType() == RefType::kCallRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(0)->GetAttrType() == AttrType::kStmtNum);
+
+			Assert::IsTrue(query_->GetSelectTuple()->at(1)->GetRefType() == RefType::kProcRef);
+			Assert::IsTrue(query_->GetSelectTuple()->at(1)->GetValType() == ValType::kSynonym);
+			Assert::IsTrue(query_->GetSelectTuple()->at(1)->GetAttrType() == AttrType::kProcName);
+		}
 	};
 }
