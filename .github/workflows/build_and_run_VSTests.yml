@@ -52,8 +52,7 @@ jobs:
       run: |
           ./${{env.POWER_SHELL_FILE_PATH}} -gui 0
 
-    - name: PowerShell script
-      uses: Amadevus/pwsh-script@v2.0.3
+    - name: Run executable
       with:
         script: |
             ./${{env.AUTO_TESTER_FILE_PATH}}
