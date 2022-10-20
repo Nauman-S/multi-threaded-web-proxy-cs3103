@@ -1,6 +1,6 @@
 #include "OptimizedClauseGrouper.h"
 
-
+#include <algorithm>
 
 #include "../Clause.h"
 #include "../ClauseGroup.h"
@@ -93,47 +93,43 @@ std::unordered_map<string, vector<shared_ptr<Clause>>> OptimizedClauseGrouper::C
 }
 
 vector<shared_ptr<Clause>> OptimizedClauseGrouper::OptimizeOrderWithinGroup(vector<shared_ptr<Clause>> clauses) {
-	unordered_set<shared_ptr<Clause>> remained_clause_set(clauses.begin(), clauses.end());
-	vector<shared_ptr<Clause>> optimized_clauses;
+	if (clauses.size() == 0) {
+		return clauses;
+	}
 	PriorityManager priority_manager;
+	auto priority_comparator = [&priority_manager](shared_ptr<Clause> a, shared_ptr<Clause> b) { return a->GetPriority(priority_manager) < b->GetPriority(priority_manager); };
+	std::sort(clauses.begin(), clauses.end(), priority_comparator);
 
+	vector<shared_ptr<Clause>> optimized_clauses;
 	unordered_set<string> used_syns;
-
-
-	auto priority_compare = [&priority_manager](shared_ptr<Clause> a, shared_ptr<Clause> b) { return a->GetPriority(priority_manager) < b->GetPriority(priority_manager); };
-	std::set<shared_ptr<Clause>, decltype(priority_compare)> waiting_clause_set(priority_compare);
-
-	// Step 1: select the clause with highest priority
-	shared_ptr<Clause> smallest_clause = clauses.at(0);
-	for (shared_ptr<Clause> clause : remained_clause_set) {
-		if (clause->GetPriority(priority_manager) < smallest_clause->GetPriority(priority_manager)) {
-			smallest_clause = clause;
-		}
-	}
-	remained_clause_set.erase(smallest_clause);
-	AddClauseToList(smallest_clause, optimized_clauses, used_syns);
 	
-
-	// Step 2: In each iteration, add clause with used synonyms to waiting set,
-	//			and add the highest priority clause in waiting set to optimized clauses
-	while (remained_clause_set.size() > 0) {
-		vector<shared_ptr<Clause>> curr_waiting_clauses = GetWaitingClauses(remained_clause_set, used_syns);
-		for (shared_ptr<Clause> clause : curr_waiting_clauses) {
-			remained_clause_set.erase(clause);
-			waiting_clause_set.insert(clause);
+	unsigned num_of_clauses = clauses.size();
+	vector<bool> is_clause_used(num_of_clauses, false);
+	vector<bool> can_clause_be_used(num_of_clauses, false);
+	can_clause_be_used[0] = true;
+	
+	shared_ptr<Clause> smallest_clause;
+	for (unsigned count = 0; count < num_of_clauses; ++count) {
+		for (unsigned idx = 0; idx < num_of_clauses; ++idx) {
+			if (!is_clause_used[idx] && can_clause_be_used[idx]) {
+				smallest_clause = clauses[idx];
+				is_clause_used[idx] = true;
+				break;
+			}
 		}
-		smallest_clause = *waiting_clause_set.begin();
-		waiting_clause_set.erase(smallest_clause);
+		
 		AddClauseToList(smallest_clause, optimized_clauses, used_syns);
-	}
+		for (unsigned idx = 0; idx < clauses.size(); ++idx) {
+			if (is_clause_used[idx]) {
+				continue;
+			}
 
-	// Step 3: keep adding the highest priority clause in waiting set to optimized clauses
-	while (waiting_clause_set.size() > 0) {
-		smallest_clause = *waiting_clause_set.begin();
-		waiting_clause_set.erase(smallest_clause);
-		AddClauseToList(smallest_clause, optimized_clauses, used_syns);
+			shared_ptr<Clause> clause = clauses[idx];
+			if (ContainsUsedSyns(clause, used_syns)) {
+				can_clause_be_used[idx] = true;
+			}
+		}
 	}
-
 	return optimized_clauses;
 }
 
