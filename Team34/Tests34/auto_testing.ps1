@@ -1,9 +1,9 @@
 param (
-    [bool]$gui = $true
+    [bool]$gui = $true,
+    [string]$autotester_file = "..\Code34\Debug\AutoTester.exe"
 )
 
 Write-Output "AutoTester Script has begun"
-$autotester_file = "..\Code34\Debug\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
 $port = 2333
 

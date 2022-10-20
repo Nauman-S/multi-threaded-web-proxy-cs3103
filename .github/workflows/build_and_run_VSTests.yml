@@ -52,8 +52,4 @@ jobs:
 
     - name: PowerShell script
       run: |
-          ./${{env.POWER_SHELL_FILE_PATH}} -gui 0
-
-    - name: Run executable
-      run: ./${{env.AUTO_TESTER_FILE_PATH}}
-
+          ./${{env.POWER_SHELL_FILE_PATH}} -gui 0 -autotester_file ${{env.AUTO_TESTER_FILE_PATH}}
