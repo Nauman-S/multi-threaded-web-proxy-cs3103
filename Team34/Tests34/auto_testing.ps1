@@ -11,7 +11,7 @@ if ($condition) {
     Write-Output "AutoTester binary is found"
 } else {
     Write-Output "AutoTester binary is not found"
-    Exit
+    Exit 1
 }
 
 
@@ -58,4 +58,4 @@ if ($gui) {
     Start-Process "http://localhost:2333"
     & python -m http.server $port
 }
-Exit
+Exit 0
