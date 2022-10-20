@@ -3,16 +3,16 @@ param (
 )
 
 Write-Output "AutoTester Script has begun"
-$autotester_file = ".\AutoTester.exe"
+$autotester_file = "..\Code34\Debug\AutoTester.exe"
 $condition = Test-Path -Path $autotester_file -PathType Leaf
 $port = 2333
 
-if ($condition) {
-    Write-Output "AutoTester binary is found"
-} else {
-    Write-Output "AutoTester binary is not found"
-    Exit
-}
+# if ($condition) {
+#     Write-Output "AutoTester binary is found"
+# } else {
+#     Write-Output "AutoTester binary is not found"
+#     Exit
+# }
 
 
 
