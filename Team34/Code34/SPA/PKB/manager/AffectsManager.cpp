@@ -110,16 +110,23 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmtsFr
     if (!IsAssignStmt(stmt)) {
         return all_effect_stmts;
     }
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum node = queue.front();
+        queue.pop();
 
-    Variable modified_var = GetModifiedVarInAssign(stmt);
-    std::shared_ptr<std::unordered_set<StmtNum>> all_next_stmts = pkb.next_manager_.GetAllNextStmtsFromStmt(stmt);
-    for (auto iter = all_next_stmts->begin(); iter != all_next_stmts->end(); ++iter) {
-        if (!IsAssignStmt(*iter)) {
+        if (visited.find(node) != visited.end()) {
             continue;
         }
-        std::shared_ptr <std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(*iter);
-        if (uses_vars->find(modified_var) != uses_vars->end()) {
-            all_effect_stmts->insert(*iter);
+
+        visited.insert(node);
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(node);
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
         }
     }
     return all_effect_stmts;
@@ -130,16 +137,23 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmtsFro
     if (!IsAssignStmt(stmt)) {
         return all_cause_stmts;
     }
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum node = queue.front();
+        queue.pop();
 
-    std::shared_ptr<std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(stmt);
-    std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
-    for (auto iter = all_prev_stmts->begin(); iter != all_prev_stmts->end(); ++iter) {
-        if (!IsAssignStmt(*iter)) {
+        if (visited.find(node) != visited.end()) {
             continue;
         }
-        Variable modified_var = GetModifiedVarInAssign(*iter);
-        if (uses_vars->find(modified_var) != uses_vars->end()) {
-            all_cause_stmts->insert(*iter);
+
+        visited.insert(node);
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetCauseStmtsFromStmt(node);
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
         }
     }
     return all_cause_stmts;
