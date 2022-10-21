@@ -1,3 +1,8 @@
+14 - variable.varName, Single Return
+assign a; while w1, w2; variable v;
+Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
+none
+40000
 1 - procedure.procName , single return
 procedure p, q;
 Select p such that Calls (p, q) with q.procName = "Echo" such that Modifies (p, "z")
@@ -53,11 +58,6 @@ print p,q; procedure proc1,proc2;assign a;variable v;
 Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
 85
 40000
-14 - variable.varName, Single Return
-assign a; while w1, w2; variable v;
-Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
-none
-40000
 15 - variable.varName, Multiple
 variable v; assign a;
 Select v.varName such that  Modifies("Echo",v) pattern a(v, _"   j +   10  "_)
@@ -72,4 +72,29 @@ FALSE
 read r; variable v; procedure p,q;
 Select r such that Calls*(p,q) and Modifies (p, v) and Modifies (q,v) with r.varName = v.varName
 14, 2, 27, 28, 35, 41, 58, 64
+40000
+18 - read.varName, Multiple
+read r; if ifs1, ifs2;
+Select <r.varName,r.varName> such that Parent*(ifs1, ifs2) and Parent*(ifs2,r) 
+l l, z z
+40000
+19 - read.varName, BOOLEAN
+read r;call c,c2; procedure p , q; variable v; assign a; if ifs1, ifs2;
+Select BOOLEAN such that Calls(p,q) pattern a(v,_"y"_) such that Uses (c, v) and Modifies (q, v) such that Parent(ifs1,ifs2) and Parent (ifs2, r) and Next*(c,c2) with c2.procName = "Bravo"  with r.varName='z' 
+TRUE
+40000
+23 - constant.value, Multiple
+constant BOOLEAN; procedure p,q; stmt s; variable v;
+Select <BOOLEAN.value,p.procName,q.procName>  such that Calls*(p,q) with BOOLEAN.value = s.stmt# such that Uses (s,v) and Modifies (q,v) with p.procName="Echo"
+23 Echo Foxtrot,24 Echo Foxtrot,29 Echo Foxtrot,56 Echo Foxtrot,67 Echo Foxtrot,78 Echo Foxtrot
+40000
+41 - if.stmt#, Single
+if ifs; constant c;
+Select ifs.stmt# with ifs.stmt#=c.value
+23, 78
+40000
+46 - assign.stmt#, BOOLEAN
+assign a; assign a2; variable v;
+Select BOOLEAN pattern a(v,_) such that Next*(a,a2) pattern a2(v,_) with a.stmt# = a2.stmt#
+TRUE
 40000
