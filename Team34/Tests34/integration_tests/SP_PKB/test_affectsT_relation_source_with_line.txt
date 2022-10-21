@@ -1,0 +1,19 @@
+procedure NoNest {
+1.  x = 1;
+2.  y = 2;
+3.  z = x + 1;
+4.  x = z;
+5.  y = y + 1;
+6.  z = x + x;
+}
+
+procedure SingleIf {
+7.  x = 1;
+8.  if (x == 0) then {
+9.    a = x;
+10.    a = a + 1;
+    } else {
+11.    y = x - 1;
+    }
+12.  x = a;
+}

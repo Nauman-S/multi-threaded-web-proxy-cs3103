@@ -125,6 +125,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmtsFr
         std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(node);
         for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
             if (visited.find(*iter) == visited.end()) {
+                all_effect_stmts->insert(*iter);
                 queue.push(*iter);
             }
         }
@@ -152,6 +153,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmtsFro
         std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetCauseStmtsFromStmt(node);
         for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
             if (visited.find(*iter) == visited.end()) {
+                all_cause_stmts->insert(*iter);
                 queue.push(*iter);
             }
         }
