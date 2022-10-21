@@ -1,7 +1,7 @@
 1 - Basic affects
 stmt s;
 Select s such that Affects(1, s)
-3
+3, 4, 6
 5000
 2 - Basic affects
 stmt s;
@@ -15,7 +15,7 @@ Select s such that Affects(9, s)
 5000
 4 - Basic affects
 stmt s;
-Select s such that Next(8, s)
+Select s such that Affects(8, s)
 
 5000
 5 - Basic affects
@@ -26,7 +26,7 @@ Select c such that Affects(1, c)
 6 - Basic affects
 assign a;
 Select a such that Affects(12, a)
-13
+13, 15, 17
 5000
 7 - Basic affects
 assign a;

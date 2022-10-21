@@ -1,5 +1,5 @@
-8 - Basic next
+4 - Basic affects
 stmt s;
-Select s such that Next(s, 2)
-1, 7, 8
+Select s such that Affects(8, s)
+
 5000
