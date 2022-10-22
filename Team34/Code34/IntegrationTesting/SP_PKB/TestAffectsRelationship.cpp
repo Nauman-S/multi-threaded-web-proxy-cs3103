@@ -271,53 +271,5 @@ namespace IntegrationTesting
             Assert::AreEqual(20, int(all_affects->size()));
         }
 
-        TEST_METHOD(CheckAffectsTBasic)
-        {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer_empty_affects = SourceLexer(base_dir + "test_affects_T_source.txt");
-            parser.SetTokens(lexer_empty_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse();
-            extractor.PopulatePKB(root_empty_affects);
-
-            Assert::IsTrue(read->CheckAffectsT(1, 3));
-            Assert::IsTrue(read->CheckAffectsT(1, 4));
-            Assert::IsFalse(read->CheckAffectsT(5, 8));
-        }
-
-        TEST_METHOD(CheckAffectsTCalls) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(10, 14));
-            Assert::IsTrue(read->CheckAffectsT(11, 14));
-        }
-
-        TEST_METHOD(CheckAffectsTWhileStmt) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(15, 17));
-            Assert::IsTrue(read->CheckAffectsT(19, 18));
-            Assert::IsTrue(read->CheckAffectsT(19, 19));
-        }
-
-        TEST_METHOD(CheckAffectsTIfStmt) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(20, 25));
-            Assert::IsTrue(read->CheckAffectsT(21, 27));
-        }
-
-        TEST_METHOD(CheckGetAllAffectsT)
-        {
-
-            // Repopulate PKB in event of random order test
-            write->ResetPKB();
-            SourceLexer lexer = SourceLexer(base_dir + "test_affects_relation_source.txt");
-            SourceParser parser_re;
-            parser_re.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser_re.Parse();
-            DesignExtractor extractor;
-            extractor.PopulatePKB(root);
-        }
     };
 }
