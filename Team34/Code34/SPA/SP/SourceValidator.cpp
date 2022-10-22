@@ -33,6 +33,9 @@ bool SourceValidator::ValidateProcedure() {
     if (tokens->at(idx).GetType() != SourceTokenType::kName) {
         return false;
     }
+    if (std::find(procedure_names.begin(), procedure_names.end(), tokens->at(idx).GetStringVal()) != procedure_names.end()) {
+        return false;
+    }
     procedure_names.push_back(tokens->at(idx++).GetStringVal());
     if (tokens->at(idx++).GetType() != SourceTokenType::kLeftCurly) {
         return false;
