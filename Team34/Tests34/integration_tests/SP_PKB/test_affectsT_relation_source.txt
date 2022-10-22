@@ -17,3 +17,13 @@ procedure SingleIf {
   }
   x = a;
 }
+
+procedure SingleWhile {
+  x = 1;
+  while (x <= 10) {
+    a = x;
+    b = x + x + a;
+    c = a + b;
+  }
+  y = x;
+}
