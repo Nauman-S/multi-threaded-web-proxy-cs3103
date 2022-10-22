@@ -45,6 +45,9 @@ bool AffectsManager::IsEmpty() {
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromStmt(StmtNum stmt) {
     std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return effect_stmts;
+    }
     Variable modified_var = GetModifiedVarInAssign(stmt);
     AddEffectsStmtsBFS(effect_stmts, modified_var, stmt);
     return effect_stmts;
@@ -52,6 +55,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetEffectStmtsFromS
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromStmt(StmtNum stmt) {
     std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return cause_stmts;
+    }
     std::shared_ptr <std::unordered_set<Variable>> used_vars = pkb.uses_manager_.GetVarByStmtNum(stmt);
     for (auto used_var = used_vars->begin(); used_var != used_vars->end(); ++used_var) {
         AddCauseStmtsBFS(cause_stmts, *used_var, stmt);
