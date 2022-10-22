@@ -828,8 +828,7 @@ std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(
         stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == ClauseType::kFollowsTRel) {
-        stmt_set =
-            pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
+        stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
     }
     else if (type == ClauseType::kNextRel) {
         stmt_set = pkb_ptr_->GetNextStmtsFromStmt(lhs_stmt_num, rhs_stmt_type);
@@ -949,16 +948,12 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
     else if (type == ClauseType::kNextTRel) {
         table = pkb_ptr_->GetAllNextTRelations();
     }
-
-    // WIP
-    /*
     else if (type == ClauseType::kAffectsRel) {
-
+        table = pkb_ptr_->GetAllAffectsRelations();
     }
     else if (type == ClauseType::kAffectsTRel) {
-
+        table = pkb_ptr_->GetAllAffectsTRelations();
     }
-    */
     table = FilterStmtTableByTypes(table, lhs_stmt_type, rhs_stmt_type);
 
     return StmtStmtTableToStrStrTable(table);
