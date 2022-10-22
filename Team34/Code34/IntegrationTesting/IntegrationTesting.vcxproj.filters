@@ -35,5 +35,8 @@
     <ClCompile Include="SP_PKB\TestAffectsRelationship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestAffectsTRelationship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
