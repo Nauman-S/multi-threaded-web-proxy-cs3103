@@ -1,0 +1,51 @@
+procedure test {
+    a = 1;            // 1
+    b = a + 1;        // 2
+    call useA;        // 3
+    b = a - 1;        // 4
+    b = a * 1;        // 5
+    b = a % 1;        // 6
+    if(x < 1) then {  // 7
+        b = a * a;    // 8
+    } else {
+        c = b + 1;    // 9
+    }
+    b = a / 1;        // 10
+    call modifyA;     // 11
+    b = a % 2;        // 12
+    b = a + 1;        // 13
+    c = b + 2;        // 14
+    c = b % 2;        // 15
+    read b;           // 16
+    c = b / 2;        // 17
+
+    while (y < 1) {   // 18
+        d = b + 1;    // 19
+        e = e + d;    // 20
+    }
+    f = d + e;        // 21
+
+    g = 1;                     // 22
+    if(x < 1) then {           // 23
+        if(x < 1) then {       // 24
+            if(x < 1) then {   // 25
+                h = g + 1;     // 26
+            } else {
+                h = g + 1;     // 27
+            }
+        } else {
+            h = g + 2;         // 28
+        }
+    } else {
+        h = g * 1;             // 29
+    }
+    i = g % 2;                 // 30
+}
+
+procedure modifyA {
+    read a;                    // 31
+}
+
+procedure useA {
+    print a;                   // 32
+}

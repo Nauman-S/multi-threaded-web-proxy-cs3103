@@ -1,0 +1,38 @@
+procedure wechat {
+	a = a + 1;
+	while (user != name) {
+		b = a + 1;
+		c = (b + 1) % a;
+		if (x > i*j/k) then {
+			d = a - (i+j+k);
+		} else {
+			e = f * k;
+            call telegram;
+		}
+        g = e * d;
+	}
+	if(other == ok) then {
+		while (alpha < beta) {
+			alpha = 999;
+            beta = alpha * 2 % 3;
+            call gmail;
+            gamma = alpha * 3 % 2;
+		}
+	} else {
+		omega = alpha * 2;
+	}
+	theta = alpha + beta + omega;
+}
+
+procedure gmail {
+	p = o * 2+3;
+	q = p % 2 + 2;
+	o = p + q;
+} 
+
+procedure telegram {
+	x = z + 3;
+    y = x * z;
+    z = z + 1;
+}
+

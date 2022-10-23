@@ -1,0 +1,6 @@
+procedure proc1 {
+    read a;
+}
+procedure proc1 {
+    print a;
+}
