@@ -396,11 +396,21 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with) {
         res = make_shared<ResWrapper>(false);
     }
     else if (lhs_type == ValType::kSynonym && rhs_type == ValType::kSynonym) {
-        auto table = GetAllWithClause(with);
-        unordered_map<string, int> syn_to_col = { {with.LhsValue(), 0},
-                                                 {with.RhsValue(), 1} };
-        auto table_res = make_shared<TableRes>(syn_to_col, table);
-        res = make_shared<ResWrapper>(table_res);
+        bool are_same_synonyms = with.LhsValue() == with.RhsValue();
+        bool are_same_attrs = with.LhsAttrType() == with.RhsAttrType();
+        if (are_same_synonyms && are_same_attrs) {
+            res = make_shared<ResWrapper>(true);
+        }
+        else if (are_same_synonyms && !are_same_attrs) {
+            res = make_shared<ResWrapper>(false);
+        }
+        else {
+            auto table = GetAllWithClause(with);
+            unordered_map<string, int> syn_to_col = { {with.LhsValue(), 0},
+                                                     {with.RhsValue(), 1} };
+            auto table_res = make_shared<TableRes>(syn_to_col, table);
+            res = make_shared<ResWrapper>(table_res);
+        }
     }
     else if (lhs_type == ValType::kSynonym) {
         auto rhs_val = with.RhsValue();
