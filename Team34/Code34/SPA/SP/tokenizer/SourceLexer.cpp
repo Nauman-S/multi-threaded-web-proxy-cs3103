@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "..\..\Utils\Token.h"
-#include "..\..\Utils\InvalidTokenException.h"
+#include "..\..\Utils\tokenizer\Token.h"
+#include "..\..\Utils\tokenizer\InvalidTokenException.h"
 #include "SourceToken.h"
 
 using namespace std;

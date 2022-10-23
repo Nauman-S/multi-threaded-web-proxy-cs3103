@@ -5,10 +5,10 @@
 
 #include "Pattern.h"
 #include "../ClauseType.h"
-#include "../reference/AssignRef.h"
-#include "../reference/VarRef.h"
-#include "../reference/ValType.h"
-#include "../../Utils/expression/ExprSpec.h"
+#include "../../reference/AssignRef.h"
+#include "../../reference/VarRef.h"
+#include "../../reference/ValType.h"
+#include "../../../Utils/expression/ExprSpec.h"
 
 
 

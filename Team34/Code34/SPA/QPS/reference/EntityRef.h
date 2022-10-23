@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../reference/Ref.h"
-#include "../AttrType.h"
+#include "../clause/AttrType.h"
 
 #include <string>
 #include <memory>

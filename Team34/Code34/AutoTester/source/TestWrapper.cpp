@@ -16,7 +16,7 @@
 #include "../SPA/QPS/Query.h"
 #include "../SPA/QPS/QueryEvaluator.h"
 
-#include "../SPA/Utils/InvalidTokenException.h"
+#include "../SPA/Utils/tokenizer/InvalidTokenException.h"
 
 using namespace std;
 

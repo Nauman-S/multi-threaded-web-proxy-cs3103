@@ -5,16 +5,14 @@
 
 #include "Rel.h"
 #include "../ClauseType.h"
-#include "../reference/StmtRef.h"
-#include "../reference/ValType.h"
-#include "../query_result/ResWrapper.h"
+#include "../../reference/StmtRef.h"
+#include "../../reference/ValType.h"
+#include "../../query_result/ResWrapper.h"
 //#include "../DataRetriever.h"
 class DataRetriever;  // To avoid cyclic include of visitor pattern
 
 
-class StmtStmtRel :
-    public Rel
-{
+class StmtStmtRel : public Rel {
 protected:
     std::shared_ptr<StmtRef> lhs_ref_;
     std::shared_ptr<StmtRef> rhs_ref_;
