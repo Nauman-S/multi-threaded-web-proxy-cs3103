@@ -36,6 +36,8 @@ private:
     int line_idx = 1;
 
     shared_ptr<vector<SourceToken>> tokens;
+    vector<Procedure> procedure_names;
+    vector<pair<Procedure, Procedure>> calls;
     void IncrementTokenIdx();
     void IncrementLineIdex();
 
