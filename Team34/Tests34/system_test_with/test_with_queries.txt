@@ -226,25 +226,35 @@ dummy
 46 - Test two synonyms of same types
 print pn1, pn2;
 Select <pn1, pn2> with pn1.varName = pn2.varName
-19 20, 20 19
+17 17, 19 19, 19 20, 20 19, 20 20
 5000
 47 - Test two syonyms of same types
 read rd1, rd2;
 Select <rd1, rd2> with rd1.varName = rd2.varName
-
+1 1, 18 18
 5000
 48 - Test two syonyms of same types
 read rd1, rd2;
 Select <rd1, rd2> with rd1.stmt# = rd2.stmt#
-
+1 1, 18 18
 5000
 49 - Test two syonyms of same types
 call cl1, cl2;
 Select <cl1, cl2> with cl1.procName = cl2.procName
-9 11, 9 16, 11 16, 11 9, 16 9, 16 11
+6 6, 8 8, 9 9, 9 11, 9 16, 11 11, 11 16, 11 9, 16 9, 16 11, 16 16, 21 21
 5000
 50 - Syntax SyntaxError
 stmt s;
 Select s such that s.stmt# = 3;
 SyntaxError
+5000
+51 - Test same syonyms
+procedure p;
+Select p with p.procName = p.procName
+findPrimes, checkPrime, printPrime, x, i, z
+5000
+52 - Test same synonyms
+read rd;
+Select rd with rd.varName = rd.stmt#
+
 5000
