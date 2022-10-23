@@ -9,34 +9,34 @@
 
 #include "SyntaxError.h"
 #include "SemanticError.h"
-#include "..\..\Utils\InvalidTokenException.h"
-#include "..\..\Utils\expression\ExprSpec.h"
-#include "..\..\Utils\expression\PartialExprSpec.h"
-#include "..\..\Utils\expression\WildcardExprSpec.h"
-#include "..\..\Utils\expression\ExactExprSpec.h"
-#include "..\reference\ValType.h"
-#include "..\reference\Ref.h"
-#include "..\reference\EntityRef.h"
-#include "..\reference\TempRef.h"
-#include "..\relation\Rel.h"
-#include "..\relation\FollowsRel.h"
-#include "..\relation\FollowsTRel.h"
-#include "..\relation\ParentRel.h"
-#include "..\relation\ParentTRel.h"
-#include "..\relation\UsesSRel.h"
-#include "..\relation\UsesPRel.h"
-#include "..\relation\NextRel.h"
-#include "..\relation\NextTRel.h"
-#include "..\relation\AffectsRel.h"
-#include "..\relation\AffectsTRel.h"
-#include "..\relation\CallsRel.h"
-#include "..\relation\CallsTRel.h"
-#include "../pattern/Pattern.h"
-#include "../pattern/AssignPattern.h"
-#include "../pattern/IfPattern.h"
-#include "../pattern/WhilePattern.h"
-#include "../with_clause/With.h"
-#include "../AttrType.h"
+#include "../reference/ValType.h"
+#include "../reference/Ref.h"
+#include "../reference/EntityRef.h"
+#include "../reference/TempRef.h"
+#include "../clause/relation/Rel.h"
+#include "../clause/relation/FollowsRel.h"
+#include "../clause/relation/FollowsTRel.h"
+#include "../clause/relation/ParentRel.h"
+#include "../clause/relation/ParentTRel.h"
+#include "../clause/relation/UsesSRel.h"
+#include "../clause/relation/UsesPRel.h"
+#include "../clause/relation/NextRel.h"
+#include "../clause/relation/NextTRel.h"
+#include "../clause/relation/AffectsRel.h"
+#include "../clause/relation/AffectsTRel.h"
+#include "../clause/relation/CallsRel.h"
+#include "../clause/relation/CallsTRel.h"
+#include "../clause/pattern/Pattern.h"
+#include "../clause/pattern/AssignPattern.h"
+#include "../clause/pattern/IfPattern.h"
+#include "../clause/pattern/WhilePattern.h"
+#include "../clause/with_clause/With.h"
+#include "../clause/AttrType.h"
+#include "../../Utils/tokenizer/InvalidTokenException.h"
+#include "../../Utils/expression/ExprSpec.h"
+#include "../../Utils/expression/PartialExprSpec.h"
+#include "../../Utils/expression/WildcardExprSpec.h"
+#include "../../Utils/expression/ExactExprSpec.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -162,7 +162,7 @@ shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
         return select_tuple;
     }
     else if (lexer_->HasIdentity()) {
-        
+
         shared_ptr<Ref> select_syn = ParseSelectSyn();
         select_tuple->push_back(select_syn);
         return select_tuple;
@@ -464,8 +464,8 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
 
 shared_ptr<Ref> QueryBuilder::ParseSelectSyn() {
     string syn_name = lexer_->MatchIdentity();
-    shared_ptr<Ref> select_syn = GetDeclaredSyn(syn_name) -> Clone();
-    
+    shared_ptr<Ref> select_syn = GetDeclaredSyn(syn_name)->Clone();
+
     if (lexer_->HasFullStop()) {
         AttrType attr_type = ParseAttr(select_syn);
         select_syn->SetAttrType(attr_type);

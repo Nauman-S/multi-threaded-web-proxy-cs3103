@@ -6,8 +6,8 @@
 #include <memory>
 #include <vector>
 
-#include "..\..\Utils\Tokenizer.h"
-#include "..\..\Utils\Token.h"
+#include "..\..\Utils\tokenizer\Tokenizer.h"
+#include "..\..\Utils\tokenizer\Token.h"
 #include "SourceToken.h"
 
 class SourceLexer {

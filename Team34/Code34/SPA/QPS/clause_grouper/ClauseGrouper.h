@@ -5,8 +5,8 @@
 #include <string>
 #include <set>
 
-#include "../ClauseGroup.h"
-#include "../Clause.h"
+#include "../clause/ClauseGroup.h"
+#include "../clause/Clause.h"
 
 class ClauseGrouper
 {

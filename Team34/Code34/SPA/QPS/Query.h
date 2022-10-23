@@ -1,9 +1,9 @@
 #pragma once
 #include "reference/Ref.h"
-#include "relation/Rel.h"
-#include "pattern/Pattern.h"
-#include "with_clause/With.h"
-#include "Clause.h"
+#include "clause/relation/Rel.h"
+#include "clause/pattern/Pattern.h"
+#include "clause/with_clause/With.h"
+#include "clause/Clause.h"
 #include "DataRetriever.h"
 
 #include <vector>

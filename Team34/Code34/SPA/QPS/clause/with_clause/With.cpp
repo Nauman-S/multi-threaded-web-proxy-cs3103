@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "../DataRetriever.h"
-#include "../PriorityManager.h"
+#include "../../DataRetriever.h"
+#include "../../PriorityManager.h"
 
 using std::string;
 using std::vector;
