@@ -4,7 +4,7 @@
 #include <memory.h>
 
 #include "Query.h"
-#include "relation/Rel.h"
+#include "clause/relation/Rel.h"
 #include "ResultExtractor.h"
 #include "query_result/Table.h"
 #include "query_result/EmptyTable.h"
