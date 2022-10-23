@@ -26,6 +26,7 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure() {
         IncrementTokenIdx();
     }
     p = tokens->at(token_idx++).GetStringVal();
+    procedure_names.push_back(p);
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
         IncrementTokenIdx();
     }
@@ -270,6 +271,7 @@ shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(Procedure& pro
     }
     Procedure proc_index = tokens->at(token_idx).GetStringVal();
     p_node->SetProcedure(proc_index);
+    calls.push_back(pair<string, string>(procedure_names.at(procedure_names.size() - 1), proc_index));
     IncrementTokenIdx();
     if (tokens->at(token_idx).GetType() == SourceTokenType::kSemiColon) {
         IncrementTokenIdx();
