@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-#include "../Utils/Token.h"
+#include "../Utils/tokenizer/Token.h"
 #include "../Utils/type/TypeDef.h"
 
 #include "./tokenizer/SourceToken.h"

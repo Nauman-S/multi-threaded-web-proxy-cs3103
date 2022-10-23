@@ -5,9 +5,9 @@
 
 #include "Rel.h"
 #include "../ClauseType.h"
-#include "../reference/ProcRef.h"
-#include "../reference/ValType.h"
-#include "../query_result/ResWrapper.h"
+#include "../../reference/ProcRef.h"
+#include "../../reference/ValType.h"
+#include "../../query_result/ResWrapper.h"
 class DataRetriever;
 
 class ProcProcRel

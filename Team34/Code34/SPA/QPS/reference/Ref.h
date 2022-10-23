@@ -4,10 +4,10 @@
 #include <memory>
 
 #include "ValType.h"
+#include "../clause/AttrType.h"
 #include "../../Utils/type/RefType.h"
-#include "../AttrType.h"
-
 class DataRetriever;
+
 
 class Ref {
 protected:

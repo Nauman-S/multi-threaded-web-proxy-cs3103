@@ -1,6 +1,6 @@
 #include "SimpleClauseGrouper.h"
 
-#include "../Clause.h"
+#include "../clause/Clause.h"
 
 using std::vector;
 using std::shared_ptr;

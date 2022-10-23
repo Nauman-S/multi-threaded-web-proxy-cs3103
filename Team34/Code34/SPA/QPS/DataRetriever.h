@@ -5,19 +5,19 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../PKB/ReadPKBManager.h"
-#include "../Utils/type/TypeDef.h"
-#include "AttrType.h"
-#include "ClauseType.h"
+#include "clause/AttrType.h"
+#include "clause/ClauseType.h"
+#include "clause/relation/ModifiesPRel.h"
+#include "clause/relation/ModifiesSRel.h"
+#include "clause/relation/UsesPRel.h"
+#include "clause/relation/UsesSRel.h"
 #include "query_result/ResWrapper.h"
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "reference/Ref.h"
 #include "reference/ValType.h"
-#include "relation/ModifiesPRel.h"
-#include "relation/ModifiesSRel.h"
-#include "relation/UsesPRel.h"
-#include "relation/UsesSRel.h"
+#include "../PKB/ReadPKBManager.h"
+#include "../Utils/type/TypeDef.h"
 // Use forward declaration to avoid cyclic include of Visitor pattern
 class StmtVarRel;
 class ProcVarRel;
@@ -28,6 +28,7 @@ class AssignPattern;
 class IfPattern;
 class WhilePattern;
 class With;
+
 
 class DataRetriever {
 protected:  // attributes
