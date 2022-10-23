@@ -223,3 +223,28 @@ print p;
 Select p.varName with p.varName = "dummy"
 dummy
 5000
+46 - Test two synonyms of same types
+print pn1, pn2;
+Select <pn1, pn2> with pn1.varName = pn2.varName
+19 20, 20 19
+5000
+47 - Test two syonyms of same types
+read rd1, rd2;
+Select <rd1, rd2> with rd1.varName = rd2.varName
+
+5000
+48 - Test two syonyms of same types
+read rd1, rd2;
+Select <rd1, rd2> with rd1.stmt# = rd2.stmt#
+
+5000
+49 - Test two syonyms of same types
+call cl1, cl2;
+Select <cl1, cl2> with cl1.procName = cl2.procName
+9 11, 9 16, 11 16, 11 9, 16 9, 16 11
+5000
+50 - Syntax SyntaxError
+stmt s;
+Select s such that s.stmt# = 3;
+SyntaxError
+5000

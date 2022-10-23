@@ -43,5 +43,5 @@ procedure i {
 
 procedure z {
     print dummy;
-     call i;
+    call i;
 }
