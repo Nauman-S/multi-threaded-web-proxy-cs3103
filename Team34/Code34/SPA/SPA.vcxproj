@@ -135,7 +135,6 @@
     <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
-    <ClInclude Include="Utils\algo\SpaAlgo.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
     <ClInclude Include="Utils\expression\Expr.h" />
@@ -251,7 +250,6 @@
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
-    <ClCompile Include="Utils\algo\SpaAlgo.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
     <ClCompile Include="Utils\expression\ExactExprSpec.cpp" />
