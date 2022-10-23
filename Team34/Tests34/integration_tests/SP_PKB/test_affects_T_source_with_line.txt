@@ -1,0 +1,74 @@
+procedure basicAffectsT {
+1.  x = 1;
+2.  a = 3 + x;
+3.  y = 3 + a; 
+4.  z = 2 + x;
+}
+
+procedure basicNoAffectsT {
+5.  x = 1;
+6.  a = 3 + x;
+7.  read a;
+8.  y = 3 + a; 
+}
+
+procedure ModifiesX {
+9.  x = 2;
+}
+
+procedure affectsTWithCall {
+10.  x = 3;
+11.  z = 3 + x;
+12.  call ModifiesX;
+13.  c = 2 + 5;
+14.  a = z + x;
+}
+
+procedure affectsTWhileLoop {
+15.  x = 3;
+16.  while (x == 2) {
+17.    a = 3 + x + y;
+18.    x = 3 + a;
+19.    y = 3 + x;
+  }
+}
+
+procedure affectsTIfLoop {
+20.  z = 2 + x;
+21.  x = 2 + a;
+22.  if (x == 2) then {
+23.    call ModifiesX;
+24.    read a;
+25.    x = 3 + z; 
+  } else {
+26.    z = 1;
+  }
+27.  a = 3 + x;
+}
+
+procedure MultiAffectsTRelation {
+28.  x = 3 + a;
+29.  if (x == 2) then {
+30.    z = 2 + x;
+31.    call ModifiesX;
+32.    read a;
+33.    x = 3 + z; 
+  } else {
+34.    z = 1;
+35.    while (x == 1) {
+36.      a = 2 + x + y;
+37.      z = 3 + b + z;
+38.      read x;
+    }
+  }
+39.  z = 3 + x;
+40.  read z;
+41.  print y;
+42.  a = 3 + z + a;
+43.  while (x == 2) {
+44.    x = x;
+45.    y = 3 + x;
+46.    read x;
+47.    z = y;
+  }
+}
