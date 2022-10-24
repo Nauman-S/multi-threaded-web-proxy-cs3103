@@ -1,6 +1,9 @@
 #pragma once
+
 #include <string>
 #include <unordered_set>
+#include <memory>
+
 #include "..\..\Utils\tokenizer\Tokenizer.h"
 #include "..\..\Utils\tokenizer\Token.h"
 
@@ -10,21 +13,19 @@ using std::string;
 #define QUERYLEXER_H
 class QueryLexer {
 private:
-
-    Tokenizer* tokenizer_;
+    std::shared_ptr<Tokenizer> tokenizer_;
     std::unordered_set<std::string> design_entities_;
     std::unordered_set<std::string> relation_keywords_;
-    std::unordered_set<std::string> keywords_;
     std::unordered_set<std::string> attr_names_;
-    std::unordered_set <char> delimiters_;
     std::unordered_set <TokenType> operators_;
 
     void InitializeKeywords();
+    bool HasKeyword(std::string keyword);
+    void MatchKeyword(std::string keyword);
 
 public:
-
     QueryLexer();
-    ~QueryLexer();
+
     void FeedQuery(const std::string& query_string_);
 
     bool HasDesignEntity();
@@ -34,11 +35,12 @@ public:
     std::string MatchIdentity();
 
     bool HasEndOfDeclarationStatement();
-    std::string MatchEndOfDeclarationStatement();
+    void MatchEndOfDeclarationStatement();
 
-    bool HasKeyword(std::string keyword_);
-    void MatchKeyword(std::string keyword_);
+    
 
+    bool HasSelectKeyword();
+    void MatchSelectKeyword();
 
     bool HasReferenceKeyword();
     std::string MatchReferenceKeyword();
@@ -99,6 +101,7 @@ public:
     bool HasAttrName();
     std::string MatchAttrName();
 
+    string GenerateErrorMessage(string expected);
     string GenerateErrorMessage(string expected, string actual);
 
     std::string PeekNextToken(int number_tokens_);
