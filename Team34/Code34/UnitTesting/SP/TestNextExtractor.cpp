@@ -29,7 +29,7 @@ namespace UnitTesting
 			SourceParser parser;
 			SourceLexer lexer = SourceLexer("../../Tests34/integration_tests/SP_PKB/design_extractor/next_extraction_test_source.txt");
 			parser.SetTokens(lexer.GetAllTokens());
-			std::shared_ptr<ProgramNode> root = parser.Parse();
+			std::shared_ptr<ProgramNode> root = parser.Parse().first;
 			root->Extract(extractor);
 		}
 

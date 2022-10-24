@@ -37,7 +37,7 @@ namespace IntegrationTesting
             SourceParser parser = SourceParser();
             SourceLexer lexer = SourceLexer(this->base_dir + "design_extractor_test_source.txt");
             parser.SetTokens(lexer.GetAllTokens());
-            this->common_root = parser.Parse();
+            this->common_root = parser.Parse().first;
             this->read = ReadPKBManager::GetInstance();
             this->write = WritePKBManager::GetInstance();
         }
@@ -249,7 +249,7 @@ namespace IntegrationTesting
             SourceParser parser = SourceParser();
             SourceLexer lexer = SourceLexer(calls_test_file);
             parser.SetTokens(lexer.GetAllTokens());
-            shared_ptr<ProgramNode> calls_root = parser.Parse();
+            shared_ptr<ProgramNode> calls_root = parser.Parse().first;
 
             CallsExtractor extractor(this->write);
             calls_root->Extract(extractor);
@@ -283,7 +283,7 @@ namespace IntegrationTesting
             SourceParser parser = SourceParser();
             SourceLexer lexer = SourceLexer(next_test_file);
             parser.SetTokens(lexer.GetAllTokens());
-            shared_ptr<ProgramNode> next_root = parser.Parse();
+            shared_ptr<ProgramNode> next_root = parser.Parse().first;
 
             NextExtractor extractor(this->write);
             next_root->Extract(extractor);

@@ -9,13 +9,13 @@
 
 using namespace std;
 
-std::shared_ptr<ProgramNode> SourceParser::Parse() {
+pair<shared_ptr<ProgramNode>, vector<Procedure>> SourceParser::Parse() {
     std::shared_ptr<ProgramNode> programNode(new ProgramNode());
     while (token_idx < (int)tokens->size()) {
         shared_ptr<ProcedureASTNode> p_node = ParseProcedure();
         programNode->AddProcedure(p_node);
     }
-    return programNode;
+    return pair<shared_ptr<ProgramNode>, vector<Procedure>>(programNode, GenerateSortedCalls());
 }
 
 std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure() {
