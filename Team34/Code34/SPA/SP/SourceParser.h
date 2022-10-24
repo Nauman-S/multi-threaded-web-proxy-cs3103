@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-#include "../Utils/Token.h"
+#include "../Utils/tokenizer/Token.h"
 #include "../Utils/type/TypeDef.h"
 
 #include "./tokenizer/SourceToken.h"
@@ -36,6 +36,8 @@ private:
     int line_idx = 1;
 
     shared_ptr<vector<SourceToken>> tokens;
+    vector<Procedure> procedure_names;
+    vector<pair<Procedure, Procedure>> calls;
     void IncrementTokenIdx();
     void IncrementLineIdex();
 
@@ -48,6 +50,6 @@ private:
     shared_ptr<WhileStatementASTNode> ParseWhileStatement(Procedure&);
     shared_ptr<AssignStatementASTNode> ParseAssignStatement(Procedure&);
     shared_ptr<ConditionExpression> ParseConditionExpression(Procedure&);
-
+    vector<Procedure> GenerateSortedCalls();
     std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };

@@ -1,7 +1,15 @@
 procedure NoAffects {
   x = 2;
-  read x;
+  call ModifiesX;
   a = 3 + x;
   y = 3;
   y = 1 + z;
+}
+
+procedure ModifiesX {
+  if (x == 3) {
+    read x;
+  } else {
+    y = 4;
+  }
 }

@@ -1131,5 +1131,29 @@ namespace UnitTesting
 			bool expected = true;
 			Assert::IsTrue(actual == expected);
 		};
+
+		TEST_METHOD(RepeatedProcedure) {
+			SourceValidator validator = SourceValidator();
+			shared_ptr<vector<SourceToken>> stub(new vector<SourceToken>{
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc1"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "read"),
+				SourceToken(SourceTokenType::kName, "a"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				SourceToken(SourceTokenType::kName, "procedure"),
+				SourceToken(SourceTokenType::kName, "proc1"),
+				SourceToken(SourceTokenType::kLeftCurly, "{"),
+				SourceToken(SourceTokenType::kName, "print"),
+				SourceToken(SourceTokenType::kName, "a"),
+				SourceToken(SourceTokenType::kSemiColon, ";"),
+				SourceToken(SourceTokenType::kRightCurly, "}"),
+				});
+			validator.SetTokens(stub);
+			bool actual = validator.Validate();
+			bool expected = false;
+			Assert::IsTrue(actual == expected);
+		};
 	};
 }

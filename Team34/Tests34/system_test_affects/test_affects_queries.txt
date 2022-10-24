@@ -1,0 +1,50 @@
+1 - Basic affects
+stmt s;
+Select s such that Affects(1, s)
+3, 4, 6
+5000
+2 - Basic affects
+stmt s;
+Select s such that Affects(3, s)
+4
+5000
+3 - Basic affects
+stmt s;
+Select s such that Affects(9, s)
+
+5000
+4 - Basic affects
+stmt s;
+Select s such that Affects(8, s)
+
+5000
+5 - Basic affects
+call c;
+Select c such that Affects(1, c)
+
+5000
+6 - Basic affects
+assign a;
+Select a such that Affects(12, a)
+13, 15, 17
+5000
+7 - Basic affects
+assign a;
+Select a such that Affects(a, 17)
+12, 13, 16
+5000
+8 - Basic affects
+stmt s;
+Select s such that Affects(s, 20)
+18, 19
+5000
+9 - Basic affects
+stmt s;
+Select s such that Affects(s, 9)
+6, 7
+5000
+10 - Basic affects
+stmt s;
+Select s such that Affects(4, s)
+
+5000

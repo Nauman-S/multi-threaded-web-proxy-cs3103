@@ -1,0 +1,80 @@
+1 - non-interrupting call
+stmt s;
+Select s such that Affects(1, s)
+2,4,5,6,8,10
+5000
+2 - non-interrupting call
+assign a;
+Select a such that Affects(a, 10)
+1
+5000
+3 - interrupting call
+stmt s;
+Select BOOLEAN such that Affects(1, 12)
+FALSE
+5000
+4 - interrupt by assign
+stmt s;
+Select BOOLEAN such that Affects(12, 14)
+FALSE
+5000
+5 - interrupt by read
+stmt s;
+Select s such that Affects(13, s)
+14, 15
+5000
+6 - interrupt by read
+stmt s;
+Select s such that Affects(s, 17)
+
+5000
+7 - loop to self affects
+stmt s;
+Select BOOLEAN such that Affects(20,20)
+TRUE
+5000
+8 - loop to self affects
+stmt s;
+Select s such that Affects(s,s)
+20
+5000
+9 - loop to self affects
+stmt s;
+Select s such that Affects(20,s)
+20, 21
+5000
+10 - loop to self affects
+stmt s;
+Select s such that Affects(s,20)
+19, 20
+5000
+11 - nested if blocks
+assign a;
+Select a such that Affects(22,a)
+26, 27, 28, 29, 30
+5000
+11 - nested if blocks
+assign a;
+Select a such that Affects(a,27)
+22
+5000
+12 - nested if blocks
+assign a;
+Select a such that Affects(a,30)
+22
+5000
+13 - wrong stmt type
+call c;
+Select c such that Affects(c,30)
+
+5000
+14 - wrong stmt type (stmt 3 is call)
+assign a;
+Select a such that Affects(3,a)
+
+5000
+15 - wrong stmt type (stmt 16 is read)
+assign a;
+Select a such that Affects(a,16)
+
+5000

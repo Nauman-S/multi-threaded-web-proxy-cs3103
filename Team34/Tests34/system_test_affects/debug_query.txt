@@ -1,0 +1,5 @@
+4 - Basic affects
+stmt s;
+Select s such that Affects(8, s)
+
+5000

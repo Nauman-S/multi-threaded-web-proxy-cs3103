@@ -270,5 +270,6 @@ namespace IntegrationTesting
             std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects = read->GetAllAffectsRelations();
             Assert::AreEqual(20, int(all_affects->size()));
         }
+
     };
 }

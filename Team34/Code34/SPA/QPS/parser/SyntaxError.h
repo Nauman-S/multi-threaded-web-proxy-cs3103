@@ -1,15 +1,12 @@
+#pragma once
 #include <string>
-
-#ifndef SYNTAXERROR_H
-#define SYNTAXERROR_H
 
 class SyntaxError
 {
 private:
 	std::string message;
 public:
+	SyntaxError() {};
 	SyntaxError(std::string message);
 	std::string what() const throw ();
 };
-
-#endif
