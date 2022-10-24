@@ -47,11 +47,9 @@ QueryBuilder::QueryBuilder() {
 
 shared_ptr<Query> QueryBuilder::GetQuery(const std::string& query_string_) {
     this->lexer_->FeedQuery(query_string_);
-
     declared_synonyms_ = ParseDeclarationStatements();
-
     shared_ptr<Query> query_ = ParseSelectStatement();
-    //std::shared_ptr<Query> sp_ = std::shared_ptr<Query>(query_);
+
     return query_;
 }
 
@@ -77,8 +75,6 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
     return all_synonyms;
 }
 
-
-
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
     std::string design_entity = this->lexer_->MatchDesignEntityKeyword();
 
@@ -94,12 +90,8 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
         synonyms.push_back(curr_syn);
     }
 
-    if (this->lexer_->HasEndOfDeclarationStatement()) {
-        this->lexer_->MatchEndOfDeclarationStatement();
-    }
-    else {
-        throw SyntaxError("Declaration Statement - Missing semicolon (;) at end of statement");
-    }
+    this->lexer_->MatchEndOfDeclarationStatement();
+
     return synonyms;
 }
 
@@ -143,7 +135,6 @@ shared_ptr<Query> QueryBuilder::ParseSelectStatement() {
         throw SyntaxError("Unexpected token at end of query");
     }
 
-
     shared_ptr<Query> query;
     if (select_tuple->size() == 0) {
         query = shared_ptr<Query>(new Query(relations, patterns, with_clauses));
@@ -162,7 +153,6 @@ shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
         return select_tuple;
     }
     else if (lexer_->HasIdentity()) {
-
         shared_ptr<Ref> select_syn = ParseSelectSyn();
         select_tuple->push_back(select_syn);
         return select_tuple;
@@ -186,7 +176,6 @@ shared_ptr<vector<shared_ptr<Ref>>> QueryBuilder::ParseReturnValues() {
 std::vector<shared_ptr<Rel>> QueryBuilder::ParseRelations() {
     std::vector<shared_ptr<Rel>> relations;
     lexer_->MatchSuchThatKeywords();
-
     relations.push_back(ParseRelation());
 
     while (lexer_->HasAndKeyword()) {
@@ -494,20 +483,14 @@ shared_ptr<VarRef> QueryBuilder::GetRhsVarRef(std::vector<shared_ptr<Ref>> decla
     }
     else if (this->lexer_->HasQuotationMarks()) {
         this->lexer_->MatchQuotationMarks();
-        if (this->lexer_->HasIdentity()) {
-            shared_ptr <VarRef> rhs_ = shared_ptr <VarRef>(new VarRef(ValType::kVarName, this->lexer_->MatchIdentity()));
-            return rhs_;
-        }
-        else {
-            throw SyntaxError("Select statement - [suchthatcl] - invalid identity token inside quotes");
-        }
-
+        string var_name = this->lexer_->MatchIdentity();
+        shared_ptr <VarRef> rhs_ = shared_ptr<VarRef>(new VarRef(ValType::kVarName, var_name));
+        return rhs_;
     }
     else {
         throw SyntaxError("Select statement - [suchthatcl] - invalid token on RHS of relRef ");
     }
 }
-
 
 vector <shared_ptr<Pattern>> QueryBuilder::ParsePatterns() {
     vector<shared_ptr<Pattern>> patterns;
@@ -564,11 +547,10 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
     bool is_partial_expr = false;
     if (lexer_->HasUnderScore()) {
         lexer_->MatchUnderScore();
-        is_partial_expr = true;
-
         if (lexer_->HasRightBrace()) {
             return shared_ptr<ExprSpec>(new WildcardExprSpec());
         }
+        is_partial_expr = true;
     }
 
     lexer_->MatchQuotationMarks();
@@ -590,7 +572,6 @@ shared_ptr<ExprSpec> QueryBuilder::ParseExpression() {
     else {
         return shared_ptr<ExactExprSpec>(new ExactExprSpec(infix_expr_str, postfix_expr_str));
     }
-
 }
 
 string QueryBuilder::GetExpressionStr() {
@@ -603,19 +584,15 @@ string QueryBuilder::GetExpressionStr() {
     while (isExpectingToken) {
         while (lexer_->HasLeftBrace()) {
             lexer_->MatchLeftBrace();
-            //expr_str += "( ";
             expr_tokens.push_back("(");
             expected_closing_brace_num++;
         }
-
         if (lexer_->HasInteger()) {
             int integer = lexer_->MatchInteger();
-            //expr_str += (std::to_string(integer) + " ");
             expr_tokens.push_back(std::to_string(integer));
         }
         else if (lexer_->HasIdentity()) {
             string identity = lexer_->MatchIdentity();
-            //expr_str += (identity + " ");
             expr_tokens.push_back(identity);
         }
         else {
@@ -624,7 +601,6 @@ string QueryBuilder::GetExpressionStr() {
 
         while (lexer_->HasRightBrace()) {
             lexer_->MatchRightBrace();
-            //expr_str += ") ";
             expr_tokens.push_back(")");
             expected_closing_brace_num--;
             if (expected_closing_brace_num < 0) {
@@ -634,7 +610,6 @@ string QueryBuilder::GetExpressionStr() {
 
         if (lexer_->HasOperator()) {
             string operator_str = lexer_->MatchOperator();
-            //expr_str += (operator_str + " ");
             expr_tokens.push_back(operator_str);
         }
         else {
@@ -651,8 +626,6 @@ string QueryBuilder::GetExpressionStr() {
     for (unsigned idx = 1; idx < expr_tokens.size(); idx++) {
         expr_str += (" " + expr_tokens.at(idx));
     }
-
-
     return expr_str;
 }
 
@@ -730,7 +703,6 @@ void QueryBuilder::ValidateAttrName(shared_ptr<Ref> synonym, string attr_name) {
             is_valid = true;
         }
     }
-
     if (!is_valid) {
         throw SemanticError("The synonym " + synonym->GetName() + " has a wrong attribute name " + attr_name);
     }
@@ -757,8 +729,3 @@ bool QueryBuilder::ContainsSynonym(string syn_name) {
     }
     return false;
 }
-
-
-
-
-
