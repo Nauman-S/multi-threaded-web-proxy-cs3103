@@ -40,18 +40,6 @@
     <ClCompile Include="QPS\reference\StmtRef.cpp" />
     <ClCompile Include="QPS\reference\VarRef.cpp" />
     <ClCompile Include="QPS\reference\WhileRef.cpp" />
-    <ClCompile Include="QPS\relation\FollowsRel.cpp" />
-    <ClCompile Include="QPS\relation\FollowsTRel.cpp" />
-    <ClCompile Include="QPS\relation\ModifiesPRel.cpp" />
-    <ClCompile Include="QPS\relation\ModifiesSRel.cpp" />
-    <ClCompile Include="QPS\relation\ParentRel.cpp" />
-    <ClCompile Include="QPS\relation\ParentTRel.cpp" />
-    <ClCompile Include="QPS\relation\ProcVarRel.cpp" />
-    <ClCompile Include="QPS\relation\Rel.cpp" />
-    <ClCompile Include="QPS\relation\StmtStmtRel.cpp" />
-    <ClCompile Include="QPS\relation\StmtVarRel.cpp" />
-    <ClCompile Include="QPS\relation\UsesPRel.cpp" />
-    <ClCompile Include="QPS\relation\UsesSRel.cpp" />
     <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
     <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
     <ClCompile Include="QPS\clause\Clause.cpp" />
@@ -74,7 +62,6 @@
     <ClCompile Include="Utils\tokenizer\InvalidTokenException.cpp" />
     <ClCompile Include="Utils\tokenizer\Token.cpp" />
     <ClCompile Include="Utils\tokenizer\Tokenizer.cpp" />
-    <ClCompile Include="QPS\relation\ProcProcRel.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\ASTNode.cpp" />
     <ClCompile Include="SP\ast\CallStatementASTNode.cpp" />
@@ -99,12 +86,6 @@
     <ClCompile Include="QPS\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="QPS\clause\pattern\WhilePattern.cpp" />
-    <ClCompile Include="QPS\relation\AffectsRel.cpp" />
-    <ClCompile Include="QPS\relation\AffectsTRel.cpp" />
-    <ClCompile Include="QPS\relation\CallsRel.cpp" />
-    <ClCompile Include="QPS\relation\CallsTRel.cpp" />
-    <ClCompile Include="QPS\relation\NextRel.cpp" />
-    <ClCompile Include="QPS\relation\NextTRel.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
     <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
@@ -194,18 +175,6 @@
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
     <ClInclude Include="QPS\reference\WhileRef.h" />
-    <ClInclude Include="QPS\relation\FollowsRel.h" />
-    <ClInclude Include="QPS\relation\FollowsTRel.h" />
-    <ClInclude Include="QPS\relation\ModifiesPRel.h" />
-    <ClInclude Include="QPS\relation\ModifiesSRel.h" />
-    <ClInclude Include="QPS\relation\ParentRel.h" />
-    <ClInclude Include="QPS\relation\ParentTRel.h" />
-    <ClInclude Include="QPS\relation\ProcVarRel.h" />
-    <ClInclude Include="QPS\relation\Rel.h" />
-    <ClInclude Include="QPS\relation\StmtStmtRel.h" />
-    <ClInclude Include="QPS\relation\StmtVarRel.h" />
-    <ClInclude Include="QPS\relation\UsesPRel.h" />
-    <ClInclude Include="QPS\relation\UsesSRel.h" />
     <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
     <ClInclude Include="QPS\stub\RelationStubFactory.h" />
     <ClInclude Include="QPS\clause\Clause.h" />
@@ -232,13 +201,6 @@
     <ClInclude Include="Utils\tokenizer\InvalidTokenException.h" />
     <ClInclude Include="Utils\tokenizer\Token.h" />
     <ClInclude Include="Utils\tokenizer\Tokenizer.h" />
-    <ClInclude Include="QPS\relation\ProcProcRel.h" />
-    <ClInclude Include="QPS\relation\CallsRel.h" />
-    <ClInclude Include="QPS\relation\CallsTRel.h" />
-    <ClInclude Include="QPS\relation\NextRel.h" />
-    <ClInclude Include="QPS\relation\NextTRel.h" />
-    <ClInclude Include="QPS\relation\AffectsRel.h" />
-    <ClInclude Include="QPS\relation\AffectsTRel.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
     <ClInclude Include="SP\ast\ASTNode.h" />
     <ClInclude Include="SP\ast\CallStatementASTNode.h" />
@@ -295,5 +257,6 @@
     <ClInclude Include="QPS\clause\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\clause\relation\UsesPRel.h" />
     <ClInclude Include="QPS\clause\relation\UsesSRel.h" />
+    <ClInclude Include="QPS\parser\StringLiterals.h" />
   </ItemGroup>
 </Project>
