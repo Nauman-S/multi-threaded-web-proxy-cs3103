@@ -36,6 +36,7 @@
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\clause\ClauseGroup.h" />
     <ClInclude Include="QPS\clause\ClauseType.h" />
+    <ClInclude Include="QPS\parser\StringLiterals.h" />
     <ClInclude Include="QPS\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="QPS\clause\pattern\IfPattern.h" />

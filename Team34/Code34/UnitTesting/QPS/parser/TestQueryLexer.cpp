@@ -26,14 +26,12 @@ namespace UnitTesting
 			Assert::AreEqual(identity_, this->query_lexer_->MatchIdentity());
 			Assert::IsTrue(this->query_lexer_->HasEndOfDeclarationStatement());
 			this->query_lexer_->MatchEndOfDeclarationStatement();
-			Assert::IsTrue(this->query_lexer_->HasKeyword("Select"));
-			this->query_lexer_->MatchKeyword("Select");
+			Assert::IsTrue(this->query_lexer_->HasSelectKeyword());
+			this->query_lexer_->MatchSelectKeyword();
 			Assert::IsTrue(this->query_lexer_->HasIdentity());
 			Assert::AreEqual(identity_, this->query_lexer_->MatchIdentity());
-			Assert::IsTrue(this->query_lexer_->HasKeyword("such"));
-			this->query_lexer_->MatchKeyword("such");
-			Assert::IsTrue(this->query_lexer_->HasKeyword("that"));
-			this->query_lexer_->MatchKeyword("that");
+			Assert::IsTrue(this->query_lexer_->HasSuchThatKeywords());
+			this->query_lexer_->MatchSuchThatKeywords();
 			Assert::IsTrue(this->query_lexer_->HasReferenceKeyword());
 			Assert::AreEqual( reference_keyword_, this->query_lexer_->MatchReferenceKeyword());
 			Assert::IsTrue(this->query_lexer_->HasLeftBrace());
