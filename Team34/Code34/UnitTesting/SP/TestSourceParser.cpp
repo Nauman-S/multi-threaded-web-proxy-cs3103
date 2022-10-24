@@ -71,10 +71,6 @@ CallreadPointifCondition0countAssignflagflag1AssigncenXcenXcenXcountAssigncenYce
 			for (auto x : calls) {
 				actual = actual + x + " ";
 			}
-			ofstream myfile;
-			myfile.open("example.txt");
-			myfile << actual;
-			myfile.close();
 			string expected = "proc5 proc1 proc6 proc9 proc8 proc7 proc2 proc4 proc3 ";
 			Assert::IsTrue(actual == expected);
 		};
