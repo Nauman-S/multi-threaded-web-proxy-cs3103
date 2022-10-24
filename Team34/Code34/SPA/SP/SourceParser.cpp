@@ -5,6 +5,7 @@
 
 #include "./ast/IfStatementASTNode.h"
 #include "../Utils/type/TypeDef.h"
+#include "../Utils/algo/TopoCycle.h"
 
 using namespace std;
 
@@ -296,4 +297,9 @@ void SourceParser::IncrementTokenIdx() { token_idx += 1; }
 
 void SourceParser::SetTokens(shared_ptr<vector<SourceToken>> source_tokens) {
     tokens = source_tokens;
+}
+
+vector<Procedure> SourceParser::GenerateSortedCalls() {
+    TopoCycle generater = TopoCycle();
+    return generater.GenerateList(calls, procedure_names);
 }
