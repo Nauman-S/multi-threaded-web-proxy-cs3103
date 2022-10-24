@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-#include "../Clause.h"
-#include "../ClauseGroup.h"
+#include "../clause/Clause.h"
+#include "../clause/ClauseGroup.h"
 #include "../PriorityManager.h"
 
 

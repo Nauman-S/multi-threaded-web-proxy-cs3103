@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <unordered_set>
-#include "..\..\Utils\Tokenizer.h"
-#include "..\..\Utils\Token.h"
+#include "..\..\Utils\tokenizer\Tokenizer.h"
+#include "..\..\Utils\tokenizer\Token.h"
 
 using std::string;
 
@@ -101,9 +101,9 @@ public:
 
     string GenerateErrorMessage(string expected, string actual);
 
-	std::string PeekNextToken(int number_tokens_);
+    std::string PeekNextToken(int number_tokens_);
 
-	bool IsCurrentTokenOfType(TokenType);
+    bool IsCurrentTokenOfType(TokenType);
 };
 #endif
 

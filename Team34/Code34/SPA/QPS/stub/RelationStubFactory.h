@@ -1,14 +1,14 @@
 #include <vector>
 #include <memory>
 
-#include "../relation/ModifiesPRel.h"
-#include "../relation/ModifiesSRel.h"
-#include "../relation/UsesPRel.h"
-#include "../relation/UsesSRel.h"
-#include "../relation/FollowsRel.h"
-#include "../relation/FollowsTRel.h"
-#include "../relation/ParentRel.h"
-#include "../relation/ParentTRel.h"
+#include "../clause/relation/ModifiesPRel.h"
+#include "../clause/relation/ModifiesSRel.h"
+#include "../clause/relation/UsesPRel.h"
+#include "../clause/relation/UsesSRel.h"
+#include "../clause/relation/FollowsRel.h"
+#include "../clause/relation/FollowsTRel.h"
+#include "../clause/relation/ParentRel.h"
+#include "../clause/relation/ParentTRel.h"
 
 class RelationStubFactory {
 
