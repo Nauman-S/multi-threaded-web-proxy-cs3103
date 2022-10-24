@@ -39,9 +39,9 @@ AssignxxxyzProcedureAssignzz5AssignvvzPrintv";
 Callproc2PrintzProcedurePrintx";
             Assert::IsTrue(actual == expected);
         };
-		TEST_METHOD(ComplexxCalls) {
+		TEST_METHOD(ComplexCalls) {
 			SourceParser parser = SourceParser();
-			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls.txt");
+			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls_1.txt");
 			parser.SetTokens(lexer.GetAllTokens());
 			std::shared_ptr<ProgramNode> root = parser.Parse().first;
 			string actual = root->Stringify();
@@ -64,7 +64,7 @@ CallreadPointifCondition0countAssignflagflag1AssigncenXcenXcenXcountAssigncenYce
 		};
 		TEST_METHOD(CallList) {
 			SourceParser parser = SourceParser();
-			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls.txt");
+			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls_2.txt");
 			parser.SetTokens(lexer.GetAllTokens());
 			vector<Procedure> calls = parser.Parse().second;
 			string actual;
