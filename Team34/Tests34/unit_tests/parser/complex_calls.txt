@@ -1,6 +1,6 @@
-procedure proc1 {
+procedure proc5 {
     call proc2;
-    call proc5;
+    call proc1;
 }
 procedure proc2 {
     call proc3;
@@ -12,8 +12,8 @@ procedure proc3 {
 procedure proc4 {
     print proc4;
 }
-procedure proc5 {
-    print proc6;
+procedure proc1 {
+    call proc6;
 }
 procedure proc6 {
     call proc7;
