@@ -233,6 +233,10 @@ int QueryLexer::MatchInteger() {
     return i;
 }
 
+bool QueryLexer::HasClauseKeyword() {
+    return HasPatternKeyword() || HasSuchThatKeywords() || HasWithKeyword();
+}
+
 bool QueryLexer::HasPatternKeyword() {
     return HasKeyword(PATTERN);
 }

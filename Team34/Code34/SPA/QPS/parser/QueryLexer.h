@@ -37,8 +37,6 @@ public:
     bool HasEndOfDeclarationStatement();
     void MatchEndOfDeclarationStatement();
 
-    
-
     bool HasSelectKeyword();
     void MatchSelectKeyword();
 
@@ -75,11 +73,16 @@ public:
     bool HasEqualSign();
     void MatchEqualSign();
 
+    bool HasClauseKeyword();
+
     bool HasPatternKeyword();
     void MatchPatternKeyword();
 
     bool HasWithKeyword();
     void MatchWithKeyword();
+
+    bool HasSuchThatKeywords();
+    void MatchSuchThatKeywords();
 
     bool HasAndKeyword();
     void MatchAndKeyword();
@@ -95,14 +98,12 @@ public:
     bool HasOperator();
     std::string MatchOperator();
 
-    bool HasSuchThatKeywords();
-    void MatchSuchThatKeywords();
+
 
     bool HasAttrName();
     std::string MatchAttrName();
 
     string GenerateErrorMessage(string expected);
-    string GenerateErrorMessage(string expected, string actual);
 
     std::string PeekNextToken(int number_tokens_);
 
