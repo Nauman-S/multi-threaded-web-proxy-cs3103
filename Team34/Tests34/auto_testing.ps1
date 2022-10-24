@@ -1,19 +1,33 @@
 param (
     [bool]$gui = $true,
-    [string]$autotester_file = "..\Code34\Debug\AutoTester.exe"
+    [string]$autotester_file = "..\Code34\Debug\AutoTester.exe",
+    [int]$port = 2333
 )
 
-Write-Output "AutoTester Script has begun"
-$condition = Test-Path -Path $autotester_file -PathType Leaf
-$port = 2333
 
-if ($condition) {
+function has_errors {
+    param (
+        $output_file
+    )
+
+    $file_data = Get-Content $output_file
+    if ($file_data -contains "<failed>") {
+        return $true
+    }
+    return $false
+}
+
+[System.Collections.ArrayList]$failedTestSuites = @()
+$exit_code = 0
+
+Write-Output "AutoTester Script has begun"
+
+if (Test-Path -Path $autotester_file -PathType Leaf) {
     Write-Output "AutoTester binary is found"
 } else {
     Write-Output "AutoTester binary is not found"
     Exit 1
 }
-
 
 
 $directories = Get-ChildItem -Directory
@@ -36,6 +50,18 @@ foreach($folder in $directories) {
     } else {
         $output_folder = "$($folder.FullName)\out.xml"
         & $autotester_file $source_file $query_file $output_folder
+        if (has_errors($output_folder)) {
+            $failedTestSuites.Add($folder.Name)
+        }
+    }
+}
+
+if ($failedTestSuites.Length -gt 0) {
+    $exit_code = 1
+    Write-Output "FAILURES WERE FOUND IN FOLDERS:"
+    for ($i = 0; $i -lt $failedTestSuites.Count ; $i++)
+    {
+        Write-output $failedTestSuites[$i]
     }
 }
 
@@ -57,4 +83,4 @@ if ($gui) {
     & python -m http.server $port
 }
 
-Exit 0
+Exit $exit_code
