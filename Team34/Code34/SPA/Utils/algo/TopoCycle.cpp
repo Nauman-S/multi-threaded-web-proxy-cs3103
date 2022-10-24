@@ -1,5 +1,6 @@
 #include "TopoCycle.h"
 #include <stack>
+#include <stdexcept>
 #include <vector>
 #include <unordered_map>
 #include <iostream>
@@ -27,10 +28,10 @@ void TopoCycle::AddEdge(int u, int v)
 	adj[u].push_back(v);
 }
 
-bool TopoCycle::HaveCycle(int m, int n)
+bool TopoCycle::HaveCycle()
 {
 	// Stores the position of
-	// vertex in topological order
+    // vertex in topological order
 	unordered_map<int, int> pos;
 	int index = 0;
 
@@ -48,7 +49,7 @@ bool TopoCycle::HaveCycle(int m, int n)
 		s.pop();
 	}
 
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < num_nodes; i++) {
 		for (auto it : adj[i]) {
 
 			// If parent vertex
@@ -66,34 +67,55 @@ bool TopoCycle::HaveCycle(int m, int n)
 	return false;
 }
 
-bool TopoCycle::CheckCycle(vector<pair<string, string>> edges, vector<string> nodes) {
-	int num_nodes = nodes.size();
-	int num_edges = edges.size();
-	Init(num_nodes);
-	map<string, int> mapping;
+bool TopoCycle::CheckCycle(vector<pair<Procedure, Procedure>> edges, vector<Procedure> nodes) {
+
+	if (!Init(edges, nodes)) {
+		return true;
+	}
+	for (int i = 0; i < num_nodes; i++) {
+		if (visited[i] == 0) {
+			Dfs(i);
+		}
+	}
+
+	return HaveCycle();
+}
+
+bool TopoCycle::Init(vector<pair<Procedure, Procedure>> edges, vector<Procedure> nodes) {
+    num_nodes = nodes.size();
+	num_edges = edges.size();
+	for (int i = 0; i < num_nodes; i++) {
+		vector<int> tmp;
+		adj.push_back(tmp);
+		visited.push_back(0);
+	}
 	int temp = 0;
 	for (auto p : nodes) {
 		mapping[p] = temp++;
 	}
 	for (auto x : edges) {
 		if (x.first == x.second) {
-			return true;
+			return false;
 		}
 		AddEdge(mapping[x.first], mapping[x.second]);
 	}
-
-	for (int i = 0; i < num_nodes; i++) {
-		if (visited[i] == 0) {
-			Dfs(i);
-		}
-	}
-	return HaveCycle(num_edges, num_nodes);
+	return true;
 }
 
-void TopoCycle::Init(int num_nodes) {
-	for (int i = 0; i < num_nodes; i++) {
-		vector<int> tmp;
-		adj.push_back(tmp);
-		visited.push_back(0);
+vector<Procedure> TopoCycle::GenerateList(vector<pair<Procedure, Procedure>> edges, vector<Procedure> nodes) {
+	if (CheckCycle(edges, nodes)) {
+		throw exception("cycle detected");
+	}
+	else {
+		vector<Procedure> res;
+		for (auto n : tsort) {
+			for (auto const& x : mapping) {
+				if (x.second == n) {
+					res.push_back(x.first);
+					break;
+				}
+			}
+		}
+		return res;
 	}
 }

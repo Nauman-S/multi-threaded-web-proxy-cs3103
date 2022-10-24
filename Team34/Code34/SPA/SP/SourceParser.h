@@ -50,6 +50,6 @@ private:
     shared_ptr<WhileStatementASTNode> ParseWhileStatement(Procedure&);
     shared_ptr<AssignStatementASTNode> ParseAssignStatement(Procedure&);
     shared_ptr<ConditionExpression> ParseConditionExpression(Procedure&);
-
+    vector<Procedure> GenerateSortedCalls();
     std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };
