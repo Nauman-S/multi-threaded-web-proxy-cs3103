@@ -34,14 +34,14 @@ class With;
 class DataRetriever {
 protected:  // attributes
     std::shared_ptr<ReadPKBManager> pkb_ptr_;
-    ResTableCache res_table_cache_;
+    ResTableCache<StmtNum, StmtNum> stmt_stmt_table_cache_;
 
 public:  // public API
-    DataRetriever() : res_table_cache_{} {
+    DataRetriever() : stmt_stmt_table_cache_{} {
         pkb_ptr_ = ReadPKBManager::GetInstance();
     };
 
-    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb }, res_table_cache_{} {
+    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb }, stmt_stmt_table_cache_{} {
     };
 
     std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
@@ -119,6 +119,8 @@ protected:  // helper methods
         StmtStmtRel& rel);  // (synonym, wildcard)
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(
         StmtStmtRel& rel);  // (synonym, synonym)
+    std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllSSRelFromPKB(
+        ClauseType type);
 
     // Pattern
     std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByVar(
