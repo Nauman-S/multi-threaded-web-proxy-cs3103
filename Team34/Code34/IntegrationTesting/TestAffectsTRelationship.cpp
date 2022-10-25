@@ -38,6 +38,29 @@ namespace IntegrationTesting
             extractor.PopulatePKB(root);
         }
 
+        TEST_METHOD(TestCheckAffectsTNoNesting)
+        {
+            Assert::IsTrue(read->CheckAffectsT(1, 3));
+            Assert::IsTrue(read->CheckAffectsT(1, 4));
+            Assert::IsFalse(read->CheckAffectsT(1, 5));
+        }
+
+        TEST_METHOD(TestCheckAffectsTSingleIf)
+        {
+            Assert::IsTrue(read->CheckAffectsT(7, 10));
+            Assert::IsTrue(read->CheckAffectsT(7, 11));
+            Assert::IsTrue(read->CheckAffectsT(7, 12));
+        }
+
+        TEST_METHOD(TestCheckAffectsTSingleWhile)
+        {
+            Assert::IsTrue(read->CheckAffectsT(15,16));
+            Assert::IsTrue(read->CheckAffectsT(15,17));
+            Assert::IsTrue(read->CheckAffectsT(16,17));
+            Assert::IsFalse(read->CheckAffectsT(16, 16));
+            Assert::IsFalse(read->CheckAffectsT(17, 17));
+        }
+
         TEST_METHOD(TestGetAllEffectStmtsFromStmtNoNesting)
         {
             std::shared_ptr<std::unordered_set<StmtNum>> all_effects = read->GetAllEffectStmtsFromStmt(1, RefType::kStmtRef);
