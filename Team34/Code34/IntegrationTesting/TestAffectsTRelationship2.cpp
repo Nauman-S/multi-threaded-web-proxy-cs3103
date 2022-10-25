@@ -40,16 +40,6 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestCheckAffectsTBasic)
         {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer_empty_affects = SourceLexer(base_dir + "test_affects_T_relation_2_source.txt");
-            parser.SetTokens(lexer_empty_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse();
-            extractor.PopulatePKB(root_empty_affects);
-
             Assert::IsTrue(read->CheckAffectsT(1, 3));
             Assert::IsTrue(read->CheckAffectsT(1, 4));
             Assert::IsFalse(read->CheckAffectsT(5, 8));
@@ -76,16 +66,6 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllEffectStmtsFromStmtBasic)
         {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer_empty_affects = SourceLexer(base_dir + "test_affects_T_relation_2_source.txt");
-            parser.SetTokens(lexer_empty_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse();
-            extractor.PopulatePKB(root_empty_affects);
-
             std::shared_ptr<std::unordered_set<StmtNum>> all_effects = read->GetAllEffectStmtsFromStmt(1, RefType::kStmtRef);
             Assert::AreEqual(3, int(all_effects->size()));
             Assert::IsTrue(all_effects->find(2) != all_effects->end());
@@ -120,7 +100,7 @@ namespace IntegrationTesting
             Assert::IsTrue(all_effects->find(19) != all_effects->end());
         }
 
-        TEST_METHOD(TestGetAllEffectStmtsFromStmtIfLoop)
+        TEST_METHOD(TestGetAllEffectStmtsFromStmtIfStmt)
         {
             std::shared_ptr<std::unordered_set<StmtNum>> all_effects = read->GetAllEffectStmtsFromStmt(20, RefType::kStmtRef);
             Assert::AreEqual(2, int(all_effects->size()));
@@ -132,19 +112,48 @@ namespace IntegrationTesting
             Assert::IsTrue(all_effects->find(27) != all_effects->end());
         }
 
+        TEST_METHOD(TestGetAllCauseStmtsFromStmtBasic)
+        {
+            std::shared_ptr<std::unordered_set<StmtNum>> all_causes = read->GetAllCauseStmtsFromStmt(4, RefType::kStmtRef);
+            Assert::AreEqual(1, int(all_causes->size()));
+            Assert::IsTrue(all_causes->find(1) != all_causes->end());
+
+            all_causes = read->GetAllCauseStmtsFromStmt(8, RefType::kStmtRef);
+            Assert::AreEqual(0, int(all_causes->size()));
+        }
+
+        TEST_METHOD(TestGetAllCauseStmtsFromStmtCalls)
+        {
+            std::shared_ptr<std::unordered_set<StmtNum>> all_causes = read->GetAllCauseStmtsFromStmt(14, RefType::kStmtRef);
+            Assert::AreEqual(2, int(all_causes->size()));
+            Assert::IsTrue(all_causes->find(10) != all_causes->end());
+            Assert::IsTrue(all_causes->find(11) != all_causes->end());
+
+            all_causes = read->GetAllCauseStmtsFromStmt(13, RefType::kStmtRef);
+            Assert::AreEqual(0, int(all_causes->size()));
+        }
+
+        TEST_METHOD(TestGetAllCauseStmtsFromStmtWhileLoop)
+        {
+            std::shared_ptr<std::unordered_set<StmtNum>> all_causes = read->GetAllCauseStmtsFromStmt(19, RefType::kStmtRef);
+            Assert::AreEqual(4, int(all_causes->size()));
+            Assert::IsTrue(all_causes->find(15) != all_causes->end());
+            Assert::IsTrue(all_causes->find(17) != all_causes->end());
+            Assert::IsTrue(all_causes->find(18) != all_causes->end());
+            Assert::IsTrue(all_causes->find(19) != all_causes->end());
+        }
+
+        TEST_METHOD(TestGetAllCauseStmtsFromStmtIfStmt)
+        {
+            std::shared_ptr<std::unordered_set<StmtNum>> all_causes = read->GetAllCauseStmtsFromStmt(27, RefType::kStmtRef);
+            Assert::AreEqual(3, int(all_causes->size()));
+            Assert::IsTrue(all_causes->find(20) != all_causes->end());
+            Assert::IsTrue(all_causes->find(21) != all_causes->end());
+            Assert::IsTrue(all_causes->find(25) != all_causes->end());
+        }
 
         TEST_METHOD(TestGetAllAffectsTRelation)
         {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer = SourceLexer(base_dir + "test_affects_T_relation_2_source.txt");
-            parser.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser.Parse();
-            extractor.PopulatePKB(root);
-
             std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> actual = read->GetAllAffectsTRelations();
 
             Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(28, 30)) != actual->end());
