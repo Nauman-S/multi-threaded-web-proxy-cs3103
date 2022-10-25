@@ -67,24 +67,20 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromSt
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmts() {
     std::shared_ptr<std::unordered_set<StmtNum>> result = std::make_shared<std::unordered_set<StmtNum>>();
-    std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = pkb.statement_manager_.GetAllStatements();
-    for (auto stmt = all_stmts->begin(); stmt != all_stmts->end(); ++stmt) {
-        if (IsAssignStmt(*stmt)) {
-            std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(*stmt);
-            result->insert(effect_stmts->begin(), effect_stmts->end());
-        }
+    std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+    for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt) {
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(*stmt);
+        result->insert(effect_stmts->begin(), effect_stmts->end());
     }
     return result;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmts() {
     std::shared_ptr<std::unordered_set<StmtNum>> result = std::make_shared<std::unordered_set<StmtNum>>();
-    std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = pkb.statement_manager_.GetAllStatements();
-    for (auto stmt = all_stmts->begin(); stmt != all_stmts->end(); ++stmt) {
-        if (IsAssignStmt(*stmt)) {
-            std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = GetCauseStmtsFromStmt(*stmt);
-            result->insert(cause_stmts->begin(), cause_stmts->end());
-        }
+    std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+    for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt) {
+        std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = GetCauseStmtsFromStmt(*stmt);
+        result->insert(cause_stmts->begin(), cause_stmts->end());
     }
     return result;
 }
