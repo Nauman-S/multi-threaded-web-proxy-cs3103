@@ -36,8 +36,9 @@
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\clause\ClauseGroup.h" />
     <ClInclude Include="QPS\clause\ClauseType.h" />
+    <ClInclude Include="QPS\optimization\ResTableCache.h" />
     <ClInclude Include="QPS\parser\StringLiterals.h" />
-    <ClInclude Include="QPS\PriorityManager.h" />
+    <ClInclude Include="QPS\optimization\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="QPS\clause\pattern\IfPattern.h" />
     <ClInclude Include="QPS\clause\pattern\Pattern.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="QPS\clause\Clause.cpp" />
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="QPS\DataRetriever.cpp" />
+    <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\SemanticError.cpp" />

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "../../DataRetriever.h"
-#include "../../PriorityManager.h"
+#include "../../optimization/PriorityManager.h"
 
 using std::string;
 using std::vector;
