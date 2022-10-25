@@ -28,8 +28,9 @@ using namespace std;
 
 class SourceParser {
 public:
-    shared_ptr<ProgramNode> Parse();
+    pair<shared_ptr<ProgramNode>, vector<Procedure>> Parse();
     void SetTokens(shared_ptr<vector<SourceToken>>);
+    vector<Procedure> GenerateSortedCalls();
 
 private:
     int token_idx = 0;
@@ -50,6 +51,5 @@ private:
     shared_ptr<WhileStatementASTNode> ParseWhileStatement(Procedure&);
     shared_ptr<AssignStatementASTNode> ParseAssignStatement(Procedure&);
     shared_ptr<ConditionExpression> ParseConditionExpression(Procedure&);
-    vector<Procedure> GenerateSortedCalls();
     std::string JoinWithDelimiter(std::vector<std::string>&, std::string);
 };
