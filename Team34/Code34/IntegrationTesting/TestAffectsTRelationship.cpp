@@ -124,5 +124,23 @@ namespace IntegrationTesting
             Assert::IsTrue(all_causes->find(15) != all_causes->end());
             Assert::IsTrue(all_causes->find(13) != all_causes->end());
         }
+
+        TEST_METHOD(TestGetAllAffectsTRelation)
+        {
+            std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> actual = read->GetAllAffectsTRelations();
+
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 3)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 4)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 10)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 11)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 12)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(15, 16)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(15, 17)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(16, 17)) != actual->end());
+
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 5)) != actual->end());
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(16, 16)) != actual->end());
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(17, 17)) != actual->end());
+        }
     };
 }
