@@ -62,7 +62,23 @@ AssigncenYcenY0CallreadPointWhileCondition00xyAssigncountcount1countAssigncenXce
 CallreadPointifCondition0countAssignflagflag1AssigncenXcenXcenXcountAssigncenYcenYcenYcountAssignnormSqnormSqcenXcenXcenYcenY";
 			Assert::IsTrue(actual == expected);
 		};
-		TEST_METHOD(CallList) {
+		TEST_METHOD(CallList1) {
+			SourceParser parser = SourceParser();
+			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls_1.txt");
+			parser.SetTokens(lexer.GetAllTokens());
+			vector<Procedure> calls = parser.Parse().second;
+			string actual;
+			for (auto x : calls) {
+				actual = actual + x + " ";
+			}
+			ofstream myfile;
+			myfile.open("example.txt");
+			myfile << actual;
+			myfile.close();
+			string expected = "proc6 proc9 proc8 proc7 proc1 proc5 proc2 proc4 proc3 ";
+			Assert::IsTrue(actual == expected);
+		};
+		TEST_METHOD(CallList2) {
 			SourceParser parser = SourceParser();
 			SourceLexer lexer = SourceLexer(base_dir + "/complex_calls_2.txt");
 			parser.SetTokens(lexer.GetAllTokens());
@@ -72,6 +88,22 @@ CallreadPointifCondition0countAssignflagflag1AssigncenXcenXcenXcountAssigncenYce
 				actual = actual + x + " ";
 			}
 			string expected = "proc5 proc1 proc6 proc9 proc8 proc7 proc2 proc4 proc3 ";
+			Assert::IsTrue(actual == expected);
+		};
+		TEST_METHOD(CallList3) {
+			SourceParser parser = SourceParser();
+			SourceLexer lexer = SourceLexer(base_dir + "/long_program.txt");
+			parser.SetTokens(lexer.GetAllTokens());
+			vector<Procedure> calls = parser.Parse().second;
+			string actual;
+			for (auto x : calls) {
+				actual = actual + x + " ";
+			}
+			ofstream myfile;
+			myfile.open("example.txt");
+			myfile << actual;
+			myfile.close();
+			string expected = "main printResults computeCentroid readPoint ";
 			Assert::IsTrue(actual == expected);
 		};
 	};
