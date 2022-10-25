@@ -11,9 +11,18 @@ void CallsExtractor::ExtractProgramNode(const ProgramNode& program) {
 }
 
 void CallsExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
+    if (IsExtractedProcedure(proc.GetProc())) {
+        return;
+    }
+    InitCachedSet(proc.GetProc());
     std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
     for (std::shared_ptr<StatementASTNode> child : children) {
         child->Extract(*this);
+    }
+    // At this point, the set of Calls* for proc is fully populated. 
+    std::shared_ptr<std::set<Procedure>> populated_set = this->proc_to_calls_T_.at(proc.GetProc());
+    for (Procedure p : *populated_set) {
+        this->AddToCallsT(proc.GetProc(), p);
     }
 }
 
@@ -25,15 +34,20 @@ void CallsExtractor::ExtractCallNode(const CallStatementASTNode& call) {
 
     // Add indirect calls from call stacks
     this->procedure_calls_stack_.push_back(parent_proc);
-    for (Procedure prev_proc : this->procedure_calls_stack_) {
-        this->AddToCallsT(prev_proc, called_proc);
-    }
+    this->AddToCachedSet(called_proc);
 
-    if (this->proc_node_map_.find(called_proc) != this->proc_node_map_.end()) {
+    if (IsExtractedProcedure(called_proc)) {
+        // Add Calls* relation through cached set instead of reevaluating procedure node
+        std::shared_ptr<std::set<Procedure>> cached_set = this->proc_to_calls_T_.at(called_proc);
+        for (Procedure p : *cached_set) {
+            this->AddToCachedSet(p);
+        }
+    } 
+    else {
+        // Jump to called node and extract that first
         std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
         called_proc_node->Extract(*this);
     }
-
     this->procedure_calls_stack_.pop_back();
 }
 
@@ -60,18 +74,26 @@ void CallsExtractor::ExtractPrintNode(const PrintStatementASTNode& print) {}
 void CallsExtractor::ExtractReadNode(const ReadStatementASTNode& read) {}
 void CallsExtractor::ExtractConditionExpression(const ConditionExpression& cond) {}
 
-void CallsExtractor::AddToCalls(Procedure caller, Procedure callee) {
-    std::pair<Procedure, Procedure> calls = std::make_pair(caller, callee);
-    if (this->added_calls_.find(calls) == this->added_calls_.end()) {
-        this->write_manager_->SetCalls(caller, callee);
-        this->added_calls_.insert(calls);
+bool CallsExtractor::IsExtractedProcedure(Procedure p) {
+    return this->proc_to_calls_T_.find(p) != this->proc_to_calls_T_.end();
+}
+
+void CallsExtractor::AddToCachedSet(Procedure called) {
+    for (Procedure prev_proc : this->procedure_calls_stack_) {
+        std::shared_ptr<std::set<Procedure>> cached_set = this->proc_to_calls_T_.at(prev_proc);
+        cached_set->insert(called);
     }
 }
 
+void CallsExtractor::InitCachedSet(Procedure p) {
+    std::shared_ptr<std::set<Procedure>> new_set(new std::set<Procedure>());
+    this->proc_to_calls_T_.insert(std::make_pair(p, new_set));
+}
+
+void CallsExtractor::AddToCalls(Procedure caller, Procedure callee) {
+    this->write_manager_->SetCalls(caller, callee);
+}
+
 void CallsExtractor::AddToCallsT(Procedure caller, Procedure callee) {
-    std::pair<Procedure, Procedure> calls = std::make_pair(caller, callee);
-    if (this->added_calls_T_.find(calls) == this->added_calls_T_.end()) {
-        this->write_manager_->SetCallsT(caller, callee);
-        this->added_calls_T_.insert(calls);
-    }
+    this->write_manager_->SetCallsT(caller, callee);
 }
