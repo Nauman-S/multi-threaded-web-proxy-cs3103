@@ -178,3 +178,8 @@ while w; stmt s; call c;
 Select <s,c> pattern w("CS2030",_) such that Next*(s, w) and Parent(s, c)
 7 8, 15 22, 16 17, 18 19, 20 21
 5000
+37 - Check cache for stmt stmt table
+while w1, w2, w3, w4, w5, w6, w7, w8, w9, w10; stmt s1, s2, s3, s4, s5, s6, s7, s8, s9, s10; call c;
+Select <s1,c> pattern w1("CS2030",_) such that Parent(s1, c) and Next*(s1, w1) and Next*(s2, w2) and Next*(s3, w3) and Next*(s4, w4) and Next*(s5, w5) and Next*(s6, w6) and Next*(s7, w7) and Next*(s8, w8) and Next*(s9, w9) and Next*(s10, w10)
+7 8, 15 22, 16 17, 18 19, 20 21
+5000
