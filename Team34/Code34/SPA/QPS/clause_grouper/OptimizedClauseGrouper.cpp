@@ -4,7 +4,7 @@
 
 #include "../clause/Clause.h"
 #include "../clause/ClauseGroup.h"
-#include "../PriorityManager.h"
+#include "../optimization/PriorityManager.h"
 
 
 using std::string;

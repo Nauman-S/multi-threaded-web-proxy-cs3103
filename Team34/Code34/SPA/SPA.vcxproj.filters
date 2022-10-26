@@ -113,6 +113,7 @@
     <ClCompile Include="QPS\clause\relation\UsesPRel.cpp" />
     <ClCompile Include="QPS\clause\relation\UsesSRel.cpp" />
     <ClCompile Include="QPS\reference\TempRef.cpp" />
+    <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -228,7 +229,7 @@
     <ClInclude Include="QPS\clause_grouper\SimpleClauseGrouper.h" />
     <ClInclude Include="SP\design_extractor\NextExtractor.h" />
     <ClInclude Include="QPS\clause\ClauseType.h" />
-    <ClInclude Include="QPS\PriorityManager.h" />
+    <ClInclude Include="QPS\optimization\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
@@ -258,5 +259,6 @@
     <ClInclude Include="QPS\clause\relation\UsesPRel.h" />
     <ClInclude Include="QPS\clause\relation\UsesSRel.h" />
     <ClInclude Include="QPS\parser\StringLiterals.h" />
+    <ClInclude Include="QPS\optimization\ResTableCache.h" />
   </ItemGroup>
 </Project>
