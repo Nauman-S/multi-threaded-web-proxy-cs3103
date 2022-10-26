@@ -38,6 +38,29 @@ namespace IntegrationTesting
             extractor.PopulatePKB(root);
         }
 
+        TEST_METHOD(TestCheckAffectsTNoNesting)
+        {
+            Assert::IsTrue(read->CheckAffectsT(1, 3));
+            Assert::IsTrue(read->CheckAffectsT(1, 4));
+            Assert::IsFalse(read->CheckAffectsT(1, 5));
+        }
+
+        TEST_METHOD(TestCheckAffectsTSingleIf)
+        {
+            Assert::IsTrue(read->CheckAffectsT(7, 10));
+            Assert::IsTrue(read->CheckAffectsT(7, 11));
+            Assert::IsTrue(read->CheckAffectsT(7, 12));
+        }
+
+        TEST_METHOD(TestCheckAffectsTSingleWhile)
+        {
+            Assert::IsTrue(read->CheckAffectsT(15,16));
+            Assert::IsTrue(read->CheckAffectsT(15,17));
+            Assert::IsTrue(read->CheckAffectsT(16,17));
+            Assert::IsFalse(read->CheckAffectsT(16, 16));
+            Assert::IsFalse(read->CheckAffectsT(17, 17));
+        }
+
         TEST_METHOD(TestGetAllEffectStmtsFromStmtNoNesting)
         {
             std::shared_ptr<std::unordered_set<StmtNum>> all_effects = read->GetAllEffectStmtsFromStmt(1, RefType::kStmtRef);
@@ -102,62 +125,22 @@ namespace IntegrationTesting
             Assert::IsTrue(all_causes->find(13) != all_causes->end());
         }
 
-        // Append 'z' to let following tests run after previous ones (tests run order by alphabetical order)
-        TEST_METHOD(TestzCheckAffectsTBasic)
+        TEST_METHOD(TestGetAllAffectsTRelation)
         {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer_empty_affects = SourceLexer(base_dir + "test_affects_T_source.txt");
-            parser.SetTokens(lexer_empty_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse().first;
-            extractor.PopulatePKB(root_empty_affects);
-
-            Assert::IsTrue(read->CheckAffectsT(1, 3));
-            Assert::IsTrue(read->CheckAffectsT(1, 4));
-            Assert::IsFalse(read->CheckAffectsT(5, 8));
-        }
-
-        TEST_METHOD(TestzCheckAffectsTCalls) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(10, 14));
-            Assert::IsTrue(read->CheckAffectsT(11, 14));
-        }
-
-        TEST_METHOD(TestzCheckAffectsTWhileStmt) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(15, 17));
-            Assert::IsTrue(read->CheckAffectsT(19, 18));
-            Assert::IsTrue(read->CheckAffectsT(19, 19));
-        }
-
-        TEST_METHOD(TestzCheckAffectsTIfStmt) 
-        {
-            Assert::IsTrue(read->CheckAffectsT(20, 25));
-            Assert::IsTrue(read->CheckAffectsT(21, 27));
-        }
-
-        TEST_METHOD(TestzGetAllAffectsTRelation)
-        {
-            DesignExtractor extractor;
-            SourceParser parser;
-
-            // Test new source file for affectsT relation
-            write->ResetPKB();
-            SourceLexer lexer = SourceLexer(base_dir + "test_affects_T_source.txt");
-            parser.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser.Parse().first;
-            extractor.PopulatePKB(root);
-
             std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> actual = read->GetAllAffectsTRelations();
 
-            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(28, 30)) != actual->end());
-            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(30, 33)) != actual->end());
-            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(28, 36)) != actual->end());
-            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(28, 39)) != actual->end());
-            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(39, 42)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 3)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 4)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 10)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 11)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 12)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(15, 16)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(15, 17)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(16, 17)) != actual->end());
+
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 5)) != actual->end());
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(16, 16)) != actual->end());
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(17, 17)) != actual->end());
         }
     };
 }
