@@ -6,9 +6,9 @@
 
 #include "../Clause.h"
 #include "../ClauseType.h"
-#include "../reference/ValType.h"
-#include "../../Utils/type/RefType.h"
-#include "../../Utils/expression/ExprSpec.h"
+#include "../../reference/ValType.h"
+#include "../../../Utils/type/RefType.h"
+#include "../../../Utils/expression/ExprSpec.h"
 class DataRetriever;
 
 class Pattern

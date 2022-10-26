@@ -5,19 +5,20 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../PKB/ReadPKBManager.h"
-#include "../Utils/type/TypeDef.h"
-#include "AttrType.h"
-#include "ClauseType.h"
+#include "clause/AttrType.h"
+#include "clause/ClauseType.h"
+#include "clause/relation/ModifiesPRel.h"
+#include "clause/relation/ModifiesSRel.h"
+#include "clause/relation/UsesPRel.h"
+#include "clause/relation/UsesSRel.h"
 #include "query_result/ResWrapper.h"
 #include "query_result/SetRes.h"
 #include "query_result/TableRes.h"
 #include "reference/Ref.h"
 #include "reference/ValType.h"
-#include "relation/ModifiesPRel.h"
-#include "relation/ModifiesSRel.h"
-#include "relation/UsesPRel.h"
-#include "relation/UsesSRel.h"
+#include "optimization/ResTableCache.h"
+#include "../PKB/ReadPKBManager.h"
+#include "../Utils/type/TypeDef.h"
 // Use forward declaration to avoid cyclic include of Visitor pattern
 class StmtVarRel;
 class ProcVarRel;
@@ -29,16 +30,18 @@ class IfPattern;
 class WhilePattern;
 class With;
 
+
 class DataRetriever {
 protected:  // attributes
     std::shared_ptr<ReadPKBManager> pkb_ptr_;
+    ResTableCache<StmtNum, StmtNum> stmt_stmt_table_cache_;
 
 public:  // public API
-    DataRetriever() {
+    DataRetriever() : stmt_stmt_table_cache_{} {
         pkb_ptr_ = ReadPKBManager::GetInstance();
     };
 
-    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) :pkb_ptr_{ pkb } {
+    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb }, stmt_stmt_table_cache_{} {
     };
 
     std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);
@@ -116,6 +119,8 @@ protected:  // helper methods
         StmtStmtRel& rel);  // (synonym, wildcard)
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>> GetAllSSRel(
         StmtStmtRel& rel);  // (synonym, synonym)
+    std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllSSRelFromPKB(
+        ClauseType type);
 
     // Pattern
     std::shared_ptr<std::unordered_set<std::string>> GetPatternStmtByVar(
@@ -163,7 +168,7 @@ protected:  // helper methods
             std::string& filter_val);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetAllWithClause(With& with);
-    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> 
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         GetWithClauseAttrPairs(RefType syn_ref_type);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1,
@@ -171,8 +176,8 @@ protected:  // helper methods
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseSetAndTable(std::shared_ptr<std::unordered_set<std::string>> set1,
             std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2);
-    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> 
-        JoinWithClauseSetAndTable(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, 
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
+        JoinWithClauseSetAndTable(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1,
             std::shared_ptr<std::unordered_set<std::string>> set2);
     std::shared_ptr<std::vector<std::pair<std::string, std::string>>>
         JoinWithClauseTables(

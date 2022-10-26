@@ -67,24 +67,20 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetCauseStmtsFromSt
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmts() {
     std::shared_ptr<std::unordered_set<StmtNum>> result = std::make_shared<std::unordered_set<StmtNum>>();
-    std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = pkb.statement_manager_.GetAllStatements();
-    for (auto stmt = all_stmts->begin(); stmt != all_stmts->end(); ++stmt) {
-        if (IsAssignStmt(*stmt)) {
-            std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(*stmt);
-            result->insert(effect_stmts->begin(), effect_stmts->end());
-        }
+    std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+    for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt) {
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(*stmt);
+        result->insert(effect_stmts->begin(), effect_stmts->end());
     }
     return result;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmts() {
     std::shared_ptr<std::unordered_set<StmtNum>> result = std::make_shared<std::unordered_set<StmtNum>>();
-    std::shared_ptr<std::unordered_set<StmtNum>> all_stmts = pkb.statement_manager_.GetAllStatements();
-    for (auto stmt = all_stmts->begin(); stmt != all_stmts->end(); ++stmt) {
-        if (IsAssignStmt(*stmt)) {
-            std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = GetCauseStmtsFromStmt(*stmt);
-            result->insert(cause_stmts->begin(), cause_stmts->end());
-        }
+    std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+    for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt) {
+        std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = GetCauseStmtsFromStmt(*stmt);
+        result->insert(cause_stmts->begin(), cause_stmts->end());
     }
     return result;
 }
@@ -101,29 +97,101 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAll
 
 // APIs related to Affects* relation
 bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
-    std::shared_ptr<std::unordered_set<Variable>> modified_vars = pkb.modifies_manager_.GetVarByStmtNum(cause);
-    std::shared_ptr<std::unordered_set<Variable>> uses_vars = pkb.uses_manager_.GetVarByStmtNum(effect);
-    for (auto iter = modified_vars->begin(); iter != modified_vars->end(); ++iter) {
-        if (uses_vars->find(*iter) != uses_vars->end() && pkb.next_manager_.CheckNextT(cause, effect)) {
+    if (!IsAssignStmt(cause) || !IsAssignStmt(effect)) {
+        return false;
+    }
+
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(cause);
+    while (!queue.empty()) {
+        StmtNum current = queue.front();
+        queue.pop();
+
+        if (visited.find(current) != visited.end()) {
+            continue;
+        }
+        visited.insert(current);
+
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(current);
+        if (effect_stmts->find(effect) != effect_stmts->end()) {
             return true;
+        }
+
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
         }
     }
     return false;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllEffectStmtsFromStmt(StmtNum stmt) {
-    // TODO: get all stmts that modify and BFS to find all stmts that Uses the same variable
-    return std::shared_ptr<std::unordered_set<StmtNum>>();
+    std::shared_ptr<std::unordered_set<StmtNum>> all_effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return all_effect_stmts;
+    }
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum node = queue.front();
+        queue.pop();
+
+        if (visited.find(node) != visited.end()) {
+            continue;
+        }
+
+        visited.insert(node);
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(node);
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            all_effect_stmts->insert(*iter);
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
+        }
+    }
+    return all_effect_stmts;
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmtsFromStmt(StmtNum stmt) {
-    // TODO: get all stmts that uses and reverse BFS to find all stmts that Modifies the same variable
-    return std::shared_ptr<std::unordered_set<StmtNum>>();
+    std::shared_ptr<std::unordered_set<StmtNum>> all_cause_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    if (!IsAssignStmt(stmt)) {
+        return all_cause_stmts;
+    }
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum node = queue.front();
+        queue.pop();
+
+        if (visited.find(node) != visited.end()) {
+            continue;
+        }
+
+        visited.insert(node);
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetCauseStmtsFromStmt(node);
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            all_cause_stmts->insert(*iter);
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
+        }
+    }
+    return all_cause_stmts;
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAllAffectsTRelations() {
-    // TODO: discuss implementation
-    return std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>>();
+    std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_T_relations = std::make_shared<std::vector<std::pair<StmtNum, StmtNum>>>();
+    std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+
+    for (auto iter = assign_stmts->begin(); iter != assign_stmts->end(); ++iter) {
+        std::shared_ptr < std::unordered_set<StmtNum>> all_effect_stmts = GetAllEffectStmtsFromStmt(*iter);
+        GenerateAffectsPairs(all_affects_T_relations, *iter, all_effect_stmts);
+    }
+    return all_affects_T_relations;
 }
 
 // Helper functions

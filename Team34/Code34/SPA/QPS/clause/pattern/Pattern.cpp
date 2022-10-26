@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../DataRetriever.h"
+#include "../../DataRetriever.h"
 
 std::shared_ptr<ResWrapper> Pattern::GetMatch(DataRetriever& retriever)
 {

@@ -5,16 +5,17 @@
 
 #include "./ast/IfStatementASTNode.h"
 #include "../Utils/type/TypeDef.h"
+#include "../Utils/algo/TopoCycle.h"
 
 using namespace std;
 
-std::shared_ptr<ProgramNode> SourceParser::Parse() {
+pair<shared_ptr<ProgramNode>, vector<Procedure>> SourceParser::Parse() {
     std::shared_ptr<ProgramNode> programNode(new ProgramNode());
     while (token_idx < (int)tokens->size()) {
         shared_ptr<ProcedureASTNode> p_node = ParseProcedure();
         programNode->AddProcedure(p_node);
     }
-    return programNode;
+    return pair<shared_ptr<ProgramNode>, vector<Procedure>>(programNode, GenerateSortedCalls());
 }
 
 std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure() {
@@ -26,6 +27,7 @@ std::shared_ptr<ProcedureASTNode> SourceParser::ParseProcedure() {
         IncrementTokenIdx();
     }
     p = tokens->at(token_idx++).GetStringVal();
+    procedure_names.push_back(p);
     if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftCurly) {
         IncrementTokenIdx();
     }
@@ -270,6 +272,7 @@ shared_ptr<CallStatementASTNode> SourceParser::ParseCallStatement(Procedure& pro
     }
     Procedure proc_index = tokens->at(token_idx).GetStringVal();
     p_node->SetProcedure(proc_index);
+    calls.push_back(pair<string, string>(procedure_names.at(procedure_names.size() - 1), proc_index));
     IncrementTokenIdx();
     if (tokens->at(token_idx).GetType() == SourceTokenType::kSemiColon) {
         IncrementTokenIdx();
@@ -294,4 +297,9 @@ void SourceParser::IncrementTokenIdx() { token_idx += 1; }
 
 void SourceParser::SetTokens(shared_ptr<vector<SourceToken>> source_tokens) {
     tokens = source_tokens;
+}
+
+vector<Procedure> SourceParser::GenerateSortedCalls() {
+    TopoCycle generater = TopoCycle();
+    return generater.GenerateList(calls, procedure_names);
 }

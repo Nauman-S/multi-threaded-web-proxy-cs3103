@@ -2,8 +2,8 @@
 
 #include <unordered_map>
 
-#include "ClauseType.h"
-#include "../Utils/type/TypeDef.h"
+#include "../clause/ClauseType.h"
+#include "../../Utils/type/TypeDef.h"
 
 class PriorityManager {
 private:

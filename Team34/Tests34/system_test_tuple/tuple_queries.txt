@@ -46,7 +46,7 @@ Select <ifs, w> such that Parent(ifs, w) pattern ifs("x",_,_) pattern w("i",_)
 10 - select tuple of two with two patterns Modifies and with
 if ifs; while w; procedure p; variable x;
 Select <ifs, w> such that Modifies(p, x) with p.procName = "p" pattern ifs(x,_,_) pattern w(x,_)
-8 6, 15 16, 15 6, 24 16, 24 6, 8 16
+
 5000
 11 - select tuple of two with two patterns and Next
 if ifs; while w;

@@ -3,10 +3,10 @@
 #include <memory>
 
 #include "ClauseType.h"
-#include "PriorityManager.h"
-#include "reference/Ref.h"
-#include "query_result/ResWrapper.h"
-#include "../Utils/type/TypeDef.h"
+#include "../query_result/ResWrapper.h"
+#include "../reference/Ref.h"
+#include "../optimization/PriorityManager.h"
+#include "../../Utils/type/TypeDef.h"
 class DataRetriever;
 
 

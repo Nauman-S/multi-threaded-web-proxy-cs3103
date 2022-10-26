@@ -4,14 +4,16 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Clause.h"
+#include "clause/Clause.h"
+#include "clause/ClauseGroup.h"
+#include "clause/relation/Rel.h"
+#include "clause/pattern/Pattern.h"
+#include "clause_grouper/ClauseGrouper.h"
 #include "DataRetriever.h"
 #include "Query.h"
-#include "clause_grouper/ClauseGrouper.h"
-#include "pattern/Pattern.h"
 #include "query_result/Table.h"
 #include "reference/Ref.h"
-#include "relation/Rel.h"
+
 
 class QueryEvaluator {
 protected:

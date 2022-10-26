@@ -6,34 +6,34 @@
 #include <unordered_set>
 #include <vector>
 
+#include "clause/ClauseType.h"
+#include "clause/pattern/AssignPattern.h"
+#include "clause/pattern/IfPattern.h"
+#include "clause/pattern/Pattern.h"
+#include "clause/pattern/WhilePattern.h"
+#include "clause/relation/AffectsRel.h"
+#include "clause/relation/AffectsTRel.h"
+#include "clause/relation/CallsRel.h"
+#include "clause/relation/CallsTRel.h"
+#include "clause/relation/FollowsRel.h"
+#include "clause/relation/FollowsTRel.h"
+#include "clause/relation/ModifiesPRel.h"
+#include "clause/relation/ModifiesSRel.h"
+#include "clause/relation/NextRel.h"
+#include "clause/relation/NextTRel.h"
+#include "clause/relation/ParentRel.h"
+#include "clause/relation/ParentTRel.h"
+#include "clause/relation/ProcProcRel.h"
+#include "clause/relation/ProcVarRel.h"
+#include "clause/relation/StmtStmtRel.h"
+#include "clause/relation/StmtVarRel.h"
+#include "clause/relation/UsesPRel.h"
+#include "clause/relation/UsesSRel.h"
+#include "clause/with_clause/With.h"
+#include "reference/ValType.h"
 #include "../PKB/ReadPKBManager.h"
 #include "../PKB/manager/UsesManager.h"
 #include "../Utils/type/TypeDef.h"
-#include "ClauseType.h"
-#include "pattern/AssignPattern.h"
-#include "pattern/IfPattern.h"
-#include "pattern/Pattern.h"
-#include "pattern/WhilePattern.h"
-#include "reference/ValType.h"
-#include "relation/AffectsRel.h"
-#include "relation/AffectsTRel.h"
-#include "relation/CallsRel.h"
-#include "relation/CallsTRel.h"
-#include "relation/FollowsRel.h"
-#include "relation/FollowsTRel.h"
-#include "relation/ModifiesPRel.h"
-#include "relation/ModifiesSRel.h"
-#include "relation/NextRel.h"
-#include "relation/NextTRel.h"
-#include "relation/ParentRel.h"
-#include "relation/ParentTRel.h"
-#include "relation/ProcProcRel.h"
-#include "relation/ProcVarRel.h"
-#include "relation/StmtStmtRel.h"
-#include "relation/StmtVarRel.h"
-#include "relation/UsesPRel.h"
-#include "relation/UsesSRel.h"
-#include "with_clause/With.h"
 
 using std::make_shared;
 using std::pair;
@@ -936,9 +936,23 @@ shared_ptr<unordered_set<string>> DataRetriever::GetLhsStmtByWildcard(
 
 std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStmtRel& rel) {
     ClauseType type = rel.GetRelType();
+    shared_ptr<vector<pair<StmtNum, StmtNum>>> table;
+    if (stmt_stmt_table_cache_.HasCache(type)) {
+        table = stmt_stmt_table_cache_.GetCachedTable(type);
+    }
+    else {
+        table = GetAllSSRelFromPKB(type);
+        stmt_stmt_table_cache_.PutCacheTable(type, table);
+    }
 
     RefType lhs_stmt_type = rel.LhsRefType();
     RefType rhs_stmt_type = rel.RhsRefType();
+    table = FilterStmtTableByTypes(table, lhs_stmt_type, rhs_stmt_type);
+
+    return StmtStmtTableToStrStrTable(table);
+}
+
+std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> DataRetriever::GetAllSSRelFromPKB(ClauseType type) {
     shared_ptr<vector<pair<StmtNum, StmtNum>>> table;
     if (type == ClauseType::kParentRel) {
         table = pkb_ptr_->GetAllParentRelations();
@@ -964,13 +978,11 @@ std::shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSSRel(StmtStm
     else if (type == ClauseType::kAffectsTRel) {
         table = pkb_ptr_->GetAllAffectsTRelations();
     }
-    table = FilterStmtTableByTypes(table, lhs_stmt_type, rhs_stmt_type);
 
-    return StmtStmtTableToStrStrTable(table);
+    return table;
 }
 
-std::shared_ptr<std::unordered_set<std::string>>
-DataRetriever::GetPatternStmtByVar(Pattern& pat) {
+std::shared_ptr<std::unordered_set<std::string>> DataRetriever::GetPatternStmtByVar(Pattern& pat) {
     auto type = pat.GetPatternType();
 
     shared_ptr<unordered_set<string>> set;

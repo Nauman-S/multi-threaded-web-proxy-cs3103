@@ -5,10 +5,10 @@
 
 #include "../Clause.h"
 #include "../ClauseType.h"
-#include "../reference/ValType.h"
-#include "../PriorityManager.h"
-#include "../../Utils/type/RefType.h"
-#include "../query_result/ResWrapper.h"
+#include "../../reference/ValType.h"
+#include "../../optimization/PriorityManager.h"
+#include "../../query_result/ResWrapper.h"
+#include "../../../Utils/type/RefType.h"
 class DataRetriever;
 
 

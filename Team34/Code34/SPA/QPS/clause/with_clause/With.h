@@ -3,14 +3,14 @@
 #include <memory>
 #include <string>
 
-#include "../../Utils/type/RefType.h"
-#include "../../Utils/type/TypeDef.h"
 #include "../AttrType.h"
 #include "../Clause.h"
-#include "../PriorityManager.h"
-#include "../query_result/ResWrapper.h"
-#include "../reference/Ref.h"
-#include "../reference/ValType.h"
+#include "../../optimization/PriorityManager.h"
+#include "../../query_result/ResWrapper.h"
+#include "../../reference/Ref.h"
+#include "../../reference/ValType.h"
+#include "../../../Utils/type/RefType.h"
+#include "../../../Utils/type/TypeDef.h"
 class DataRetriever;
 
 class With : public Clause {
