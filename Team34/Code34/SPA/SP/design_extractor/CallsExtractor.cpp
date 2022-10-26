@@ -14,6 +14,7 @@ void CallsExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
     if (IsExtractedProcedure(proc.GetProc())) {
         return;
     }
+
     InitCachedSet(proc.GetProc());
     std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
     for (std::shared_ptr<StatementASTNode> child : children) {
