@@ -19,9 +19,9 @@
 #include "../ast/WhileStatementASTNode.h"
 #include "../ast/ConditionExpression.h"
 
-class UsesModifiesExtractor : public NodeExtractor {
+class UsesExtractor : public NodeExtractor {
 public:
-    UsesModifiesExtractor(std::shared_ptr<WritePKBManager>);
+    UsesExtractor(std::shared_ptr<WritePKBManager>);
 
     virtual void ExtractProgramNode(const ProgramNode&) override;
     virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
@@ -38,10 +38,9 @@ public:
 private:
     std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
 
-    // Cache procedure to modified and used variable in the procedure,
+    // Cache procedure to used variable in the procedure,
     // to prevent evaluating same procedure twice
     std::map<Procedure, std::shared_ptr<std::set<Variable>>> proc_uses_;
-    std::map<Procedure, std::shared_ptr<std::set<Variable>>> proc_modifies_;
     bool IsExtractedProcedure(Procedure);
     void InitCachedSet(Procedure);
 
@@ -50,14 +49,9 @@ private:
     std::vector<Procedure> proc_call_stack_;
     std::vector<StmtNum> parent_smts_;
     void SetIndirectUses(Variable);
-    void SetIndirectModifies(Variable);
 
     // Wrapper methods to access PKB API to write uses relationship
     void AddToUses(StmtNum, Variable);
     void AddToUses(Procedure, Variable);
-
-    // Wrapper methods to access PKB API to write modifies relationship
-    void AddToModifies(StmtNum, Variable);
-    void AddToModifies(Procedure, Variable);
 };
 
