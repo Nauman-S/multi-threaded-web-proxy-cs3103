@@ -41,5 +41,8 @@
     <ClCompile Include="TestAffectsTRelationship2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestClauseGrouper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

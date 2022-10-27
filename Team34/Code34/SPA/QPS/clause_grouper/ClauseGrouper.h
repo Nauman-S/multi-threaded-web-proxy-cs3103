@@ -17,8 +17,6 @@ protected:
 	std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_;
 	std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_;
 
-	
-
 	virtual void Group() = 0;
 	bool AreSelectSynsIn(std::vector<std::string> syns);
 	
