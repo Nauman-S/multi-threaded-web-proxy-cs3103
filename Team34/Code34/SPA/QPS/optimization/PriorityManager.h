@@ -85,7 +85,7 @@ private:
         {std::make_pair(ClauseType::kCallsTRel, 2), 10},
 
         {std::make_pair(ClauseType::kUsesPRel, 2), 15},
-        { std::make_pair(ClauseType::kUsesSRel, 2), 15 },
+        {std::make_pair(ClauseType::kUsesSRel, 2), 15},
 
         {std::make_pair(ClauseType::kFollowsRel, 2), 20},
         {std::make_pair(ClauseType::kNextRel, 2), 20},
@@ -94,17 +94,16 @@ private:
         
         {std::make_pair(ClauseType::kWith, 2), 30},
         {std::make_pair(ClauseType::kAssignPattern, 2), 30},
-        
-        {std::make_pair(ClauseType::kFollowsTRel, 2), 40},
 
         {std::make_pair(ClauseType::kAffectsRel, 2), 50},        
         {std::make_pair(ClauseType::kNextTRel, 2), 50},
         
+        {std::make_pair(ClauseType::kFollowsTRel, 2), 80},
+
         {std::make_pair(ClauseType::kAffectsTRel, 2), 100}
     };
 
 public:
-    //Priority GetClausePriority(ClauseType type) { return priority_map_[type]; }
 
     Priority GetClausePriority(ClauseType type, int syn_num) { return priority_map_[std::make_pair(type, syn_num)]; }
 
