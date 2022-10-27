@@ -1,0 +1,38 @@
+procedure p1 {
+  x = 1;
+  call p2;
+  z = 2;
+  call p4;
+}
+
+procedure p2 {
+  read x;
+  call p3;
+}
+
+procedure p3 {
+  print y;
+}
+
+procedure p4 {
+  call p5;
+  print y;
+}
+
+procedure p5 {
+  x = 2;
+}
+
+procedure p6 {
+  x = 1;
+  call p7;
+  y = 2;
+}
+
+procedure p7 {
+  x = 1;
+  call p4;
+  y = 2;
+  call p2;
+}
+

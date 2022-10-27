@@ -38,17 +38,12 @@ public:
 private:
     std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
 
-    // Cached add of uses relationship
-    std::set<std::pair<StmtNum, Variable>> stmt_uses_cache_;
-    std::set<std::pair<Procedure, Variable>> procedure_uses_cache_;
-    void AddToUses(StmtNum, Variable);
-    void AddToUses(Procedure, Variable);
-
-    // Cached add of modifies relationship
-    std::set<std::pair<StmtNum, Variable>> stmt_modifies_cache_;
-    std::set<std::pair<Procedure, Variable>> procedure_modifies_cache_;
-    void AddToModifies(StmtNum, Variable);
-    void AddToModifies(Procedure, Variable);
+    // Cache procedure to modified and used variable in the procedure,
+    // to prevent evaluating same procedure twice
+    std::map<Procedure, std::shared_ptr<std::set<Variable>>> proc_uses_;
+    std::map<Procedure, std::shared_ptr<std::set<Variable>>> proc_modifies_;
+    bool IsExtractedProcedure(Procedure);
+    void InitCachedSet(Procedure);
 
     // Add uses and modifies relationship from indirect parents (container
     // and call statements)
@@ -56,5 +51,13 @@ private:
     std::vector<StmtNum> parent_smts_;
     void SetIndirectUses(Variable);
     void SetIndirectModifies(Variable);
+
+    // Wrapper methods to access PKB API to write uses relationship
+    void AddToUses(StmtNum, Variable);
+    void AddToUses(Procedure, Variable);
+
+    // Wrapper methods to access PKB API to write modifies relationship
+    void AddToModifies(StmtNum, Variable);
+    void AddToModifies(Procedure, Variable);
 };
 
