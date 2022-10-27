@@ -36,14 +36,17 @@ public:
     virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
+    // Map of procedure to set of Calls* relation for that procedure, used as cache
+    // to prevent evaluating same procedure twice
+    std::map<Procedure, std::shared_ptr<std::set<Procedure>>> proc_to_calls_T_;
+    void AddToCachedSet(Procedure);
+    bool IsExtractedProcedure(Procedure);
+    void InitCachedSet(Procedure);
+
     std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
     std::vector<Procedure> procedure_calls_stack_;
 
-    std::set<std::pair<Procedure, Procedure>> added_calls_;
-    std::set<std::pair<Procedure, Procedure>> added_calls_T_;
-
-    // Cached add of calls relation
+    // Wrapper methods to access write PKB API
     void AddToCalls(Procedure, Procedure);
-    // Cached add of calls* relation
     void AddToCallsT(Procedure, Procedure);
 };

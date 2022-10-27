@@ -23,6 +23,11 @@ void UsesModifiesExtractor::ExtractProgramNode(const ProgramNode& program) {
 }
 
 void UsesModifiesExtractor::ExtractProcedureNode(const ProcedureASTNode& proc) {
+    if (IsExtractedProcedure(proc.GetProc())) {
+        return;
+    }
+
+    InitCachedSet(proc.GetProc());
     std::vector<std::shared_ptr<StatementASTNode>> children = proc.GetChildren();
     for (std::shared_ptr<StatementASTNode> child : children) {
         child->Extract(*this);
@@ -51,17 +56,28 @@ void UsesModifiesExtractor::ExtractAssignmentNode(const AssignStatementASTNode& 
 }
 
 void UsesModifiesExtractor::ExtractCallNode(const CallStatementASTNode& call) {
-    Procedure called_proc = call.GetProcedure();
-    if (this->proc_node_map_.find(called_proc) == this->proc_node_map_.end()) {
-        return;
-    }
-
     Procedure parent_procedure = call.GetParentProcIndex();
+    Procedure called_proc = call.GetProcedure();
+
     this->proc_call_stack_.push_back(parent_procedure);
     this->parent_smts_.push_back(call.GetLineIndex());
 
-    std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
-    called_proc_node->Extract(*this);
+    if (IsExtractedProcedure(called_proc)) {
+        // Set uses and modifies from cached sets
+        std::shared_ptr<std::set<Variable>> cached_uses = this->proc_uses_.at(called_proc);
+        for (Variable used_var : *cached_uses) {
+            this->SetIndirectUses(used_var);
+        }
+
+        std::shared_ptr<std::set<Variable>> cached_modifies = this->proc_modifies_.at(called_proc);
+        for (Variable modified_var : *cached_modifies) {
+            this->SetIndirectModifies(modified_var);
+        }
+    }
+    else {
+        std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
+        called_proc_node->Extract(*this);
+    }
 
     this->parent_smts_.pop_back();
     this->proc_call_stack_.pop_back();
@@ -133,36 +149,17 @@ void UsesModifiesExtractor::ExtractConditionExpression(const ConditionExpression
     }
 }
 
-void UsesModifiesExtractor::AddToUses(StmtNum line, Variable var) {
-    std::pair<StmtNum, Variable> uses = std::make_pair(line, var);
-    if (this->stmt_uses_cache_.find(uses) == this->stmt_uses_cache_.end()) {
-        this->write_manager_->SetUses(line, var);
-        this->stmt_uses_cache_.insert(uses);
-    }
+bool UsesModifiesExtractor::IsExtractedProcedure(Procedure p) {
+    return this->proc_uses_.find(p) != this->proc_uses_.end()
+        && this->proc_modifies_.find(p) != this->proc_modifies_.end();
 }
 
-void UsesModifiesExtractor::AddToUses(Procedure proc, Variable var) {
-    std::pair<Procedure, Variable> uses = std::make_pair(proc, var);
-    if (this->procedure_uses_cache_.find(uses) == this->procedure_uses_cache_.end()) {
-        this->write_manager_->SetUses(proc, var);
-        this->procedure_uses_cache_.insert(uses);
-    }
-}
+void UsesModifiesExtractor::InitCachedSet(Procedure p) {
+    std::shared_ptr<std::set<Variable>> uses_set(new std::set<Variable>());
+    this->proc_uses_.insert(std::make_pair(p, uses_set));
 
-void UsesModifiesExtractor::AddToModifies(StmtNum line, Variable var) {
-    std::pair<StmtNum, Variable> modifies = std::make_pair(line, var);
-    if (this->stmt_modifies_cache_.find(modifies) == this->stmt_modifies_cache_.end()) {
-        this->write_manager_->SetModifies(line, var);
-        this->stmt_modifies_cache_.insert(modifies);
-    }
-}
-
-void UsesModifiesExtractor::AddToModifies(Procedure proc, Variable var) {
-    std::pair<Procedure, Variable> modifies = std::make_pair(proc, var);
-    if (this->procedure_modifies_cache_.find(modifies) == this->procedure_modifies_cache_.end()) {
-        this->write_manager_->SetModifies(proc, var);
-        this->procedure_modifies_cache_.insert(modifies);
-    }
+    std::shared_ptr<std::set<Variable>> modifies_set(new std::set<Variable>());
+    this->proc_modifies_.insert(std::make_pair(p, modifies_set));
 }
 
 // Sets uses on the variable for parent procedure calls and container stmts
@@ -183,4 +180,24 @@ void UsesModifiesExtractor::SetIndirectModifies(Variable var) {
     for (StmtNum l : this->parent_smts_) {
         this->AddToModifies(l, var);
     }
+}
+
+void UsesModifiesExtractor::AddToUses(StmtNum line, Variable var) {
+    this->write_manager_->SetUses(line, var);
+}
+
+void UsesModifiesExtractor::AddToUses(Procedure proc, Variable var) {
+    this->write_manager_->SetUses(proc, var);
+    std::shared_ptr<std::set<Variable>> cached_set = this->proc_uses_.at(proc);
+    cached_set->insert(var);
+}
+
+void UsesModifiesExtractor::AddToModifies(StmtNum line, Variable var) {
+    this->write_manager_->SetModifies(line, var);
+}
+
+void UsesModifiesExtractor::AddToModifies(Procedure proc, Variable var) {
+    this->write_manager_->SetModifies(proc, var);
+    std::shared_ptr<std::set<Variable>> cached_set = this->proc_modifies_.at(proc);
+    cached_set->insert(var);
 }
