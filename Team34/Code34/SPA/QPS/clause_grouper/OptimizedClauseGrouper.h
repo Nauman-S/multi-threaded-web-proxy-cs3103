@@ -16,8 +16,6 @@ private:
 
 	std::vector<std::shared_ptr<Clause>> OptimizeOrderWithinGroup(std::vector<std::shared_ptr<Clause>>);
 
-	std::vector<std::shared_ptr<Clause>> GetWaitingClauses(std::unordered_set<std::shared_ptr<Clause>>& remained_clause_set, std::unordered_set<std::string>& used_syns);
-	
 	void AddClauseToList(std::shared_ptr<Clause> clause, std::vector<std::shared_ptr<Clause>>& optimized_clauses, std::unordered_set<std::string>& used_syns);
 
 	bool ContainsUsedSyns(std::shared_ptr<Clause> clause, std::unordered_set<std::string>& used_syns);

@@ -21,10 +21,6 @@ protected:
 	bool AreSelectSynsIn(std::vector<std::string> syns);
 	
 public:
-	/*static std::shared_ptr<ClauseGrouper> CreateClauseGrouper(std::vector<Clause> clauses, std::vector<std::string> synonyms) {
-		return std::make_shared<ClauseGrouper>(clauses, synonyms);
-	}*/
-
 	ClauseGrouper(std::vector<std::shared_ptr<Clause>> clauses, std::vector<std::string> synonyms)
 		: clauses_{ clauses }, select_synonyms_{ synonyms } {
 	};

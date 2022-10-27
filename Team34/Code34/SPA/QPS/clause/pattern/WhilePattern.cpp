@@ -17,7 +17,7 @@ int WhilePattern::CountSynonyms()
 }
 
 Priority WhilePattern::GetPriority(PriorityManager& pm) {
-    return pm.GetClausePriority(ClauseType::kWhilePattern);
+    return pm.GetClausePriority(ClauseType::kWhilePattern, CountSynonyms());
 }
 
 std::shared_ptr<std::vector<std::string>> WhilePattern::GetSynonyms()
