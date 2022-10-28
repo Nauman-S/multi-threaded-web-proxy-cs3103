@@ -2,9 +2,9 @@ name: Style Check
 
 on:
   push:
-    branches: [ "ns-system-test" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "ns-system-test" ]
+    branches: [ "master" ]
 
 env:
   PKB_FOLDER_PATH: ./Team34/Code34/SPA/PKB
