@@ -13,7 +13,15 @@ env:
   INTEGRATION_TESTING_FOLDER_PATH:  ./Team34/Code34/IntegrationTesting
 
 jobs:
-  build:
+   cpp_style_check:
+    runs-on: ubuntu-latest
+    name: Check C++ Style
+    steps:
+    - name: Checkout this commit
+      uses: actions/checkout@v2
+    - name: Run style checks
+      uses: coleaeason/actions-uncrustify@v1
+   cpplint_style_check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
