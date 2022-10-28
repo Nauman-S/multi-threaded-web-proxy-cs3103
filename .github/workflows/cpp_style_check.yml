@@ -13,7 +13,7 @@ env:
   INTEGRATION_TESTING_FOLDER_PATH:  ./Team34/Code34/IntegrationTesting
 
 jobs:
-  cpplint:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
