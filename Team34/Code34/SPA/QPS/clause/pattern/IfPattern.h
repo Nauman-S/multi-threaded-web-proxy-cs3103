@@ -9,7 +9,7 @@
 #include "../../reference/IfRef.h"
 #include "../../reference/VarRef.h"
 #include "../../reference/ValType.h"
-#include "../../PriorityManager.h"
+#include "../../optimization/PriorityManager.h"
 
 
 class IfPattern : public Pattern {

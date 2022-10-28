@@ -1,0 +1,15 @@
+1 - test isolated procedure
+procedure p;
+Select p such that Calls("p1", p)
+p2, p4
+5000
+2 - test isolated procedure
+procedure p;
+Select p such that Calls*("p1", p)
+p2, p4, p3, p5
+5000
+3 - test cached procedure
+procedure p;
+Select p such that Calls*("p6", p)
+p7, p4, p5, p2, p3
+5000

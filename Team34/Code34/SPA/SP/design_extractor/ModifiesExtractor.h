@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 #include <set>
+#include <vector>
 
 #include "NodeExtractor.h"
 
@@ -19,9 +19,9 @@
 #include "../ast/WhileStatementASTNode.h"
 #include "../ast/ConditionExpression.h"
 
-class CallsExtractor : public NodeExtractor {
+class ModifiesExtractor : public NodeExtractor {
 public:
-    CallsExtractor(std::shared_ptr<WritePKBManager>);
+    ModifiesExtractor(std::shared_ptr<WritePKBManager>);
 
     virtual void ExtractProgramNode(const ProgramNode&) override;
     virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
@@ -36,17 +36,22 @@ public:
     virtual void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
-    // Map of procedure to set of Calls* relation for that procedure, used as cache
+    std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
+
+    // Cache procedure to modified variable in the procedure,
     // to prevent evaluating same procedure twice
-    std::map<Procedure, std::shared_ptr<std::set<Procedure>>> proc_to_calls_T_;
-    void AddToCachedSet(Procedure);
+    std::map<Procedure, std::shared_ptr<std::set<Variable>>> proc_modifies_;
     bool IsExtractedProcedure(Procedure);
     void InitCachedSet(Procedure);
 
-    std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;
-    std::vector<Procedure> procedure_calls_stack_;
+    // Add modifies relationship from indirect parents (container
+    // and call statements)
+    std::vector<Procedure> proc_call_stack_;
+    std::vector<StmtNum> parent_smts_;
+    void SetIndirectModifies(Variable);
 
-    // Wrapper methods to access write PKB API
-    void AddToCalls(Procedure, Procedure);
-    void AddToCallsT(Procedure, Procedure);
+    // Wrapper methods to access PKB API to write modifies relationship
+    void AddToModifies(StmtNum, Variable);
+    void AddToModifies(Procedure, Variable);
 };
+

@@ -36,8 +36,9 @@
     <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\clause\ClauseGroup.h" />
     <ClInclude Include="QPS\clause\ClauseType.h" />
+    <ClInclude Include="QPS\optimization\ResTableCache.h" />
     <ClInclude Include="QPS\parser\StringLiterals.h" />
-    <ClInclude Include="QPS\PriorityManager.h" />
+    <ClInclude Include="QPS\optimization\PriorityManager.h" />
     <ClInclude Include="QPS\query_result\EmptyTable.h" />
     <ClInclude Include="QPS\clause\pattern\IfPattern.h" />
     <ClInclude Include="QPS\clause\pattern\Pattern.h" />
@@ -121,10 +122,11 @@
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\ModifiesExtractor.h" />
     <ClInclude Include="SP\design_extractor\NextExtractor.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
-    <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
+    <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="SP\SourceValidator.h" />
     <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
@@ -194,6 +196,7 @@
     <ClCompile Include="QPS\clause\Clause.cpp" />
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="QPS\DataRetriever.cpp" />
+    <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
     <ClCompile Include="QPS\parser\SemanticError.cpp" />
@@ -242,9 +245,10 @@
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\ModifiesExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
-    <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />

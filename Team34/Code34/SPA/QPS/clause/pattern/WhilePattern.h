@@ -9,7 +9,7 @@
 #include "../../reference/WhileRef.h"
 #include "../../reference/VarRef.h"
 #include "../../reference/ValType.h"
-#include "../../PriorityManager.h"
+#include "../../optimization/PriorityManager.h"
 
 
 class WhilePattern : public Pattern {

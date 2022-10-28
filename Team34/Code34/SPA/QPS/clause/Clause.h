@@ -5,7 +5,7 @@
 #include "ClauseType.h"
 #include "../query_result/ResWrapper.h"
 #include "../reference/Ref.h"
-#include "../PriorityManager.h"
+#include "../optimization/PriorityManager.h"
 #include "../../Utils/type/TypeDef.h"
 class DataRetriever;
 
