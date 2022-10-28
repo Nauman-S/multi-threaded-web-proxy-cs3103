@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include <vector>
+#include <utility>
 
 #include "Rel.h"
 #include "../ClauseType.h"

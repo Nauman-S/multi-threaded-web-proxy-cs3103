@@ -8,6 +8,7 @@ on:
 
 env:
   PKB_FOLDER_PATH: ./Team34/Code34/SPA/PKB
+  QPS_FOLDER_PATH: ./Team34/Code34/SPA/QPS
   SPA_FOLDER_PATH: ./Team34/Code34/SPA
   UNIT_TESTING_FOLDER_PATH:  ./Team34/Code34/UnitTesting
   INTEGRATION_TESTING_FOLDER_PATH:  ./Team34/Code34/IntegrationTesting
@@ -28,9 +29,13 @@ jobs:
     - uses: actions/setup-python@v1
     - run: pip install cpplint
 
-    - name: style check source
+    - name: style check PKB
       working-directory: ${{env.PKB_FOLDER_PATH}}
-      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references,-build/namespaces,-build/explicit_make_pair --linelength=120 --extension=hpp,cpp,h .
+
+    - name: style check QPS
+      working-directory: ${{env.QPS_FOLDER_PATH}}
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references,-build/namespaces,-build/explicit_make_pair --linelength=120 --extension=hpp,cpp,h .
 
 #    - name: style check source
 #      working-directory: ${{env.SPA_FOLDER_PATH}}

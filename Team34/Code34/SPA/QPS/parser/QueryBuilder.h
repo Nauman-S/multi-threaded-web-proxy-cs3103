@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <utility>
+#include <unordered_set>
 #include <unordered_map>
 
 #include "QueryLexer.h"
