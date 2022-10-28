@@ -1,7 +1,7 @@
 #include "QueryEvaluator.h"
 
 #include <string>
-#include <memory.h>
+#include <memory>
 
 #include "Query.h"
 #include "clause/relation/Rel.h"

@@ -7,6 +7,6 @@ private:
 	std::string message;
 public:
 	SyntaxError() {}
-	SyntaxError(std::string message);
+	explicit SyntaxError(std::string message);
 	std::string what() const throw ();
 };

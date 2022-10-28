@@ -38,7 +38,7 @@ protected:
         std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_);
 
 public:
-    QueryEvaluator(Query query);
+    explicit QueryEvaluator(Query query);
     QueryEvaluator(Query query, DataRetriever data_retriever);
     bool Evaluate();
 

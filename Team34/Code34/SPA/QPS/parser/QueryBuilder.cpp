@@ -40,6 +40,7 @@
 #include "StringLiterals.h"
 
 using namespace StringLiterals;
+
 using std::shared_ptr;
 using std::vector;
 

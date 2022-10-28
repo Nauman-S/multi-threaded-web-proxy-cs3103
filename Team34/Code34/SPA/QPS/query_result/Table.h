@@ -1,11 +1,12 @@
 #pragma once
 
+#include <assert.h>
+
 #include <unordered_set>
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <memory>
-#include <assert.h>
 
 #include "ResWrapper.h"
 
@@ -53,7 +54,7 @@ public:
 		is_empty_ = (rows_.size() == 0);
 	};
 
-	Table(std::shared_ptr<ResWrapper>);
+	explicit Table(std::shared_ptr<ResWrapper>);
 
 	int GetNumOfRows() { return rows_.size(); }
 	unsigned GetNumOfCols() { return fields_.size(); }

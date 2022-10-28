@@ -16,13 +16,13 @@ protected:
 	ResType type_;
 
 public:
-	ResWrapper(std::shared_ptr<SetRes> set)
+	explicit ResWrapper(std::shared_ptr<SetRes> set)
 		: set_res_{ set }, table_res_{ nullptr }, is_valid_{ true }, type_{ ResType::kSet } {};
 
-	ResWrapper(std::shared_ptr<TableRes> table)
+	explicit ResWrapper(std::shared_ptr<TableRes> table)
 		: set_res_{ nullptr }, table_res_{ table }, is_valid_{ true }, type_{ ResType::kTable } {};
 
-	ResWrapper(bool valid) 
+	explicit ResWrapper(bool valid) 
 		: set_res_{ nullptr }, table_res_{ nullptr }, is_valid_{ valid }, type_{ ResType::kBool } {};
 
 	ResType GetResType() { return type_; }

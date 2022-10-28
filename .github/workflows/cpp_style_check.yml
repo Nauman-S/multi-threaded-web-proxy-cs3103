@@ -30,7 +30,7 @@ jobs:
 
     - name: style check source
       working-directory: ${{env.PKB_FOLDER_PATH}}
-      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references,-build/namespaces,-build/explicit_make_pair --linelength=120 --extension=hpp,cpp,h .
 
 #    - name: style check source
 #      working-directory: ${{env.SPA_FOLDER_PATH}}
