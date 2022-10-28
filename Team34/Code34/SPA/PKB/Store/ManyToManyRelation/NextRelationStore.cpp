@@ -49,8 +49,7 @@ void NextRelationStore::OptimisedCFGTraversal(std::shared_ptr<std::vector<std::p
 				StmtNum next_block_end = code_block_map_[*iter];
 				if (code_block_start == next_block_start) {
 					PopulateNextTPairsBetweenSameBlock(all_transitive_relations, code_block_start, code_block_end);
-				}
-				else {
+				} else {
 					PopulateNextTPairsBetweenBlocks(all_transitive_relations, code_block_start, code_block_end,
 						next_block_start, next_block_end);
 				}

@@ -1,6 +1,8 @@
 #pragma once
 
+#include <string>
 #include <memory>
+#include <vector>
 
 #include "ClauseType.h"
 #include "../query_result/ResWrapper.h"

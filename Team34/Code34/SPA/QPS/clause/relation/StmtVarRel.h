@@ -1,6 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <utility>
+#include <string>
+#include <vector>
 
 #include "Rel.h"
 #include "../ClauseType.h"
@@ -20,7 +23,7 @@ protected:
     std::shared_ptr <VarRef> rhs_ref_;
 
 public:
-    StmtVarRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr<VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    StmtVarRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr<VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {}
 
     std::string LhsValue() override;
 

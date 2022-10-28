@@ -12,8 +12,7 @@ void PatternStore::AddPattern(StmtNum stmt_num, Variable var) {
 std::shared_ptr<std::unordered_set<StmtNum>> PatternStore::GetAllStatmentsFromVar(Variable var) {
 	if (var_to_stmt_map_.find(var) == var_to_stmt_map_.end()) {
 		return std::make_shared<std::unordered_set<StmtNum>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<StmtNum>>(var_to_stmt_map_[var]);
 	}
 }

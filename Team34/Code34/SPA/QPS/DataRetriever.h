@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <utility>
 
 #include "clause/AttrType.h"
 #include "clause/ClauseType.h"

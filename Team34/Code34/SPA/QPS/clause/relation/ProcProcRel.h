@@ -2,6 +2,8 @@
 
 #include <string>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "Rel.h"
 #include "../ClauseType.h"
@@ -18,7 +20,7 @@ protected:
 	std::shared_ptr<ProcRef> rhs_ref_;
 
 public:
-    ProcProcRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<ProcRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    ProcProcRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<ProcRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {}
 
     std::string LhsValue() override;
 

@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "../AttrType.h"
 #include "../Clause.h"

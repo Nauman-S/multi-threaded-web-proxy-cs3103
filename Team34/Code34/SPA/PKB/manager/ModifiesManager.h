@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <unordered_set>
+#include <utility>
+#include <memory>
 
 #include "../store/ManyToManyRelation/ManyToManyRelationStore.h"
 #include "../../Utils/type/TypeDef.h"

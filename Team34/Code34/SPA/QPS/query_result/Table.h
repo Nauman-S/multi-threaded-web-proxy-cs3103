@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_set>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -7,6 +8,7 @@
 #include <assert.h>
 
 #include "ResWrapper.h"
+
 class Table {
 private:
 	std::vector<std::string> fields_;
@@ -53,8 +55,8 @@ public:
 
 	Table(std::shared_ptr<ResWrapper>);
 
-	int GetNumOfRows() { return rows_.size(); };
-	unsigned GetNumOfCols() { return fields_.size(); };
+	int GetNumOfRows() { return rows_.size(); }
+	unsigned GetNumOfCols() { return fields_.size(); }
 
 	std::vector<std::vector<std::string>> GetRows() {
 		return rows_;

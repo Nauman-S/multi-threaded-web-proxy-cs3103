@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../reference/Ref.h"
-#include "../clause/AttrType.h"
-
 #include <string>
 #include <memory>
+
+#include "../reference/Ref.h"
+#include "../clause/AttrType.h"
 
 class EntityRef
 {
