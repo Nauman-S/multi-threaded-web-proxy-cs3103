@@ -7,6 +7,7 @@ on:
     branches: [ "ns-system-test" ]
 
 env:
+  PKB_FOLDER_PATH: ./Team34/Code34/SPA/PKB
   SPA_FOLDER_PATH: ./Team34/Code34/SPA
   UNIT_TESTING_FOLDER_PATH:  ./Team34/Code34/UnitTesting
   INTEGRATION_TESTING_FOLDER_PATH:  ./Team34/Code34/IntegrationTesting
@@ -20,13 +21,17 @@ jobs:
     - run: pip install cpplint
 
     - name: style check source
-      working-directory: ${{env.SPA_FOLDER_PATH}}
-      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
+      working-directory: ${{env.PKB_FOLDER_PATH}}
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .
 
-    - name: style check unit tests
-      working-directory: ${{env.UNIT_TESTING_FOLDER_PATH}}
-      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
+#    - name: style check source
+#      working-directory: ${{env.SPA_FOLDER_PATH}}
+#      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .
 
-    - name: style check integration tests
-      working-directory: ${{env.INTEGRATION_TESTING_FOLDER_PATH}}
-      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
+#    - name: style check unit tests
+#      working-directory: ${{env.UNIT_TESTING_FOLDER_PATH}}
+#      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .
+
+#    - name: style check integration tests
+#      working-directory: ${{env.INTEGRATION_TESTING_FOLDER_PATH}}
+#      run: cpplint --recursive --filter=-legal/copyright,-whitespace,-runtime/references --linelength=120 --extension=hpp,cpp,h .

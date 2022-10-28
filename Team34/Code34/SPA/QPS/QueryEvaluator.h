@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 #include "clause/Clause.h"
 #include "clause/ClauseGroup.h"

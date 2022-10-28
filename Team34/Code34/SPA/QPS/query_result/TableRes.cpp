@@ -53,8 +53,7 @@ shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {
         for (StrPair pair : (*rows_ptr_)) {
             result_set->insert(pair.first);
         }
-    }
-    else if (col_index == 1) {
+    } else if (col_index == 1) {
         for (StrPair pair : (*rows_ptr_)) {
             result_set->insert(pair.second);
         }

@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <unordered_set>
+#include <vector>
+#include <utility>
 
 #include "../../Utils/type/TypeDef.h"
 #include "../../PKB/ReadPKBManager.h"
@@ -113,32 +115,32 @@ class ReadPKBManagerStub : public ReadPKBManager
 	std::shared_ptr<std::vector<std::pair<Procedure, Variable>>> GetAllPVModifies() override;
 
 	// APIs related to Follows relation
-	virtual bool CheckFollows(StmtNum left, StmtNum right) override;
-	virtual bool IsFollowsStoreEmpty() override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type) override;
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations() override;
+	bool CheckFollows(StmtNum left, StmtNum right) override;
+	bool IsFollowsStoreEmpty() override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type) override;
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations() override;
 
 	// APIs relation to Follows* relation
-	virtual bool CheckFollowsT(StmtNum left, StmtNum right) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType predecessor_type) override;
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations() override;
+	bool CheckFollowsT(StmtNum left, StmtNum right) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmtsFromStmt(StmtNum stmt, RefType successor_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmtsFromStmt(StmtNum stmt, RefType predecessor_type) override;
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsTRelations() override;
 
 	// APIs related to Parent relation
-	virtual bool CheckParent(StmtNum parent, StmtNum child) override;
-	virtual bool IsParentStoreEmpty() override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type) override;
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations() override;
+	bool CheckParent(StmtNum parent, StmtNum child) override;
+	bool IsParentStoreEmpty() override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type) override;
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations() override;
 
 	// APIs related to Parent* relation
-	virtual bool CheckParentT(StmtNum parent, StmtNum child) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt, RefType children_type) override;
-	virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt, RefType parent_type) override;
-	virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations() override;
+	bool CheckParentT(StmtNum parent, StmtNum child) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildrenFromStmt(StmtNum stmt, RefType children_type) override;
+	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParentsFromStmt(StmtNum stmt, RefType parent_type) override;
+	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentTRelations() override;
 };

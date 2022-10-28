@@ -2,6 +2,8 @@
 
 #include <string>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "Rel.h"
 #include "../ClauseType.h"
@@ -18,7 +20,7 @@ protected:
     std::shared_ptr<StmtRef> rhs_ref_;
 
 public:
-    StmtStmtRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr<StmtRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    StmtStmtRel(std::shared_ptr<StmtRef> lhs, std::shared_ptr<StmtRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {}
 
     std::string LhsValue() override;
 

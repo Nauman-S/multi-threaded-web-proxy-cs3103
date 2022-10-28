@@ -24,8 +24,7 @@ Table::Table(shared_ptr<ResWrapper> res_wrapper) {
 		for (const auto& value: *set_res->GetDomain()) {
 			rows_.push_back({ value });
 		}
-	}
-	else {
+	} else {
 		std::shared_ptr<TableRes> table_res = res_wrapper->GetTable();
 		fields_ = *table_res->Columns();
 
@@ -70,8 +69,7 @@ shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
 
 	if (common_fields.size() == 0) {
 		return CrossProductJoin(that);
-	}
-	else {
+	} else {
 		return HashJoin(that, common_fields);
 	}
 }

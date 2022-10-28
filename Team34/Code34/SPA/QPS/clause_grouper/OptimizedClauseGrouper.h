@@ -1,6 +1,10 @@
 #pragma once
 
 #include <unordered_set>
+#include <unordered_map>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include "ClauseGrouper.h"
 #include "../../Utils/algo/UnionFind.h"

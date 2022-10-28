@@ -15,8 +15,7 @@ bool SetRes::Merge(shared_ptr<SetRes> other) {
 
 	if (merged_result->size() == 0) {
 		return false;
-	}
-	else {
+	} else {
 		return true;
 	}
-};
+}
