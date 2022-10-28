@@ -1,5 +1,11 @@
 #pragma once
 
+#include <utility>
+#include <vector>
+#include <unordered_map>
+#include <memory>
+#include <unordered_set>
+
 #include "OneToOneRelationStore.h"
 
 template <typename T>

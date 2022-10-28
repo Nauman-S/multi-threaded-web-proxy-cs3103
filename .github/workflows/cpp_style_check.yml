@@ -21,12 +21,12 @@ jobs:
 
     - name: style check source
       working-directory: ${{env.SPA_FOLDER_PATH}}
-      run: cpplint --recursive .
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
 
     - name: style check unit tests
       working-directory: ${{env.UNIT_TESTING_FOLDER_PATH}}
-      run: cpplint --recursive .
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
 
     - name: style check integration tests
       working-directory: ${{env.INTEGRATION_TESTING_FOLDER_PATH}}
-      run: cpplint --recursive .
+      run: cpplint --recursive --filter=-legal/copyright,-whitespace --linelength=120 --extension=hpp,cpp,h .
