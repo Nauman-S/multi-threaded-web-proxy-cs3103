@@ -18,6 +18,15 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v1
     - run: pip install cpplint
-    - run: cpplint.py --recursive --repository=${{env.SPA_FOLDER_PATH}}
-    - run: cpplint.py --recursive --repository=${{env.UNIT_TESTING_FOLDER_PATH}}
-    - run: cpplint.py --recursive --repository=${{env.INTEGRATION_TESTING_FOLDER_PATH}}
+
+    - name: style check source
+      working-directory: ${{env.SPA_FOLDER_PATH}}
+      run: cpplint --recursive .
+
+    - name: style check unit tests
+      working-directory: ${{env.UNIT_TESTING_FOLDER_PATH}}
+      run: cpplint --recursive .
+
+    - name: style check integration tests
+      working-directory: ${{env.INTEGRATION_TESTING_FOLDER_PATH}}
+      run: cpplint --recursive .
