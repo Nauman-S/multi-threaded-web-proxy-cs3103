@@ -1,19 +1,24 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Style Check
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "ns-system-test" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "ns-system-test" ]]
+
+env:
+  SPA_FOLDER_PATH: ./Team34/Code34/SPA
+  UNIT_TESTING_FOLDER_PATH:  ./Team34/Code34/UnitTesting
+  INTEGRATION_TESTING_FOLDER_PATH:  ./Team34/Code34/IntegrationTesting
 
 jobs:
-  cpp_style_check:
+  cpplint:
     runs-on: ubuntu-latest
-    name: Check C++ Style
     steps:
-    - name: Checkout this commit
-      uses: actions/checkout@v2
-    - name: Run style checks
-      uses: coleaeason/actions-uncrustify@v1
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v1
+    - run: pip install cpplint
+    - run: find ${{env.SPA_FOLDER_PATH}} -iname *.h  -iname *.cc | xargs cpplint
+    - run: find ${{env.UNIT_TESTING_FOLDER_PATH}} -iname *.h  -iname *.cc | xargs cpplint
+    - run: find ${{env.INTEGRATION_TESTING_FOLDER_PATH}} -iname *.h  -iname *.cc | xargs cpplint
+    #- run: cpplint --recursive .
