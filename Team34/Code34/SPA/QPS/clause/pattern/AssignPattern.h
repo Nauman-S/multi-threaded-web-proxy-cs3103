@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "Pattern.h"
 #include "../ClauseType.h"

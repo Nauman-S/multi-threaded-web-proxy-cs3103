@@ -209,17 +209,13 @@ std::string QueryLexer::MatchOperator() {
     Token& token = this->tokenizer_->GetToken();
     if (token.GetType() == TokenType::kAdd) {
         operator_string_ = PLUS;
-    }
-    else if (token.GetType() == TokenType::kMinus) {
+    } else if (token.GetType() == TokenType::kMinus) {
         operator_string_ = MINUS;
-    }
-    else if (token.GetType() == TokenType::kkDivide) {
+    } else if (token.GetType() == TokenType::kkDivide) {
         operator_string_ = DIVIDE;
-    }
-    else if (token.GetType() == TokenType::kMultiply) {
+    } else if (token.GetType() == TokenType::kMultiply) {
         operator_string_ = MULTIPLE;
-    }
-    else if (token.GetType() == TokenType::kModulo) {
+    } else if (token.GetType() == TokenType::kModulo) {
         operator_string_ = MODULO;
     }
     this->tokenizer_->NextToken();

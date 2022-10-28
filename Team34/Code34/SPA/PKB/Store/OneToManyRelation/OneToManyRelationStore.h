@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <utility>
 
 template <typename S, typename T>
 class OneToManyRelationStore {
@@ -51,8 +52,7 @@ template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<S, T>::GetMany(S s) {
 	if (one_to_many_map_.find(s) == one_to_many_map_.end()) {
 		return std::make_shared<std::unordered_set<T>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<T>>(one_to_many_map_[s]);
 	}
 }

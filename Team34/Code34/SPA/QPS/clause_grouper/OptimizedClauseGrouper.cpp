@@ -55,8 +55,7 @@ void OptimizedClauseGrouper::GroupClauseWithSyn(std::unordered_map<std::string, 
 
 		if (contains_select_syn) {
 			groups_w_select_syn_.push_back(optimized_clause_group);
-		}
-		else {
+		} else {
 			groups_wo_select_syn_.push_back(optimized_clause_group);
 		}
 
@@ -84,8 +83,7 @@ std::unordered_map<string, vector<shared_ptr<Clause>>> OptimizedClauseGrouper::C
 		string representation = union_find.Find(curr_syns->at(0));
 		if (rep_to_clauses.count(representation) > 0) {
 			rep_to_clauses.at(representation).push_back(clause);
-		}
-		else {
+		} else {
 			rep_to_clauses.insert({ representation, vector<shared_ptr<Clause>>({ clause }) });
 		}
 	}

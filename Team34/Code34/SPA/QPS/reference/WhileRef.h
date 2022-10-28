@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "StmtRef.h"
 #include "../../Utils/type/RefType.h"
 

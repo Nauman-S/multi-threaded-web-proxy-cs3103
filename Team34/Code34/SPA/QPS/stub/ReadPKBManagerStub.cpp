@@ -49,8 +49,7 @@ const std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllP
 bool ReadPKBManagerStub::CheckCalls(Procedure caller, Procedure callee) {
 	if (caller == "Foo1" && callee == "bar") {
 		return true;
-	}
-	else if (caller == "bar" && callee == "Nine") {
+	} else if (caller == "bar" && callee == "Nine") {
 		return true;
 	}
 	return false;
@@ -64,8 +63,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetCalleeFrom
 	std::shared_ptr<std::unordered_set<Procedure>> callee = std::make_shared<std::unordered_set<Procedure>>();
 	if (caller == "Foo1") {
 		callee->insert("bar");
-	}
-	else if (caller == "bar") {
+	} else if (caller == "bar") {
 		callee->insert("Nine");
 	}
 	
@@ -76,8 +74,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetCallerFrom
 	std::shared_ptr<std::unordered_set<Procedure>> caller = std::make_shared<std::unordered_set<Procedure>>();
 	if (callee == "bar") {
 		caller->insert("Foo1");
-	}
-	else if (callee == "Nine") {
+	} else if (callee == "Nine") {
 		caller->insert("bar");
 	}
 
@@ -109,8 +106,7 @@ std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> ReadPKBManagerStub
 bool ReadPKBManagerStub::CheckCallsT(Procedure caller, Procedure callee) {
 	if (caller == "Foo1" ) {
 		return callee == "bar" || callee == "Nine";
-	}
-	else if (caller == "bar") {
+	} else if (caller == "bar") {
 		return callee == "Nine";
 	}
 	return false;
@@ -121,8 +117,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCalleeF
 		callee->insert("bar");
 		callee->insert("Nine");
 		return callee;
-	}
-	else if (caller == "bar") {
+	} else if (caller == "bar") {
 		callee->insert("Nine");
 		return callee;
 	}
@@ -133,8 +128,7 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManagerStub::GetAllCallerF
 	if (callee == "Nine") {
 		caller->insert("Foo1");
 		caller->insert("bar");
-	}
-	else if (callee == "bar") {
+	} else if (callee == "bar") {
 		caller->insert("Foo1");
 	}
 	return caller;
@@ -152,14 +146,11 @@ std::shared_ptr<RefType> ReadPKBManagerStub::GetStatementType(StmtNum stmt_num)
 {
 	if (stmt_num == 2 || stmt_num == 4 || stmt_num == 5 || stmt_num == 6) {
 		return std::make_shared<RefType>(RefType::kAssignRef);
-	}
-	else if (stmt_num == 1) {
+	} else if (stmt_num == 1) {
 		return std::make_shared<RefType>(RefType::kWhileRef);
-	}
-	else if (stmt_num == 3) {
+	} else if (stmt_num == 3) {
 		return std::make_shared<RefType>(RefType::kIfRef);
-	}
-	else if (stmt_num == 7 || stmt_num == 8 || stmt_num == 9) {
+	} else if (stmt_num == 7 || stmt_num == 8 || stmt_num == 9) {
 		return std::make_shared<RefType>(RefType::kCallRef);
 	}
 
@@ -170,25 +161,21 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetStatementsBy
 	if (type == RefType::kWhileRef) {
 		statements->insert(1);
 		return statements;
-	}
-	else if (type == RefType::kAssignRef) {
+	} else if (type == RefType::kAssignRef) {
 		statements->insert(2);
 		statements->insert(4);
 		statements->insert(5);
 		statements->insert(6);
 		return statements;
-	}
-	else if (type == RefType::kCallRef) {
+	} else if (type == RefType::kCallRef) {
 		statements->insert(7);
 		statements->insert(8);
 		statements->insert(9);
 		return statements;
-	}
-	else if (type == RefType::kIfRef) {
+	} else if (type == RefType::kIfRef) {
 		statements->insert(3);
 		return statements;
-	}
-	else if (type == RefType::kStmtRef) {
+	} else if (type == RefType::kStmtRef) {
 		statements->insert(1);
 		statements->insert(2);
 		statements->insert(3);
@@ -225,11 +212,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManagerStub::GetAllStatement
 		 statements->insert(4);
 		 statements->insert(5);
 		 statements->insert(6);
-	 }
-	 else if (proc == "Foo1") {
+	 } else if (proc == "Foo1") {
 		 statements->insert(7);
-	 }
-	 else if (proc == "") {
+	 } else if (proc == "") {
 		 statements->insert(8);
 		 statements->insert(9);
 	 }

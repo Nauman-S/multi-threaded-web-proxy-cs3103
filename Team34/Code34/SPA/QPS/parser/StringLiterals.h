@@ -51,4 +51,5 @@ namespace StringLiterals {
     const std::string VALUE = "value";
     const std::string STMT = "stmt";
     const std::string STMT_NUM = STMT + HASHTAG;
-}
+
+}// namespace StringLiterals

@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <utility>
 
 #include "clause/AttrType.h"
 #include "clause/ClauseType.h"
@@ -41,7 +42,7 @@ public:  // public API
         pkb_ptr_ = ReadPKBManager::GetInstance();
     };
 
-    DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb }, stmt_stmt_table_cache_{} {
+    explicit DataRetriever(std::shared_ptr<ReadPKBManager> pkb) : pkb_ptr_{ pkb }, stmt_stmt_table_cache_{} {
     };
 
     std::shared_ptr<ResWrapper> retrieve(StmtVarRel& rel);

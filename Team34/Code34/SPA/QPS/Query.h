@@ -1,15 +1,16 @@
 #pragma once
+
+#include <vector>
+#include <unordered_map>
+#include <string>
+#include <memory>
+
 #include "reference/Ref.h"
 #include "clause/relation/Rel.h"
 #include "clause/pattern/Pattern.h"
 #include "clause/with_clause/With.h"
 #include "clause/Clause.h"
 #include "DataRetriever.h"
-
-#include <vector>
-#include <unordered_map>
-#include <string>
-#include <memory>
 
 using std::vector;
 using std::shared_ptr;

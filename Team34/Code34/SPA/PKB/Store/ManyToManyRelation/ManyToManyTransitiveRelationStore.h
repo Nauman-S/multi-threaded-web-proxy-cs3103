@@ -2,6 +2,10 @@
 
 #include <queue>
 #include <unordered_set>
+#include <utility>
+#include <vector>
+#include <unordered_map>
+#include <memory>
 
 #include "ManyToManyRelationStore.h"
 
@@ -32,8 +36,7 @@ inline bool ManyToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left
 			}
 			if (*iter == right) {
 				return true;
-			}
-			else {
+			} else {
 				visited.insert(*iter);
 				queue.push(*iter);
 			}

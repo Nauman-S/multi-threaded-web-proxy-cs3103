@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Table.h"
 class WildcardTable :
     public Table
