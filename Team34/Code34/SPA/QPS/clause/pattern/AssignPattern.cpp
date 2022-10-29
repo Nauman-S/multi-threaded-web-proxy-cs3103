@@ -17,7 +17,7 @@ int AssignPattern::CountSynonyms()
 }
 
 Priority AssignPattern::GetPriority(PriorityManager& pm) {
-    return pm.GetClausePriority(ClauseType::kAssignPattern);
+    return pm.GetClausePriority(ClauseType::kAssignPattern, CountSynonyms());
 }
 
 std::shared_ptr<std::vector<std::string>> AssignPattern::GetSynonyms()

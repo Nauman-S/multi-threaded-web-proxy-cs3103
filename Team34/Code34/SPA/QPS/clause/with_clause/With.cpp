@@ -25,7 +25,7 @@ int With::CountSynonyms()
 }
 
 Priority With::GetPriority(PriorityManager& pm) {
-    return pm.GetClausePriority(ClauseType::kWith);
+    return pm.GetClausePriority(ClauseType::kWith, CountSynonyms());
 }
 
 std::shared_ptr<std::vector<std::string>> With::GetSynonyms()

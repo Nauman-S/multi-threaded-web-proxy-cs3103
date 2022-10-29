@@ -18,7 +18,6 @@ void OptimizedClauseGrouper::Group() {
 	vector<shared_ptr<Clause>> clauses_w_syn;
 	unordered_set<string> synonym_set;
 
-
 	for (shared_ptr<Clause> clause : clauses_) {
 		if (clause->CountSynonyms() == 0) {
 			clauses_wo_syn.push_back(clause);
@@ -121,7 +120,6 @@ vector<shared_ptr<Clause>> OptimizedClauseGrouper::OptimizeOrderWithinGroup(vect
 			if (is_clause_used[idx]) {
 				continue;
 			}
-
 			shared_ptr<Clause> clause = clauses[idx];
 			if (ContainsUsedSyns(clause, used_syns)) {
 				can_clause_be_used[idx] = true;
@@ -136,18 +134,6 @@ void OptimizedClauseGrouper::AddClauseToList(shared_ptr<Clause> clause, vector<s
 	shared_ptr<vector<string>> synonyms = clause->GetSynonyms();
 	used_syns.insert(synonyms->begin(), synonyms->end());
 }
-
-
-vector<shared_ptr<Clause>> OptimizedClauseGrouper::GetWaitingClauses(unordered_set<shared_ptr<Clause>>& remained_clause_set, unordered_set<string>& used_syns) {
-	vector<shared_ptr<Clause>> waiting_clauses;
-	for (shared_ptr<Clause> clause : remained_clause_set) {
-		if (ContainsUsedSyns(clause, used_syns)) {
-			waiting_clauses.push_back(clause);
-		}
-	}
-	return waiting_clauses;
-}
-
 
 bool OptimizedClauseGrouper::ContainsUsedSyns(shared_ptr<Clause> clause, unordered_set<string>& used_syns) {
 	shared_ptr<vector<string>> syns_in_clause = clause->GetSynonyms();
