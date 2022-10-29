@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <utility>
 
 #include "../clause/ClauseType.h"
 #include "../clause/Clause.h"
