@@ -8,8 +8,7 @@ bool IntValueableRef::IsIntValued() {
 std::optional<int> IntValueableRef::ValueAsInt() {
 	if (IsIntValued()) {
 		return std::optional<int>(std::stoi(val_));
-	}
-	else {
+	} else {
 		return std::optional<int>();
 	}
 }

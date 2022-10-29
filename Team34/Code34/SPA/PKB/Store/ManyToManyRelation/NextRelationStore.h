@@ -1,5 +1,12 @@
 #pragma once
 
+#include <queue>
+#include <unordered_set>
+#include <unordered_map>
+#include <memory>
+#include <vector>
+#include <utility>
+
 #include "ManyToManyTransitiveRelationStore.h"
 #include "../../../Utils/type/TypeDef.h"
 

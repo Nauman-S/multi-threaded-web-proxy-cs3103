@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 #include "clause/Clause.h"
 #include "clause/ClauseGroup.h"
@@ -37,7 +38,7 @@ protected:
         std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_);
 
 public:
-    QueryEvaluator(Query query);
+    explicit QueryEvaluator(Query query);
     QueryEvaluator(Query query, DataRetriever data_retriever);
     bool Evaluate();
 

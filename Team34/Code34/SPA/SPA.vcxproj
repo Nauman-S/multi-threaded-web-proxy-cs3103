@@ -122,10 +122,11 @@
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
     <ClInclude Include="SP\design_extractor\FollowsExtractor.h" />
+    <ClInclude Include="SP\design_extractor\ModifiesExtractor.h" />
     <ClInclude Include="SP\design_extractor\NextExtractor.h" />
     <ClInclude Include="SP\design_extractor\NodeExtractor.h" />
     <ClInclude Include="SP\design_extractor\ParentsExtractor.h" />
-    <ClInclude Include="SP\design_extractor\UsesModifiesExtractor.h" />
+    <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="SP\SourceValidator.h" />
     <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
@@ -244,9 +245,10 @@
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\ModifiesExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ParentsExtractor.cpp" />
-    <ClCompile Include="SP\design_extractor\UsesModifiesExtractor.cpp" />
+    <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />

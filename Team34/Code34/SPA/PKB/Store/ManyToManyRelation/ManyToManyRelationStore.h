@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <utility>
 
 template <typename S, typename T>
 class ManyToManyRelationStore {
@@ -54,8 +55,7 @@ inline std::shared_ptr<std::unordered_set<T>> ManyToManyRelationStore<S, T>::Get
 	auto iter = s_to_t_map_.find(s);
 	if (iter == s_to_t_map_.end()) {
 		return std::make_shared<std::unordered_set<T>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<T>>(s_to_t_map_[s]);
 	}
 }
@@ -65,8 +65,7 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::Get
 	auto iter = t_to_s_map_.find(t);
 	if (iter == t_to_s_map_.end()) {
 		return std::make_shared<std::unordered_set<S>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<S>>(t_to_s_map_[t]);
 	}
 }

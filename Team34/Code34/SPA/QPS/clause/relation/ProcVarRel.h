@@ -2,6 +2,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+#include <utility>
 
 #include "Rel.h"
 #include "../ClauseType.h"
@@ -21,7 +23,7 @@ protected:
     std::shared_ptr<VarRef> rhs_ref_;
 
 public:
-    ProcVarRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {};
+    ProcVarRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<VarRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {}
 
     std::string LhsValue() override;
 
@@ -39,6 +41,6 @@ public:
 
     int CountSynonyms() override;
 
-    virtual std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
+    std::shared_ptr<std::vector<std::string>> GetSynonyms() override;
 };
 

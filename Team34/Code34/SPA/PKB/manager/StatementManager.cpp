@@ -35,8 +35,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetAllStatements(
 std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetCallsStatementFromProcedure(Procedure proc) {
 	if (calls_statements_.find(proc) == calls_statements_.end()) {
 		return std::make_shared<std::unordered_set<StmtNum>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<StmtNum>>(calls_statements_[proc]);
 	}
 }
@@ -44,8 +43,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetCallsStatement
 std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetPrintStatementFromVariable(Variable var) {
 	if (print_statements_.find(var) == print_statements_.end()) {
 		return std::make_shared<std::unordered_set<StmtNum>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<StmtNum>>(print_statements_[var]);
 	}
 }
@@ -53,8 +51,7 @@ std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetPrintStatement
 std::shared_ptr<std::unordered_set<StmtNum>> StatementManager::GetReadStatementFromVariable(Variable var) {
 	if (read_statements_.find(var) == read_statements_.end()) {
 		return std::make_shared<std::unordered_set<StmtNum>>();
-	}
-	else {
+	} else {
 		return std::make_shared<std::unordered_set<StmtNum>>(read_statements_[var]);
 	}
 }

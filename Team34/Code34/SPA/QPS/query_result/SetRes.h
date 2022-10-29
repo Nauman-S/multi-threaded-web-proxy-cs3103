@@ -11,7 +11,7 @@ protected:
 	std::shared_ptr<std::unordered_set<std::string>> domain_ptr_;
 
 public:
-	SetRes(std::string s, std::shared_ptr<std::unordered_set<std::string>> d) : syn_{ s }, domain_ptr_(d) {};
+	SetRes(std::string s, std::shared_ptr<std::unordered_set<std::string>> d) : syn_{ s }, domain_ptr_(d) {}
 
 	std::string GetSyn() { return syn_; }
 
@@ -19,6 +19,6 @@ public:
 
 	bool Merge(std::shared_ptr<SetRes> other);
 
-	bool IsEmpty() { return domain_ptr_->empty(); };
+	bool IsEmpty() { return domain_ptr_->empty(); }
 };
  

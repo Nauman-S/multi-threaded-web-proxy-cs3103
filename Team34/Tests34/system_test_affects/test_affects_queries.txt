@@ -1,50 +1,115 @@
-1 - Basic affects
+1 - Basic Affects
 stmt s;
 Select s such that Affects(1, s)
 3, 4, 6
 5000
-2 - Basic affects
+2 - Basic Affects
 stmt s;
 Select s such that Affects(3, s)
 4
 5000
-3 - Basic affects
+3 - Basic Affects
 stmt s;
 Select s such that Affects(9, s)
 
 5000
-4 - Basic affects
+4 - Basic Affects
 stmt s;
 Select s such that Affects(8, s)
 
 5000
-5 - Basic affects
+5 - Basic Affects
 call c;
 Select c such that Affects(1, c)
 
 5000
-6 - Basic affects
+6 - Basic Affects
 assign a;
 Select a such that Affects(12, a)
 13, 15, 17
 5000
-7 - Basic affects
+7 - Basic Affects
 assign a;
 Select a such that Affects(a, 17)
 12, 13, 16
 5000
-8 - Basic affects
+8 - Basic Affects
 stmt s;
 Select s such that Affects(s, 20)
 18, 19
 5000
-9 - Basic affects
+9 - Basic Affects
 stmt s;
 Select s such that Affects(s, 9)
 6, 7
 5000
-10 - Basic affects
+10 - Basic Affects
 stmt s;
 Select s such that Affects(4, s)
 
+5000
+11 - Basic Affects*
+stmt s;
+Select s such that Affects*(4, s)
+
+5000
+12 - Basic Affects*
+assign a;
+Select a such that Affects*(1,a)
+3, 4, 6, 9
+5000
+13 - Basic Affects*
+assign a;
+Select a such that Affects*(a, 9)
+1, 6, 7
+5000
+14 - Basic Affects*
+assign a; read rd;
+Select a such that Affects*(1, rd)
+
+5000
+15 - Basic Affects*
+stmt s;
+Select s such that Affects*(s, 17)
+12, 13, 16, 
+5000
+16 - Basic Affects*
+call cl;
+Select BOOLEAN such that Affects*(cl, 7)
+FALSE
+5000
+17 - Basic Affects*
+stmt s; assign a;
+Select <s, a> such that Affects*(s, a) with a.stmt# = 17
+12 17, 13 17, 16 17
+5000
+18 - Basic Affects*
+stmt s; assign a;
+Select <s, a> such that Affects*(s, a)
+1 3, 1 4, 1 6, 1 9, 3 4, 6 9, 7 9, 12 13, 12 15, 12 16, 12 17, 13 17, 15 17, 16 17, 18 19, 18 20, 19 20, 21 22
+5000
+19 - Wrong stmt type: 2 is while
+stmt s;
+Selec BOOLEAN such that Affects*(2, s)
+FALSE
+20 - Wrong stmt type: 2 is while
+stmt s;
+Selec BOOLEAN such that Affects*(s, 2)
+FALSE
+5000
+21 - Wrong stmt type: 5 is if
+Select BOOLEAN such that Affects*(5, s)
+FALSE
+5000
+22 - Wrong stmt type: 5 is if
+Select BOOLEAN such that Affects*(s, 5)
+FALSE
+5000
+23 - Wrong stmt type: 8 is call
+Select BOOLEAN such that Affects*(8, s)
+FALSE
+5000
+24 - Wrong stmt type: 8 is call
+Select BOOLEAN such that Affects*(s, 8)
+FALSE
 5000

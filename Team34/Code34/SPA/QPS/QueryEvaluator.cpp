@@ -1,7 +1,7 @@
 #include "QueryEvaluator.h"
 
 #include <string>
-#include <memory.h>
+#include <memory>
 
 #include "Query.h"
 #include "clause/relation/Rel.h"
@@ -20,7 +20,7 @@ using std::string;
 QueryEvaluator::QueryEvaluator(Query query) {
 	query_ = query;
 	data_retriever_ = DataRetriever();
-};
+}
 
 QueryEvaluator::QueryEvaluator(Query query, DataRetriever data_retriever) {
 	query_ = query;
@@ -83,8 +83,7 @@ bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_sy
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
 		if (res_wrapper->IsValid()) {
 			continue;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -98,8 +97,7 @@ bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group
 		if (res_wrapper->GetResType() == ResType::kBool) {
 			if (res_wrapper->IsValid()) {
 				continue;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
@@ -132,8 +130,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<Cl
 		if (res_wrapper->GetResType() == ResType::kBool) {
 			if (res_wrapper->IsValid()) {
 				continue;
-			}
-			else {
+			} else {
 				return std::make_shared<EmptyTable>();
 			}
 		}
@@ -168,8 +165,7 @@ vector<std::string> QueryEvaluator::ExtractResult() {
 	if (query_.IsBoolean()) {
 		if (result_table_->IsEmpty()) {
 			result.push_back("FALSE");
-		}
-		else {
+		} else {
 			result.push_back("TRUE");
 		}
 		return result;

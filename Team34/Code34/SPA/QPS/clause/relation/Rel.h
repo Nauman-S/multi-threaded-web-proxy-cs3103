@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <utility>
 
 #include "../Clause.h"
 #include "../ClauseType.h"

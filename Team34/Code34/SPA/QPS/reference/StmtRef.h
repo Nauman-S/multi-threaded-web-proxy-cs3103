@@ -1,6 +1,8 @@
 #pragma once
 
 #include <optional>
+#include <string>
+#include <memory>
 
 #include "IntValueableRef.h"
 #include "../../Utils/type/RefType.h"

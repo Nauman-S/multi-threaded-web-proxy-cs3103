@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <string>
+
 #include "Ref.h"
 #include "../../Utils/type/RefType.h"
 

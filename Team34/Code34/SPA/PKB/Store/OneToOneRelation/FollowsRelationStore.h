@@ -1,4 +1,7 @@
 #pragma once
+#include <memory>
+#include <utility>
+#include <vector>
 
 #include "OneToOneTransitiveRelationStore.h"
 #include "../../../Utils/type/TypeDef.h"
