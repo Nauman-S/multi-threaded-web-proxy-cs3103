@@ -129,7 +129,6 @@
     <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
     <ClInclude Include="SP\SourceParser.h" />
     <ClInclude Include="SP\SourceValidator.h" />
-    <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
     <ClInclude Include="SP\tokenizer\SourceLexer.h" />
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
@@ -251,7 +250,6 @@
     <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
     <ClCompile Include="SP\SourceParser.cpp" />
     <ClCompile Include="SP\SourceValidator.cpp" />
-    <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />

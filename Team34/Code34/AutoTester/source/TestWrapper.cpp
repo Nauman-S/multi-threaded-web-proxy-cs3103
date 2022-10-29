@@ -23,8 +23,8 @@ using namespace std;
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
 AbstractWrapper* WrapperFactory::createWrapper() {
-  if (wrapper == 0) wrapper = new TestWrapper;
-  return wrapper;
+    if (wrapper == 0) wrapper = new TestWrapper;
+    return wrapper;
 }
 // Do not modify the following line
 volatile bool TestWrapper::GlobalStop = false;
@@ -32,8 +32,8 @@ volatile bool TestWrapper::GlobalStop = false;
 // a default constructor
 TestWrapper::TestWrapper() {
     this->is_valid_source_ = true;
-  // create any objects here as instance variables of this class
-  // as well as any initialization required for your spa program
+    // create any objects here as instance variables of this class
+    // as well as any initialization required for your spa program
 }
 
 // method for parsing the SIMPLE source
@@ -44,7 +44,8 @@ void TestWrapper::parse(std::string filename) {
     std::shared_ptr<vector<SourceToken>> tokens;
     try {
         tokens = lexer.GetAllTokens();
-    } catch (InvalidTokenException e) {
+    }
+    catch (InvalidTokenException e) {
         std::cout << e.what() << std::endl;
         this->is_valid_source_ = false;
         return;
@@ -55,9 +56,7 @@ void TestWrapper::parse(std::string filename) {
     if (validator.Validate()) {
         SourceParser parser = SourceParser();
         parser.SetTokens(tokens);
-        pair<shared_ptr<ProgramNode>, vector<Procedure>> result = parser.Parse();
-        shared_ptr<ProgramNode> root = result.first;
-        vector<Procedure> calls = result.second;
+        std::shared_ptr<ProgramNode> root = parser.Parse();
         DesignExtractor extractor;
         extractor.PopulatePKB(root);
     }
@@ -68,7 +67,7 @@ void TestWrapper::parse(std::string filename) {
 }
 
 // method to evaluating a query
-void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& results){
+void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& results) {
     // call your evaluator to evaluate the query here
     // ...code to evaluate query...
     // store the answers to the query in the results list (it is initially empty)
@@ -100,7 +99,7 @@ void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& result
         evaluator.Evaluate();
         vector<std::string> res = evaluator.ExtractResult();
         results.insert(results.end(), res.begin(), res.end());
-        
+
         return;
     }
 }

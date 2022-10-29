@@ -36,7 +36,7 @@ public:
         SourceParser parser = SourceParser();
         SourceLexer lexer = SourceLexer(this->base_dir + "design_extractor_test_source.txt");
         parser.SetTokens(lexer.GetAllTokens());
-        this->common_root = parser.Parse().first;
+        this->common_root = parser.Parse();
         this->read = ReadPKBManager::GetInstance();
         this->write = WritePKBManager::GetInstance();
     }
@@ -247,7 +247,7 @@ public:
         SourceParser parser = SourceParser();
         SourceLexer lexer = SourceLexer(calls_test_file);
         parser.SetTokens(lexer.GetAllTokens());
-        shared_ptr<ProgramNode> calls_root = parser.Parse().first;
+        shared_ptr<ProgramNode> calls_root = parser.Parse();
 
         CallsExtractor extractor(this->write);
         calls_root->Extract(extractor);
@@ -281,7 +281,7 @@ public:
         SourceParser parser = SourceParser();
         SourceLexer lexer = SourceLexer(next_test_file);
         parser.SetTokens(lexer.GetAllTokens());
-        shared_ptr<ProgramNode> next_root = parser.Parse().first;
+        shared_ptr<ProgramNode> next_root = parser.Parse();
 
         NextExtractor extractor(this->write);
         next_root->Extract(extractor);
