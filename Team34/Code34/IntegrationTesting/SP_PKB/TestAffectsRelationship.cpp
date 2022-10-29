@@ -267,8 +267,20 @@ namespace IntegrationTesting
 
         TEST_METHOD(TestGetAllAffectsRelations)
         {
-            std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects = read->GetAllAffectsRelations();
-            Assert::AreEqual(20, int(all_affects->size()));
+            std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> actual = read->GetAllAffectsRelations();
+            Assert::AreEqual(20, int(actual->size()));
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 3)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(2, 6)) != actual->end());
+            Assert::IsFalse(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(1, 5)) != actual->end());
+
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 11)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(7, 12)) != actual->end());
+
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(15, 15)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(16, 15)) != actual->end());
+
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(29, 33)) != actual->end());
+            Assert::IsTrue(std::find(actual->begin(), actual->end(), std::make_pair<StmtNum, StmtNum>(38, 37)) != actual->end());
         }
 
     };

@@ -89,7 +89,7 @@ std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAll
     std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations = std::make_shared<std::vector<std::pair<StmtNum, StmtNum>>>();
     std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
     for (auto iter = assign_stmts->begin(); iter != assign_stmts->end(); ++iter) {
-        std::shared_ptr < std::unordered_set<StmtNum>> all_cause_stmts = GetCauseStmtsFromStmt(*iter);
+        std::shared_ptr < std::unordered_set<StmtNum>> all_cause_stmts = GetEffectStmtsFromStmt(*iter);
         GenerateAffectsPairs(all_affects_relations, *iter, all_cause_stmts);
     }
     return all_affects_relations;
