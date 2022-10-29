@@ -87,7 +87,6 @@
     <ClCompile Include="QPS\clause\pattern\WhilePattern.cpp" />
     <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
-    <ClCompile Include="SP\stub\WritePKBManagerStub.cpp" />
     <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
     <ClCompile Include="QPS\reference\Ref.cpp" />
@@ -234,7 +233,6 @@
     <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
-    <ClInclude Include="SP\stub\WritePKBManagerStub.h" />
     <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="QPS\clause\AttrType.h" />
