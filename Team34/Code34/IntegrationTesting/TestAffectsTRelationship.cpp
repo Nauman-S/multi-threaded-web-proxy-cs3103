@@ -34,7 +34,7 @@ namespace IntegrationTesting
             SourceParser parser;
             SourceLexer lexer = SourceLexer(base_dir + "test_affectsT_relation_source.txt");
             parser.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser.Parse().first;
+            std::shared_ptr<ProgramNode> root = parser.Parse();
             extractor.PopulatePKB(root);
         }
 

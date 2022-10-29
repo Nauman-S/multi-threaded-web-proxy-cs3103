@@ -34,7 +34,7 @@ namespace IntegrationTesting
             SourceParser parser;
             SourceLexer lexer = SourceLexer(base_dir + "test_affects_relation_source.txt");
             parser.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser.Parse().first;
+            std::shared_ptr<ProgramNode> root = parser.Parse();
             extractor.PopulatePKB(root);
         }
 
@@ -243,7 +243,7 @@ namespace IntegrationTesting
             write->ResetPKB();
             SourceLexer lexer_empty_affects = SourceLexer(base_dir + "no_affects_relation_source.txt");
             parser.SetTokens(lexer_empty_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse().first;
+            std::shared_ptr<ProgramNode> root_empty_affects = parser.Parse();
             extractor.PopulatePKB(root_empty_affects);
             Assert::IsTrue(read->IsAffectsStoreEmpty());
 
@@ -252,7 +252,7 @@ namespace IntegrationTesting
             SourceLexer lexer_has_affects = SourceLexer(base_dir + "some_affects_relation_source.txt");
             SourceParser parser_some;
             parser_some.SetTokens(lexer_has_affects.GetAllTokens());
-            std::shared_ptr<ProgramNode> root_has_affects = parser_some.Parse().first;
+            std::shared_ptr<ProgramNode> root_has_affects = parser_some.Parse();
             extractor.PopulatePKB(root_has_affects);
             Assert::IsFalse(read->IsAffectsStoreEmpty());
 
@@ -261,7 +261,7 @@ namespace IntegrationTesting
             SourceLexer lexer = SourceLexer(base_dir + "test_affects_relation_source.txt");
             SourceParser parser_re;
             parser_re.SetTokens(lexer.GetAllTokens());
-            std::shared_ptr<ProgramNode> root = parser_re.Parse().first;
+            std::shared_ptr<ProgramNode> root = parser_re.Parse();
             extractor.PopulatePKB(root);
         }
 
