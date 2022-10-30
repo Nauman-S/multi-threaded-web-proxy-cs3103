@@ -48,3 +48,28 @@ if ifs; assign a; variable v; procedure p; while w;
 Select ifs pattern ifs(v,_,_) such that Uses(p, v) and Modifies(w, v) with p.procName = "proc2" 
 8
 5000
+11 - Test Affects
+if ifs; assign a; assign b;
+Select ifs pattern ifs(_,_,_) such that Affects(a, b) and Next(ifs, a)
+6
+5000
+12 - Test Affects
+if ifs; assign a; assign b;
+Select ifs pattern ifs(_,_,_) such that Affects(a, b) and Next(a, ifs)
+8
+5000
+13 - Test Affects*
+if ifs; assign a; assign b;
+Select ifs pattern ifs(_,_,_) such that Affects*(a, b) and Next(ifs, a)
+6
+5000
+14 - Test Affects* and Parent*
+if ifs; assign a; assign b;
+Select ifs pattern ifs(_,_,_) such that Affects*(a, b) and Parent*(ifs, b)
+6, 8
+5000
+15 - Test Affects* and Parent*
+if ifs; assign a; assign b;
+Select ifs pattern ifs(_,_,_) such that Affects*(a, b) and Parent*(ifs, a)
+6
+5000
