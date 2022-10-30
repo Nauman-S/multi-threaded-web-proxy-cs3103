@@ -98,3 +98,28 @@ procedure p1, p2; variable v1, v2;
 Select <p1, p2> such that Calls*(p1, p2) and Modifies(p2, v1) with p1.procName="Example"
 Example p, Example q
 5000
+21 - select tuple of two with Affects
+assign a, b;
+Select <a, b> such that Affects(a, b)
+1 4,1 7,13 11,13 13,19 23,2 10,2 11,20 21,20 23,21 23,22 23,3 11,3 13,7 10,7 11,7 9,9 11
+5000
+22 - select tuple of two with Affects*
+assign a, b;
+Select <a, b> such that Affects*(a, b)
+1 10,1 11,1 4,1 7,1 9,13 11,13 13,19 23,2 10,2 11,20 21,20 23,21 23,22 23,3 11,3 13,7 10,7 11,7 9,9 11
+5000
+23 - select tuple of two with Affects and Parent
+assign a, b; if ifs;
+Select <a, b> such that Affects(a, b) and Parent(ifs, a)
+20 21,20 23,21 23,22 23,9 11
+5000
+24 - select tuple of two with Affects and Follows
+assign a, b;
+Select <a, b> such that Affects(a, b) and Follows(a, b)
+20 21
+5000
+24 - select tuple of two with Affects and Follows*
+assign a, b;
+Select <a, b> such that Affects(a, b) and Follows*(a, b)
+1 4,20 21,7 11
+5000
