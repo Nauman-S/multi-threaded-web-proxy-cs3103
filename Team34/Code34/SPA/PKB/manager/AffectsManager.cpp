@@ -79,8 +79,9 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmts() 
     std::shared_ptr<std::unordered_set<StmtNum>> result = std::make_shared<std::unordered_set<StmtNum>>();
     std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
     for (auto stmt = assign_stmts->begin(); stmt != assign_stmts->end(); ++stmt) {
-        std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts = GetCauseStmtsFromStmt(*stmt);
-        result->insert(cause_stmts->begin(), cause_stmts->end());
+        if (IsEffectStmtPresent(*stmt)) {
+            result->insert(*stmt);
+        }
     }
     return result;
 }
@@ -218,6 +219,15 @@ bool AffectsManager::IsDirectlyModified(Variable var, StmtNum stmt) {
     return pkb.modifies_manager_.CheckModifies(stmt, var);
 }
 
+bool AffectsManager::IsEffectStmtPresent(StmtNum stmt) {
+    if (!IsAssignStmt(stmt)) {
+        return false;
+    }
+    std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = std::make_shared<std::unordered_set<StmtNum>>();
+    Variable modified_var = GetModifiedVarInAssign(stmt);
+    return CheckEffectsStmtExistsBFS(effect_stmts, modified_var, stmt);
+}
+
 void AffectsManager::AddEffectsStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt) {
     std::unordered_set<StmtNum> visited;
     std::queue<StmtNum> queue;
@@ -230,6 +240,30 @@ void AffectsManager::AddEffectsStmtsBFS(std::shared_ptr<std::unordered_set<StmtN
             AddEffectsStmtsIfUsingVar(stmt, visited, queue, effect_stmts, modified_var);
         });
     }
+}
+
+bool AffectsManager::CheckEffectsStmtExistsBFS(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt) {
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(stmt);
+    while (!queue.empty()) {
+        StmtNum stmt = queue.front();
+        queue.pop();
+        std::shared_ptr<std::unordered_set<StmtNum>> next_stmts = pkb.next_manager_.GetNextStmtsFromStmt(stmt);
+        for (auto stmt = next_stmts->begin(); stmt != next_stmts->end(); ++stmt) {
+            if (visited.find(*stmt) != visited.end()) {
+                continue;
+            }
+            if (IsAssignStatementUsingVariable(modified_var, *stmt)) {
+                return true;
+            }
+            if (!IsDirectlyModified(modified_var, *stmt)) {
+                visited.insert(*stmt);
+                queue.push(*stmt);
+            }
+        };
+    }
+    return false;
 }
 
 void AffectsManager::AddEffectsStmtsIfUsingVar(StmtNum stmt, std::unordered_set<StmtNum>& visited, std::queue<StmtNum>& queue,
