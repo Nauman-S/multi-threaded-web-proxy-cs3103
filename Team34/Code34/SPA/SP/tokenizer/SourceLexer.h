@@ -5,6 +5,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <string>
 
 #include "..\..\Utils\tokenizer\Tokenizer.h"
 #include "..\..\Utils\tokenizer\Token.h"
@@ -12,7 +13,7 @@
 
 class SourceLexer {
 public:
-    SourceLexer(const std::string&);
+    explicit SourceLexer(const std::string&);
 
     std::shared_ptr<std::vector<SourceToken>> GetAllTokens();
 

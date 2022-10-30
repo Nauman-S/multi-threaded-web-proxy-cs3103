@@ -10,7 +10,7 @@ using namespace std;
 
 std::shared_ptr<ProgramNode> SourceParser::Parse() {
     std::shared_ptr<ProgramNode> programNode(new ProgramNode());
-    while (token_idx < (int)tokens->size()) {
+    while (token_idx < static_cast<int>(tokens->size())) {
         shared_ptr<ProcedureASTNode> p_node = ParseProcedure();
         programNode->AddProcedure(p_node);
     }
@@ -47,27 +47,21 @@ shared_ptr<StatementASTNode> SourceParser::ParseStatement(Procedure& proc) {
     if (tokens->at(token_idx).GetType() == SourceTokenType::kName && tokens->at(token_idx + 1).GetType() == SourceTokenType::kEqual) {
         // Variable followed by equal sign to be parsed as assign
         s_node = ParseAssignStatement(proc);
-    }
-    else if (tokens->at(token_idx).IsIf()) {
+    } else if (tokens->at(token_idx).IsIf()) {
         // cout << "if" << line_idx << endl;
         s_node = ParseIfStatement(proc);
-    }
-    else if (tokens->at(token_idx).IsWhile()) {
+    } else if (tokens->at(token_idx).IsWhile()) {
         // cout << "while" << line_idx << endl;
         s_node = ParseWhileStatement(proc);
-    }
-    else if (tokens->at(token_idx).IsRead()) {
+    } else if (tokens->at(token_idx).IsRead()) {
         // cout << "read" << line_idx << endl;
         s_node = ParseReadStatement(proc);
-    }
-    else if (tokens->at(token_idx).IsPrint()) {
+    } else if (tokens->at(token_idx).IsPrint()) {
         // cout << "print" << line_idx << endl;
         s_node = ParsePrintStatement(proc);
-    }
-    else if (tokens->at(token_idx).IsCall()) {
+    } else if (tokens->at(token_idx).IsCall()) {
         s_node = ParseCallStatement(proc);
-    }
-    else {
+    } else {
     }
     s_node->SetParentProcIndex(proc);
     return s_node;
@@ -134,18 +128,14 @@ shared_ptr<ConditionExpression> SourceParser::ParseConditionExpression(Procedure
         if (tokens->at(token_idx).GetType() == SourceTokenType::kName) {
             Variable v = tokens->at(token_idx).GetStringVal();
             vars.push_back(v);
-        }
-        else if (tokens->at(token_idx).GetType() == SourceTokenType::kInteger) {
+        } else if (tokens->at(token_idx).GetType() == SourceTokenType::kInteger) {
             Constant c = stoi(tokens->at(token_idx).GetStringVal());
             cons.push_back(c);
-        }
-        else if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftRound) {
+        } else if (tokens->at(token_idx).GetType() == SourceTokenType::kLeftRound) {
             round_count += 1;
-        }
-        else if (tokens->at(token_idx).GetType() == SourceTokenType::kRightRound) {
+        } else if (tokens->at(token_idx).GetType() == SourceTokenType::kRightRound) {
             round_count -= 1;
-        }
-        else {
+        } else {
 
         }
         IncrementTokenIdx();
@@ -180,8 +170,7 @@ shared_ptr<AssignStatementASTNode> SourceParser::ParseAssignStatement(Procedure&
         if (tokens->at(token_idx).GetType() == SourceTokenType::kName) {
             Variable r_var = tokens->at(token_idx).GetStringVal();
             r_vars.push_back(r_var);
-        }
-        else if (tokens->at(token_idx).GetType() == SourceTokenType::kInteger) {
+        } else if (tokens->at(token_idx).GetType() == SourceTokenType::kInteger) {
             Constant r_con = stoi(tokens->at(token_idx).GetStringVal());
             r_cons.push_back(r_con);
         }

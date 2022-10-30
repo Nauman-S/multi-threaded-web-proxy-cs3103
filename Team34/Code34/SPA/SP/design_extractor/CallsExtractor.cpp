@@ -43,8 +43,7 @@ void CallsExtractor::ExtractCallNode(const CallStatementASTNode& call) {
         for (Procedure p : *cached_set) {
             this->AddToCachedSet(p);
         }
-    } 
-    else {
+    } else {
         // Jump to called node and extract that first
         std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
         called_proc_node->Extract(*this);

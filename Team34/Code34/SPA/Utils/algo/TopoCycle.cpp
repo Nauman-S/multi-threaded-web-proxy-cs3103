@@ -105,8 +105,7 @@ bool TopoCycle::Init(vector<pair<Procedure, Procedure>> edges, vector<Procedure>
 vector<Procedure> TopoCycle::GenerateList(vector<pair<Procedure, Procedure>> edges, vector<Procedure> nodes) {
 	if (CheckCycle(edges, nodes)) {
 		throw exception("cycle detected");
-	}
-	else {
+	} else {
 		vector<Procedure> res;
 		for (auto n : tsort) {
 			for (auto const& x : mapping) {

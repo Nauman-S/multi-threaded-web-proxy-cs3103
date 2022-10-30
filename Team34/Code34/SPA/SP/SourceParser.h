@@ -22,8 +22,6 @@
 #include "./ast/ConditionExpression.h"
 #include "./ast/StatementASTNode.h"
 
-#include "../Utils/type/TypeDef.h"
-
 using namespace std;
 
 class SourceParser {

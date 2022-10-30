@@ -17,8 +17,8 @@ public:
     std::vector<Variable> GetRightVars() const;
     std::vector<Constant> GetRightCons() const;
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+    void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 protected:
     Variable left;

@@ -9,7 +9,7 @@
 using namespace std;
 
 bool SourceValidator::Validate() {
-    while (idx < (int)tokens->size()) {
+    while (idx < static_cast<int>(tokens->size())) {
         if (!ValidateProcedure()) {
             return false;
         }
@@ -54,8 +54,7 @@ bool SourceValidator::ValidateStatement() {
         int tmp = idx;
         if (ValidateAssign()) {
             continue;
-        }
-        else {
+        } else {
             idx = tmp;
         }
         if (tokens->at(idx).IsRead()) {
@@ -63,32 +62,27 @@ bool SourceValidator::ValidateStatement() {
             if (!ValidateRead()) {
                 return false;
             }
-        }
-        else if (tokens->at(idx).IsPrint()) {
+        } else if (tokens->at(idx).IsPrint()) {
             IncrementIdx();
             if (!ValidatePrint()) {
                 return false;
             }
-        }
-        else if (tokens->at(idx).IsCall()) {
+        } else if (tokens->at(idx).IsCall()) {
             IncrementIdx();
             if (!ValidateCall()) {
                 return false;
             }
-        }
-        else if (tokens->at(idx).IsIf()) {
+        } else if (tokens->at(idx).IsIf()) {
             IncrementIdx();
             if (!ValidateIf()) {
                 return false;
             }
-        }
-        else if (tokens->at(idx).IsWhile()) {
+        } else if (tokens->at(idx).IsWhile()) {
             IncrementIdx();
             if (!ValidateWhile()) {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -217,8 +211,7 @@ bool SourceValidator::ValidateExpression() {
             return false;
         }
         return true;
-    }
-    else if (tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
+    } else if (tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
         int temp = idx;
         IncrementIdx();
         bool flag = true;
@@ -243,13 +236,11 @@ bool SourceValidator::ValidateExpression() {
         }
         if (flag) {
             return true;
-        }
-        else {
+        } else {
             idx = temp;
             return ValidateRelation();
         }
-    }
-    else {
+    } else {
         return ValidateRelation();
     }
 }
@@ -260,35 +251,25 @@ bool SourceValidator::ValidateArithmeticExpression() {
     while (tokens->at(idx).GetType() == SourceTokenType::kName || tokens->at(idx).GetType() == SourceTokenType::kInteger || tokens->at(idx).GetType() == SourceTokenType::kLeftRound || tokens->at(idx).GetType() == SourceTokenType::kRightRound || tokens->at(idx).GetType() == SourceTokenType::kAdd || tokens->at(idx).GetType() == SourceTokenType::kMinus || tokens->at(idx).GetType() == SourceTokenType::kMultiply || tokens->at(idx).GetType() == SourceTokenType::kDivide || tokens->at(idx).GetType() == SourceTokenType::kModulo) {
         if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kName) {
             expected = "sign";
-        }
-        else if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kInteger) {
+        } else if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kInteger) {
             expected = "sign";
-        }
-        else if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
+        } else if (expected == "var" && tokens->at(idx).GetType() == SourceTokenType::kLeftRound) {
             cnt += 1;
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kRightRound && cnt > 0) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kRightRound && cnt > 0) {
             cnt -= 1;
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kRightRound && cnt == 0) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kRightRound && cnt == 0) {
             return true;
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kAdd) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kAdd) {
             expected = "var";
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kDivide) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kDivide) {
             expected = "var";
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kMinus) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kMinus) {
             expected = "var";
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kModulo) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kModulo) {
             expected = "var";
-        }
-        else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kMultiply) {
+        } else if (expected == "sign" && tokens->at(idx).GetType() == SourceTokenType::kMultiply) {
             expected = "var";
-        }
-        else {
+        } else {
             return false;
         }
         IncrementIdx();

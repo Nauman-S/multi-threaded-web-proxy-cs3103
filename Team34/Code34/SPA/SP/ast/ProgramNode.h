@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <utility>
+#include <string>
 
 #include "ASTNode.h"
 #include "ProcedureASTNode.h"
@@ -17,8 +19,8 @@ public:
 
     void AddProcedure(std::shared_ptr<ProcedureASTNode>);
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+     void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 private:
     std::vector<std::shared_ptr<ProcedureASTNode>> children_;

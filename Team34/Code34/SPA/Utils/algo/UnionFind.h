@@ -13,7 +13,7 @@ private:
 	unsigned Find(unsigned idx);
 
 public:
-	UnionFind(std::vector<std::string> synonyms);
+	explicit UnionFind(std::vector<std::string> synonyms);
 
 	void Union(std::string first_syn, std::string second_syn);
 

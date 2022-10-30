@@ -19,7 +19,7 @@ class ConditionExpression;
 
 class NodeExtractor {
 public:
-    NodeExtractor(std::shared_ptr<WritePKBManager> manager) : write_manager_(manager) {}
+    explicit NodeExtractor(std::shared_ptr<WritePKBManager> manager) : write_manager_(manager) {}
 
     virtual void ExtractProgramNode(const ProgramNode&) = 0;
     virtual void ExtractProcedureNode(const ProcedureASTNode&) = 0;
