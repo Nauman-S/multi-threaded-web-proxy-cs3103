@@ -34,26 +34,22 @@ std::string PostfixConverter::InfixToPostfix(std::string& infix) {
 	for (string& token : *splited) {
 		if (token == " ") {
 			continue;
-		}
-		else if (token == left_bracket) {
+		} else if (token == left_bracket) {
 			stk.push(token);
-		}
-		else if (token == right_bracket) {
+		} else if (token == right_bracket) {
 			while (!stk.empty() && stk.top() != left_bracket) {
 				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
 			stk.pop();  // discard left bracket
-		}
-		else if (auto p = precedence_.find(token); p != precedence_.end()) {
+		} else if (auto p = precedence_.find(token); p != precedence_.end()) {
 			while (!stk.empty() && stk.top() != left_bracket && precedence_[stk.top()] >= p->second) {
 				// assume all operators are left-associative
 				postfix_tokens.push_back(stk.top());
 				stk.pop();
 			}
 			stk.push(token);
-		}
-		else {  // is not an operator
+		} else {  // is not an operator
 			postfix_tokens.push_back(token);
 		}
 	}

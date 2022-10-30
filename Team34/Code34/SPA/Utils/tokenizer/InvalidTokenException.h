@@ -10,7 +10,7 @@ private:
     std::string invalid_token_;
 
 public:
-    InvalidTokenException(std::string invalid_token);
+    explicit InvalidTokenException(std::string invalid_token);
     std::string what() const throw ();
 };
 

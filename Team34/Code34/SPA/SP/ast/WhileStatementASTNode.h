@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "StatementASTNode.h"
 #include "ConditionExpression.h"
@@ -14,8 +15,8 @@ public:
     void SetConditionExpression(std::shared_ptr<ConditionExpression>);
     std::shared_ptr<ConditionExpression> GetCondition() const;
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+    void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 protected:
     std::shared_ptr<ConditionExpression> condition;

@@ -11,8 +11,8 @@ public:
     void SetVariable(Variable&);
     virtual Variable GetReadVariable() const;
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+    void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 protected:
     Variable var;

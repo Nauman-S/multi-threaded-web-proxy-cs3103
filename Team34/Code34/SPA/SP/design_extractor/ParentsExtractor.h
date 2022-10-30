@@ -21,19 +21,19 @@
 class ParentsExtractor : public NodeExtractor {
 public:
 
-    ParentsExtractor(std::shared_ptr<WritePKBManager>);
+    explicit ParentsExtractor(std::shared_ptr<WritePKBManager>);
 
-    virtual void ExtractProgramNode(const ProgramNode&) override;
-    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
+    void ExtractProgramNode(const ProgramNode&) override;
+    void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
-    virtual void ExtractCallNode(const CallStatementASTNode&) override;
-    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
-    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
+    void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    void ExtractCallNode(const CallStatementASTNode&) override;
+    void ExtractPrintNode(const PrintStatementASTNode&) override;
+    void ExtractReadNode(const ReadStatementASTNode&) override;
 
-    virtual void ExtractIfNode(const IfStatementASTNode&) override;
-    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
-    virtual void ExtractConditionExpression(const ConditionExpression&) override;
+    void ExtractIfNode(const IfStatementASTNode&) override;
+    void ExtractWhileNode(const WhileStatementASTNode&) override;
+    void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
     // Keeps track of parent statements in previous level as we go down

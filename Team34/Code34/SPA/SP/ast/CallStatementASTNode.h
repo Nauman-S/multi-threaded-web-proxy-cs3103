@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 # include "StatementASTNode.h"
 #include "../../Utils/type/TypeDef.h"
 
@@ -8,8 +10,8 @@ public:
     void SetProcedure(Procedure& p);
     Procedure GetProcedure() const;
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+    void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 protected:
     Procedure proc;

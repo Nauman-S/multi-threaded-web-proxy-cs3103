@@ -3,6 +3,9 @@
 #include <memory>
 #include <set>
 #include <vector>
+#include <string>
+#include <utility>
+#include <map>
 
 #include "NodeExtractor.h"
 
@@ -21,19 +24,19 @@
 
 class ModifiesExtractor : public NodeExtractor {
 public:
-    ModifiesExtractor(std::shared_ptr<WritePKBManager>);
+    explicit ModifiesExtractor(std::shared_ptr<WritePKBManager>);
 
-    virtual void ExtractProgramNode(const ProgramNode&) override;
-    virtual void ExtractProcedureNode(const ProcedureASTNode&) override;
+    void ExtractProgramNode(const ProgramNode&) override;
+    void ExtractProcedureNode(const ProcedureASTNode&) override;
 
-    virtual void ExtractAssignmentNode(const AssignStatementASTNode&) override;
-    virtual void ExtractCallNode(const CallStatementASTNode&) override;
-    virtual void ExtractPrintNode(const PrintStatementASTNode&) override;
-    virtual void ExtractReadNode(const ReadStatementASTNode&) override;
+    void ExtractAssignmentNode(const AssignStatementASTNode&) override;
+    void ExtractCallNode(const CallStatementASTNode&) override;
+    void ExtractPrintNode(const PrintStatementASTNode&) override;
+    void ExtractReadNode(const ReadStatementASTNode&) override;
 
-    virtual void ExtractIfNode(const IfStatementASTNode&) override;
-    virtual void ExtractWhileNode(const WhileStatementASTNode&) override;
-    virtual void ExtractConditionExpression(const ConditionExpression&) override;
+    void ExtractIfNode(const IfStatementASTNode&) override;
+    void ExtractWhileNode(const WhileStatementASTNode&) override;
+    void ExtractConditionExpression(const ConditionExpression&) override;
 
 private:
     std::map<Procedure, std::shared_ptr<ProcedureASTNode>> proc_node_map_;

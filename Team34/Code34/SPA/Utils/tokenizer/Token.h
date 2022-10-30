@@ -40,6 +40,12 @@ enum class TokenType {
 };
 
 class Token {
+private:
+    static const std::map<char, TokenType> allowed_special_char_;
+
+    std::string literal_value_;
+    TokenType type_;
+
 public:
     Token(std::string, TokenType);
     std::string& GetStringValue();
@@ -47,11 +53,5 @@ public:
 
     static bool IsValidToken(char);
     static TokenType GetTokenTypeByChar(char);
-
-private:
-    std::string literal_value_;
-    TokenType type_;
-
-    const static std::map<char, TokenType> allowed_special_char_;
 };
 

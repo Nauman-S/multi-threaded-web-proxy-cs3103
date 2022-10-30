@@ -66,19 +66,16 @@ SourceToken SourceLexer::ConstructSourceToken() {
     SourceTokenType type;
     if (token.GetType() == TokenType::kName) {
         type = SourceTokenType::kName;
-    }
-    else if (token.GetType() == TokenType::kInteger) {
+    } else if (token.GetType() == TokenType::kInteger) {
         type = SourceTokenType::kInteger;
-    }
-    else if (IsValidToken(token.GetStringValue())) {
+    } else if (IsValidToken(token.GetStringValue())) {
         type = GetValidTokenType(token.GetStringValue());
-    }
-    else {
+    } else {
         throw InvalidTokenException(token.GetStringValue());
     }
 
     return SourceToken(type, token.GetStringValue());
-};
+}
 
 bool SourceLexer::HasNextToken() {
     if (!this->buffer_.empty() || this->tokenizer_.HasNextToken()) {
@@ -90,7 +87,7 @@ bool SourceLexer::HasNextToken() {
         this->tokenizer_.FeedLine(line);
         if (this->tokenizer_.HasNextToken()) {
             return true;
-        };
+        }
     }
 
     // Finished consumption of both tokenizer stream and file stream
@@ -122,8 +119,7 @@ Token SourceLexer::CombineMultiToken(Token& token) {
     string combined_literal = token.GetStringValue() + followed_token.GetStringValue();
     if (IsValidToken(combined_literal)) {
         return Token(combined_literal, TokenType::kParseStart);
-    }
-    else {
+    } else {
         // Tokens cannot be combined, store it for consumption in next operation
         this->buffer_.push_back(followed_token);
         return token;

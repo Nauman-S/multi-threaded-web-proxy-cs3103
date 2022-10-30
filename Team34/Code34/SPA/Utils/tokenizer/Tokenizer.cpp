@@ -73,14 +73,11 @@ void Tokenizer::MoveToNextToken(int* current_index_) {
     char current_char = this->query_pointer[*current_index_];
     if (isdigit(current_char)) {
         ConsumeIntegerToken(current_index_);
-    }
-    else if (isalpha(current_char)) {
+    } else if (isalpha(current_char)) {
         ConsumeAlphanumericToken(current_index_);
-    }
-    else if (Token::IsValidToken(current_char)) {
+    } else if (Token::IsValidToken(current_char)) {
         ConsumeSpecialCharacter();
-    }
-    else {
+    } else {
         std::string val;
         val.push_back(current_char);
         throw InvalidTokenException(val);

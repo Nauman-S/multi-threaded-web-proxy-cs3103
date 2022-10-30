@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "StatementASTNode.h"
 #include "../../Utils/type/TypeDef.h"
 
@@ -8,8 +9,8 @@ public:
     void SetVariable(Variable&);
     Variable GetVariable() const;
 
-    virtual void Extract(NodeExtractor&) override;
-    virtual string Stringify() override;
+    void Extract(NodeExtractor&) override;
+    string Stringify() override;
 
 protected:
     Variable var;

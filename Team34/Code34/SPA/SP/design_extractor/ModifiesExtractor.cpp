@@ -60,8 +60,7 @@ void ModifiesExtractor::ExtractCallNode(const CallStatementASTNode& call) {
         for (Variable modified_var : *cached_modifies) {
             this->SetIndirectModifies(modified_var);
         }
-    }
-    else {
+    } else {
         std::shared_ptr<ProcedureASTNode> called_proc_node = this->proc_node_map_.at(called_proc);
         called_proc_node->Extract(*this);
     }

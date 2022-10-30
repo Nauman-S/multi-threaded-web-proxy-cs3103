@@ -1,4 +1,7 @@
 #pragma once
+
+#include <string>
+
 #include "ExprSpec.h"
 #include "Expr.h"
 
