@@ -44,5 +44,11 @@
     <ClCompile Include="TestClauseGrouper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\UnitTesting\stub\ReadPKBManagerStub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UnitTesting\stub\RelationStubFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -165,6 +165,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\UnitTesting\stub\ReadPKBManagerStub.cpp" />
+    <ClCompile Include="..\UnitTesting\stub\RelationStubFactory.cpp" />
     <ClCompile Include="QPS\TestQPSComponent.cpp" />
     <ClCompile Include="SP_PKB\TestAffectsRelationship.cpp" />
     <ClCompile Include="SP_PKB\TestProgramNodeExtraction.cpp" />

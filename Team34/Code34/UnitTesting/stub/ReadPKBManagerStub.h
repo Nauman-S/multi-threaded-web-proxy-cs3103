@@ -1,12 +1,11 @@
 #pragma once
-
 #include <memory>
 #include <unordered_set>
 #include <vector>
 #include <utility>
 
-#include "../../Utils/type/TypeDef.h"
-#include "../../PKB/ReadPKBManager.h"
+#include "../../SPA/Utils/type/TypeDef.h"
+#include "../../SPA/PKB/ReadPKBManager.h"
 
 class ReadPKBManagerStub : public ReadPKBManager
 {

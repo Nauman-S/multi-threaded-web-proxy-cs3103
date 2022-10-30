@@ -1,10 +1,11 @@
+#include "stdafx.h"
 #include "ReadPKBManagerStub.h"
 
 #include <memory>
 #include <unordered_set>
 
-#include "../../Utils/type/TypeDef.h"
-#include "../../PKB/ReadPKBManager.h"
+#include "../../SPA/Utils/type/TypeDef.h"
+#include "../../SPA/PKB/ReadPKBManager.h"
 
 using std::shared_ptr;
 using std::make_shared;

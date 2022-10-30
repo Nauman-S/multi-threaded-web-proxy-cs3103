@@ -6,8 +6,8 @@
 #include <vector>
 
 #include "../../SPA/PKB/ReadPKBManager.h"
-#include "../../SPA/QPS/stub/RelationStubFactory.h"
-#include "../../SPA/QPS/stub/ReadPKBManagerStub.h"
+#include "../stub/RelationStubFactory.h"
+#include "../stub/ReadPKBManagerStub.h"
 #include "../../SPA/QPS/DataRetriever.h"
 #include "../../SPA/QPS/clause/relation/Rel.h"
 #include "../../SPA/QPS/clause/relation/ModifiesPRel.h"
