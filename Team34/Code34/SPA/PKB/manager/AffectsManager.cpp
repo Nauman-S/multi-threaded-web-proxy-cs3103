@@ -261,7 +261,7 @@ bool AffectsManager::CheckEffectsStmtExistsBFS(std::shared_ptr<std::unordered_se
                 visited.insert(*stmt);
                 queue.push(*stmt);
             }
-        };
+        }
     }
     return false;
 }
