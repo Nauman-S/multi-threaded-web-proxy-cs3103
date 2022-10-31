@@ -32,14 +32,10 @@ volatile bool TestWrapper::GlobalStop = false;
 // a default constructor
 TestWrapper::TestWrapper() {
     this->is_valid_source_ = true;
-    // create any objects here as instance variables of this class
-    // as well as any initialization required for your spa program
 }
 
 // method for parsing the SIMPLE source
 void TestWrapper::parse(std::string filename) {
-    // call your parser to do the parsing
-    // ...rest of your code...
     SourceLexer lexer = SourceLexer(filename);
     std::shared_ptr<vector<SourceToken>> tokens;
     try {
@@ -68,16 +64,11 @@ void TestWrapper::parse(std::string filename) {
 
 // method to evaluating a query
 void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& results) {
-    // call your evaluator to evaluate the query here
-    // ...code to evaluate query...
-    // store the answers to the query in the results list (it is initially empty)
-    // each result must be a string.
     if (this->is_valid_source_) {
-        QueryBuilder q_builder;
-        Query query;
+        QueryBuilder query_builder;
+        std::shared_ptr<Query> query_ptr;
         try {
-            std::shared_ptr<Query> query_ptr = q_builder.GetQuery(query_str);
-            query = *query_ptr;
+            query_ptr = query_builder.GetQuery(query_str);
         }
         catch (SyntaxError e) {
             std::cout << e.what() << std::endl;
@@ -85,8 +76,8 @@ void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& result
             results.push_back("SyntaxError");
             return;
         }
-        catch (SemanticError) {
-            std::cout << "SemanticError" << std::endl;
+        catch (SemanticError e) {
+            std::cout << e.what() << std::endl;
             results.push_back("SemanticError");
             return;
         }
@@ -94,10 +85,10 @@ void TestWrapper::Evaluate(std::string query_str, std::list<std::string>& result
             std::cout << "Unknown Exception" << endl;
         }
 
-        cout << query.GetSelectTuple() << endl;
-        QueryEvaluator evaluator(query);
+        cout << query_ptr->GetSelectTuple() << endl;
+        QueryEvaluator evaluator(*query_ptr);
         evaluator.Evaluate();
-        vector<std::string> res = evaluator.ExtractResult();
+        vector<std::string>& res = evaluator.ExtractResult();
         results.insert(results.end(), res.begin(), res.end());
 
         return;
