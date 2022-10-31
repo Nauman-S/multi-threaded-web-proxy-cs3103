@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <vector>
 #include <queue>
+#include <map>
 #include <utility>
 
 #include "../../Utils/type/TypeDef.h"
@@ -42,4 +43,5 @@ private:
     bool IsReadStmt(StmtNum);
     bool IsCallStmt(StmtNum);
     void GenerateAffectsPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations, StmtNum lhs, std::shared_ptr<std::unordered_set<StmtNum>> rhs);
+    void CachedGenerateAffectsTPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> result, StmtNum lhs, std::shared_ptr<std::map<StmtNum, std::shared_ptr<std::unordered_set<StmtNum>>>> cache);
 };
