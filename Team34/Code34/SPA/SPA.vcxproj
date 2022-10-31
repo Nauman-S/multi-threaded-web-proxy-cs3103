@@ -102,8 +102,6 @@
     <ClInclude Include="QPS\reference\VarRef.h" />
     <ClInclude Include="QPS\reference\WhileRef.h" />
     <ClInclude Include="QPS\ResultExtractor.h" />
-    <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
-    <ClInclude Include="QPS\stub\RelationStubFactory.h" />
     <ClInclude Include="QPS\clause\with_clause\With.h" />
     <ClInclude Include="QPS\clause_grouper\SimpleClauseGrouper.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
@@ -225,8 +223,6 @@
     <ClCompile Include="QPS\reference\VarRef.cpp" />
     <ClCompile Include="QPS\reference\WhileRef.cpp" />
     <ClCompile Include="QPS\ResultExtractor.cpp" />
-    <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
-    <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
     <ClCompile Include="QPS\clause\with_clause\With.cpp" />
     <ClCompile Include="QPS\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />

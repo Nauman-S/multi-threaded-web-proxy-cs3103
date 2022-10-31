@@ -2,8 +2,8 @@
 #include "CppUnitTest.h"
 
 #include "../../SPA/QPS/parser/QueryBuilder.h"
-#include "../../SPA/QPS/stub/RelationStubFactory.h"
-#include "../../SPA/QPS/stub/ReadPKBManagerStub.h"
+#include "../../UnitTesting/stub/RelationStubFactory.h"
+#include "../../UnitTesting/stub/ReadPKBManagerStub.h"
 #include "../../SPA/QPS/DataRetriever.h"
 #include "../../SPA/QPS/QueryEvaluator.h"
 

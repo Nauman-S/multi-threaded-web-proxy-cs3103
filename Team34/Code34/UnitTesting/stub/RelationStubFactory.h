@@ -1,16 +1,15 @@
 #pragma once
-
 #include <vector>
 #include <memory>
 
-#include "../clause/relation/ModifiesPRel.h"
-#include "../clause/relation/ModifiesSRel.h"
-#include "../clause/relation/UsesPRel.h"
-#include "../clause/relation/UsesSRel.h"
-#include "../clause/relation/FollowsRel.h"
-#include "../clause/relation/FollowsTRel.h"
-#include "../clause/relation/ParentRel.h"
-#include "../clause/relation/ParentTRel.h"
+#include "../../SPA/QPS/clause/relation/ModifiesPRel.h"
+#include "../../SPA/QPS/clause/relation/ModifiesSRel.h"
+#include "../../SPA/QPS/clause/relation/UsesPRel.h"
+#include "../../SPA/QPS/clause/relation/UsesSRel.h"
+#include "../../SPA/QPS/clause/relation/FollowsRel.h"
+#include "../../SPA/QPS/clause/relation/FollowsTRel.h"
+#include "../../SPA/QPS/clause/relation/ParentRel.h"
+#include "../../SPA/QPS/clause/relation/ParentTRel.h"
 
 class RelationStubFactory {
 
