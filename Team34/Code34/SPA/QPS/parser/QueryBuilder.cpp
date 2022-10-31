@@ -7,8 +7,8 @@
 #include <memory>
 #include <unordered_set>
 
-#include "SyntaxError.h"
-#include "SemanticError.h"
+#include "../../Utils/error/SyntaxError.h"
+#include "../../Utils/error/SemanticError.h"
 #include "../reference/ValType.h"
 #include "../reference/Ref.h"
 #include "../reference/EntityRef.h"
@@ -32,7 +32,7 @@
 #include "../clause/pattern/WhilePattern.h"
 #include "../clause/with_clause/With.h"
 #include "../clause/AttrType.h"
-#include "../../Utils/tokenizer/InvalidTokenException.h"
+#include "../../Utils/error/InvalidTokenException.h"
 #include "../../Utils/expression/ExprSpec.h"
 #include "../../Utils/expression/PartialExprSpec.h"
 #include "../../Utils/expression/WildcardExprSpec.h"

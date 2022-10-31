@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "..\..\QPS\parser\SyntaxError.h"
+#include "SyntaxError.h"
 
 class InvalidTokenException : public SyntaxError
 {

@@ -11,12 +11,12 @@
 #include "../SPA/SP/DesignExtractor.h"
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
-#include "../SPA/QPS/parser/SyntaxError.h"
-#include "../SPA/QPS/parser/SemanticError.h"
+#include "../SPA/Utils/error/SyntaxError.h"
+#include "../SPA/Utils/error/SemanticError.h"
 #include "../SPA/QPS/Query.h"
 #include "../SPA/QPS/QueryEvaluator.h"
 
-#include "../SPA/Utils/tokenizer/InvalidTokenException.h"
+#include "../SPA/Utils/error/InvalidTokenException.h"
 
 using namespace std;
 

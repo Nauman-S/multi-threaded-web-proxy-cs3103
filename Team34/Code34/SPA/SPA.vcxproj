@@ -78,8 +78,9 @@
     <ClInclude Include="QPS\DataRetriever.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
-    <ClInclude Include="QPS\parser\SemanticError.h" />
-    <ClInclude Include="QPS\parser\SyntaxError.h" />
+    <ClInclude Include="Utils\error\Error.h" />
+    <ClInclude Include="Utils\error\SemanticError.h" />
+    <ClInclude Include="Utils\error\SyntaxError.h" />
     <ClInclude Include="QPS\clause\pattern\AssignPattern.h" />
     <ClInclude Include="QPS\Query.h" />
     <ClInclude Include="QPS\QueryEvaluator.h" />
@@ -141,7 +142,7 @@
     <ClInclude Include="Utils\expression\ExprSpec.h" />
     <ClInclude Include="Utils\expression\PartialExprSpec.h" />
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
-    <ClInclude Include="Utils\tokenizer\InvalidTokenException.h" />
+    <ClInclude Include="Utils\error\InvalidTokenException.h" />
     <ClInclude Include="Utils\tokenizer\Token.h" />
     <ClInclude Include="Utils\tokenizer\Tokenizer.h" />
     <ClInclude Include="Utils\type\RefType.h" />
@@ -196,8 +197,8 @@
     <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
-    <ClCompile Include="QPS\parser\SemanticError.cpp" />
-    <ClCompile Include="QPS\parser\SyntaxError.cpp" />
+    <ClCompile Include="Utils\error\SemanticError.cpp" />
+    <ClCompile Include="Utils\error\SyntaxError.cpp" />
     <ClCompile Include="QPS\clause\pattern\AssignPattern.cpp" />
     <ClCompile Include="QPS\clause\pattern\IfPattern.cpp" />
     <ClCompile Include="QPS\clause\pattern\Pattern.cpp" />
@@ -257,7 +258,7 @@
     <ClCompile Include="Utils\expression\ExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
-    <ClCompile Include="Utils\tokenizer\InvalidTokenException.cpp" />
+    <ClCompile Include="Utils\error\InvalidTokenException.cpp" />
     <ClCompile Include="Utils\tokenizer\Token.cpp" />
     <ClCompile Include="Utils\tokenizer\Tokenizer.cpp" />
   </ItemGroup>
