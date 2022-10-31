@@ -28,7 +28,9 @@ public:
 private:
     bool IsPossibleAffectPair(StmtNum, StmtNum);
     bool IsDirectlyModified(Variable, StmtNum);
+    bool IsEffectStmtPresent(StmtNum stmt);
     void AddEffectsStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt);
+    bool CheckEffectsStmtExistsBFS(std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var, StmtNum stmt);
     void AddEffectsStmtsIfUsingVar(StmtNum stmt, std::unordered_set<StmtNum>& visited, std::queue<StmtNum>& queue, std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts, Variable modified_var);
     void AddCauseStmtsBFS(std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var, StmtNum stmt);
     void AddCauseStmtsIfModifyingVar(StmtNum stmt, std::unordered_set<StmtNum>& visited, std::queue<StmtNum>& queue, std::shared_ptr<std::unordered_set<StmtNum>> cause_stmts, Variable used_var);
