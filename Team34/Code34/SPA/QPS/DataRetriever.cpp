@@ -384,7 +384,7 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with) {
 bool DataRetriever::CheckSVRel(StmtVarRel& rel) {
     ClauseType type = rel.GetRelType();
 
-    bool res;
+    bool res{ false };
     StmtNum stmt_num = rel.LhsValueAsInt().value_or(-1);
     Variable var_name = rel.RhsValue();
     if (type == ClauseType::kUsesSRel) {
@@ -467,7 +467,7 @@ shared_ptr<vector<pair<string, string>>> DataRetriever::GetAllSVRel(
 bool DataRetriever::CheckPVRel(ProcVarRel& rel) {
     ClauseType type = rel.GetRelType();
 
-    bool res;
+    bool res{ false };
     if (type == ClauseType::kUsesPRel) {
         res = pkb_ptr_->CheckUses(rel.LhsValue(), rel.RhsValue());
     } else if (type == ClauseType::kModifiesPRel) {
