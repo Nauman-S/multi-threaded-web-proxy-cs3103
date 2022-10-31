@@ -4,7 +4,7 @@
 #include <string>
 #include <optional>
 
-#include "InvalidTokenException.h"
+#include "../error/InvalidTokenException.h"
 #include "Token.h"
 
 Tokenizer::~Tokenizer() {

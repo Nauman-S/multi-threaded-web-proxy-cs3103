@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "..\..\Utils\tokenizer\Token.h"
-#include "..\..\Utils\tokenizer\InvalidTokenException.h"
+#include "..\..\Utils\error\InvalidTokenException.h"
 #include "SourceToken.h"
 
 using namespace std;

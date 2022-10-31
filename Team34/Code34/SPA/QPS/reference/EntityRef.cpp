@@ -12,7 +12,7 @@
 #include "..\reference\ConstRef.h"
 #include "..\reference\ConstRef.h"
 #include "..\reference\ProcRef.h"
-#include "..\parser\SyntaxError.h"
+#include "..\..\Utils\error\SyntaxError.h"
 
 #include <string>
 #include <memory>

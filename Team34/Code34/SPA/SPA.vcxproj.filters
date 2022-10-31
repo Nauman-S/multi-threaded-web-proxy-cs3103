@@ -3,7 +3,7 @@
   <ItemGroup>
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
-    <ClCompile Include="QPS\parser\SyntaxError.cpp" />
+    <ClCompile Include="Utils\error\SyntaxError.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
     <ClCompile Include="PKB\manager\ParentManager.cpp" />
@@ -22,7 +22,7 @@
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
-    <ClCompile Include="QPS\parser\SemanticError.cpp" />
+    <ClCompile Include="Utils\error\SemanticError.cpp" />
     <ClCompile Include="QPS\parser\SyntaxError.cpp" />
     <ClCompile Include="QPS\clause\pattern\AssignPattern.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
@@ -56,7 +56,7 @@
     <ClCompile Include="Utils\expression\ExprSpec.cpp" />
     <ClCompile Include="Utils\expression\PartialExprSpec.cpp" />
     <ClCompile Include="Utils\expression\WildcardExprSpec.cpp" />
-    <ClCompile Include="Utils\tokenizer\InvalidTokenException.cpp" />
+    <ClCompile Include="Utils\error\InvalidTokenException.cpp" />
     <ClCompile Include="Utils\tokenizer\Token.cpp" />
     <ClCompile Include="Utils\tokenizer\Tokenizer.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
@@ -120,7 +120,7 @@
     <ClInclude Include="QPS\reference\RefType.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
-    <ClInclude Include="QPS\parser\SyntaxError.h" />
+    <ClInclude Include="Utils\error\SyntaxError.h" />
     <ClInclude Include="PKB\manager\ConstantManager.h" />
     <ClInclude Include="PKB\manager\EntityManager.h" />
     <ClInclude Include="PKB\manager\FollowsManager.h" />
@@ -153,7 +153,7 @@
     <ClInclude Include="PKB\WritePKBManager.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
-    <ClInclude Include="QPS\parser\SemanticError.h" />
+    <ClInclude Include="Utils\error\SemanticError.h" />
     <ClInclude Include="QPS\parser\SyntaxError.h" />
     <ClInclude Include="QPS\clause\pattern\AssignPattern.h" />
     <ClInclude Include="QPS\query_result\ResType.h" />
@@ -194,7 +194,7 @@
     <ClInclude Include="Utils\expression\WildcardExprSpec.h" />
     <ClInclude Include="Utils\type\RefType.h" />
     <ClInclude Include="Utils\type\TypeDef.h" />
-    <ClInclude Include="Utils\tokenizer\InvalidTokenException.h" />
+    <ClInclude Include="Utils\error\InvalidTokenException.h" />
     <ClInclude Include="Utils\tokenizer\Token.h" />
     <ClInclude Include="Utils\tokenizer\Tokenizer.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
@@ -256,5 +256,6 @@
     <ClInclude Include="QPS\optimization\ResTableCache.h" />
     <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
     <ClInclude Include="SP\design_extractor\ModifiesExtractor.h" />
+    <ClInclude Include="Utils\error\Error.h" />
   </ItemGroup>
 </Project>

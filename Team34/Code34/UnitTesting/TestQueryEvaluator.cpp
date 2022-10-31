@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
-#include "../SPA/QPS/parser/SyntaxError.h"
-#include "../SPA/QPS/parser/SemanticError.h"
+#include "../SPA/Utils/error/SyntaxError.h"
+#include "../SPA/Utils/error/SemanticError.h"
 #include "../SPA/QPS/query_result/Table.h"
 
 using std::vector;

@@ -3,6 +3,8 @@
 
 #include "../reference/EntityRef.h"
 #include "StringLiterals.h"
+#include "../../Utils/error/SyntaxError.h"
+#include "../../Utils/error/SemanticError.h"
 
 using namespace StringLiterals;
 
