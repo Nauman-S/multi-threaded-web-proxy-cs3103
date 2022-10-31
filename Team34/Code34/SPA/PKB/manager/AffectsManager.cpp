@@ -112,8 +112,8 @@ bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
         if (visited.find(current) != visited.end()) {
             continue;
         }
-        visited.insert(current);
 
+        visited.insert(current);
         std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(current);
         if (effect_stmts->find(effect) != effect_stmts->end()) {
             return true;
