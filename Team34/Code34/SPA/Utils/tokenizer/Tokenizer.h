@@ -25,8 +25,8 @@ private:
     std::optional<std::string> sval = {};
 
     char* query_pointer = NULL;
-    int current_index;
-    int last_index;
+    int current_index = 0;
+    int last_index = 0;
 
     Token current_token = Token("", TokenType::kParseStart);
 
