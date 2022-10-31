@@ -40,8 +40,6 @@
     <ClCompile Include="QPS\reference\StmtRef.cpp" />
     <ClCompile Include="QPS\reference\VarRef.cpp" />
     <ClCompile Include="QPS\reference\WhileRef.cpp" />
-    <ClCompile Include="QPS\stub\ReadPKBManagerStub.cpp" />
-    <ClCompile Include="QPS\stub\RelationStubFactory.cpp" />
     <ClCompile Include="QPS\clause\Clause.cpp" />
     <ClCompile Include="QPS\DataRetriever.cpp" />
     <ClCompile Include="QPS\Query.cpp" />
@@ -176,8 +174,6 @@
     <ClInclude Include="QPS\reference\ValType.h" />
     <ClInclude Include="QPS\reference\VarRef.h" />
     <ClInclude Include="QPS\reference\WhileRef.h" />
-    <ClInclude Include="QPS\stub\ReadPKBManagerStub.h" />
-    <ClInclude Include="QPS\stub\RelationStubFactory.h" />
     <ClInclude Include="QPS\clause\Clause.h" />
     <ClInclude Include="QPS\DataRetriever.h" />
     <ClInclude Include="QPS\Query.h" />
