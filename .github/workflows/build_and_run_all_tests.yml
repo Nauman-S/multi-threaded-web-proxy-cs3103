@@ -1,4 +1,4 @@
-name: build and run VS tests
+name: build and run all tests
 on:
   push:
     branches: [ "master" ]
