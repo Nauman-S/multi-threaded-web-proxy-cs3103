@@ -112,8 +112,8 @@ bool AffectsManager::CheckAffectsT(StmtNum cause, StmtNum effect) {
         if (visited.find(current) != visited.end()) {
             continue;
         }
-        visited.insert(current);
 
+        visited.insert(current);
         std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts = GetEffectStmtsFromStmt(current);
         if (effect_stmts->find(effect) != effect_stmts->end()) {
             return true;
@@ -187,10 +187,10 @@ std::shared_ptr<std::unordered_set<StmtNum>> AffectsManager::GetAllCauseStmtsFro
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> AffectsManager::GetAllAffectsTRelations() {
     std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_T_relations = std::make_shared<std::vector<std::pair<StmtNum, StmtNum>>>();
     std::shared_ptr<std::unordered_set<StmtNum>> assign_stmts = pkb.statement_manager_.GetStatementsByType(RefType::kAssignRef);
+    std::shared_ptr<std::map<StmtNum, std::shared_ptr<std::unordered_set<StmtNum>>>> cache = std::make_shared<std::map<StmtNum, std::shared_ptr<std::unordered_set<StmtNum>>>>();
 
     for (auto iter = assign_stmts->begin(); iter != assign_stmts->end(); ++iter) {
-        std::shared_ptr < std::unordered_set<StmtNum>> all_effect_stmts = GetAllEffectStmtsFromStmt(*iter);
-        GenerateAffectsPairs(all_affects_T_relations, *iter, all_effect_stmts);
+        CachedGenerateAffectsTPairs(all_affects_T_relations, *iter, cache);
     }
     return all_affects_T_relations;
 }
@@ -343,5 +343,35 @@ bool AffectsManager::IsCallStmt(StmtNum stmt) {
 void AffectsManager::GenerateAffectsPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> all_affects_relations, StmtNum lhs, std::shared_ptr<std::unordered_set<StmtNum>> rhs) {
     for (auto iter = rhs->begin(); iter != rhs->end(); ++iter) {
         all_affects_relations->push_back(std::make_pair(lhs, *iter));
+    }
+}
+
+void AffectsManager::CachedGenerateAffectsTPairs(std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> result, StmtNum lhs, std::shared_ptr<std::map<StmtNum, std::shared_ptr<std::unordered_set<StmtNum>>>> cache) {
+    std::unordered_set<StmtNum> visited;
+    std::queue<StmtNum> queue;
+    queue.push(lhs);
+    while (!queue.empty()) {
+        StmtNum node = queue.front();
+        queue.pop();
+
+        if (visited.find(node) != visited.end()) {
+            continue;
+        }
+        visited.insert(node);
+
+        std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts;
+        if (cache->find(node) != cache->end()) {
+            effect_stmts = cache->at(node);
+        } else {
+            effect_stmts = GetEffectStmtsFromStmt(node);
+            cache->insert(std::make_pair(node, effect_stmts));
+        }
+
+        for (auto iter = effect_stmts->begin(); iter != effect_stmts->end(); ++iter) {
+            result->push_back(std::make_pair(lhs, *iter));
+            if (visited.find(*iter) == visited.end()) {
+                queue.push(*iter);
+            }
+        }
     }
 }
