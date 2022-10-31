@@ -362,8 +362,7 @@ void AffectsManager::CachedGenerateAffectsTPairs(std::shared_ptr<std::vector<std
         std::shared_ptr<std::unordered_set<StmtNum>> effect_stmts;
         if (cache->find(node) != cache->end()) {
             effect_stmts = cache->at(node);
-        }
-        else {
+        } else {
             effect_stmts = GetEffectStmtsFromStmt(node);
             cache->insert(std::make_pair(node, effect_stmts));
         }
