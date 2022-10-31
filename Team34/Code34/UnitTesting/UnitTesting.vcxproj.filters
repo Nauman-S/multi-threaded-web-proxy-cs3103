@@ -21,6 +21,12 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="stub\ReadPKBManagerStub.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
+	<ClInclude Include="stub\RelationStubFactory.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -92,5 +98,11 @@
     <ClCompile Include="SP\TestSourceParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="stub\ReadPKBManagerStub.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+	<ClCompile Include="stub\RelationStubFactory.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
   </ItemGroup>
 </Project>
