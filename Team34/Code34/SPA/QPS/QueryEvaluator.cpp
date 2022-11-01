@@ -141,16 +141,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<Cl
 vector<std::string> QueryEvaluator::ExtractResult() {
 	vector<std::string> result;
 
-	if (query_.IsBoolean()) {
-		if (result_table_->IsEmpty()) {
-			result.push_back("FALSE");
-		} else {
-			result.push_back("TRUE");
-		}
-		return result;
-	}
-
-	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms(), query_.GetSelectTuple());
+	ResultExtractor result_extractor = ResultExtractor(result_table_, query_);
 	result = result_extractor.GetFormattedResult(data_retriever_);
 
 	return result;

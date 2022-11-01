@@ -19,13 +19,27 @@ using std::vector;
 
 vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever) {
 	vector<std::string> results;
-	if (result_table_->IsEmpty()) {
-		return results;
-	}
+
+    if (is_boolean_result) {
+        if (result_table_->IsEmpty()) {
+            results.push_back("FALSE");
+        }
+        else {
+            results.push_back("TRUE");
+        }
+        return results;
+    }
+
+    if (result_table_->IsEmpty()) {
+        return results;
+    }
+
 	return GetFormattedResult(data_retriever);
 }
 
 vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retriever) {
+    
+    
     shared_ptr<vector<vector<string>>> result_rows = result_table_->ExtractSynonyms(select_synonyms_);
 
     for (size_t pos = 0; pos < tuple_->size(); ++pos) {
