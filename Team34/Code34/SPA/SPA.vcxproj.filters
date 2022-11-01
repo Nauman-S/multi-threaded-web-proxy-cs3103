@@ -76,7 +76,7 @@
     <ClCompile Include="QPS\clause\pattern\Pattern.cpp" />
     <ClCompile Include="QPS\clause\with_clause\With.cpp" />
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
-    <ClCompile Include="QPS\query_result\Table.cpp" />
+    <ClCompile Include="QPS\query_result\table\Table.cpp" />
     <ClCompile Include="QPS\clause\ClauseGroup.cpp" />
     <ClCompile Include="QPS\optimization\clause_grouper\ClauseGrouper.cpp" />
     <ClCompile Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.cpp" />
@@ -215,8 +215,8 @@
     <ClInclude Include="QPS\clause\with_clause\With.h" />
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
-    <ClInclude Include="QPS\query_result\Table.h" />
-    <ClInclude Include="QPS\query_result\EmptyTable.h" />
+    <ClInclude Include="QPS\query_result\table\Table.h" />
+    <ClInclude Include="QPS\query_result\table\EmptyTable.h" />
     <ClInclude Include="QPS\clause\ClauseGroup.h" />
     <ClInclude Include="QPS\optimization\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.h" />
@@ -224,7 +224,6 @@
     <ClInclude Include="QPS\clause\ClauseType.h" />
     <ClInclude Include="QPS\optimization\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
-    <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
     <ClInclude Include="QPS\optimization\clause_grouper\OptimizedClauseGrouper.h" />
@@ -255,5 +254,7 @@
     <ClInclude Include="SP\design_extractor\UsesExtractor.h" />
     <ClInclude Include="SP\design_extractor\ModifiesExtractor.h" />
     <ClInclude Include="Utils\error\Error.h" />
+    <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
+    <ClInclude Include="QPS\query_result\table\TableFactory.h" />
   </ItemGroup>
 </Project>

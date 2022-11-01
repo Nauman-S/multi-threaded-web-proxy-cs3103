@@ -5,7 +5,7 @@
 #include "../SPA/QPS/parser/QueryBuilder.h"
 #include "../SPA/Utils/error/SyntaxError.h"
 #include "../SPA/Utils/error/SemanticError.h"
-#include "../SPA/QPS/query_result/Table.h"
+#include "../SPA/QPS/query_result/table/Table.h"
 
 using std::vector;
 using std::string;

@@ -12,7 +12,7 @@
 #include "optimization/clause_grouper/ClauseGrouper.h"
 #include "DataRetriever.h"
 #include "Query.h"
-#include "query_result/Table.h"
+#include "query_result/table/Table.h"
 #include "reference/Ref.h"
 
 

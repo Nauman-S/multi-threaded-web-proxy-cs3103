@@ -39,7 +39,7 @@
     <ClInclude Include="QPS\optimization\ResTableCache.h" />
     <ClInclude Include="QPS\parser\StringLiterals.h" />
     <ClInclude Include="QPS\optimization\PriorityManager.h" />
-    <ClInclude Include="QPS\query_result\EmptyTable.h" />
+    <ClInclude Include="QPS\query_result\table\EmptyTable.h" />
     <ClInclude Include="QPS\clause\pattern\IfPattern.h" />
     <ClInclude Include="QPS\clause\pattern\Pattern.h" />
     <ClInclude Include="QPS\clause\pattern\WhilePattern.h" />
@@ -78,6 +78,8 @@
     <ClInclude Include="QPS\DataRetriever.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
+    <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
+    <ClInclude Include="QPS\query_result\table\TableFactory.h" />
     <ClInclude Include="Utils\error\Error.h" />
     <ClInclude Include="Utils\error\SemanticError.h" />
     <ClInclude Include="Utils\error\SyntaxError.h" />
@@ -131,8 +133,7 @@
     <ClInclude Include="SP\tokenizer\SourceLexer.h" />
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
-    <ClInclude Include="QPS\query_result\Table.h" />
-    <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="QPS\query_result\table\Table.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
@@ -207,7 +208,7 @@
     <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
-    <ClCompile Include="QPS\query_result\Table.cpp" />
+    <ClCompile Include="QPS\query_result\table\Table.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
