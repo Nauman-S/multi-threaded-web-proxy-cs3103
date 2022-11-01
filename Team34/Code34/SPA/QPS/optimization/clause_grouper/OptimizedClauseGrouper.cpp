@@ -2,9 +2,9 @@
 
 #include <algorithm>
 
-#include "../clause/Clause.h"
-#include "../clause/ClauseGroup.h"
-#include "../optimization/PriorityManager.h"
+#include "../../clause/Clause.h"
+#include "../../clause/ClauseGroup.h"
+#include "../PriorityManager.h"
 
 
 using std::string;

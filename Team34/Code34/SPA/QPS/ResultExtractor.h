@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 
-#include "query_result/Table.h"
+#include "query_result/table/Table.h"
 #include "reference/Ref.h"
 #include "DataRetriever.h"
 

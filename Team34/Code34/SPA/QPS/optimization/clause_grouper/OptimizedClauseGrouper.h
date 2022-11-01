@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "ClauseGrouper.h"
-#include "../../Utils/algo/UnionFind.h"
+#include "../../../Utils/algo/UnionFind.h"
 
 class OptimizedClauseGrouper :
 	public ClauseGrouper {

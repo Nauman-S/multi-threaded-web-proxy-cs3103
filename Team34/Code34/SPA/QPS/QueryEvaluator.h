@@ -9,10 +9,10 @@
 #include "clause/ClauseGroup.h"
 #include "clause/relation/Rel.h"
 #include "clause/pattern/Pattern.h"
-#include "clause_grouper/ClauseGrouper.h"
+#include "optimization/clause_grouper/ClauseGrouper.h"
 #include "DataRetriever.h"
 #include "Query.h"
-#include "query_result/Table.h"
+#include "query_result/table/Table.h"
 #include "reference/Ref.h"
 
 

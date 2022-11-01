@@ -30,16 +30,16 @@
     <ClInclude Include="QPS\clause\relation\StmtVarRel.h" />
     <ClInclude Include="QPS\clause\relation\UsesPRel.h" />
     <ClInclude Include="QPS\clause\relation\UsesSRel.h" />
-    <ClInclude Include="QPS\clause_grouper\OptimizedClauseGrouper.h" />
+    <ClInclude Include="QPS\optimization\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="QPS\clause\AttrType.h" />
     <ClInclude Include="PKB\manager\AffectsManager.h" />
-    <ClInclude Include="QPS\clause_grouper\ClauseGrouper.h" />
+    <ClInclude Include="QPS\optimization\clause_grouper\ClauseGrouper.h" />
     <ClInclude Include="QPS\clause\ClauseGroup.h" />
     <ClInclude Include="QPS\clause\ClauseType.h" />
     <ClInclude Include="QPS\optimization\ResTableCache.h" />
     <ClInclude Include="QPS\parser\StringLiterals.h" />
     <ClInclude Include="QPS\optimization\PriorityManager.h" />
-    <ClInclude Include="QPS\query_result\EmptyTable.h" />
+    <ClInclude Include="QPS\query_result\table\EmptyTable.h" />
     <ClInclude Include="QPS\clause\pattern\IfPattern.h" />
     <ClInclude Include="QPS\clause\pattern\Pattern.h" />
     <ClInclude Include="QPS\clause\pattern\WhilePattern.h" />
@@ -78,6 +78,8 @@
     <ClInclude Include="QPS\DataRetriever.h" />
     <ClInclude Include="QPS\parser\QueryBuilder.h" />
     <ClInclude Include="QPS\parser\QueryLexer.h" />
+    <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
+    <ClInclude Include="QPS\query_result\table\TableFactory.h" />
     <ClInclude Include="Utils\error\Error.h" />
     <ClInclude Include="Utils\error\SemanticError.h" />
     <ClInclude Include="Utils\error\SyntaxError.h" />
@@ -104,7 +106,7 @@
     <ClInclude Include="QPS\reference\WhileRef.h" />
     <ClInclude Include="QPS\ResultExtractor.h" />
     <ClInclude Include="QPS\clause\with_clause\With.h" />
-    <ClInclude Include="QPS\clause_grouper\SimpleClauseGrouper.h" />
+    <ClInclude Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.h" />
     <ClInclude Include="SP\ast\AssignStatementASTNode.h" />
     <ClInclude Include="SP\ast\ASTNode.h" />
     <ClInclude Include="SP\ast\CallStatementASTNode.h" />
@@ -131,8 +133,7 @@
     <ClInclude Include="SP\tokenizer\SourceLexer.h" />
     <ClInclude Include="SP\tokenizer\SourceToken.h" />
     <ClInclude Include="QPS\reference\TempRef.h" />
-    <ClInclude Include="QPS\query_result\Table.h" />
-    <ClInclude Include="QPS\query_result\WildcardTable.h" />
+    <ClInclude Include="QPS\query_result\table\Table.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
     <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
@@ -173,7 +174,7 @@
     <ClCompile Include="QPS\clause\relation\StmtVarRel.cpp" />
     <ClCompile Include="QPS\clause\relation\UsesPRel.cpp" />
     <ClCompile Include="QPS\clause\relation\UsesSRel.cpp" />
-    <ClCompile Include="QPS\clause_grouper\ClauseGrouper.cpp" />
+    <ClCompile Include="QPS\optimization\clause_grouper\ClauseGrouper.cpp" />
     <ClCompile Include="QPS\clause\ClauseGroup.cpp" />
     <ClCompile Include="PKB\manager\FollowsManager.cpp" />
     <ClCompile Include="PKB\manager\ModifiesManager.cpp" />
@@ -192,7 +193,7 @@
     <ClCompile Include="PKB\ReadPKBManager.cpp" />
     <ClCompile Include="PKB\WritePKBManager.cpp" />
     <ClCompile Include="QPS\clause\Clause.cpp" />
-    <ClCompile Include="QPS\clause_grouper\OptimizedClauseGrouper.cpp" />
+    <ClCompile Include="QPS\optimization\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="QPS\DataRetriever.cpp" />
     <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
@@ -207,7 +208,7 @@
     <ClCompile Include="QPS\QueryEvaluator.cpp" />
     <ClCompile Include="QPS\query_result\ResWrapper.cpp" />
     <ClCompile Include="QPS\query_result\SetRes.cpp" />
-    <ClCompile Include="QPS\query_result\Table.cpp" />
+    <ClCompile Include="QPS\query_result\table\Table.cpp" />
     <ClCompile Include="QPS\query_result\TableRes.cpp" />
     <ClCompile Include="QPS\reference\AssignRef.cpp" />
     <ClCompile Include="QPS\reference\CallRef.cpp" />
@@ -225,7 +226,7 @@
     <ClCompile Include="QPS\reference\WhileRef.cpp" />
     <ClCompile Include="QPS\ResultExtractor.cpp" />
     <ClCompile Include="QPS\clause\with_clause\With.cpp" />
-    <ClCompile Include="QPS\clause_grouper\SimpleClauseGrouper.cpp" />
+    <ClCompile Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\ASTNode.cpp" />
     <ClCompile Include="SP\ast\CallStatementASTNode.cpp" />

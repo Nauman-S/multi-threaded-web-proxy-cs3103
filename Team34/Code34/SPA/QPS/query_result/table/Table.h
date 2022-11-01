@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "ResWrapper.h"
+#include "../ResWrapper.h"
 
 class Table {
 private:
@@ -18,9 +18,7 @@ private:
 
 	std::vector<std::vector<std::string>> rows_;
 
-	
 	std::string GetFieldAtIndex(unsigned idx) {
-		assert(idx < fields_.size());
 		return fields_.at(idx);
 	}
 
@@ -39,22 +37,25 @@ private:
 
 	std::shared_ptr<Table> HashJoin(std::shared_ptr<Table> that, std::vector<std::string> common_fields);
 
-protected:
-	bool is_empty_;
+	/*void JoinTableWithRow(std::shared_ptr<Table> that, 
+		std::vector<std::string>& that_row,
+		std::vector<std::string> common_fields,
+		std::unordered_multimap<std::string, std::vector<std::string>>& hashkey_to_row_map, 
+		std::vector<std::vector<std::string>> new_rows
+	);*/
 
 public:
-	Table()
-		: is_empty_{ false } {};
+	Table() {}
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
 		: fields_{ fields }, rows_{ rows }  {
 		for (unsigned i = 0; i < fields.size(); i++) {
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
-		is_empty_ = (rows_.size() == 0);
-	};
+	}
 
-	explicit Table(std::shared_ptr<ResWrapper>);
+	explicit Table(std::shared_ptr<SetRes>);
+	explicit Table(std::shared_ptr<TableRes>);
 
 	int GetNumOfRows() { return rows_.size(); }
 	unsigned GetNumOfCols() { return fields_.size(); }
@@ -69,9 +70,7 @@ public:
 
 	virtual bool IsWildcard() { return false; }
 
-	bool ContainsSynonym(std::string synonym);
-
-	bool ContainsSynonyms(std::vector<std::string> synonyms);
+	bool HasSynonym(std::string synonym);
 
 	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
 
