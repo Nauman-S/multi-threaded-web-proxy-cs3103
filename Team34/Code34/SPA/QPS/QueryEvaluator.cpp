@@ -6,12 +6,11 @@
 #include "Query.h"
 #include "clause/relation/Rel.h"
 #include "ResultExtractor.h"
-#include "query_result/Table.h"
-#include "query_result/EmptyTable.h"
-#include "query_result/WildcardTable.h"
-#include "clause_grouper/ClauseGrouper.h"
-#include "clause_grouper/SimpleClauseGrouper.h"
-#include "clause_grouper/OptimizedClauseGrouper.h"
+#include "query_result/table/Table.h"
+#include "query_result/table/TableFactory.h"
+#include "optimization/clause_grouper/ClauseGrouper.h"
+#include "optimization/clause_grouper/SimpleClauseGrouper.h"
+#include "optimization/clause_grouper/OptimizedClauseGrouper.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -41,19 +40,13 @@ bool QueryEvaluator::Evaluate() {
 	}
 	vector<string> select_synonyms = query_.GetSelectSynonyms();
 
-	// If the result table from clauses does not contain any select synonyms,
-	// we create a new wildcard result table
-	if (!result_table_->ContainsSynonyms(select_synonyms)) {
-		result_table_ = std::make_shared<WildcardTable>();
-	}
-
+	// add select synonyms not in clauses to result table
 	for (shared_ptr<Ref> ref : *select_tuple) {
-		if (result_table_->ContainsSynonym(ref->GetName())) {
+		if (result_table_->HasSynonym(ref->GetName())) {
 			continue;
 		} 
 		shared_ptr<ResWrapper> res_wrapper = data_retriever_.retrieve(ref);
-		shared_ptr<Table> curr_result_table = std::make_shared<Table>(res_wrapper);
-
+		shared_ptr<Table> curr_result_table = TableFactory::CreateTable(res_wrapper);
 		result_table_ = result_table_->Join(curr_result_table);
 	}
 
@@ -77,13 +70,10 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateByGroup(shared_ptr<ClauseGrouper>
 	return table;
 }
 
-
 bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_syn_) {
 	for (shared_ptr<Clause> clause : group_wo_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
-		if (res_wrapper->IsValid()) {
-			continue;
-		} else {
+		if (!res_wrapper->IsValid()) {
 			return false;
 		}
 	}
@@ -94,15 +84,8 @@ bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group
 	shared_ptr<Table> table = std::make_shared<WildcardTable>();
 	for (shared_ptr<Clause> clause : group_wo_select_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
-		if (res_wrapper->GetResType() == ResType::kBool) {
-			if (res_wrapper->IsValid()) {
-				continue;
-			} else {
-				return false;
-			}
-		}
 
-		shared_ptr<Table> result_table = std::make_shared<Table>(res_wrapper);
+		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
 		table = table->Join(result_table);
 		if (table->IsEmpty()) {
 			return false;
@@ -121,21 +104,12 @@ bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<Claus
 }
 
 
-
 std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
 	shared_ptr<Table> table = std::make_shared<WildcardTable>();
-
 	for (shared_ptr<Clause> clause : group_w_select_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
-		if (res_wrapper->GetResType() == ResType::kBool) {
-			if (res_wrapper->IsValid()) {
-				continue;
-			} else {
-				return std::make_shared<EmptyTable>();
-			}
-		}
 
-		shared_ptr<Table> result_table = std::make_shared<Table>(res_wrapper);
+		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
 		table = table->Join(result_table);
 		if (table->IsEmpty()) {
 			return table;

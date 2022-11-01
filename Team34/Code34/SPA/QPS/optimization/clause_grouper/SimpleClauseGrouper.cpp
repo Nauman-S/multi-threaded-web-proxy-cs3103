@@ -1,6 +1,6 @@
 #include "SimpleClauseGrouper.h"
 
-#include "../clause/Clause.h"
+#include "../../clause/Clause.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -19,14 +19,6 @@ void SimpleClauseGrouper::Group() {
 			continue;
 		}
 
-		//if (AreSelectSynsIn(*(clause->GetSynonyms()))) {
-		//	clauses_w_select_syn.push_back(clause);
-		//	continue;
-		//}
-
-		//clauses_wo_select_syn_.push_back(clause);
-
-
 		clauses_w_select_syn.push_back(clause);
 
 	}
@@ -36,7 +28,6 @@ void SimpleClauseGrouper::Group() {
 	groups_w_select_syn_.clear();
 	groups_wo_select_syn_.push_back(std::make_shared<ClauseGroup>(clauses_wo_select_syn_));
 	groups_w_select_syn_.push_back(std::make_shared<ClauseGroup>(clauses_w_select_syn));
-
 }
 
 
