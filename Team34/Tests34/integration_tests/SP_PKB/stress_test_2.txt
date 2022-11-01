@@ -1,0 +1,1300 @@
+procedure proc0 {
+    read x0;
+    while (x0 < 0) {
+        x0 = X0 + 1;
+        y0 = X0 * 2;
+        if (y0 > 0) then {
+            print y0;
+        } else {
+            call proc1;
+        }
+    }
+}
+
+procedure proc1 {
+    read x1;
+    while (x1 < 2) {
+        x1 = X1 + 1;
+        y1 = X1 * 2;
+        if (y1 > 1) then {
+            print y1;
+        } else {
+            call proc2;
+        }
+    }
+}
+
+procedure proc2 {
+    read x2;
+    while (x2 < 4) {
+        x2 = X2 + 1;
+        y2 = X2 * 2;
+        if (y2 > 2) then {
+            print y2;
+        } else {
+            call proc3;
+        }
+    }
+}
+
+procedure proc3 {
+    read x3;
+    while (x3 < 6) {
+        x3 = X3 + 1;
+        y3 = X3 * 2;
+        if (y3 > 3) then {
+            print y3;
+        } else {
+            call proc4;
+        }
+    }
+}
+
+procedure proc4 {
+    read x4;
+    while (x4 < 8) {
+        x4 = X4 + 1;
+        y4 = X4 * 2;
+        if (y4 > 4) then {
+            print y4;
+        } else {
+            call proc5;
+        }
+    }
+}
+
+procedure proc5 {
+    read x5;
+    while (x5 < 10) {
+        x5 = X5 + 1;
+        y5 = X5 * 2;
+        if (y5 > 5) then {
+            print y5;
+        } else {
+            call proc6;
+        }
+    }
+}
+
+procedure proc6 {
+    read x6;
+    while (x6 < 12) {
+        x6 = X6 + 1;
+        y6 = X6 * 2;
+        if (y6 > 6) then {
+            print y6;
+        } else {
+            call proc7;
+        }
+    }
+}
+
+procedure proc7 {
+    read x7;
+    while (x7 < 14) {
+        x7 = X7 + 1;
+        y7 = X7 * 2;
+        if (y7 > 7) then {
+            print y7;
+        } else {
+            call proc8;
+        }
+    }
+}
+
+procedure proc8 {
+    read x8;
+    while (x8 < 16) {
+        x8 = X8 + 1;
+        y8 = X8 * 2;
+        if (y8 > 8) then {
+            print y8;
+        } else {
+            call proc9;
+        }
+    }
+}
+
+procedure proc9 {
+    read x9;
+    while (x9 < 18) {
+        x9 = X9 + 1;
+        y9 = X9 * 2;
+        if (y9 > 9) then {
+            print y9;
+        } else {
+            call proc10;
+        }
+    }
+}
+
+procedure proc10 {
+    read x10;
+    while (x10 < 20) {
+        x10 = X10 + 1;
+        y10 = X10 * 2;
+        if (y10 > 10) then {
+            print y10;
+        } else {
+            call proc11;
+        }
+    }
+}
+
+procedure proc11 {
+    read x11;
+    while (x11 < 22) {
+        x11 = X11 + 1;
+        y11 = X11 * 2;
+        if (y11 > 11) then {
+            print y11;
+        } else {
+            call proc12;
+        }
+    }
+}
+
+procedure proc12 {
+    read x12;
+    while (x12 < 24) {
+        x12 = X12 + 1;
+        y12 = X12 * 2;
+        if (y12 > 12) then {
+            print y12;
+        } else {
+            call proc13;
+        }
+    }
+}
+
+procedure proc13 {
+    read x13;
+    while (x13 < 26) {
+        x13 = X13 + 1;
+        y13 = X13 * 2;
+        if (y13 > 13) then {
+            print y13;
+        } else {
+            call proc14;
+        }
+    }
+}
+
+procedure proc14 {
+    read x14;
+    while (x14 < 28) {
+        x14 = X14 + 1;
+        y14 = X14 * 2;
+        if (y14 > 14) then {
+            print y14;
+        } else {
+            call proc15;
+        }
+    }
+}
+
+procedure proc15 {
+    read x15;
+    while (x15 < 30) {
+        x15 = X15 + 1;
+        y15 = X15 * 2;
+        if (y15 > 15) then {
+            print y15;
+        } else {
+            call proc16;
+        }
+    }
+}
+
+procedure proc16 {
+    read x16;
+    while (x16 < 32) {
+        x16 = X16 + 1;
+        y16 = X16 * 2;
+        if (y16 > 16) then {
+            print y16;
+        } else {
+            call proc17;
+        }
+    }
+}
+
+procedure proc17 {
+    read x17;
+    while (x17 < 34) {
+        x17 = X17 + 1;
+        y17 = X17 * 2;
+        if (y17 > 17) then {
+            print y17;
+        } else {
+            call proc18;
+        }
+    }
+}
+
+procedure proc18 {
+    read x18;
+    while (x18 < 36) {
+        x18 = X18 + 1;
+        y18 = X18 * 2;
+        if (y18 > 18) then {
+            print y18;
+        } else {
+            call proc19;
+        }
+    }
+}
+
+procedure proc19 {
+    read x19;
+    while (x19 < 38) {
+        x19 = X19 + 1;
+        y19 = X19 * 2;
+        if (y19 > 19) then {
+            print y19;
+        } else {
+            call proc20;
+        }
+    }
+}
+
+procedure proc20 {
+    read x20;
+    while (x20 < 40) {
+        x20 = X20 + 1;
+        y20 = X20 * 2;
+        if (y20 > 20) then {
+            print y20;
+        } else {
+            call proc21;
+        }
+    }
+}
+
+procedure proc21 {
+    read x21;
+    while (x21 < 42) {
+        x21 = X21 + 1;
+        y21 = X21 * 2;
+        if (y21 > 21) then {
+            print y21;
+        } else {
+            call proc22;
+        }
+    }
+}
+
+procedure proc22 {
+    read x22;
+    while (x22 < 44) {
+        x22 = X22 + 1;
+        y22 = X22 * 2;
+        if (y22 > 22) then {
+            print y22;
+        } else {
+            call proc23;
+        }
+    }
+}
+
+procedure proc23 {
+    read x23;
+    while (x23 < 46) {
+        x23 = X23 + 1;
+        y23 = X23 * 2;
+        if (y23 > 23) then {
+            print y23;
+        } else {
+            call proc24;
+        }
+    }
+}
+
+procedure proc24 {
+    read x24;
+    while (x24 < 48) {
+        x24 = X24 + 1;
+        y24 = X24 * 2;
+        if (y24 > 24) then {
+            print y24;
+        } else {
+            call proc25;
+        }
+    }
+}
+
+procedure proc25 {
+    read x25;
+    while (x25 < 50) {
+        x25 = X25 + 1;
+        y25 = X25 * 2;
+        if (y25 > 25) then {
+            print y25;
+        } else {
+            call proc26;
+        }
+    }
+}
+
+procedure proc26 {
+    read x26;
+    while (x26 < 52) {
+        x26 = X26 + 1;
+        y26 = X26 * 2;
+        if (y26 > 26) then {
+            print y26;
+        } else {
+            call proc27;
+        }
+    }
+}
+
+procedure proc27 {
+    read x27;
+    while (x27 < 54) {
+        x27 = X27 + 1;
+        y27 = X27 * 2;
+        if (y27 > 27) then {
+            print y27;
+        } else {
+            call proc28;
+        }
+    }
+}
+
+procedure proc28 {
+    read x28;
+    while (x28 < 56) {
+        x28 = X28 + 1;
+        y28 = X28 * 2;
+        if (y28 > 28) then {
+            print y28;
+        } else {
+            call proc29;
+        }
+    }
+}
+
+procedure proc29 {
+    read x29;
+    while (x29 < 58) {
+        x29 = X29 + 1;
+        y29 = X29 * 2;
+        if (y29 > 29) then {
+            print y29;
+        } else {
+            call proc30;
+        }
+    }
+}
+
+procedure proc30 {
+    read x30;
+    while (x30 < 60) {
+        x30 = X30 + 1;
+        y30 = X30 * 2;
+        if (y30 > 30) then {
+            print y30;
+        } else {
+            call proc31;
+        }
+    }
+}
+
+procedure proc31 {
+    read x31;
+    while (x31 < 62) {
+        x31 = X31 + 1;
+        y31 = X31 * 2;
+        if (y31 > 31) then {
+            print y31;
+        } else {
+            call proc32;
+        }
+    }
+}
+
+procedure proc32 {
+    read x32;
+    while (x32 < 64) {
+        x32 = X32 + 1;
+        y32 = X32 * 2;
+        if (y32 > 32) then {
+            print y32;
+        } else {
+            call proc33;
+        }
+    }
+}
+
+procedure proc33 {
+    read x33;
+    while (x33 < 66) {
+        x33 = X33 + 1;
+        y33 = X33 * 2;
+        if (y33 > 33) then {
+            print y33;
+        } else {
+            call proc34;
+        }
+    }
+}
+
+procedure proc34 {
+    read x34;
+    while (x34 < 68) {
+        x34 = X34 + 1;
+        y34 = X34 * 2;
+        if (y34 > 34) then {
+            print y34;
+        } else {
+            call proc35;
+        }
+    }
+}
+
+procedure proc35 {
+    read x35;
+    while (x35 < 70) {
+        x35 = X35 + 1;
+        y35 = X35 * 2;
+        if (y35 > 35) then {
+            print y35;
+        } else {
+            call proc36;
+        }
+    }
+}
+
+procedure proc36 {
+    read x36;
+    while (x36 < 72) {
+        x36 = X36 + 1;
+        y36 = X36 * 2;
+        if (y36 > 36) then {
+            print y36;
+        } else {
+            call proc37;
+        }
+    }
+}
+
+procedure proc37 {
+    read x37;
+    while (x37 < 74) {
+        x37 = X37 + 1;
+        y37 = X37 * 2;
+        if (y37 > 37) then {
+            print y37;
+        } else {
+            call proc38;
+        }
+    }
+}
+
+procedure proc38 {
+    read x38;
+    while (x38 < 76) {
+        x38 = X38 + 1;
+        y38 = X38 * 2;
+        if (y38 > 38) then {
+            print y38;
+        } else {
+            call proc39;
+        }
+    }
+}
+
+procedure proc39 {
+    read x39;
+    while (x39 < 78) {
+        x39 = X39 + 1;
+        y39 = X39 * 2;
+        if (y39 > 39) then {
+            print y39;
+        } else {
+            call proc40;
+        }
+    }
+}
+
+procedure proc40 {
+    read x40;
+    while (x40 < 80) {
+        x40 = X40 + 1;
+        y40 = X40 * 2;
+        if (y40 > 40) then {
+            print y40;
+        } else {
+            call proc41;
+        }
+    }
+}
+
+procedure proc41 {
+    read x41;
+    while (x41 < 82) {
+        x41 = X41 + 1;
+        y41 = X41 * 2;
+        if (y41 > 41) then {
+            print y41;
+        } else {
+            call proc42;
+        }
+    }
+}
+
+procedure proc42 {
+    read x42;
+    while (x42 < 84) {
+        x42 = X42 + 1;
+        y42 = X42 * 2;
+        if (y42 > 42) then {
+            print y42;
+        } else {
+            call proc43;
+        }
+    }
+}
+
+procedure proc43 {
+    read x43;
+    while (x43 < 86) {
+        x43 = X43 + 1;
+        y43 = X43 * 2;
+        if (y43 > 43) then {
+            print y43;
+        } else {
+            call proc44;
+        }
+    }
+}
+
+procedure proc44 {
+    read x44;
+    while (x44 < 88) {
+        x44 = X44 + 1;
+        y44 = X44 * 2;
+        if (y44 > 44) then {
+            print y44;
+        } else {
+            call proc45;
+        }
+    }
+}
+
+procedure proc45 {
+    read x45;
+    while (x45 < 90) {
+        x45 = X45 + 1;
+        y45 = X45 * 2;
+        if (y45 > 45) then {
+            print y45;
+        } else {
+            call proc46;
+        }
+    }
+}
+
+procedure proc46 {
+    read x46;
+    while (x46 < 92) {
+        x46 = X46 + 1;
+        y46 = X46 * 2;
+        if (y46 > 46) then {
+            print y46;
+        } else {
+            call proc47;
+        }
+    }
+}
+
+procedure proc47 {
+    read x47;
+    while (x47 < 94) {
+        x47 = X47 + 1;
+        y47 = X47 * 2;
+        if (y47 > 47) then {
+            print y47;
+        } else {
+            call proc48;
+        }
+    }
+}
+
+procedure proc48 {
+    read x48;
+    while (x48 < 96) {
+        x48 = X48 + 1;
+        y48 = X48 * 2;
+        if (y48 > 48) then {
+            print y48;
+        } else {
+            call proc49;
+        }
+    }
+}
+
+procedure proc49 {
+    read x49;
+    while (x49 < 98) {
+        x49 = X49 + 1;
+        y49 = X49 * 2;
+        if (y49 > 49) then {
+            print y49;
+        } else {
+            call proc50;
+        }
+    }
+}
+
+procedure proc50 {
+    read x50;
+    while (x50 < 100) {
+        x50 = X50 + 1;
+        y50 = X50 * 2;
+        if (y50 > 50) then {
+            print y50;
+        } else {
+            call proc51;
+        }
+    }
+}
+
+procedure proc51 {
+    read x51;
+    while (x51 < 102) {
+        x51 = X51 + 1;
+        y51 = X51 * 2;
+        if (y51 > 51) then {
+            print y51;
+        } else {
+            call proc52;
+        }
+    }
+}
+
+procedure proc52 {
+    read x52;
+    while (x52 < 104) {
+        x52 = X52 + 1;
+        y52 = X52 * 2;
+        if (y52 > 52) then {
+            print y52;
+        } else {
+            call proc53;
+        }
+    }
+}
+
+procedure proc53 {
+    read x53;
+    while (x53 < 106) {
+        x53 = X53 + 1;
+        y53 = X53 * 2;
+        if (y53 > 53) then {
+            print y53;
+        } else {
+            call proc54;
+        }
+    }
+}
+
+procedure proc54 {
+    read x54;
+    while (x54 < 108) {
+        x54 = X54 + 1;
+        y54 = X54 * 2;
+        if (y54 > 54) then {
+            print y54;
+        } else {
+            call proc55;
+        }
+    }
+}
+
+procedure proc55 {
+    read x55;
+    while (x55 < 110) {
+        x55 = X55 + 1;
+        y55 = X55 * 2;
+        if (y55 > 55) then {
+            print y55;
+        } else {
+            call proc56;
+        }
+    }
+}
+
+procedure proc56 {
+    read x56;
+    while (x56 < 112) {
+        x56 = X56 + 1;
+        y56 = X56 * 2;
+        if (y56 > 56) then {
+            print y56;
+        } else {
+            call proc57;
+        }
+    }
+}
+
+procedure proc57 {
+    read x57;
+    while (x57 < 114) {
+        x57 = X57 + 1;
+        y57 = X57 * 2;
+        if (y57 > 57) then {
+            print y57;
+        } else {
+            call proc58;
+        }
+    }
+}
+
+procedure proc58 {
+    read x58;
+    while (x58 < 116) {
+        x58 = X58 + 1;
+        y58 = X58 * 2;
+        if (y58 > 58) then {
+            print y58;
+        } else {
+            call proc59;
+        }
+    }
+}
+
+procedure proc59 {
+    read x59;
+    while (x59 < 118) {
+        x59 = X59 + 1;
+        y59 = X59 * 2;
+        if (y59 > 59) then {
+            print y59;
+        } else {
+            call proc60;
+        }
+    }
+}
+
+procedure proc60 {
+    read x60;
+    while (x60 < 120) {
+        x60 = X60 + 1;
+        y60 = X60 * 2;
+        if (y60 > 60) then {
+            print y60;
+        } else {
+            call proc61;
+        }
+    }
+}
+
+procedure proc61 {
+    read x61;
+    while (x61 < 122) {
+        x61 = X61 + 1;
+        y61 = X61 * 2;
+        if (y61 > 61) then {
+            print y61;
+        } else {
+            call proc62;
+        }
+    }
+}
+
+procedure proc62 {
+    read x62;
+    while (x62 < 124) {
+        x62 = X62 + 1;
+        y62 = X62 * 2;
+        if (y62 > 62) then {
+            print y62;
+        } else {
+            call proc63;
+        }
+    }
+}
+
+procedure proc63 {
+    read x63;
+    while (x63 < 126) {
+        x63 = X63 + 1;
+        y63 = X63 * 2;
+        if (y63 > 63) then {
+            print y63;
+        } else {
+            call proc64;
+        }
+    }
+}
+
+procedure proc64 {
+    read x64;
+    while (x64 < 128) {
+        x64 = X64 + 1;
+        y64 = X64 * 2;
+        if (y64 > 64) then {
+            print y64;
+        } else {
+            call proc65;
+        }
+    }
+}
+
+procedure proc65 {
+    read x65;
+    while (x65 < 130) {
+        x65 = X65 + 1;
+        y65 = X65 * 2;
+        if (y65 > 65) then {
+            print y65;
+        } else {
+            call proc66;
+        }
+    }
+}
+
+procedure proc66 {
+    read x66;
+    while (x66 < 132) {
+        x66 = X66 + 1;
+        y66 = X66 * 2;
+        if (y66 > 66) then {
+            print y66;
+        } else {
+            call proc67;
+        }
+    }
+}
+
+procedure proc67 {
+    read x67;
+    while (x67 < 134) {
+        x67 = X67 + 1;
+        y67 = X67 * 2;
+        if (y67 > 67) then {
+            print y67;
+        } else {
+            call proc68;
+        }
+    }
+}
+
+procedure proc68 {
+    read x68;
+    while (x68 < 136) {
+        x68 = X68 + 1;
+        y68 = X68 * 2;
+        if (y68 > 68) then {
+            print y68;
+        } else {
+            call proc69;
+        }
+    }
+}
+
+procedure proc69 {
+    read x69;
+    while (x69 < 138) {
+        x69 = X69 + 1;
+        y69 = X69 * 2;
+        if (y69 > 69) then {
+            print y69;
+        } else {
+            call proc70;
+        }
+    }
+}
+
+procedure proc70 {
+    read x70;
+    while (x70 < 140) {
+        x70 = X70 + 1;
+        y70 = X70 * 2;
+        if (y70 > 70) then {
+            print y70;
+        } else {
+            call proc71;
+        }
+    }
+}
+
+procedure proc71 {
+    read x71;
+    while (x71 < 142) {
+        x71 = X71 + 1;
+        y71 = X71 * 2;
+        if (y71 > 71) then {
+            print y71;
+        } else {
+            call proc72;
+        }
+    }
+}
+
+procedure proc72 {
+    read x72;
+    while (x72 < 144) {
+        x72 = X72 + 1;
+        y72 = X72 * 2;
+        if (y72 > 72) then {
+            print y72;
+        } else {
+            call proc73;
+        }
+    }
+}
+
+procedure proc73 {
+    read x73;
+    while (x73 < 146) {
+        x73 = X73 + 1;
+        y73 = X73 * 2;
+        if (y73 > 73) then {
+            print y73;
+        } else {
+            call proc74;
+        }
+    }
+}
+
+procedure proc74 {
+    read x74;
+    while (x74 < 148) {
+        x74 = X74 + 1;
+        y74 = X74 * 2;
+        if (y74 > 74) then {
+            print y74;
+        } else {
+            call proc75;
+        }
+    }
+}
+
+procedure proc75 {
+    read x75;
+    while (x75 < 150) {
+        x75 = X75 + 1;
+        y75 = X75 * 2;
+        if (y75 > 75) then {
+            print y75;
+        } else {
+            call proc76;
+        }
+    }
+}
+
+procedure proc76 {
+    read x76;
+    while (x76 < 152) {
+        x76 = X76 + 1;
+        y76 = X76 * 2;
+        if (y76 > 76) then {
+            print y76;
+        } else {
+            call proc77;
+        }
+    }
+}
+
+procedure proc77 {
+    read x77;
+    while (x77 < 154) {
+        x77 = X77 + 1;
+        y77 = X77 * 2;
+        if (y77 > 77) then {
+            print y77;
+        } else {
+            call proc78;
+        }
+    }
+}
+
+procedure proc78 {
+    read x78;
+    while (x78 < 156) {
+        x78 = X78 + 1;
+        y78 = X78 * 2;
+        if (y78 > 78) then {
+            print y78;
+        } else {
+            call proc79;
+        }
+    }
+}
+
+procedure proc79 {
+    read x79;
+    while (x79 < 158) {
+        x79 = X79 + 1;
+        y79 = X79 * 2;
+        if (y79 > 79) then {
+            print y79;
+        } else {
+            call proc80;
+        }
+    }
+}
+
+procedure proc80 {
+    read x80;
+    while (x80 < 160) {
+        x80 = X80 + 1;
+        y80 = X80 * 2;
+        if (y80 > 80) then {
+            print y80;
+        } else {
+            call proc81;
+        }
+    }
+}
+
+procedure proc81 {
+    read x81;
+    while (x81 < 162) {
+        x81 = X81 + 1;
+        y81 = X81 * 2;
+        if (y81 > 81) then {
+            print y81;
+        } else {
+            call proc82;
+        }
+    }
+}
+
+procedure proc82 {
+    read x82;
+    while (x82 < 164) {
+        x82 = X82 + 1;
+        y82 = X82 * 2;
+        if (y82 > 82) then {
+            print y82;
+        } else {
+            call proc83;
+        }
+    }
+}
+
+procedure proc83 {
+    read x83;
+    while (x83 < 166) {
+        x83 = X83 + 1;
+        y83 = X83 * 2;
+        if (y83 > 83) then {
+            print y83;
+        } else {
+            call proc84;
+        }
+    }
+}
+
+procedure proc84 {
+    read x84;
+    while (x84 < 168) {
+        x84 = X84 + 1;
+        y84 = X84 * 2;
+        if (y84 > 84) then {
+            print y84;
+        } else {
+            call proc85;
+        }
+    }
+}
+
+procedure proc85 {
+    read x85;
+    while (x85 < 170) {
+        x85 = X85 + 1;
+        y85 = X85 * 2;
+        if (y85 > 85) then {
+            print y85;
+        } else {
+            call proc86;
+        }
+    }
+}
+
+procedure proc86 {
+    read x86;
+    while (x86 < 172) {
+        x86 = X86 + 1;
+        y86 = X86 * 2;
+        if (y86 > 86) then {
+            print y86;
+        } else {
+            call proc87;
+        }
+    }
+}
+
+procedure proc87 {
+    read x87;
+    while (x87 < 174) {
+        x87 = X87 + 1;
+        y87 = X87 * 2;
+        if (y87 > 87) then {
+            print y87;
+        } else {
+            call proc88;
+        }
+    }
+}
+
+procedure proc88 {
+    read x88;
+    while (x88 < 176) {
+        x88 = X88 + 1;
+        y88 = X88 * 2;
+        if (y88 > 88) then {
+            print y88;
+        } else {
+            call proc89;
+        }
+    }
+}
+
+procedure proc89 {
+    read x89;
+    while (x89 < 178) {
+        x89 = X89 + 1;
+        y89 = X89 * 2;
+        if (y89 > 89) then {
+            print y89;
+        } else {
+            call proc90;
+        }
+    }
+}
+
+procedure proc90 {
+    read x90;
+    while (x90 < 180) {
+        x90 = X90 + 1;
+        y90 = X90 * 2;
+        if (y90 > 90) then {
+            print y90;
+        } else {
+            call proc91;
+        }
+    }
+}
+
+procedure proc91 {
+    read x91;
+    while (x91 < 182) {
+        x91 = X91 + 1;
+        y91 = X91 * 2;
+        if (y91 > 91) then {
+            print y91;
+        } else {
+            call proc92;
+        }
+    }
+}
+
+procedure proc92 {
+    read x92;
+    while (x92 < 184) {
+        x92 = X92 + 1;
+        y92 = X92 * 2;
+        if (y92 > 92) then {
+            print y92;
+        } else {
+            call proc93;
+        }
+    }
+}
+
+procedure proc93 {
+    read x93;
+    while (x93 < 186) {
+        x93 = X93 + 1;
+        y93 = X93 * 2;
+        if (y93 > 93) then {
+            print y93;
+        } else {
+            call proc94;
+        }
+    }
+}
+
+procedure proc94 {
+    read x94;
+    while (x94 < 188) {
+        x94 = X94 + 1;
+        y94 = X94 * 2;
+        if (y94 > 94) then {
+            print y94;
+        } else {
+            call proc95;
+        }
+    }
+}
+
+procedure proc95 {
+    read x95;
+    while (x95 < 190) {
+        x95 = X95 + 1;
+        y95 = X95 * 2;
+        if (y95 > 95) then {
+            print y95;
+        } else {
+            call proc96;
+        }
+    }
+}
+
+procedure proc96 {
+    read x96;
+    while (x96 < 192) {
+        x96 = X96 + 1;
+        y96 = X96 * 2;
+        if (y96 > 96) then {
+            print y96;
+        } else {
+            call proc97;
+        }
+    }
+}
+
+procedure proc97 {
+    read x97;
+    while (x97 < 194) {
+        x97 = X97 + 1;
+        y97 = X97 * 2;
+        if (y97 > 97) then {
+            print y97;
+        } else {
+            call proc98;
+        }
+    }
+}
+
+procedure proc98 {
+    read x98;
+    while (x98 < 196) {
+        x98 = X98 + 1;
+        y98 = X98 * 2;
+        if (y98 > 98) then {
+            print y98;
+        } else {
+            call proc99;
+        }
+    }
+}
+
+procedure proc99 {
+    read x99;
+    while (x99 < 198) {
+        x99 = X99 + 1;
+        y99 = X99 * 2;
+        if (y99 > 99) then {
+            print y99;
+        } else {
+
+        }
+    }
+}
+
