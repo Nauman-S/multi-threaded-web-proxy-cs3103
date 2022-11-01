@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "ResWrapper.h"
+#include "../ResWrapper.h"
 
 class Table {
 private:
@@ -18,9 +18,7 @@ private:
 
 	std::vector<std::vector<std::string>> rows_;
 
-	
 	std::string GetFieldAtIndex(unsigned idx) {
-		assert(idx < fields_.size());
 		return fields_.at(idx);
 	}
 
@@ -54,7 +52,8 @@ public:
 		is_empty_ = (rows_.size() == 0);
 	};
 
-	explicit Table(std::shared_ptr<ResWrapper>);
+	explicit Table(std::shared_ptr<SetRes>);
+	explicit Table(std::shared_ptr<TableRes>);
 
 	int GetNumOfRows() { return rows_.size(); }
 	unsigned GetNumOfCols() { return fields_.size(); }

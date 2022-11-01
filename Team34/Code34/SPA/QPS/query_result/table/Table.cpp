@@ -3,11 +3,10 @@
 #include <iterator>
 #include <algorithm>
 
-#include "ResWrapper.h"
-#include "TableRes.h"
-#include "SetRes.h"
+#include "../ResWrapper.h"
+#include "../TableRes.h"
+#include "../SetRes.h"
 #include "EmptyTable.h"
-
 
 using std::string;
 using std::vector;
@@ -16,21 +15,34 @@ using std::unordered_multimap;
 using std::shared_ptr;
 
 
-Table::Table(shared_ptr<ResWrapper> res_wrapper) {
-	
-	if (res_wrapper->GetResType() == ResType::kSet) {
-		std::shared_ptr<SetRes> set_res = res_wrapper->GetSet();
-		fields_.push_back(set_res->GetSyn());
-		for (const auto& value: *set_res->GetDomain()) {
-			rows_.push_back({ value });
-		}
-	} else {
-		std::shared_ptr<TableRes> table_res = res_wrapper->GetTable();
-		fields_ = *table_res->Columns();
 
-		for (auto& row : *table_res->GetRows()) {
-			rows_.push_back({ row.first, row.second });
-		}
+//Table::Table(shared_ptr<ResWrapper> res_wrapper) {
+//	
+//	if (res_wrapper->GetResType() == ResType::kSet) {
+//		std::shared_ptr<SetRes> set_res = res_wrapper->GetSet();
+//		fields_.push_back(set_res->GetSyn());
+//		for (const auto& value: *set_res->GetDomain()) {
+//			rows_.push_back({ value });
+//		}
+//	} else {
+//		std::shared_ptr<TableRes> table_res = res_wrapper->GetTable();
+//		fields_ = *table_res->Columns();
+//
+//		for (auto& row : *table_res->GetRows()) {
+//			rows_.push_back({ row.first, row.second });
+//		}
+//	}
+//
+//	is_empty_ = (rows_.size() == 0);
+//
+//	for (unsigned i = 0; i < fields_.size(); i++) {
+//		field_to_index_map_.insert({ fields_.at(i), i });
+//	}
+//}
+Table::Table(shared_ptr<SetRes> set_res) {
+	fields_.push_back(set_res->GetSyn());
+	for (const auto& value : *set_res->GetDomain()) {
+		rows_.push_back({ value });
 	}
 
 	is_empty_ = (rows_.size() == 0);
@@ -39,6 +51,19 @@ Table::Table(shared_ptr<ResWrapper> res_wrapper) {
 		field_to_index_map_.insert({ fields_.at(i), i });
 	}
 }
+
+Table::Table(shared_ptr<TableRes> table_res) {
+	fields_ = *table_res->Columns();	
+	for (auto& row : *table_res->GetRows()) {
+		rows_.push_back({ row.first, row.second });
+	}
+	is_empty_ = (rows_.size() == 0);
+
+	for (unsigned i = 0; i < fields_.size(); i++) {
+		field_to_index_map_.insert({ fields_.at(i), i });
+	}
+}
+
 
 vector<string> Table::GetCommonFields(shared_ptr<Table> that) {
 
