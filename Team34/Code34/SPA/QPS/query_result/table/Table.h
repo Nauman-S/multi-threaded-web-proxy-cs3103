@@ -45,14 +45,14 @@ private:
 	);*/
 
 public:
-	Table() {};
+	Table() {}
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
 		: fields_{ fields }, rows_{ rows }  {
 		for (unsigned i = 0; i < fields.size(); i++) {
 			field_to_index_map_.insert({ fields.at(i), i });
 		}
-	};
+	}
 
 	explicit Table(std::shared_ptr<SetRes>);
 	explicit Table(std::shared_ptr<TableRes>);

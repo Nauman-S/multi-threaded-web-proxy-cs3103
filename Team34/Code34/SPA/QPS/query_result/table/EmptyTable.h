@@ -2,6 +2,8 @@
 
 #include "Table.h"
 
+#include "memory"
+
 class EmptyTable
 	: public Table 
 {

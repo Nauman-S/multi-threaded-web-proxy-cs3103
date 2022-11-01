@@ -12,17 +12,13 @@ public:
     static std::shared_ptr<Table> CreateTable(std::shared_ptr<ResWrapper> res_wrapper) {
         if (res_wrapper->GetResType() == ResType::kBool && res_wrapper->IsValid()) {
             return std::make_shared<WildcardTable>();
-        }
-        else if (res_wrapper->GetResType() == ResType::kBool && !res_wrapper->IsValid()) {
+        } else if (res_wrapper->GetResType() == ResType::kBool && !res_wrapper->IsValid()) {
             return std::make_shared<EmptyTable>();
-        } 
-        else if (res_wrapper->GetResType() == ResType::kSet) {
+        } else if (res_wrapper->GetResType() == ResType::kSet) {
             return std::make_shared<Table>(res_wrapper->GetSet());
-        }
-        else if (res_wrapper->GetResType() == ResType::kTable) {
+        } else if (res_wrapper->GetResType() == ResType::kTable) {
             return std::make_shared<Table>(res_wrapper->GetTable());
-        }
-        else {
+        } else {
             return std::make_shared<EmptyTable>();
         }
     }

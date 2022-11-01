@@ -122,20 +122,20 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 			continue;
 		}
 
-		auto& matched_row_entries = hashkey_to_row_map.equal_range(hashkey);
-		for (auto& matched_row_entry = matched_row_entries.first; matched_row_entry != matched_row_entries.second; ++matched_row_entry) {
-			string hashkey = matched_row_entry->first;
-			vector<string> matched_row = matched_row_entry->second;
-			
-			for (size_t field_idx = 0; field_idx < that_col_nums; field_idx++) {
-				string& that_field = that->GetFieldAtIndex(field_idx);
-				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
-					continue;
-				}
-				matched_row.push_back(that_row.at(field_idx));
-			}
-			new_rows.push_back(matched_row);
-		}
+        auto& matched_row_entries = hashkey_to_row_map.equal_range(hashkey);
+        for (auto& matched_row_entry = matched_row_entries.first; matched_row_entry != matched_row_entries.second; ++matched_row_entry) {
+            string hashkey = matched_row_entry->first;
+            vector<string> matched_row = matched_row_entry->second;
+
+            for (size_t field_idx = 0; field_idx < that_col_nums; field_idx++) {
+                string& that_field = that->GetFieldAtIndex(field_idx);
+                if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
+                    continue;
+                }
+                matched_row.push_back(that_row.at(field_idx));
+            }
+            new_rows.push_back(matched_row);
+        }
 	}
 
 	if (new_rows.size() == 0) {
