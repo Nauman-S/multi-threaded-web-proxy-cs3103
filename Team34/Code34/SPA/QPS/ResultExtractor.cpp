@@ -72,6 +72,3 @@ vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retr
     std::vector<string> result_vector(result_set->begin(), result_set->end());
     return result_vector;
 }
-
-
-

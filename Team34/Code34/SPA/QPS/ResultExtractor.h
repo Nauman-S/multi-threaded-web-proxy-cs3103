@@ -18,9 +18,6 @@ private:
 	bool is_boolean_result;
 
 public:
-	/*ResultExtractor(std::shared_ptr<Table> result_table, std::vector<std::string> select_synonyms,
-		std::shared_ptr<std::vector<std::shared_ptr<Ref>>> tuple)
-		: result_table_{ result_table }, select_synonyms_{ select_synonyms }, tuple_{ tuple } {};*/
 	ResultExtractor(std::shared_ptr<Table> result_table, Query query)
 		: result_table_{ result_table } {
 		select_synonyms_ = query.GetSelectSynonyms();
@@ -34,4 +31,3 @@ public:
 	std::vector<std::string> GetFormattedResult(DataRetriever&);
 
 };
-

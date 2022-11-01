@@ -139,13 +139,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<Cl
 
 
 vector<std::string> QueryEvaluator::ExtractResult() {
-	vector<std::string> result;
-
 	ResultExtractor result_extractor = ResultExtractor(result_table_, query_);
-	result = result_extractor.GetFormattedResult(data_retriever_);
-
+	vector<std::string> result = result_extractor.ExtractResult(data_retriever_);
 	return result;
 }
-
-
-	
