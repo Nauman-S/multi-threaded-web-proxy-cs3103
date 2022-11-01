@@ -21,14 +21,9 @@ public:
 		std::shared_ptr<std::vector<std::shared_ptr<Ref>>> tuple)
 		: result_table_{ result_table }, select_synonyms_{ select_synonyms }, tuple_{ tuple } {};
 
+	std::vector<std::string> ExtractResult(DataRetriever&);
+
 	std::vector<std::string> GetFormattedResult(DataRetriever&);
 
-	std::vector<std::string> GetSingleSynResult(DataRetriever&);
-
-	std::vector<std::string> GetMultiSynResult(DataRetriever&);
-
-	//std::shared_ptr<std::unordered_set<std::string>> 
-
-	std::vector<std::string> FormatResult(std::shared_ptr<std::unordered_set<std::string>> result_set);
 };
 

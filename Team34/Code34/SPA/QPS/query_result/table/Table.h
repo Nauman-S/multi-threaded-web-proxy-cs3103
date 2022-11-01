@@ -34,10 +34,7 @@ private:
 
 	std::vector<std::string> GetCommonFields(std::shared_ptr<Table> that);
 
-	std::string ComputeHashkey(
-		std::vector<std::string> common_fields,
-		std::vector<std::string> row
-	);
+	std::string ComputeHashkey(std::vector<std::string> common_fields, std::vector<std::string> row);
 		
 	std::shared_ptr<Table> CrossProductJoin(std::shared_ptr<Table> that);
 
@@ -70,10 +67,6 @@ public:
 	virtual bool IsWildcard() { return false; }
 
 	bool HasSynonym(std::string synonym);
-
-	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
-
-	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonyms(std::vector<std::string> synonyms);
 
 	std::shared_ptr<std::vector<std::vector<std::string>>> ExtractSynonyms(std::vector<std::string> synonyms);
 

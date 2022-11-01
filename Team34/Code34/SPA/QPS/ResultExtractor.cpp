@@ -17,31 +17,24 @@ using std::shared_ptr;
 using std::unordered_map;
 using std::vector;
 
-vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retriever) {
+vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever) {
 	vector<std::string> results;
 	if (result_table_->IsEmpty()) {
 		return results;
 	}
-	return GetMultiSynResult(data_retriever);
+	return GetFormattedResult(data_retriever);
 }
 
-vector<std::string> ResultExtractor::GetSingleSynResult(DataRetriever& data_retriever) {
-	string name = select_synonyms_.at(0);
-	shared_ptr<unordered_set<string>> result_set = result_table_->GetDomainBySynonym(name);
-	return FormatResult(result_set);
-}
-
-vector<std::string> ResultExtractor::GetMultiSynResult(DataRetriever& data_retriever) {
-	//shared_ptr<unordered_set<string>> result_set = result_table_->GetDomainBySynonyms(select_synonyms_);
-
+vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retriever) {
 	shared_ptr<vector<vector<string>>> result_rows = result_table_->ExtractSynonyms(select_synonyms_);
 	
-	for (unsigned pos = 0; pos < tuple_->size(); ++pos) {
+	for (size_t pos = 0; pos < tuple_->size(); ++pos) {
 		shared_ptr<Ref> ref = tuple_->at(pos);
 		if (ref->IsAttrTypeDefault()) {
 			continue;
 		}
 
+		// replace the value with attribute value 
 		for (vector<string>& row : *result_rows) {
 			string attr_value = ref->GetAttrValue(data_retriever, row.at(pos));
 			row[pos] = attr_value;
@@ -49,11 +42,12 @@ vector<std::string> ResultExtractor::GetMultiSynResult(DataRetriever& data_retri
 	}
 
 	shared_ptr <std::unordered_set<std::string>> result_set = std::make_shared< std::unordered_set<std::string>>();
+	
+	string delimiter = " ";
 	for (auto& row : *result_rows) {
-		string row_result = "";
+		string row_result;
 		for (string& cell : row) {
-			
-			row_result += (cell + " ");
+			row_result += (cell + delimiter);
 		}
 
 		// remove the extra trailing space
@@ -61,13 +55,9 @@ vector<std::string> ResultExtractor::GetMultiSynResult(DataRetriever& data_retri
 		result_set->insert(row_result);
 	}
 
-	
-	return FormatResult(result_set);
-}
-
-vector<std::string> ResultExtractor::FormatResult(shared_ptr<unordered_set<string>> result_set) {
 	std::vector<string> result_vector(result_set->begin(), result_set->end());
-	std::sort(result_vector.begin(), result_vector.end());
 	return result_vector;
 }
+
+
 

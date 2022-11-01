@@ -139,37 +139,8 @@ vector<string> Table::GetRowWithoutCommonField(shared_ptr<Table> that, const vec
 	return that_row_wo_common_field;
 }
 
-
-
 bool Table::HasSynonym(string synonym) {
 	return std::find(fields_.begin(), fields_.end(), synonym) != fields_.end();
-}
-
-shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonym(std::string synonym) {
-	int index = field_to_index_map_.at(synonym);
-
-	shared_ptr <std::unordered_set<std::string>> set = std::make_shared< std::unordered_set<std::string>>();
-
-	for (auto& row : rows_) {
-		set->insert(row.at(index));
-	}
-	return set;
-}
-
-shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonyms(std::vector<std::string> synonyms) {
-	shared_ptr <std::unordered_set<std::string>> result_set = std::make_shared< std::unordered_set<std::string>>();
-	for (auto& row : rows_) {
-		string row_result = "";
-		for (string& synonym : synonyms) {
-			int index = field_to_index_map_.at(synonym);
-			row_result += (row.at(index) + " ");
-		}
-
-		// remove the extra trailing space
-		row_result.pop_back();
-		result_set->insert(row_result);
-	}
-	return result_set;
 }
 
 shared_ptr<vector<vector<string>>> Table::ExtractSynonyms(std::vector<std::string> synonyms) {
