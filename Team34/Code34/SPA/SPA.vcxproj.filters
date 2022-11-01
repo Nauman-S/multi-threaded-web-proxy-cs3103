@@ -111,6 +111,7 @@
     <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="SP\design_extractor\UsesExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\ModifiesExtractor.cpp" />
+    <ClCompile Include="QPS\optimization\ClauseSorter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils\type\TupleType.h" />
@@ -256,5 +257,6 @@
     <ClInclude Include="Utils\error\Error.h" />
     <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
     <ClInclude Include="QPS\query_result\table\TableFactory.h" />
+    <ClInclude Include="QPS\optimization\ClauseSorter.h" />
   </ItemGroup>
 </Project>

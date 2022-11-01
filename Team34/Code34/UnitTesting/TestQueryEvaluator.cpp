@@ -13,7 +13,7 @@ using std::string;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting {
-    TEST_CLASS(TestQueryEvaluator) {
+    TEST_CLASS(TestTableClass) {
 public:
     TEST_METHOD(BasicCrossProductJoin) {
         vector<string> left_fields = { "a", "b" };

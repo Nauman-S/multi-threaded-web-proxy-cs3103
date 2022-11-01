@@ -18,6 +18,12 @@ private:
 
 	std::vector<std::vector<std::string>> rows_;
 
+	void SetFieldToIndexMap(const std::vector<std::string>& fields) {
+		for (size_t i = 0; i < fields.size(); i++) {
+			field_to_index_map_.insert({ fields.at(i), i });
+		}
+	}
+
 	std::string GetFieldAtIndex(unsigned idx) {
 		return fields_.at(idx);
 	}
@@ -28,30 +34,20 @@ private:
 
 	std::vector<std::string> GetCommonFields(std::shared_ptr<Table> that);
 
-	std::string ComputeHashkey(
-		std::vector<std::string> common_fields,
-		std::vector<std::string> row
-	);
+	std::string ComputeHashkey(std::vector<std::string> common_fields, std::vector<std::string> row);
 		
 	std::shared_ptr<Table> CrossProductJoin(std::shared_ptr<Table> that);
 
 	std::shared_ptr<Table> HashJoin(std::shared_ptr<Table> that, std::vector<std::string> common_fields);
 
-	/*void JoinTableWithRow(std::shared_ptr<Table> that, 
-		std::vector<std::string>& that_row,
-		std::vector<std::string> common_fields,
-		std::unordered_multimap<std::string, std::vector<std::string>>& hashkey_to_row_map, 
-		std::vector<std::vector<std::string>> new_rows
-	);*/
+	std::vector<std::string> GetRowWithoutCommonField(std::shared_ptr<Table> that, const std::vector<std::string>& that_row, const std::vector<std::string>& common_fields);
 
 public:
 	Table() {}
 
 	Table(std::vector<std::string> fields, std::vector<std::vector<std::string>> rows)
 		: fields_{ fields }, rows_{ rows }  {
-		for (unsigned i = 0; i < fields.size(); i++) {
-			field_to_index_map_.insert({ fields.at(i), i });
-		}
+		SetFieldToIndexMap(fields_);
 	}
 
 	explicit Table(std::shared_ptr<SetRes>);
@@ -71,10 +67,6 @@ public:
 	virtual bool IsWildcard() { return false; }
 
 	bool HasSynonym(std::string synonym);
-
-	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonym(std::string synonym);
-
-	std::shared_ptr<std::unordered_set<std::string>> GetDomainBySynonyms(std::vector<std::string> synonyms);
 
 	std::shared_ptr<std::vector<std::vector<std::string>>> ExtractSynonyms(std::vector<std::string> synonyms);
 

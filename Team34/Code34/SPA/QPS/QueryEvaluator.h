@@ -10,6 +10,7 @@
 #include "clause/relation/Rel.h"
 #include "clause/pattern/Pattern.h"
 #include "optimization/clause_grouper/ClauseGrouper.h"
+#include "optimization/ClauseSorter.h"
 #include "DataRetriever.h"
 #include "Query.h"
 #include "query_result/table/Table.h"
@@ -22,6 +23,7 @@ protected:
     shared_ptr<Table> result_table_;
     std::vector<Clause> clauses_;
     DataRetriever data_retriever_;
+    ClauseSorter clause_sorter_;
 
     std::shared_ptr<Table> EvaluateByGroup(
         shared_ptr<ClauseGrouper> clause_grouper);

@@ -39,9 +39,10 @@ void OptimizedClauseGrouper::Group() {
 
 void OptimizedClauseGrouper::GroupClauseWithSyn(std::unordered_map<std::string, std::vector<std::shared_ptr<Clause>>>& rep_to_clauses) {
 	for (auto& iterator = rep_to_clauses.begin(); iterator != rep_to_clauses.end(); ++iterator) {
-		vector<shared_ptr<Clause>> optimized_clauses = OptimizeOrderWithinGroup(iterator->second);
-		shared_ptr<ClauseGroup> optimized_clause_group = std::make_shared<ClauseGroup>(optimized_clauses);
-		shared_ptr<unordered_set<string>> syns_in_group = optimized_clause_group->GetSynSet();
+		//vector<shared_ptr<Clause>> optimized_clauses = OptimizeOrderWithinGroup(iterator->second);
+
+		shared_ptr<ClauseGroup> clause_group = std::make_shared<ClauseGroup>(iterator->second);
+		shared_ptr<unordered_set<string>> syns_in_group = clause_group->GetSynSet();
 
 		bool contains_select_syn = false;
 
@@ -53,11 +54,10 @@ void OptimizedClauseGrouper::GroupClauseWithSyn(std::unordered_map<std::string, 
 		}
 
 		if (contains_select_syn) {
-			groups_w_select_syn_.push_back(optimized_clause_group);
+			groups_w_select_syn_.push_back(clause_group);
 		} else {
-			groups_wo_select_syn_.push_back(optimized_clause_group);
+			groups_wo_select_syn_.push_back(clause_group);
 		}
-
 	}
 }
 
@@ -87,60 +87,4 @@ std::unordered_map<string, vector<shared_ptr<Clause>>> OptimizedClauseGrouper::C
 		}
 	}
 	return rep_to_clauses;
-}
-
-vector<shared_ptr<Clause>> OptimizedClauseGrouper::OptimizeOrderWithinGroup(vector<shared_ptr<Clause>> clauses) {
-	if (clauses.size() == 0) {
-		return clauses;
-	}
-	PriorityManager priority_manager;
-	auto priority_comparator = [&priority_manager](shared_ptr<Clause> a, shared_ptr<Clause> b) { return a->GetPriority(priority_manager) < b->GetPriority(priority_manager); };
-	std::sort(clauses.begin(), clauses.end(), priority_comparator);
-
-	vector<shared_ptr<Clause>> optimized_clauses;
-	unordered_set<string> used_syns;
-	
-	unsigned num_of_clauses = clauses.size();
-	vector<bool> is_clause_used(num_of_clauses, false);
-	vector<bool> can_clause_be_used(num_of_clauses, false);
-	can_clause_be_used[0] = true;
-	
-	shared_ptr<Clause> smallest_clause;
-	for (unsigned count = 0; count < num_of_clauses; ++count) {
-		for (unsigned idx = 0; idx < num_of_clauses; ++idx) {
-			if (!is_clause_used[idx] && can_clause_be_used[idx]) {
-				smallest_clause = clauses[idx];
-				is_clause_used[idx] = true;
-				break;
-			}
-		}
-		
-		AddClauseToList(smallest_clause, optimized_clauses, used_syns);
-		for (unsigned idx = 0; idx < clauses.size(); ++idx) {
-			if (is_clause_used[idx]) {
-				continue;
-			}
-			shared_ptr<Clause> clause = clauses[idx];
-			if (ContainsUsedSyns(clause, used_syns)) {
-				can_clause_be_used[idx] = true;
-			}
-		}
-	}
-	return optimized_clauses;
-}
-
-void OptimizedClauseGrouper::AddClauseToList(shared_ptr<Clause> clause, vector<shared_ptr<Clause>>& optimized_clauses, unordered_set<string>& used_syns) {
-	optimized_clauses.push_back(clause);
-	shared_ptr<vector<string>> synonyms = clause->GetSynonyms();
-	used_syns.insert(synonyms->begin(), synonyms->end());
-}
-
-bool OptimizedClauseGrouper::ContainsUsedSyns(shared_ptr<Clause> clause, unordered_set<string>& used_syns) {
-	shared_ptr<vector<string>> syns_in_clause = clause->GetSynonyms();
-	for (string& syn : *syns_in_clause) {
-		if (used_syns.count(syn) > 0) {
-			return true;
-		}
-	}
-	return false;
 }

@@ -9,35 +9,6 @@
 
 class PriorityManager {
 private:
-    //std::unordered_map<ClauseType, Priority> priority_map_ = {
-    //    // SMALLER priority number has HIGHER priority (should just sort ascendingly)
-    //    {ClauseType::kParentRel, 0},
-    //    {ClauseType::kFollowsRel, 0},
-    //    {ClauseType::kCallsRel, 0},
-    //    {ClauseType::kNextRel, 0},
-    //    
-    //    {ClauseType::kModifiesPRel, 1},
-    //    {ClauseType::kUsesPRel, 1},
-
-    //    {ClauseType::kModifiesSRel, 2},
-    //    {ClauseType::kUsesSRel, 2},
-
-    //    {ClauseType::kAssignPattern, 3},
-    //    {ClauseType::kIfPattern, 3},
-    //    {ClauseType::kWhilePattern, 3},
-    //    {ClauseType::kAffectsRel, 3},
-
-    //    {ClauseType::kWith, 4},
-
-    //    {ClauseType::kParentTRel, 5},
-    //    {ClauseType::kFollowsTRel, 5},
-    //    {ClauseType::kCallsTRel, 5},
-    //    {ClauseType::kNextTRel, 5},
-    //    {ClauseType::kAffectsTRel, 5},
-    //};
-
-
-
     // Refers to https://stackoverflow.com/questions/32685540/why-cant-i-compile-an-unordered-map-with-a-pair-as-key
     struct pair_hash {
         template <class T1, class T2>
@@ -57,6 +28,7 @@ private:
         {std::make_pair(ClauseType::kFollowsRel, 1), 0},
         {std::make_pair(ClauseType::kCallsRel, 1), 0},
         {std::make_pair(ClauseType::kNextRel, 1), 0},
+        {std::make_pair(ClauseType::kWith, 1), 0},
 
         {std::make_pair(ClauseType::kModifiesPRel, 1), 2},
         {std::make_pair(ClauseType::kUsesPRel, 1), 2},
@@ -68,7 +40,6 @@ private:
         {std::make_pair(ClauseType::kAffectsRel, 1), 3},
 
         {std::make_pair(ClauseType::kAssignPattern, 1), 4},
-        {std::make_pair(ClauseType::kWith, 1), 4},
         {std::make_pair(ClauseType::kParentTRel, 1), 4},
 
         {std::make_pair(ClauseType::kFollowsTRel, 1), 5},
@@ -105,7 +76,5 @@ private:
     };
 
 public:
-
     Priority GetClausePriority(ClauseType type, int syn_num) { return priority_map_[std::make_pair(type, syn_num)]; }
-
 };

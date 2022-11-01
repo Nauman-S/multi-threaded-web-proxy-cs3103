@@ -70,6 +70,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateByGroup(shared_ptr<ClauseGrouper>
 	return table;
 }
 
+
 bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_syn_) {
 	for (shared_ptr<Clause> clause : group_wo_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -80,20 +81,6 @@ bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_sy
 	return true;
 }
 
-bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group_wo_select_syn_) {
-	shared_ptr<Table> table = std::make_shared<WildcardTable>();
-	for (shared_ptr<Clause> clause : group_wo_select_syn_->GetClauses()) {
-		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
-
-		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
-		table = table->Join(result_table);
-		if (table->IsEmpty()) {
-			return false;
-		}
-	}
-
-	return true;
-}
 
 bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_) {
 	for (std::shared_ptr<ClauseGroup> clause_group : groups_wo_select_syn_) {
@@ -104,18 +91,21 @@ bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<Claus
 }
 
 
-std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
+bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group_wo_select_syn_) {
 	shared_ptr<Table> table = std::make_shared<WildcardTable>();
-	for (shared_ptr<Clause> clause : group_w_select_syn_->GetClauses()) {
+	shared_ptr<ClauseGroup> sorted_clause_group = clause_sorter_.SortClausesInGroup(group_wo_select_syn_);
+
+	for (shared_ptr<Clause> clause : sorted_clause_group->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
 
 		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
 		table = table->Join(result_table);
 		if (table->IsEmpty()) {
-			return table;
+			return false;
 		}
 	}
-	return table;
+
+	return true;
 }
 
 
@@ -132,24 +122,24 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::
 	return table;
 }
 
+std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
+	shared_ptr<ClauseGroup> sorted_clause_group = clause_sorter_.SortClausesInGroup(group_w_select_syn_);
 
-vector<std::string> QueryEvaluator::ExtractResult() {
-	vector<std::string> result;
-
-	if (query_.IsBoolean()) {
-		if (result_table_->IsEmpty()) {
-			result.push_back("FALSE");
-		} else {
-			result.push_back("TRUE");
+	for (shared_ptr<Clause> clause : sorted_clause_group->GetClauses()) {
+		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
+		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
+		table = table->Join(result_table);
+		if (table->IsEmpty()) {
+			return table;
 		}
-		return result;
 	}
-
-	ResultExtractor result_extractor = ResultExtractor(result_table_, query_.GetSelectSynonyms(), query_.GetSelectTuple());
-	result = result_extractor.GetFormattedResult(data_retriever_);
-
-	return result;
+	return table;
 }
 
 
-	
+vector<std::string> QueryEvaluator::ExtractResult() {
+	ResultExtractor result_extractor = ResultExtractor(result_table_, query_);
+	vector<std::string> result = result_extractor.ExtractResult(data_retriever_);
+	return result;
+}
