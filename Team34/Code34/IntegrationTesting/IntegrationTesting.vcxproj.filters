@@ -50,5 +50,8 @@
     <ClCompile Include="..\UnitTesting\stub\RelationStubFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SP_PKB\TestSourceValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
