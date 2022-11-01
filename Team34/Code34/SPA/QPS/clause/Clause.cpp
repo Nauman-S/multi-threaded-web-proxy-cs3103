@@ -10,7 +10,6 @@ using std::string;
 using std::shared_ptr;
 using std::make_shared;
 
-
 std::shared_ptr<std::vector<std::string>> Clause::GetSynonyms(vector<shared_ptr<Ref>>& refs) {
     auto res = make_shared<vector<string>>();
     for (auto& ref : refs) {

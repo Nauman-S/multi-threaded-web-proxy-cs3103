@@ -28,6 +28,7 @@ private:
         {std::make_pair(ClauseType::kFollowsRel, 1), 0},
         {std::make_pair(ClauseType::kCallsRel, 1), 0},
         {std::make_pair(ClauseType::kNextRel, 1), 0},
+        {std::make_pair(ClauseType::kWith, 1), 0},
 
         {std::make_pair(ClauseType::kModifiesPRel, 1), 2},
         {std::make_pair(ClauseType::kUsesPRel, 1), 2},
@@ -39,7 +40,6 @@ private:
         {std::make_pair(ClauseType::kAffectsRel, 1), 3},
 
         {std::make_pair(ClauseType::kAssignPattern, 1), 4},
-        {std::make_pair(ClauseType::kWith, 1), 4},
         {std::make_pair(ClauseType::kParentTRel, 1), 4},
 
         {std::make_pair(ClauseType::kFollowsTRel, 1), 5},
