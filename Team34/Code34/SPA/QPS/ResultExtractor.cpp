@@ -26,37 +26,37 @@ vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever
 }
 
 vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retriever) {
-	shared_ptr<vector<vector<string>>> result_rows = result_table_->ExtractSynonyms(select_synonyms_);
-	
-	for (size_t pos = 0; pos < tuple_->size(); ++pos) {
-		shared_ptr<Ref> ref = tuple_->at(pos);
-		if (ref->IsAttrTypeDefault()) {
-			continue;
-		}
+    shared_ptr<vector<vector<string>>> result_rows = result_table_->ExtractSynonyms(select_synonyms_);
 
-		// replace the value with attribute value 
-		for (vector<string>& row : *result_rows) {
-			string attr_value = ref->GetAttrValue(data_retriever, row.at(pos));
-			row[pos] = attr_value;
-		}
-	}
+    for (size_t pos = 0; pos < tuple_->size(); ++pos) {
+        shared_ptr<Ref> ref = tuple_->at(pos);
+        if (ref->IsAttrTypeDefault()) {
+            continue;
+        }
 
-	shared_ptr <std::unordered_set<std::string>> result_set = std::make_shared< std::unordered_set<std::string>>();
-	
-	string delimiter = " ";
-	for (auto& row : *result_rows) {
-		string row_result;
-		for (string& cell : row) {
-			row_result += (cell + delimiter);
-		}
+        // replace the value with attribute value 
+        for (vector<string>& row : *result_rows) {
+            string attr_value = ref->GetAttrValue(data_retriever, row.at(pos));
+            row[pos] = attr_value;
+        }
+    }
 
-		// remove the extra trailing space
-		row_result.pop_back();
-		result_set->insert(row_result);
-	}
+    shared_ptr<std::unordered_set<std::string>> result_set = std::make_shared< std::unordered_set<std::string>>();
 
-	std::vector<string> result_vector(result_set->begin(), result_set->end());
-	return result_vector;
+    string delimiter = " ";
+    for (auto& row : *result_rows) {
+        string row_result;
+        for (string& cell : row) {
+            row_result += (cell + delimiter);
+        }
+
+        // remove the extra trailing space
+        row_result.pop_back();
+        result_set->insert(row_result);
+    }
+
+    std::vector<string> result_vector(result_set->begin(), result_set->end());
+    return result_vector;
 }
 
 

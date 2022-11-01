@@ -10,7 +10,7 @@
 #include "../../reference/VarRef.h"
 #include "../../reference/ValType.h"
 #include "../../../Utils/expression/ExprSpec.h"
-
+#include "../../optimization/PriorityManager.h"
 
 
 class AssignPattern

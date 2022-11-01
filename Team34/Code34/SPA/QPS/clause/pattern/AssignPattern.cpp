@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "../../optimization/PriorityManager.h"
-
 using std::string;
 using std::vector;
 using std::shared_ptr;

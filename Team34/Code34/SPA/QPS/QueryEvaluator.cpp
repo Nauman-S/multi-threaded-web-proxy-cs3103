@@ -70,6 +70,7 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateByGroup(shared_ptr<ClauseGrouper>
 	return table;
 }
 
+
 bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_syn_) {
 	for (shared_ptr<Clause> clause : group_wo_syn_->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
@@ -80,9 +81,21 @@ bool QueryEvaluator::EvaluateNoSynGroup(std::shared_ptr<ClauseGroup> group_wo_sy
 	return true;
 }
 
+
+bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_) {
+	for (std::shared_ptr<ClauseGroup> clause_group : groups_wo_select_syn_) {
+		bool is_success = EvaluateNoSelectSynGroup(clause_group);
+		if (!is_success) return false;
+	}
+	return true;
+}
+
+
 bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group_wo_select_syn_) {
 	shared_ptr<Table> table = std::make_shared<WildcardTable>();
-	for (shared_ptr<Clause> clause : group_wo_select_syn_->GetClauses()) {
+	shared_ptr<ClauseGroup> sorted_clause_group = clause_sorter_.SortClausesInGroup(group_wo_select_syn_);
+
+	for (shared_ptr<Clause> clause : sorted_clause_group->GetClauses()) {
 		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
 
 		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
@@ -95,29 +108,6 @@ bool QueryEvaluator::EvaluateNoSelectSynGroup(std::shared_ptr<ClauseGroup> group
 	return true;
 }
 
-bool QueryEvaluator::EvaluateNoSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_wo_select_syn_) {
-	for (std::shared_ptr<ClauseGroup> clause_group : groups_wo_select_syn_) {
-		bool is_success = EvaluateNoSelectSynGroup(clause_group);
-		if (!is_success) return false;
-	}
-	return true;
-}
-
-
-std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
-	shared_ptr<Table> table = std::make_shared<WildcardTable>();
-	for (shared_ptr<Clause> clause : group_w_select_syn_->GetClauses()) {
-		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
-
-		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
-		table = table->Join(result_table);
-		if (table->IsEmpty()) {
-			return table;
-		}
-	}
-	return table;
-}
-
 
 std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::shared_ptr<ClauseGroup>> groups_w_select_syn_) {
 	shared_ptr<Table> table = std::make_shared<WildcardTable>();
@@ -125,6 +115,21 @@ std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroups(std::vector<std::
 		shared_ptr<Table> curr_res_table = EvaluateSelectSynGroup(clause_group);
 
 		table = table->Join(curr_res_table);
+		if (table->IsEmpty()) {
+			return table;
+		}
+	}
+	return table;
+}
+
+std::shared_ptr<Table> QueryEvaluator::EvaluateSelectSynGroup(std::shared_ptr<ClauseGroup> group_w_select_syn_) {
+	shared_ptr<Table> table = std::make_shared<WildcardTable>();
+	shared_ptr<ClauseGroup> sorted_clause_group = clause_sorter_.SortClausesInGroup(group_w_select_syn_);
+
+	for (shared_ptr<Clause> clause : sorted_clause_group->GetClauses()) {
+		shared_ptr<ResWrapper> res_wrapper = clause->GetMatch(data_retriever_);
+		shared_ptr<Table> result_table = TableFactory::CreateTable(res_wrapper);
+		table = table->Join(result_table);
 		if (table->IsEmpty()) {
 			return table;
 		}

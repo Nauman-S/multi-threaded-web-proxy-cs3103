@@ -11,6 +11,6 @@ public:
 	bool IsEmpty() override { return true; };
 
 	std::shared_ptr<Table> Join(std::shared_ptr<Table> that) override {
-		return std::shared_ptr<Table>(this);
+		return std::shared_ptr<EmptyTable>(this);
 	}
 };

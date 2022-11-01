@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QPS\optimization\ClauseSorter.h" />
     <ClInclude Include="QPS\clause\relation\AffectsRel.h" />
     <ClInclude Include="QPS\clause\relation\AffectsTRel.h" />
     <ClInclude Include="QPS\clause\relation\CallsRel.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Utils\type\TypeDef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QPS\optimization\ClauseSorter.cpp" />
     <ClCompile Include="PKB\manager\AffectsManager.cpp" />
     <ClCompile Include="QPS\clause\relation\AffectsRel.cpp" />
     <ClCompile Include="QPS\clause\relation\AffectsTRel.cpp" />
