@@ -15,39 +15,13 @@ using std::unordered_multimap;
 using std::shared_ptr;
 
 
-
-//Table::Table(shared_ptr<ResWrapper> res_wrapper) {
-//	
-//	if (res_wrapper->GetResType() == ResType::kSet) {
-//		std::shared_ptr<SetRes> set_res = res_wrapper->GetSet();
-//		fields_.push_back(set_res->GetSyn());
-//		for (const auto& value: *set_res->GetDomain()) {
-//			rows_.push_back({ value });
-//		}
-//	} else {
-//		std::shared_ptr<TableRes> table_res = res_wrapper->GetTable();
-//		fields_ = *table_res->Columns();
-//
-//		for (auto& row : *table_res->GetRows()) {
-//			rows_.push_back({ row.first, row.second });
-//		}
-//	}
-//
-//	is_empty_ = (rows_.size() == 0);
-//
-//	for (unsigned i = 0; i < fields_.size(); i++) {
-//		field_to_index_map_.insert({ fields_.at(i), i });
-//	}
-//}
 Table::Table(shared_ptr<SetRes> set_res) {
 	fields_.push_back(set_res->GetSyn());
 	for (const auto& value : *set_res->GetDomain()) {
 		rows_.push_back({ value });
 	}
 
-	is_empty_ = (rows_.size() == 0);
-
-	for (unsigned i = 0; i < fields_.size(); i++) {
+	for (size_t i = 0; i < fields_.size(); i++) {
 		field_to_index_map_.insert({ fields_.at(i), i });
 	}
 }
@@ -57,16 +31,13 @@ Table::Table(shared_ptr<TableRes> table_res) {
 	for (auto& row : *table_res->GetRows()) {
 		rows_.push_back({ row.first, row.second });
 	}
-	is_empty_ = (rows_.size() == 0);
 
-	for (unsigned i = 0; i < fields_.size(); i++) {
+	for (size_t i = 0; i < fields_.size(); i++) {
 		field_to_index_map_.insert({ fields_.at(i), i });
 	}
 }
 
-
 vector<string> Table::GetCommonFields(shared_ptr<Table> that) {
-
 	vector<string> common_fields;
 	vector<string> that_fields = that->fields_;
 	for (string this_field : fields_) {
@@ -79,9 +50,10 @@ vector<string> Table::GetCommonFields(shared_ptr<Table> that) {
 
 string Table::ComputeHashkey(vector<string> common_field, vector<string> row) {
 	string hash_key = "";
+	string delimiter = ",";
 
 	for (string field : common_field) {
-		hash_key += (GetValueInField(field, row) + ",");
+		hash_key += (GetValueInField(field, row) + delimiter);
 	}
 
 	return hash_key;
@@ -98,6 +70,7 @@ shared_ptr<Table> Table::Join(shared_ptr<Table> that) {
 		return HashJoin(that, common_fields);
 	}
 }
+
 
 shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 	vector<string> that_fields = that->fields_;
@@ -117,11 +90,11 @@ shared_ptr<Table> Table::CrossProductJoin(shared_ptr<Table> that) {
 	return std::make_shared<Table>(new_fields, new_rows);
 }
 
+
 shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_fields) {
 	vector<string> new_fields = fields_;
 
 	// remove the common fields to avoid duplicates
-	// https://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
 	vector<string> that_fields_except_common = that->fields_;
 	for (string common_field : common_fields) {
 		that_fields_except_common.erase(std::remove(that_fields_except_common.begin(), that_fields_except_common.end(), common_field), that_fields_except_common.end());
@@ -132,37 +105,39 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 
 	vector<vector<string>> new_rows;
 
-	unordered_multimap<string, vector<string>> hashkey_to_rows;
+	unordered_multimap<string, vector<string>> hashkey_to_row_map;
 
 	for (vector<string>& this_row : rows_) {
 		string hashkey = ComputeHashkey(common_fields, this_row);
-		hashkey_to_rows.insert({ hashkey, this_row });
+		hashkey_to_row_map.insert({ hashkey, this_row });
 	}
 
-	unsigned that_col_nums = that->GetNumOfCols();
+	
+	size_t that_col_nums = that->GetNumOfCols();
 	for (vector<string>& that_row : that->rows_) {
+		//JoinTableWithRow(that, that_row, common_fields, hashkey_to_row_map, new_rows);
+
 		string hashkey = that->ComputeHashkey(common_fields, that_row);
-		if (hashkey_to_rows.count(hashkey) == 0) {
+		if (hashkey_to_row_map.count(hashkey) == 0) {
 			continue;
 		}
 
-		//https://stackoverflow.com/questions/9046922/unordered-multimap-iterating-the-result-of-find-yields-elements-with-differe
-		auto& hashkey_to_row_entries = hashkey_to_rows.equal_range(hashkey);
-		for (auto& hashkey_to_row_entry = hashkey_to_row_entries.first; hashkey_to_row_entry != hashkey_to_row_entries.second; ++hashkey_to_row_entry) {
-			string hashkey = hashkey_to_row_entry->first;
-			vector<string> matched_rows = hashkey_to_row_entry->second;
+		auto& matched_row_entries = hashkey_to_row_map.equal_range(hashkey);
+		for (auto& matched_row_entry = matched_row_entries.first; matched_row_entry != matched_row_entries.second; ++matched_row_entry) {
+			string hashkey = matched_row_entry->first;
+			vector<string> matched_row = matched_row_entry->second;
 			
-			for (unsigned field_idx = 0; field_idx < that_col_nums; field_idx++) {
+			for (size_t field_idx = 0; field_idx < that_col_nums; field_idx++) {
 				string& that_field = that->GetFieldAtIndex(field_idx);
 				if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
 					continue;
 				}
-				matched_rows.push_back(that_row.at(field_idx));
+				matched_row.push_back(that_row.at(field_idx));
 			}
-			new_rows.push_back(matched_rows);
+			new_rows.push_back(matched_row);
 		}
-
 	}
+
 	if (new_rows.size() == 0) {
 		return std::make_shared<EmptyTable>();
 	}
@@ -171,18 +146,36 @@ shared_ptr<Table> Table::HashJoin(shared_ptr<Table> that, vector<string> common_
 }
 
 
+//void Table::JoinTableWithRow(std::shared_ptr<Table> that,
+//	std::vector<string>& that_row,
+//	std::vector<std::string> common_fields,
+//	std::unordered_multimap<std::string, std::vector<std::string>>& hashkey_to_row_map, 
+//	std::vector<std::vector<std::string>> new_rows
+//) {
+//	size_t that_col_nums = that->GetNumOfCols();
+//	string hashkey = that->ComputeHashkey(common_fields, that_row);
+//	if (hashkey_to_row_map.count(hashkey) == 0) {
+//		return; 
+//	}
+//
+//	auto& matched_row_entries = hashkey_to_row_map.equal_range(hashkey);
+//	for (auto& matched_row_entry = matched_row_entries.first; matched_row_entry != matched_row_entries.second; ++matched_row_entry) {
+//		//string hashkey = matched_row_entry->first;
+//		vector<string> matched_row = matched_row_entry->second;
+//
+//		for (size_t field_idx = 0; field_idx < that_col_nums; field_idx++) {
+//			string& that_field = that->GetFieldAtIndex(field_idx);
+//			if (std::find(common_fields.begin(), common_fields.end(), that_field) != common_fields.end()) {
+//				continue;
+//			}
+//			matched_row.push_back(that_row.at(field_idx));
+//		}
+//		new_rows.push_back(matched_row);
+//	}
+//}
 
-bool Table::ContainsSynonym(string synonym) {
+bool Table::HasSynonym(string synonym) {
 	return std::find(fields_.begin(), fields_.end(), synonym) != fields_.end();
-}
-
-bool Table::ContainsSynonyms(std::vector<std::string> synonyms) {
-	for (std::string& synonym : synonyms) {
-		if (ContainsSynonym(synonym)) {
-			return true;
-		}
-	}
-	return false;
 }
 
 shared_ptr <std::unordered_set<std::string>> Table::GetDomainBySynonym(std::string synonym) {

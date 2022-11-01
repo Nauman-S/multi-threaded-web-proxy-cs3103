@@ -23,7 +23,7 @@ public:
             return std::make_shared<Table>(res_wrapper->GetTable());
         }
         else {
-            return nullptr;
+            return std::make_shared<EmptyTable>();
         }
     }
 };
