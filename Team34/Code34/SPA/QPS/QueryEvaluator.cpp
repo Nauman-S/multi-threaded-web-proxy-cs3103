@@ -9,9 +9,9 @@
 #include "query_result/Table.h"
 #include "query_result/EmptyTable.h"
 #include "query_result/WildcardTable.h"
-#include "clause_grouper/ClauseGrouper.h"
-#include "clause_grouper/SimpleClauseGrouper.h"
-#include "clause_grouper/OptimizedClauseGrouper.h"
+#include "optimization/clause_grouper/ClauseGrouper.h"
+#include "optimization/clause_grouper/SimpleClauseGrouper.h"
+#include "optimization/clause_grouper/OptimizedClauseGrouper.h"
 
 using std::vector;
 using std::shared_ptr;
