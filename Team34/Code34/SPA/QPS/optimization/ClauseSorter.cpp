@@ -1,6 +1,7 @@
 #include "ClauseSorter.h"
 
 #include <algorithm>
+#include <string>
 
 using std::string;
 using std::vector;

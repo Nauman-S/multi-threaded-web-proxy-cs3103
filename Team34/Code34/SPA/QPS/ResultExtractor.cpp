@@ -23,8 +23,7 @@ vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever
     if (is_boolean_result) {
         if (result_table_->IsEmpty()) {
             results.push_back("FALSE");
-        }
-        else {
+        } else {
             results.push_back("TRUE");
         }
         return results;

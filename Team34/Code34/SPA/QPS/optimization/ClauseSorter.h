@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <unordered_set>
+#include <string>
 
 #include "PriorityManager.h"
 #include "../clause/ClauseGroup.h"
