@@ -76,7 +76,5 @@ private:
     };
 
 public:
-
     Priority GetClausePriority(ClauseType type, int syn_num) { return priority_map_[std::make_pair(type, syn_num)]; }
-
 };
