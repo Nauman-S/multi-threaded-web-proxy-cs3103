@@ -118,7 +118,7 @@ assign a, b;
 Select <a, b> such that Affects(a, b) and Follows(a, b)
 20 21
 5000
-24 - select tuple of two with Affects and Follows*
+25 - select tuple of two with Affects and Follows*
 assign a, b;
 Select <a, b> such that Affects(a, b) and Follows*(a, b)
 1 4,20 21,7 11

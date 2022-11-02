@@ -98,3 +98,28 @@ while w; variable v;
 Select w pattern w(v,_) with v.varName = "orangeNum" 
 1
 5000
+21 - Test Affects and Parent
+while w; assign a, b;
+Select w pattern w(_,_) such that Parent(w, a) and Affects(a, b)
+6
+5000
+22 - Test Affects and Parent*
+while w; assign a, b;
+Select w pattern w(_,_) such that Parent*(w, a) and Affects(a, b)
+1, 3, 6
+5000
+23 - Test Affects* and Follows*
+while w; assign a, b;
+Select w pattern w(_,_) such that Follows*(w, a) and Affects*(a, b)
+
+5000
+24 - Test Affects* and Next
+while w; assign a, b;
+Select w pattern w(_,_) such that Next(w, a) and Affects*(a, b)
+6
+5000
+25 - Test Affects* and Next*
+while w; assign a, b;
+Select w pattern w(_,_) such that Next*(w, a) and Affects*(a, b)
+1, 3, 6, 8
+5000
