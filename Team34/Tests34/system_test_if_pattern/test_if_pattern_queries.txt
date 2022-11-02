@@ -53,3 +53,8 @@ if ifs; variable v; assign a;
 Select ifs such that Parent*(ifs, a) pattern ifs(_,_,_)
 2, 4
 5000
+12 - Wrong stmt type
+call cl; variable v;
+Select cl pattern cl(v, _, _)
+SemanticError
+5000
