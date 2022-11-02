@@ -32,7 +32,6 @@
 #include "clause/with_clause/With.h"
 #include "reference/ValType.h"
 #include "../PKB/ReadPKBManager.h"
-#include "../PKB/manager/UsesManager.h"
 #include "../Utils/type/TypeDef.h"
 
 using std::make_shared;
@@ -170,12 +169,16 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel) {
      *     stmt_syn, stmt_num -> get all lhs stmt by rhs stmt_num.
      *     wildcard, stmt_syn -> get all rhs stmt.
      *     stmt_num, stmt_syn -> get all rhs stmt by lhs stmt_num.
+     *     Special case: stmt_syn, stmt_syn with same synonyms.
      *
      * bool result:
      *     wildcard, wildcard -> check if any relation exists.
      *     wildcard, stmt_num -> get all lhs stmt by rhs stmt_num, and check set
-     * emptiness. stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and
-     * check set emptiness. stmt_num, stmt_num -> check relation existence.
+     * emptiness. 
+     *     stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and
+     * check set emptiness. 
+     *     stmt_num, stmt_num -> check relation existence.
+     *     Special case: stmt_syn, stmt_syn with unallowed same synonyms.
      */
     auto [lhs_type, rhs_type] = rel.ValTypes();
 
@@ -317,14 +320,17 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
     }
 
     string syn = ref_ptr->GetName();
-    shared_ptr<SetRes> set_res = shared_ptr<SetRes>(new SetRes(syn, str_set));
+    auto set_res = shared_ptr<SetRes>(new SetRes(syn, str_set));
     return make_shared<ResWrapper>(set_res);
 }
 
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with) {
     /*
-     * Each LHS and RHS reference in With clause can be one of {kInt, kString,
-     * kSynonym} bool result: (int, int) -> test equality. (string, string) ->
+     * Each LHS and RHS reference in With clause can be one of types {kInt, kString,
+     * kSynonym} 
+     * 
+     * bool result: 
+     *     (int, int) -> test equality. (string, string) ->
      * test equality. (int, string) -> false. (string, int) -> false.
      *
      * set result:
@@ -1200,7 +1206,7 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     for (auto& [default_value, key_value] : *table2) {
         if (auto& entry_itrs = key_mulmap.equal_range(key_value); entry_itrs.first != entry_itrs.second) {
             std::for_each(entry_itrs.first, entry_itrs.second,
-                [&](auto& entry) {joined_table->push_back(make_pair(entry.second, default_value)); });
+                [&](auto& entry) { joined_table->push_back(make_pair(entry.second, default_value)); });
         }
     }
 

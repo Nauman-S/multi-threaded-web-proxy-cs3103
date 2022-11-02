@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "Table.h"
-class WildcardTable :
-    public Table
+#include "table/Table.h"
+
+class WildcardTable : public Table
 {
 public:
     bool IsWildcard() override { return true; };
