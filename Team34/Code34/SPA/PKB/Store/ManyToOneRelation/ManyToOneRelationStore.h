@@ -39,6 +39,9 @@ inline void ManyToOneRelationStore<S, T>::SetRelation(S left, T right) {
 
 template <typename S, typename T>
 inline bool ManyToOneRelationStore<S, T>::CheckRelation(S left, T right) {
+	if (many_to_one_map_.find(left) == many_to_one_map_.end()) {
+		return false;
+	}
 	return many_to_one_map_[left] == right;
 }
 

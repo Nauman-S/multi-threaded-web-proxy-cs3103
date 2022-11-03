@@ -39,10 +39,10 @@ inline void OneToOneRelationStore<S, T>::SetRelation(S left, T right) {
 
 template <typename S, typename T>
 inline bool OneToOneRelationStore<S, T>::CheckRelation(S left, T right) {
-	if (left_to_right_map_.find(left) != left_to_right_map_.end()) {
-		return left_to_right_map_[left] == right;
+	if (left_to_right_map_.find(left) == left_to_right_map_.end()) {
+		return false;
 	}
-	return false;
+	return left_to_right_map_[left] == right;
 }
 
 template <typename S, typename T>
