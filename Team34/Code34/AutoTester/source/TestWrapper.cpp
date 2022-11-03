@@ -8,15 +8,15 @@
 #include "../SPA/SP/tokenizer/SourceLexer.h"
 #include "../SPA/SP/SourceValidator.h"
 #include "../SPA/SP/SourceParser.h"
-#include "../SPA/SP/DesignExtractor.h"
+#include "../SPA/SP/design_extractor/DesignExtractor.h"
 
 #include "../SPA/QPS/parser/QueryBuilder.h"
-#include "../SPA/Utils/error/SyntaxError.h"
-#include "../SPA/Utils/error/SemanticError.h"
 #include "../SPA/QPS/Query.h"
 #include "../SPA/QPS/QueryEvaluator.h"
 
 #include "../SPA/Utils/error/InvalidTokenException.h"
+#include "../SPA/Utils/error/SyntaxError.h"
+#include "../SPA/Utils/error/SemanticError.h"
 
 using namespace std;
 

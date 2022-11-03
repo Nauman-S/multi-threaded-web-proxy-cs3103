@@ -81,6 +81,7 @@
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
     <ClInclude Include="QPS\query_result\table\TableFactory.h" />
+    <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="Utils\error\Error.h" />
     <ClInclude Include="Utils\error\SemanticError.h" />
     <ClInclude Include="Utils\error\SyntaxError.h" />
@@ -119,7 +120,6 @@
     <ClInclude Include="SP\ast\ReadStatementASTNode.h" />
     <ClInclude Include="SP\ast\StatementASTNode.h" />
     <ClInclude Include="SP\ast\WhileStatementASTNode.h" />
-    <ClInclude Include="SP\DesignExtractor.h" />
     <ClInclude Include="SP\design_extractor\CallsExtractor.h" />
     <ClInclude Include="SP\design_extractor\EntityExtractor.h" />
     <ClInclude Include="SP\design_extractor\Extractable.h" />
@@ -200,6 +200,7 @@
     <ClCompile Include="QPS\optimization\ResTableCache.cpp" />
     <ClCompile Include="QPS\parser\QueryBuilder.cpp" />
     <ClCompile Include="QPS\parser\QueryLexer.cpp" />
+    <ClCompile Include="SP\design_extractor\DesignExtractor.cpp" />
     <ClCompile Include="Utils\error\SemanticError.cpp" />
     <ClCompile Include="Utils\error\SyntaxError.cpp" />
     <ClCompile Include="QPS\clause\pattern\AssignPattern.cpp" />
@@ -230,7 +231,6 @@
     <ClCompile Include="QPS\clause\with_clause\With.cpp" />
     <ClCompile Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\ast\AssignStatementASTNode.cpp" />
-    <ClCompile Include="SP\ast\ASTNode.cpp" />
     <ClCompile Include="SP\ast\CallStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\ConditionExpression.cpp" />
     <ClCompile Include="SP\ast\IfStatementASTNode.cpp" />
@@ -240,7 +240,6 @@
     <ClCompile Include="SP\ast\ReadStatementASTNode.cpp" />
     <ClCompile Include="SP\ast\StatementASTNode.cpp" />
     <ClCompile Include="SP\ast\WhileStatementASTNode.cpp" />
-    <ClCompile Include="SP\DesignExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\CallsExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\EntityExtractor.cpp" />
     <ClCompile Include="SP\design_extractor\FollowsExtractor.cpp" />

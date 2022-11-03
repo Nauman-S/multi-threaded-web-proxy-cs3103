@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-#include "./ast/ProgramNode.h"
+#include "../ast/ProgramNode.h"
 
 class DesignExtractor {
 public:
