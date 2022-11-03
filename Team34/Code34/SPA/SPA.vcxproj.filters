@@ -258,6 +258,5 @@
     <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
     <ClInclude Include="QPS\query_result\table\TableFactory.h" />
     <ClInclude Include="QPS\optimization\ClauseSorter.h" />
-    <ClInclude Include="QPS\query_result\WildcardTable.h" />
   </ItemGroup>
 </Project>
