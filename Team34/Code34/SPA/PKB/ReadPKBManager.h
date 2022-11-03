@@ -47,6 +47,8 @@ public:
     virtual bool IsParentStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type);
+    virtual bool CheckAnyChildFromStmt(StmtNum parent);
+    virtual bool CheckAnyParentFromStmt(StmtNum child);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
@@ -121,6 +123,8 @@ public:
     virtual bool IsNextStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
+    virtual bool CheckAnyNextStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyPrevStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmts(RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts(RefType prev_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
@@ -129,8 +133,6 @@ public:
     virtual bool CheckNextT(StmtNum prev, StmtNum next);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
-    virtual bool CheckAnyNextStmtFromStmt(StmtNum stmt);
-    virtual bool CheckAnyPrevStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
 
     // APIs related to Affects relation

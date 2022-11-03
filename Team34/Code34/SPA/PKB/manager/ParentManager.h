@@ -19,6 +19,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child);
+	bool CheckAnyChildFromStmt(StmtNum parent);
+	bool CheckAnyParentFromStmt(StmtNum child);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren();
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();

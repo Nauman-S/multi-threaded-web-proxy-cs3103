@@ -95,6 +95,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetParentFromStmt(S
     return FilterStmtSetByType(parent, parent_type);
 }
 
+bool ReadPKBManager::CheckAnyChildFromStmt(StmtNum parent)
+{
+    return pkb.parent_manager_.CheckAnyChildFromStmt(parent);
+}
+
+bool ReadPKBManager::CheckAnyParentFromStmt(StmtNum child)
+{
+    return pkb.parent_manager_.CheckAnyParentFromStmt(child);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(RefType children_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_children = pkb.parent_manager_.GetAllChildren();
     return FilterStmtSetByType(all_children, children_type);
@@ -412,6 +422,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPrevStmtsFromStm
     return FilterStmtSetByType(prev_stmts, prev_stmt_type);
 }
 
+bool ReadPKBManager::CheckAnyNextStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyNextStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyPrevStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyPrevStmtFromStmt(stmt);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmts(RefType next_stmt_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_next_stmts = pkb.next_manager_.GetAllNextStmts();
     return FilterStmtSetByType(all_next_stmts, next_stmt_type);
@@ -439,16 +459,6 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmtsFrom
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
     return FilterStmtSetByType(all_prev_stmts, prev_stmt_type);
-}
-
-bool ReadPKBManager::CheckAnyNextStmtFromStmt(StmtNum stmt)
-{
-    return pkb.next_manager_.CheckAnyNextStmtFromStmt(stmt);
-}
-
-bool ReadPKBManager::CheckAnyPrevStmtFromStmt(StmtNum stmt)
-{
-    return pkb.next_manager_.CheckAnyPrevStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllNextTRelations() {
