@@ -1,0 +1,5 @@
+12 - select irrelevant stmt nums
+stmt s;
+Select BOOLEAN such that Parent(0,0)
+FALSE
+5000
