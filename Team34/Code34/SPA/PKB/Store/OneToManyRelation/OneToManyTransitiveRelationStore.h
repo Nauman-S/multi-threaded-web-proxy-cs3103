@@ -20,6 +20,9 @@ public:
 
 template <typename T>
 inline bool OneToManyTransitiveRelationStore<T>::CheckTransitiveRelation(T left, T right) {
+	if (left == 0 || right == 0) {
+		return false;
+	}
 	T next = right;
 	auto iter = many_to_one_map_.find(next);
 	while (iter != many_to_one_map_.end()) {

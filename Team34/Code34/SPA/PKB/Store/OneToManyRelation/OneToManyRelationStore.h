@@ -40,6 +40,9 @@ inline void OneToManyRelationStore<S, T>::SetRelation(S left, T right) {
 
 template <typename S, typename T>
 inline bool OneToManyRelationStore<S, T>::CheckRelation(S left, T right) {
+	if (left == 0 || right == 0) {
+		return false;
+	}
 	return many_to_one_map_[right] == left;
 }
 
