@@ -52,3 +52,14 @@ Select a1 such that Parent* (3, a1) pattern a1("var2", "var2 + 1")
 while w1;
 Select w1 such that Parent* (w1, _)
 3
+5000
+12 - select irrelevant stmt nums
+stmt s;
+Select BOOLEAN such that Parent(0,0)
+FALSE
+5000
+13 - select irrelevant stmt nums
+stmt s;
+Select BOOLEAN such that Parent(0,10)
+FALSE
+5000
