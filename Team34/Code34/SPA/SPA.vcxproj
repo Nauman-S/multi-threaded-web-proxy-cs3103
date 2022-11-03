@@ -81,7 +81,6 @@
     <ClInclude Include="QPS\parser\QueryLexer.h" />
     <ClInclude Include="QPS\query_result\table\WildcardTable.h" />
     <ClInclude Include="QPS\query_result\table\TableFactory.h" />
-    <ClInclude Include="QPS\query_result\WildcardTable.h" />
     <ClInclude Include="SP\design_extractor\DesignExtractor.h" />
     <ClInclude Include="Utils\error\Error.h" />
     <ClInclude Include="Utils\error\SemanticError.h" />
