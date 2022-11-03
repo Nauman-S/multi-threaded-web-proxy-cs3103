@@ -86,9 +86,6 @@
     <ClCompile Include="TestQueryEvaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\algo\TestDisjointSetUnion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SP\TestSourceValidator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -136,7 +136,6 @@
     <ClInclude Include="QPS\reference\TempRef.h" />
     <ClInclude Include="QPS\query_result\table\Table.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
-    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
     <ClInclude Include="Utils\algo\TopoCycle.h" />
     <ClInclude Include="Utils\expression\ExactExprSpec.h" />
@@ -251,7 +250,6 @@
     <ClCompile Include="SP\SourceValidator.cpp" />
     <ClCompile Include="SP\tokenizer\SourceLexer.cpp" />
     <ClCompile Include="SP\tokenizer\SourceToken.cpp" />
-    <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
     <ClCompile Include="Utils\algo\TopoCycle.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
