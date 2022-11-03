@@ -55,7 +55,7 @@ inline bool OneToOneRelationStore<S, T>::IsEmpty() {
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetRHSByLHS(S left) {
 	std::shared_ptr<std::unordered_set<T>> rhs = std::make_shared<std::unordered_set<T>>();
-	if (left_to_right_map_.find(left) != left_to_right_map_.end()) {
+	if (CheckAnyRHSByLHS(left)) {
 		rhs->insert(left_to_right_map_[left]);
 	}
 	return rhs;
@@ -64,7 +64,7 @@ inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetRH
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> OneToOneRelationStore<S, T>::GetLHSByRHS(T right) {
 	std::shared_ptr<std::unordered_set<S>> lhs = std::make_shared<std::unordered_set<S>>();
-	if (right_to_left_map_.find(right) != right_to_left_map_.end()) {
+	if (CheckAnyLHSByRHS(right)) {
 		lhs->insert(right_to_left_map_[right]);
 	}
 	return lhs;

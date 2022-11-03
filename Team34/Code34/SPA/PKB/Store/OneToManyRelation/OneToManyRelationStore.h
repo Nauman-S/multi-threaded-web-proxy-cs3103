@@ -17,8 +17,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<T>> GetMany(S s);
 	std::shared_ptr<std::unordered_set<S>> GetOne(T t);
-	bool CheckMany(S s);
-	bool CheckOne(T t);
+	bool CheckAnyMany(S s);
+	bool CheckAnyOne(T t);
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
@@ -52,30 +52,30 @@ inline bool OneToManyRelationStore<S, T>::IsEmpty() {
 
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToManyRelationStore<S, T>::GetMany(S s) {
-	if (one_to_many_map_.find(s) == one_to_many_map_.end()) {
-		return std::make_shared<std::unordered_set<T>>();
-	} else {
+	if (CheckAnyMany(s)) {
 		return std::make_shared<std::unordered_set<T>>(one_to_many_map_[s]);
+	} else {
+		return std::make_shared<std::unordered_set<T>>();
 	}
 }
 
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> OneToManyRelationStore<S, T>::GetOne(T t) {
 	std::shared_ptr<std::unordered_set<S>> parent = std::make_shared<std::unordered_set<S>>();
-	if (many_to_one_map_.find(t) != many_to_one_map_.end()) {
+	if (CheckAnyOne(t)) {
 		parent->insert(many_to_one_map_[t]);
 	}
 	return parent;
 }
 
 template<typename S, typename T>
-inline bool OneToManyRelationStore<S, T>::CheckMany(S s)
+inline bool OneToManyRelationStore<S, T>::CheckAnyMany(S s)
 {
 	return one_to_many_map_.find(s) != one_to_many_map_.end();
 }
 
 template<typename S, typename T>
-inline bool OneToManyRelationStore<S, T>::CheckOne(T t)
+inline bool OneToManyRelationStore<S, T>::CheckAnyOne(T t)
 {
 	return many_to_one_map_.find(t) != many_to_one_map_.end();
 }

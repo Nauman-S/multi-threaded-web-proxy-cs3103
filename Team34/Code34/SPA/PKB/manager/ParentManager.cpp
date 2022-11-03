@@ -25,12 +25,12 @@ std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetParentFromStmt(St
 
 bool ParentManager::CheckAnyChildFromStmt(StmtNum parent)
 {
-	return parent_store_.CheckMany(parent);
+	return parent_store_.CheckAnyMany(parent);
 }
 
 bool ParentManager::CheckAnyParentFromStmt(StmtNum child)
 {
-	return parent_store_.CheckOne(child);
+	return parent_store_.CheckAnyOne(child);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ParentManager::GetAllParents() {

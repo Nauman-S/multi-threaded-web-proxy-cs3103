@@ -54,21 +54,19 @@ inline bool ManyToManyRelationStore<S, T>::IsEmpty() {
 
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> ManyToManyRelationStore<S, T>::GetRHSByLHS(S s) {
-	auto iter = s_to_t_map_.find(s);
-	if (iter == s_to_t_map_.end()) {
-		return std::make_shared<std::unordered_set<T>>();
-	} else {
+	if (CheckAnyRHSByLHS(s)) {
 		return std::make_shared<std::unordered_set<T>>(s_to_t_map_[s]);
+	} else {
+		return std::make_shared<std::unordered_set<T>>();
 	}
 }
 
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::GetLHSByRHS(T t) {
-	auto iter = t_to_s_map_.find(t);
-	if (iter == t_to_s_map_.end()) {
-		return std::make_shared<std::unordered_set<S>>();
-	} else {
+	if (CheckAnyLHSByRHS(t)) {
 		return std::make_shared<std::unordered_set<S>>(t_to_s_map_[t]);
+	} else {
+		return std::make_shared<std::unordered_set<S>>();
 	}
 }
 
