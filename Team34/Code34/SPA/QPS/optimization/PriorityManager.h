@@ -55,11 +55,11 @@ private:
         {std::make_pair(ClauseType::kModifiesSRel, 2), 10},
         {std::make_pair(ClauseType::kParentTRel, 2), 10},
         {std::make_pair(ClauseType::kCallsTRel, 2), 10},
+        {std::make_pair(ClauseType::kFollowsRel, 2), 10},
 
         {std::make_pair(ClauseType::kUsesPRel, 2), 15},
         {std::make_pair(ClauseType::kUsesSRel, 2), 15},
-
-        {std::make_pair(ClauseType::kFollowsRel, 2), 20},
+        
         {std::make_pair(ClauseType::kNextRel, 2), 20},
         {std::make_pair(ClauseType::kIfPattern, 2), 20},
         {std::make_pair(ClauseType::kWhilePattern, 2), 20},

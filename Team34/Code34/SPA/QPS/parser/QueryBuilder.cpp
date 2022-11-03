@@ -75,7 +75,7 @@ std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatements() {
 }
 
 std::vector<shared_ptr<Ref>> QueryBuilder::ParseDeclarationStatement() {
-    std::string design_entity = this->lexer_->MatchDesignEntityKeyword();
+    std::string design_entity = lexer_->MatchDesignEntityKeyword();
 
     std::vector<shared_ptr<Ref>> synonyms;
 
