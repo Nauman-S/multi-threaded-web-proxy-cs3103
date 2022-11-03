@@ -498,6 +498,14 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromSt
     return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
 }
 
+bool ReadPKBManager::CheckAnyEffectStmtFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.CheckAnyEffectStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyCauseStmtFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.CheckAnyCauseStmtFromStmt(stmt);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts(RefType effect_stmt_type) {
     if (effect_stmt_type != RefType::kStmtRef && effect_stmt_type != RefType::kAssignRef) {
         return std::make_shared<std::unordered_set<StmtNum>>();

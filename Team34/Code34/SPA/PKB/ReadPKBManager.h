@@ -142,6 +142,8 @@ public:
     virtual bool IsAffectsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type);
+    virtual bool CheckAnyEffectStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyCauseStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmts(RefType effect_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmts(RefType cause_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsRelations();
