@@ -3,15 +3,15 @@
 #include <vector>
 #include <memory>
 
-#include "./design_extractor/EntityExtractor.h"
-#include "./design_extractor/UsesExtractor.h"
-#include "./design_extractor/ModifiesExtractor.h"
-#include "./design_extractor/ParentsExtractor.h"
-#include "./design_extractor/FollowsExtractor.h"
-#include "./design_extractor/CallsExtractor.h"
-#include "./design_extractor/NextExtractor.h"
+#include "EntityExtractor.h"
+#include "UsesExtractor.h"
+#include "ModifiesExtractor.h"
+#include "ParentsExtractor.h"
+#include "FollowsExtractor.h"
+#include "CallsExtractor.h"
+#include "NextExtractor.h"
 
-#include "../PKB/WritePKBManager.h"
+#include "../../PKB/WritePKBManager.h"
 
 // Extracts all entities and relations from given root node of
 // AST and stores into the PKB
