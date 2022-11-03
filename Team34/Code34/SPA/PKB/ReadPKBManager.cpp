@@ -157,6 +157,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPredecessorStmtF
     return FilterStmtSetByType(predecessor_stmt, predecessor_type);
 }
 
+bool ReadPKBManager::CheckAnySuccessorStmtFromStmt(StmtNum stmt)
+{
+    return pkb.follows_manager_.CheckAnySuccessorStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyPredecessorStmtFromStmt(StmtNum stmt)
+{
+    return pkb.follows_manager_.CheckAnyPredecessorStmtFromStmt(stmt);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts(RefType successor_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_successor_stmts = pkb.follows_manager_.GetAllSuccessorStmts();
     return FilterStmtSetByType(all_successor_stmts, successor_type);

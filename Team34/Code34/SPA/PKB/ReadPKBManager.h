@@ -64,6 +64,8 @@ public:
     virtual bool IsFollowsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type);
+    virtual bool CheckAnySuccessorStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyPredecessorStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
