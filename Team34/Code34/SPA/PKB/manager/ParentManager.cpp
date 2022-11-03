@@ -8,6 +8,9 @@ void ParentManager::SetParent(StmtNum parent, StmtNum child) {
 }
 
 bool ParentManager::CheckParent(StmtNum parent, StmtNum child) {
+	if (parent == 0 || child == 0) {
+		return false;
+	}
 	return parent_store_.CheckRelation(parent, child);
 }
 
@@ -43,6 +46,9 @@ void ParentManager::SetParentT(StmtNum parent, StmtNum child) {
 }
 
 bool ParentManager::CheckParentT(StmtNum parent, StmtNum child) {
+	if (parent == 0 || child == 0) {
+		return false;
+	}
 	return parent_store_.CheckTransitiveRelation(parent, child);
 }
 
