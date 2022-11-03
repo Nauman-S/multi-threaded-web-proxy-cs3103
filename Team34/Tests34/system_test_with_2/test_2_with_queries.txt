@@ -1,100 +1,150 @@
-14 - variable.varName, Single Return
+1 - variable.varName, Single Return
 assign a; while w1, w2; variable v;
 Select <v.varName,w1,w2> pattern a(v,_) such that Parent*(w1, w2) and Parent*(w2, a) pattern w1(v,_) with v.varName='f'
 none
 40000
-1 - procedure.procName , single return
+2 - procedure.procName , single return
 procedure p, q;
 Select p such that Calls (p, q) with q.procName = "Echo" such that Modifies (p, "z")
 Golf, Delta
 40000
-2 - procedure.procName, multiple return
+3 - procedure.procName, multiple return
 procedure p; variable v; constant c;procedure q; assign a;
 Select <q, v, c> such that Calls*(p,q) and Uses(q, v) with p.procName = "Golf" and v.varName="qwerty" with c.value = a.stmt# and a.stmt# = 20
 Echo qwerty 20,  Foxtrot qwerty 20
 40000
-3 - procedure.procName, boolean return
+4 - procedure.procName, boolean return
 procedure p,q,x,y,z; assign a1;
 Select BOOLEAN such that Calls(p,q) and Calls (q,x) and Calls(q,y) and Calls (q,z) with q.procName="Bravo" pattern a1("x",_) and a1( _ , _"x + 2"_)
 FALSE
 40000
-4 - call.procName, single return
+5 - call.procName, single return
 while w1, w2;call c;
 Select w1 such that Parent* (w1, w2) and Parent*(w2 , c) with c.procName="Bravo"
 21, 15, 42, 44
 40000
-28 - call.stmt#, multiple return
+6 - call.stmt#, multiple return
 while w1, w2;call c;
 Select w1 such that Parent* (w1, w2) and Parent*(w2 , c) with c.stmt#=24 
 21, 15
 40000
-5 - call.procName, Multiple return
+7 - call.procName, Multiple return
 call c1,c2; if ifs; assign a;
 Select <c1,c2,ifs> such that Next(c1,c2) such that Parent* (ifs, c2) pattern a (_, "j-1") such that Next* (1, a) with c2.procName="Echo"
 66 67 54, 66 67 53, 66 67 52
 40000
-29 - call.stmt#, Multiple return
+8 - call.stmt#, Multiple return
 call c1,c2; if ifs; assign a;
 Select <c1,c2,ifs> such that Next(c1,c2) such that Parent* (ifs, c2) pattern a (_, "j-1") such that Next* (1, a) with c2.stmt#=67
 66 67 54, 66 67 53, 66 67 52
 40000
-6 - call.procName, BOOLEAN return
+9 - call.procName, BOOLEAN return
 call c,c2; procedure p , q; variable v; assign a;
 Select BOOLEAN such that Calls(p,q) such that Uses (c, v) pattern a(v,_"y"_) such that Modifies (q, v) and Next*(c,c2) with c2.procName = "Bravo"
 TRUE
 40000
-30 - call.procName, BOOLEAN return
+10 - call.procName, BOOLEAN return
 call c,c2; procedure p , q; variable v; assign a;
 Select BOOLEAN such that Calls(p,q) such that Uses (c, v) pattern a(v,_"y"_) such that Modifies (q, v) and Next*(c,c2) with c2.stmt#=24
 TRUE
 40000
-13 - print.varName, single return
+11- print.varName, single return
 print p,q; procedure proc1,proc2;assign a;variable v;
 Select q such that Follows*(p,q) with q.varName = "f" such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
 26, 86
 40000
-25 - print.stmt#, single return
+12 - print.stmt#, single return
 print p,q; procedure proc1,proc2;assign a;variable v;
 Select p such that Follows*(p,q) with q.stmt# = 86 such that Calls (proc1, proc2) and Modifies(proc2, v) pattern a(v,_) such that Next*(a,q)
 85
 40000
-15 - variable.varName, Multiple
+13 - variable.varName, Multiple
 variable v; assign a;
 Select v.varName such that  Modifies("Echo",v) pattern a(v, _"   j +   10  "_)
 j
 40000
-16 - variable.varName, BOOLEAN
+14 - variable.varName, BOOLEAN
 procedure p,q; variable v;
 Select BOOLEAN such that  Calls*(p,q) and Modifies (p, v) and Modifies (q,v) with v.varName="w"
 FALSE
 40000
-17 - read.varName, Single
+15 - read.varName, Single
 read r; variable v; procedure p,q;
 Select r such that Calls*(p,q) and Modifies (p, v) and Modifies (q,v) with r.varName = v.varName
 14, 2, 27, 28, 35, 41, 58, 64
 40000
-18 - read.varName, Multiple
+16 - read.varName, Multiple
 read r; if ifs1, ifs2;
 Select <r.varName,r.varName> such that Parent*(ifs1, ifs2) and Parent*(ifs2,r) 
 l l, z z
 40000
-19 - read.varName, BOOLEAN
+17 - read.varName, BOOLEAN
 read r;call c,c2; procedure p , q; variable v; assign a; if ifs1, ifs2;
 Select BOOLEAN such that Calls(p,q) pattern a(v,_"y"_) such that Uses (c, v) and Modifies (q, v) such that Parent(ifs1,ifs2) and Parent (ifs2, r) and Next*(c,c2) with c2.procName = "Bravo"  with r.varName='z' 
 TRUE
 40000
-23 - constant.value, Multiple
+18 - constant.value, Multiple
 constant BOOLEAN; procedure p,q; stmt s; variable v;
 Select <BOOLEAN.value,p.procName,q.procName>  such that Calls*(p,q) with BOOLEAN.value = s.stmt# such that Uses (s,v) and Modifies (q,v) with p.procName="Echo"
 23 Echo Foxtrot,24 Echo Foxtrot,29 Echo Foxtrot,56 Echo Foxtrot,67 Echo Foxtrot,78 Echo Foxtrot
 40000
-41 - if.stmt#, Single
+19 - if.stmt#, Single
 if ifs; constant c;
 Select ifs.stmt# with ifs.stmt#=c.value
 23, 78
 40000
-46 - assign.stmt#, BOOLEAN
+20 - assign.stmt#, BOOLEAN
 assign a; assign a2; variable v;
 Select BOOLEAN pattern a(v,_) such that Next*(a,a2) pattern a2(v,_) with a.stmt# = a2.stmt#
 TRUE
 40000
+21 - stmt#
+assign a; stmt s; if ifs;
+Select <s, ifs> with ifs.stmt# = s.stmt#
+103 103,18 18,23 23,30 30,33 33,52 52,53 53,54 54,55 55,77 77,78 78,80 80,81 81,91 91
+5000
+22 - varName and stmt#
+assign a; stmt s; if ifs; variable v;
+Select <s, ifs> with ifs.stmt# = v.varName
+
+5000
+23 - value and stmt#
+assign a; stmt s; if ifs; variable v; constant c;
+Select ifs with ifs.stmt# = c.value
+23,78
+5000
+24 - value and stmt#
+assign a; stmt s; if ifs; variable v; constant c; print p;
+Select p with p.varName = v.varName
+108,13,16,25,26,36,56,57,65,69,71,85,86
+5000
+25 - procedure attributes (duplicate synonyms)
+assign a; stmt s; if ifs; variable v; print p; procedure p;
+Select p with p.varName = v.varName
+SemanticError
+5000
+26 - select procedure attributes 
+assign a; stmt s; if ifs;  procedure p;
+Select <p, p.procName>
+Alpha Alpha,Bravo Bravo,Charlie Charlie,Delta Delta,Echo Echo,Foxtrot Foxtrot,Golf Golf,Hotel Hotel
+5000
+27 - select call attributes 
+assign a; stmt s; if ifs;  procedure p; call c;
+Select <c, c.procName>
+24 Bravo,29 Charlie,31 Foxtrot,34 Hotel,37 Charlie,47 Bravo,50 Echo,60 Hotel,66 Hotel,67 Echo,68 Echo,94 Foxtrot
+5000
+28 - select variable attributes 
+assign a; stmt s; variable v;  procedure p; call c;
+Select <v, v.varName>
+f f,g g,h h,i i,j j,l l,m m,o o,p p,phi phi,q q,qwerty qwerty,s s,t t,temp temp,w w,x x,y y,z z
+5000
+29 - select variable attributes 
+read r; stmt s; variable v;  procedure p; call c;
+Select <r, r.varName>
+1 w,14 j,2 p,27 phi,28 m,35 l,38 t,39 o,40 g,41 phi,58 z,64 z
+5000
+30 - select print attributes 
+read r; stmt s; variable v;  procedure p; call c; print print;
+Select <print, print.varName>
+108 l,13 f,16 w,25 w,26 f,36 l,56 p,57 q,65 z,69 p,71 s,85 s,86 f
+5000
