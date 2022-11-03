@@ -104,6 +104,8 @@ public:
     virtual bool IsCallsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetCalleeFromCaller(Procedure caller);
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetCallerFromCallee(Procedure callee);
+    virtual bool CheckAnyCalleeFromCaller(Procedure caller);
+    virtual bool CheckAnyCallerFromCallee(Procedure callee);
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallers();
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallees();
     virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsRelations();
@@ -127,6 +129,8 @@ public:
     virtual bool CheckNextT(StmtNum prev, StmtNum next);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
+    virtual bool CheckAnyNextStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyPrevStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextTRelations();
 
     // APIs related to Affects relation

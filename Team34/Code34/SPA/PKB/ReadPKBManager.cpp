@@ -354,6 +354,16 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetCallerFromCall
     return pkb.calls_manager_.GetCallerFromCallee(callee);
 }
 
+bool ReadPKBManager::CheckAnyCalleeFromCaller(Procedure caller)
+{
+    return pkb.calls_manager_.CheckAnyCalleeFromCaller(caller);
+}
+
+bool ReadPKBManager::CheckAnyCallerFromCallee(Procedure callee)
+{
+    return pkb.calls_manager_.CheckAnyCallerFromCallee(callee);
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallers() {
     return pkb.calls_manager_.GetAllCallers();
 }
@@ -429,6 +439,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmtsFrom
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_prev_stmts = pkb.next_manager_.GetAllPrevStmtsFromStmt(stmt);
     return FilterStmtSetByType(all_prev_stmts, prev_stmt_type);
+}
+
+bool ReadPKBManager::CheckAnyNextStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyNextStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyPrevStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyPrevStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> ReadPKBManager::GetAllNextTRelations() {

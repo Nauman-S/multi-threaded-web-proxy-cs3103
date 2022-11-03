@@ -15,6 +15,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<T>> GetRHSByLHS(S s);
 	std::shared_ptr<std::unordered_set<S>> GetLHSByRHS(T t);
+	bool CheckAnyRHSByLHS(S s);
+	bool CheckAnyLHSByRHS(T t);
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
@@ -68,6 +70,18 @@ inline std::shared_ptr<std::unordered_set<S>> ManyToManyRelationStore<S, T>::Get
 	} else {
 		return std::make_shared<std::unordered_set<S>>(t_to_s_map_[t]);
 	}
+}
+
+template<typename S, typename T>
+inline bool ManyToManyRelationStore<S, T>::CheckAnyRHSByLHS(S s)
+{
+	return s_to_t_map_.find(s) != s_to_t_map_.end();
+}
+
+template<typename S, typename T>
+inline bool ManyToManyRelationStore<S, T>::CheckAnyLHSByRHS(T t)
+{
+	return t_to_s_map_.find(t) != t_to_s_map_.end();
 }
 
 template <typename S, typename T>
