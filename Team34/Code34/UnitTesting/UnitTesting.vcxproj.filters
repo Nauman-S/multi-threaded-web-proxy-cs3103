@@ -38,46 +38,46 @@
     <ClCompile Include="QPS\parser\TestQueryLexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestUsesManager.cpp">
+    <ClCompile Include="PKB\TestUsesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestModifiesManager.cpp">
+    <ClCompile Include="PKB\TestModifiesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestParentManager.cpp">
+    <ClCompile Include="PKB\TestParentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestFollowsManager.cpp">
+    <ClCompile Include="PKB\TestFollowsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QPS\TestDataRetriever.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestFollowsManager.cpp">
+    <ClCompile Include="PKB\TestFollowsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestCallsManager.cpp">
+    <ClCompile Include="PKB\TestCallsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestNextManager.cpp">
+    <ClCompile Include="PKB\TestNextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestStatementManager.cpp">
+    <ClCompile Include="PKB\TestStatementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestConstantManager.cpp">
+    <ClCompile Include="PKB\TestConstantManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestVariableManager.cpp">
+    <ClCompile Include="PKB\TestVariableManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestAssignPatternManager.cpp">
+    <ClCompile Include="PKB\TestAssignPatternManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestIfPatternManager.cpp">
+    <ClCompile Include="PKB\TestIfPatternManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestWhilePatternManager.cpp">
+    <ClCompile Include="PKB\TestWhilePatternManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SP\TestSourceLexer.cpp">
