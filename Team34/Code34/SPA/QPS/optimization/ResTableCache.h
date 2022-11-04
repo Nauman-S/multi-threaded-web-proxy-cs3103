@@ -27,4 +27,3 @@ public:
         cache_map_.insert_or_assign(type, table);
     }
 };
-

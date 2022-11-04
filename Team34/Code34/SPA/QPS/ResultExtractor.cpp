@@ -18,7 +18,7 @@ using std::unordered_map;
 using std::vector;
 
 vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever) {
-	vector<std::string> results;
+    vector<std::string> results;
 
     if (is_boolean_result) {
         if (result_table_->IsEmpty()) {
@@ -33,12 +33,10 @@ vector<std::string> ResultExtractor::ExtractResult(DataRetriever& data_retriever
         return results;
     }
 
-	return GetFormattedResult(data_retriever);
+    return GetFormattedResult(data_retriever);
 }
 
 vector<std::string> ResultExtractor::GetFormattedResult(DataRetriever& data_retriever) {
-    
-    
     shared_ptr<vector<vector<string>>> result_rows = result_table_->ExtractSynonyms(select_synonyms_);
 
     for (size_t pos = 0; pos < tuple_->size(); ++pos) {

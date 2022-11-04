@@ -9,8 +9,6 @@
 
 using std::string;
 
-#ifndef QUERYLEXER_H
-#define QUERYLEXER_H
 class QueryLexer {
 private:
     std::shared_ptr<Tokenizer> tokenizer_;
@@ -98,8 +96,6 @@ public:
     bool HasOperator();
     std::string MatchOperator();
 
-
-
     bool HasAttrName();
     std::string MatchAttrName();
 
@@ -109,6 +105,3 @@ public:
 
     bool IsCurrentTokenOfType(TokenType);
 };
-#endif
-
-

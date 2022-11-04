@@ -36,7 +36,6 @@ private:
     shared_ptr<Query> ParseSelectStatement();
     std::shared_ptr<std::vector<shared_ptr<Ref>>> ParseReturnValues();
 
-
     shared_ptr<StmtRef> ParseStmtRef();
     shared_ptr<ProcRef> ParseProcRef();
     shared_ptr<VarRef> ParseVarRef();
@@ -82,11 +81,7 @@ private:
     shared_ptr<Ref> ParseSelectSyn();
     bool ContainsSynonym(string syn_name);
 
-
 public:
     QueryBuilder();
     std::shared_ptr<Query> GetQuery(const std::string& query_string);
 };
-
-
-
