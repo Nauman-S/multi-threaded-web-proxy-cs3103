@@ -179,7 +179,7 @@
     </ClCompile>
     <ClCompile Include="TestAffectsTRelationship.cpp" />
     <ClCompile Include="TestAffectsTRelationship2.cpp" />
-    <ClCompile Include="TestClauseGrouper.cpp" />
+    <ClCompile Include="QPS\TestClauseGrouper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
