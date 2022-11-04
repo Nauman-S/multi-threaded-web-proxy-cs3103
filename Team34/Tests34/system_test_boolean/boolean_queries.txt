@@ -98,3 +98,28 @@ assign a; variable v;
 Select BOOLEAN such that Uses(a, v) and Modifies(a, v) pattern a(_,_"z * 3"_)
 FALSE
 5000
+21 - select Affects with calls 
+assign a, b; variable v;
+Select BOOLEAN such that Affects(a, b) pattern a(_,_"z * 3"_) with v.varName = "z"
+FALSE
+5000
+22 - select Affects with if
+assign a, b; variable v;
+Select BOOLEAN such that Affects(a, b) and Uses(a, v) pattern a(_,"x + 1") with v.varName = "z"
+FALSE
+5000
+23 - select Affects*
+assign a, b; procedure p;
+Select BOOLEAN such that Affects*(a, b)
+TRUE
+5000
+24 - select Affects* with pattern
+assign a;
+Select BOOLEAN such that Affects(a, a) pattern a(_, _"z"_)
+FALSE
+5000
+25 - select Affects* with pattern
+assign a;
+Select BOOLEAN such that Affects*(a, a) pattern a(_, _"y"_)
+FALSE
+5000
