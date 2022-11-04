@@ -73,3 +73,18 @@ stmt s;
 Select BOOLEAN such that Parent*(0,10)
 FALSE
 5000
+16 - select stmt number with leading zeros
+stmt s;
+Select BOOLEAN such that Parent*(00,10)
+SyntaxError
+5000
+17 - select stmt number with leading zeros
+stmt s;
+Select BOOLEAN such that Parent*(01,10)
+SyntaxError
+5000
+18 - select stmt number with leading zeros
+stmt s;
+Select BOOLEAN such that Parent*(s,010)
+SyntaxError
+5000
