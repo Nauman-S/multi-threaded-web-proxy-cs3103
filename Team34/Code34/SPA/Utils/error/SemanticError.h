@@ -5,13 +5,12 @@
 #include "Error.h"
 
 class SemanticError
-	: public Error
-{
+    : public Error {
 private:
-	std::string message;
+    std::string message;
 public:
-	class SemanticError
-	(std::string message);
-	std::string what() const throw () override;
+    class SemanticError
+    (std::string message);
+    std::string what() const throw () override;
 };
 

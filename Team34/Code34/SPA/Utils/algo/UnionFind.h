@@ -6,17 +6,16 @@
 
 class UnionFind {
 private:
-	std::vector<std::string> synonyms_;
-	std::vector<unsigned> parents_;
-	std::unordered_map<std::string, unsigned> syn_to_idx_map_;
+    std::vector<std::string> synonyms_;
+    std::vector<unsigned> parents_;
+    std::unordered_map<std::string, unsigned> syn_to_idx_map_;
 
-	unsigned Find(unsigned idx);
+    unsigned Find(unsigned idx);
 
 public:
-	explicit UnionFind(std::vector<std::string> synonyms);
+    explicit UnionFind(std::vector<std::string> synonyms);
 
-	void Union(std::string first_syn, std::string second_syn);
+    void Union(std::string first_syn, std::string second_syn);
 
-	std::string Find(std::string syn);
-
+    std::string Find(std::string syn);
 };

@@ -405,7 +405,7 @@ shared_ptr<Ref> QueryBuilder::GetDeclaredSyn(string name, RefType ref_type) {
         if (!(synonym->GetName() == name)) {
             continue;
         }
-        
+
         if (synonym->GetRefType() == ref_type) {
             return synonym;
         } else if (ref_type == RefType::kStmtRef && stmt_ref_types.count(synonym->GetRefType())) {

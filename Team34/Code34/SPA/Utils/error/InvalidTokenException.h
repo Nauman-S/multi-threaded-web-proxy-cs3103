@@ -4,8 +4,7 @@
 
 #include "SyntaxError.h"
 
-class InvalidTokenException : public SyntaxError
-{
+class InvalidTokenException : public SyntaxError {
 private:
     std::string invalid_token_;
 
