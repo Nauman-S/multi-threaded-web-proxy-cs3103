@@ -19,6 +19,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<Procedure>> GetCalleeFromCaller(Procedure caller);
 	std::shared_ptr<std::unordered_set<Procedure>> GetCallerFromCallee(Procedure callee);
+	bool CheckAnyCalleeFromCaller(Procedure caller);
+	bool CheckAnyCallerFromCallee(Procedure callee);
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCallers();
 	std::shared_ptr<std::unordered_set<Procedure>> GetAllCallees();
 	std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsRelations();

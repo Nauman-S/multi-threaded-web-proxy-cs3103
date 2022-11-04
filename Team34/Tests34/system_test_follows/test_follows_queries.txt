@@ -1,0 +1,45 @@
+5 - test Follows with same synonyms
+stmt s; 
+Select s such that Follows (s, s)
+
+5000
+6 - test empty Follows
+if ifs; assign a; 
+Select a such that Follows (ifs, 3)
+
+5000
+1 - test Follows in top level
+stmt s;
+Select s such that Follows(1, s)
+2
+5000
+2 - test Follows* in top level
+stmt s;
+Select s such that Follows*(1, s)
+2, 3, 8
+5000
+3 - test Follows in then of if statement
+stmt s;
+Select s such that Follows(4, s)
+5
+5000
+4 - test Follows in else of if statement
+stmt s;
+Select s such that Follows(6, s)
+7
+5000
+5 - test Follows* in then of if statement
+stmt s;
+Select s such that Follows*(4, s)
+5
+5000
+6 - select irrelevant stmt nums for Follows
+stmt s;
+Select BOOLEAN such that Follows(0,0)
+FALSE
+5000
+7 - select irrelevant stmt nums for Follows*
+stmt s;
+Select BOOLEAN such that Follows*(0,0)
+FALSE
+5000

@@ -11,7 +11,7 @@
 #include "../SPA/SP/SourceParser.h"
 #include "../SPA/SP/tokenizer/SourceLexer.h"
 
-#include "../SPA/SP/DesignExtractor.h"
+#include "../SPA/SP/design_extractor/DesignExtractor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

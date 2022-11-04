@@ -116,6 +116,8 @@ class ReadPKBManagerStub : public ReadPKBManager
 	// APIs related to Follows relation
 	bool CheckFollows(StmtNum left, StmtNum right) override;
 	bool IsFollowsStoreEmpty() override;
+	virtual bool CheckAnySuccessorStmtFromStmt(StmtNum stmt) override;
+	virtual bool CheckAnyPredecessorStmtFromStmt(StmtNum stmt) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type) override;
@@ -131,6 +133,8 @@ class ReadPKBManagerStub : public ReadPKBManager
 	// APIs related to Parent relation
 	bool CheckParent(StmtNum parent, StmtNum child) override;
 	bool IsParentStoreEmpty() override;
+	virtual bool CheckAnyChildFromStmt(StmtNum parent) override;
+	virtual bool CheckAnyParentFromStmt(StmtNum child) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type) override;
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type) override;

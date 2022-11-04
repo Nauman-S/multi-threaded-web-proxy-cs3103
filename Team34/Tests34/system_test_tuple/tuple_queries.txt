@@ -123,3 +123,23 @@ assign a, b;
 Select <a, b> such that Affects(a, b) and Follows*(a, b)
 1 4,20 21,7 11
 5000
+26 - select boolean in tuple
+stmt s;
+Select <BOOLEAN> such that Affects(1, s)
+SemanticError
+5000
+27 - select boolean in tuple
+assign a, b;
+Select <a, b, BOOLEAN> such that Affects(a,b) and Follows(a,b)
+SemanticError
+5000
+28 - select boolean in tuple (BOOLEAN is synonym name)
+while BOOLEAN; if ifs;
+Select <BOOLEAN, ifs>
+16 8, 6 8, 16 15, 6 15, 16 24, 6 24
+5000
+29 - cross product of select tuple (has unconstrainted synonym)
+while w, w2; assign a; if ifs;
+Select <a, w, ifs> such that Parent (w, a) pattern a (_, _"x"_)
+11 6 8, 19 16 8, 7 6 8, 11 6 15, 19 16 15, 7 6 15, 11 6 24, 19 16 24, 7 6 24
+5000

@@ -113,3 +113,8 @@ assign a; variable v;
 Select a pattern a(_, _"  j * (k        - p) * q % f              "_)
 12
 5000
+24 - wrong syntax
+assign a; variable v;
+Select v pattern a(v,_,_)
+SyntaxError
+5000

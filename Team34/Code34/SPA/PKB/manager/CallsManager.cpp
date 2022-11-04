@@ -22,6 +22,16 @@ std::shared_ptr<std::unordered_set<Procedure>> CallsManager::GetCallerFromCallee
 	return calls_store_.GetLHSByRHS(callee);
 }
 
+bool CallsManager::CheckAnyCalleeFromCaller(Procedure caller)
+{
+	return calls_store_.CheckAnyRHSByLHS(caller);
+}
+
+bool CallsManager::CheckAnyCallerFromCallee(Procedure callee)
+{
+	return calls_store_.CheckAnyLHSByRHS(callee);
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> CallsManager::GetAllCallers() {
 	return calls_store_.GetAllLHS();
 }

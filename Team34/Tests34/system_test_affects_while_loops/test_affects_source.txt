@@ -1,0 +1,67 @@
+procedure ModifiesX {
+    read x;
+}
+
+procedure SingleWhile {
+    x = 1;
+    y = 1;
+    while (x == 1) {
+        a = x;
+        read y;
+        a = y;
+        y = 3 + a + y; 
+    }
+    z = x + y;
+}
+
+procedure TwoWhileSameNesting {
+    while (x == 2) {
+        a = 1;        
+        b = 1;        
+        c = 1;
+        c = a + b;
+        read c;
+        a = 3 + c; 
+    }
+    x = 1;
+    x = 2 + a;
+    a = 2;
+    while (x != 2) {
+       c = 3 + x + a;
+       call ModifiesX; 
+       a = x;
+    }
+}
+
+procedure NestedWhile {
+    x = 1;
+    while (x >= 2) {
+        a = 3 + x;
+        y = 3 + a + x;
+        while (x == 3) {
+            z = 3 + a + y;
+            read a;
+            c = a + y;
+        }
+        z = 3 + a;
+    }
+    z = 3 + x;
+}
+
+procedure DoubleNestedWhile {
+    x = 2;
+    while (x == 2) {
+        while (x == 3) {
+            x = 2 + a;
+            y = 3 + x;
+            call ModifiesX;
+        }
+        x = 2;
+        y = 1;
+        while (x == 4) {
+            x = 2 + x;
+            x = 3 + y;
+            read x;
+        }
+    }
+}

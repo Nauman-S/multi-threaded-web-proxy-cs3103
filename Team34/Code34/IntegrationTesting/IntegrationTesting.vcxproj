@@ -177,9 +177,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestAffectsTRelationship.cpp" />
-    <ClCompile Include="TestAffectsTRelationship2.cpp" />
-    <ClCompile Include="TestClauseGrouper.cpp" />
+    <ClCompile Include="SP_PKB\TestAffectsTRelationship.cpp" />
+    <ClCompile Include="SP_PKB\TestAffectsTRelationship2.cpp" />
+    <ClCompile Include="QPS\TestClauseGrouper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

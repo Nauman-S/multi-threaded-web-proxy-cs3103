@@ -95,6 +95,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetParentFromStmt(S
     return FilterStmtSetByType(parent, parent_type);
 }
 
+bool ReadPKBManager::CheckAnyChildFromStmt(StmtNum parent)
+{
+    return pkb.parent_manager_.CheckAnyChildFromStmt(parent);
+}
+
+bool ReadPKBManager::CheckAnyParentFromStmt(StmtNum child)
+{
+    return pkb.parent_manager_.CheckAnyParentFromStmt(child);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllChildren(RefType children_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> all_children = pkb.parent_manager_.GetAllChildren();
     return FilterStmtSetByType(all_children, children_type);
@@ -145,6 +155,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetSuccessorStmtFro
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> predecessor_stmt = pkb.follows_manager_.GetPredecessorStmtFromStmt(stmt);
     return FilterStmtSetByType(predecessor_stmt, predecessor_type);
+}
+
+bool ReadPKBManager::CheckAnySuccessorStmtFromStmt(StmtNum stmt)
+{
+    return pkb.follows_manager_.CheckAnySuccessorStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyPredecessorStmtFromStmt(StmtNum stmt)
+{
+    return pkb.follows_manager_.CheckAnyPredecessorStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllSuccessorStmts(RefType successor_type) {
@@ -354,6 +374,16 @@ std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetCallerFromCall
     return pkb.calls_manager_.GetCallerFromCallee(callee);
 }
 
+bool ReadPKBManager::CheckAnyCalleeFromCaller(Procedure caller)
+{
+    return pkb.calls_manager_.CheckAnyCalleeFromCaller(caller);
+}
+
+bool ReadPKBManager::CheckAnyCallerFromCallee(Procedure callee)
+{
+    return pkb.calls_manager_.CheckAnyCallerFromCallee(callee);
+}
+
 std::shared_ptr<std::unordered_set<Procedure>> ReadPKBManager::GetAllCallers() {
     return pkb.calls_manager_.GetAllCallers();
 }
@@ -400,6 +430,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetNextStmtsFromStm
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type) {
     std::shared_ptr<std::unordered_set<StmtNum>> prev_stmts = pkb.next_manager_.GetPrevStmtsFromStmt(stmt);
     return FilterStmtSetByType(prev_stmts, prev_stmt_type);
+}
+
+bool ReadPKBManager::CheckAnyNextStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyNextStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyPrevStmtFromStmt(StmtNum stmt)
+{
+    return pkb.next_manager_.CheckAnyPrevStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllNextStmts(RefType next_stmt_type) {
@@ -456,6 +496,14 @@ std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetCauseStmtsFromSt
         return std::make_shared<std::unordered_set<StmtNum>>();
     }
     return pkb.affects_manager_.GetCauseStmtsFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyEffectStmtFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.CheckAnyEffectStmtFromStmt(stmt);
+}
+
+bool ReadPKBManager::CheckAnyCauseStmtFromStmt(StmtNum stmt) {
+    return pkb.affects_manager_.CheckAnyCauseStmtFromStmt(stmt);
 }
 
 std::shared_ptr<std::unordered_set<StmtNum>> ReadPKBManager::GetAllEffectStmts(RefType effect_stmt_type) {

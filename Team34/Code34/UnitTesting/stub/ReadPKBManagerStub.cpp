@@ -335,6 +335,22 @@ bool ReadPKBManagerStub::CheckModifies(Procedure proc_name, Variable var)
 	return false;
 }
 
+bool ReadPKBManagerStub::CheckAnySuccessorStmtFromStmt(StmtNum stmt) {
+	if (stmt == 2) {
+		return true;
+	}
+
+	return false;
+}
+
+bool ReadPKBManagerStub::CheckAnyPredecessorStmtFromStmt(StmtNum stmt) {
+	if (stmt == 3 || stmt == 6) {
+		return true;
+	}
+
+	return false;
+}
+
 std::shared_ptr<std::unordered_set<Variable>> ReadPKBManagerStub::GetModifiesVarByStmtNum(StmtNum stmt_num)
 {
 	shared_ptr<unordered_set<Variable>> res = make_shared<unordered_set<Variable>>();
@@ -514,6 +530,20 @@ bool ReadPKBManagerStub::CheckParent(StmtNum parent, StmtNum child)
 
 bool ReadPKBManagerStub::IsParentStoreEmpty()
 {
+	return false;
+}
+
+bool ReadPKBManagerStub::CheckAnyChildFromStmt(StmtNum parent) {
+	if (parent == 1) {
+		return true;
+	}
+	return false;
+}
+
+bool ReadPKBManagerStub::CheckAnyParentFromStmt(StmtNum child) {
+	if (child == 2 || child == 4) {
+		return true;
+	}
 	return false;
 }
 
