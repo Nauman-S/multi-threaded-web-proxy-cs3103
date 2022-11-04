@@ -5,12 +5,11 @@
 #include "Error.h"
 
 class SyntaxError
-	: public Error
-{
+    : public Error {
 private:
-	std::string message;
+    std::string message;
 public:
-	SyntaxError() {}
-	explicit SyntaxError(std::string message);
-	std::string what() const throw () override;
+    SyntaxError() {}
+    explicit SyntaxError(std::string message);
+    std::string what() const throw () override;
 };

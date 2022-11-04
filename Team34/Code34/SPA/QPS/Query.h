@@ -31,7 +31,6 @@ public:
         select_tuple_ = std::make_shared<vector<shared_ptr<Ref>>>();
     };
 
-
     Query(shared_ptr<vector<shared_ptr<Ref>>> select_tuple, shared_ptr< vector<shared_ptr<Rel>>> relations,
         shared_ptr< vector<shared_ptr<Pattern>>> patterns, shared_ptr<vector<shared_ptr<With>>> with_clauses)
         : select_tuple_{ select_tuple }, relations_{ relations }, patterns_{ patterns }, with_clauses_{ with_clauses } {
