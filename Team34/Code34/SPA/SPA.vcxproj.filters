@@ -80,7 +80,6 @@
     <ClCompile Include="QPS\optimization\clause_grouper\SimpleClauseGrouper.cpp" />
     <ClCompile Include="SP\design_extractor\NextExtractor.cpp" />
     <ClCompile Include="QPS\clause\pattern\WhilePattern.cpp" />
-    <ClCompile Include="Utils\algo\DisjointSetUnion.cpp" />
     <ClCompile Include="Utils\algo\PostfixConverter.cpp" />
     <ClCompile Include="QPS\optimization\clause_grouper\OptimizedClauseGrouper.cpp" />
     <ClCompile Include="Utils\algo\UnionFind.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="QPS\clause\ClauseType.h" />
     <ClInclude Include="QPS\optimization\PriorityManager.h" />
     <ClInclude Include="PKB\store\Entity\EntityStore.h" />
-    <ClInclude Include="Utils\algo\DisjointSetUnion.h" />
     <ClInclude Include="Utils\algo\PostfixConverter.h" />
     <ClInclude Include="QPS\optimization\clause_grouper\OptimizedClauseGrouper.h" />
     <ClInclude Include="Utils\algo\UnionFind.h" />
