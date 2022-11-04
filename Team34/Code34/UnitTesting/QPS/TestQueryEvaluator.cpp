@@ -2,19 +2,19 @@
 #include "CppUnitTest.h"
 #include <memory>
 
-#include "../SPA/QPS/parser/QueryBuilder.h"
-#include "../SPA/QPS/clause/clauseGroup.h"
-#include "../SPA/QPS/clause/relation/FollowsRel.h"
-#include "../SPA/QPS/clause/relation/FollowsTRel.h"
-#include "../SPA/QPS/clause/relation/AffectsRel.h"
-#include "../SPA/QPS/clause/relation/AffectsTRel.h"
-#include "../SPA/QPS/optimization/ClauseSorter.h"
-#include "../SPA/QPS/reference/Ref.h"
-#include "../SPA/QPS/reference/StmtRef.h"
-#include "../SPA/QPS/reference/EntityRef.h"
-#include "../SPA/Utils/error/SyntaxError.h"
-#include "../SPA/Utils/error/SemanticError.h"
-#include "../SPA/QPS/query_result/table/Table.h"
+#include "../../SPA/QPS/parser/QueryBuilder.h"
+#include "../../SPA/QPS/clause/clauseGroup.h"
+#include "../../SPA/QPS/clause/relation/FollowsRel.h"
+#include "../../SPA/QPS/clause/relation/FollowsTRel.h"
+#include "../../SPA/QPS/clause/relation/AffectsRel.h"
+#include "../../SPA/QPS/clause/relation/AffectsTRel.h"
+#include "../../SPA/QPS/optimization/ClauseSorter.h"
+#include "../../SPA/QPS/reference/Ref.h"
+#include "../../SPA/QPS/reference/StmtRef.h"
+#include "../../SPA/QPS/reference/EntityRef.h"
+#include "../../SPA/Utils/error/SyntaxError.h"
+#include "../../SPA/Utils/error/SemanticError.h"
+#include "../../SPA/QPS/query_result/table/Table.h"
 
 using std::vector;
 using std::string;
