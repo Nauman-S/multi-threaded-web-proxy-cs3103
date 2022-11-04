@@ -1,0 +1,75 @@
+1 - test affects single while
+stmt s1, s2;
+Select s1 such that Affects(s1, 9)
+2, 3, 8
+5000
+2 - test affects single while
+stmt s1, s2;
+Select s1 such that Affects(2, s1)
+5, 9
+5000
+3 - test affects single while
+stmt s1, s2;
+Select s1 such that Affects(3, s1)
+9
+5000
+4 - test affects double while
+stmt s1, s2;
+Select s1 such that Affects(11, s1)
+14
+5000
+5 - test affects* double while
+stmt s1, s2;
+Select s1 such that Affects*(11, s1)
+14
+5000
+6 - test affects double while
+stmt s1, s2;
+Select s1 such that Affects(13, s1)
+
+5000
+7 - test affects* double while
+stmt s1, s2;
+Select s1 such that Affects*(16, s1)
+18, 21
+5000
+8 - test affects double while
+stmt s1, s2;
+Select BOOLEAN such that Affects(18, 21)
+TRUE
+5000
+9 - test affects double while
+stmt s1, s2;
+Select BOOLEAN such that Affects(18, 23)
+FALSE
+5000
+10 - test affects nested while
+stmt s1, s2;
+Select s1 such that Affects(24, s1)
+26, 27, 33
+5000
+11 - test affects* nested while
+stmt s1, s2;
+Select s1 such that Affects*(24, s1)
+26, 27, 29, 31, 32, 33
+5000
+12 - test affects nested while
+stmt s1, s2;
+Select BOOLEAN such that Affects(26, 31)
+FALSE
+5000
+13 - test affects double nested while
+stmt s1, s2;
+Select s1 such that Affects(34, s1)
+
+5000
+14 - test affects* double nested while
+stmt s1, s2;
+Select BOOLEAN such that Affects*(34, 43)
+FALSE
+5000
+15 - test affects* pair double nested while
+stmt s1, s2;
+Select <s1, s2> such that Affects*(s1, s2) and Next*(34, s1) and Next*(34, s2)
+37 38,40 43,41 44
+5000

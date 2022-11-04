@@ -163,8 +163,8 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-	<ClInclude Include="stub\ReadPKBManagerStub.h" />
-	<ClInclude Include="stub\RelationStubFactory.h" />
+    <ClInclude Include="stub\ReadPKBManagerStub.h" />
+    <ClInclude Include="stub\RelationStubFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QPS\parser\TestQueryBuilder.cpp" />
@@ -175,14 +175,14 @@
     <ClCompile Include="SP\TestSourceParser.cpp" />
     <ClCompile Include="SP\TestSourceValidator.cpp" />
     <ClCompile Include="TestModifiesManager.cpp" />
-    <ClCompile Include="TestQueryEvaluator.cpp" />
+    <ClCompile Include="QPS\TestQueryEvaluator.cpp" />
     <ClCompile Include="TestStatementManager.cpp" />
     <ClCompile Include="TestAssignPatternManager.cpp" />
     <ClCompile Include="TestIfPatternManager.cpp" />
     <ClCompile Include="TestWhilePatternManager.cpp" />
     <ClCompile Include="TestUsesManager.cpp" />
-	<ClCompile Include="stub\ReadPKBManagerStub.cpp" />
-	<ClCompile Include="stub\RelationStubFactory.cpp" />
+    <ClCompile Include="stub\ReadPKBManagerStub.cpp" />
+    <ClCompile Include="stub\RelationStubFactory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -195,7 +195,6 @@
     <ClCompile Include="TestNextManager.cpp" />
     <ClCompile Include="TestConstantManager.cpp" />
     <ClCompile Include="TestVariableManager.cpp" />
-    <ClCompile Include="Utils\algo\TestDisjointSetUnion.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

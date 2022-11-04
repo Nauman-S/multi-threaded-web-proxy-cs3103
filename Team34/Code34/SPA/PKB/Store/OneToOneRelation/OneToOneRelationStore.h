@@ -16,6 +16,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<T>> GetRHSByLHS(S left);
 	std::shared_ptr<std::unordered_set<S>> GetLHSByRHS(T right);
+	bool CheckAnyRHSByLHS(S left);
+	bool CheckAnyLHSByRHS(T right);
 	std::shared_ptr<std::unordered_set<S>> GetAllLHS();
 	std::shared_ptr<std::unordered_set<T>> GetAllRHS();
 	std::shared_ptr<std::vector<std::pair<S, T>>> GetAllRelations();
@@ -39,10 +41,10 @@ inline void OneToOneRelationStore<S, T>::SetRelation(S left, T right) {
 
 template <typename S, typename T>
 inline bool OneToOneRelationStore<S, T>::CheckRelation(S left, T right) {
-	if (left_to_right_map_.find(left) != left_to_right_map_.end()) {
-		return left_to_right_map_[left] == right;
+	if (left_to_right_map_.find(left) == left_to_right_map_.end()) {
+		return false;
 	}
-	return false;
+	return left_to_right_map_[left] == right;
 }
 
 template <typename S, typename T>
@@ -53,7 +55,7 @@ inline bool OneToOneRelationStore<S, T>::IsEmpty() {
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetRHSByLHS(S left) {
 	std::shared_ptr<std::unordered_set<T>> rhs = std::make_shared<std::unordered_set<T>>();
-	if (left_to_right_map_.find(left) != left_to_right_map_.end()) {
+	if (CheckAnyRHSByLHS(left)) {
 		rhs->insert(left_to_right_map_[left]);
 	}
 	return rhs;
@@ -62,10 +64,22 @@ inline std::shared_ptr<std::unordered_set<T>> OneToOneRelationStore<S, T>::GetRH
 template <typename S, typename T>
 inline std::shared_ptr<std::unordered_set<S>> OneToOneRelationStore<S, T>::GetLHSByRHS(T right) {
 	std::shared_ptr<std::unordered_set<S>> lhs = std::make_shared<std::unordered_set<S>>();
-	if (right_to_left_map_.find(right) != right_to_left_map_.end()) {
+	if (CheckAnyLHSByRHS(right)) {
 		lhs->insert(right_to_left_map_[right]);
 	}
 	return lhs;
+}
+
+template<typename S, typename T>
+inline bool OneToOneRelationStore<S, T>::CheckAnyRHSByLHS(S left)
+{
+	return left_to_right_map_.find(left) != left_to_right_map_.end();
+}
+
+template<typename S, typename T>
+inline bool OneToOneRelationStore<S, T>::CheckAnyLHSByRHS(T right)
+{
+	return right_to_left_map_.find(right) != right_to_left_map_.end();
 }
 
 template <typename S, typename T>
