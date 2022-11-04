@@ -5,9 +5,9 @@
 #include <string>
 #include <iostream>
 
-#include "../SPA/QPS/parser/QueryBuilder.h"
-#include "../SPA/QPS/optimization/clause_grouper/ClauseGrouper.h"
-#include "../SPA/QPS/optimization/clause_grouper/OptimizedClauseGrouper.h"
+#include "../../SPA/QPS/parser/QueryBuilder.h"
+#include "../../SPA/QPS/optimization/clause_grouper/ClauseGrouper.h"
+#include "../../SPA/QPS/optimization/clause_grouper/OptimizedClauseGrouper.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

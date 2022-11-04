@@ -41,7 +41,7 @@
     <ClCompile Include="TestAffectsTRelationship2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestClauseGrouper.cpp">
+    <ClCompile Include="QPS\TestClauseGrouper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\UnitTesting\stub\ReadPKBManagerStub.cpp">
