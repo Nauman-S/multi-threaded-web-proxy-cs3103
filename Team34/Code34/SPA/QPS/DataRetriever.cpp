@@ -174,9 +174,9 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtStmtRel& rel) {
      * bool result:
      *     wildcard, wildcard -> check if any relation exists.
      *     wildcard, stmt_num -> get all lhs stmt by rhs stmt_num, and check set
-     * emptiness. 
+     * emptiness.
      *     stmt_num, wildcard -> get all rhs stmt by lhs stmt_num, and
-     * check set emptiness. 
+     * check set emptiness.
      *     stmt_num, stmt_num -> check relation existence.
      *     Special case: stmt_syn, stmt_syn with unallowed same synonyms.
      */
@@ -327,9 +327,9 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(shared_ptr<Ref> ref_ptr) {
 std::shared_ptr<ResWrapper> DataRetriever::retrieve(With& with) {
     /*
      * Each LHS and RHS reference in With clause can be one of types {kInt, kString,
-     * kSynonym} 
-     * 
-     * bool result: 
+     * kSynonym}
+     *
+     * bool result:
      *     (int, int) -> test equality. (string, string) ->
      * test equality. (int, string) -> false. (string, int) -> false.
      *
@@ -569,15 +569,32 @@ bool DataRetriever::CheckPPRelExistence(ProcProcRel& rel) {
 }
 
 bool DataRetriever::CheckPPRelExistenceByRhsProc(ProcProcRel& rel) {
-    auto lhs_proc_set = GetLhsProcByRhsProc(rel);
+    ClauseType type = rel.GetRelType();
+    Procedure rhs_proc_name = rel.RhsValue();
+    bool is_existent{ false };
+    if (type == ClauseType::kCallsRel || type == ClauseType::kCallsTRel) {
+        is_existent = pkb_ptr_->CheckAnyCallerFromCallee(rhs_proc_name);
+    }
 
-    return !(lhs_proc_set->empty());
+    return is_existent;
+    /*auto lhs_proc_set = GetLhsProcByRhsProc(rel);
+
+    return !(lhs_proc_set->empty());*/
 }
 
 bool DataRetriever::CheckPPRelExistenceByLhsProc(ProcProcRel& rel) {
+    ClauseType type = rel.GetRelType();
+    Procedure lhs_proc_name = rel.LhsValue();
+    bool is_existent{ false };
+    if (type == ClauseType::kCallsRel || type == ClauseType::kCallsTRel) {
+        is_existent = pkb_ptr_->CheckAnyCalleeFromCaller(lhs_proc_name);
+    }
+
+    return is_existent;
+    /*
     auto rhs_proc_set = GetRhsProcByLhsProc(rel);
 
-    return !(rhs_proc_set->empty());
+    return !(rhs_proc_set->empty());*/
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
@@ -688,8 +705,20 @@ bool DataRetriever::CheckSSRelExistence(StmtStmtRel& rel) {
 
 bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel) {
     ClauseType type = rel.GetRelType();
-
     StmtNum rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
+    bool is_existent{ false };
+    if (type == ClauseType::kParentRel || type == ClauseType::kParentTRel) {
+        is_existent = pkb_ptr_->CheckAnyParentFromStmt(rhs_stmt_num);
+    } else if (type == ClauseType::kFollowsRel || type == ClauseType::kFollowsTRel) {
+        is_existent = pkb_ptr_->CheckAnyPredecessorStmtFromStmt(rhs_stmt_num);
+    } else if (type == ClauseType::kNextRel || type == ClauseType::kNextTRel) {
+        is_existent = pkb_ptr_->CheckAnyPrevStmtFromStmt(rhs_stmt_num);
+    } else if (type == ClauseType::kAffectsRel || type == ClauseType::kAffectsTRel) {
+        is_existent = pkb_ptr_->CheckAnyCauseStmtFromStmt(rhs_stmt_num);
+    }
+
+    return is_existent;
+    /*
     shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == ClauseType::kParentRel) {
         stmt_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, RefType::kStmtRef);
@@ -709,13 +738,27 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel) {
         stmt_set = pkb_ptr_->GetAllCauseStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
     }
 
-    return !(stmt_set->empty());
+    return !(stmt_set->empty());*/
 }
 
 bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel) {
     ClauseType type = rel.GetRelType();
-
     StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
+    bool is_existent{ false };
+    if (type == ClauseType::kParentRel || type == ClauseType::kParentTRel) {
+        is_existent = pkb_ptr_->CheckAnyChildFromStmt(lhs_stmt_num);
+    } else if (type == ClauseType::kFollowsRel || type == ClauseType::kFollowsTRel) {
+        is_existent = pkb_ptr_->CheckAnySuccessorStmtFromStmt(lhs_stmt_num);
+    } else if (type == ClauseType::kNextRel || type == ClauseType::kNextTRel) {
+        is_existent = pkb_ptr_->CheckAnyNextStmtFromStmt(lhs_stmt_num);
+    } else if (type == ClauseType::kAffectsRel || type == ClauseType::kAffectsTRel) {
+        is_existent = pkb_ptr_->CheckAnyEffectStmtFromStmt(lhs_stmt_num);
+    }
+
+    return is_existent;
+
+
+    /*
     shared_ptr<unordered_set<StmtNum>> stmt_set;
     if (type == ClauseType::kParentRel) {
         stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);
@@ -735,7 +778,7 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel) {
         stmt_set = pkb_ptr_->GetAllEffectStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
     }
 
-    return !(stmt_set->empty());
+    return !(stmt_set->empty());*/
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(
