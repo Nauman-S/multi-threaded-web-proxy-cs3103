@@ -21,6 +21,14 @@ std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetPrevStmtsFromStmt(S
 	return next_store_.GetLHSByRHS(stmt);
 }
 
+bool NextManager::CheckAnyNextStmtFromStmt(StmtNum stmt) {
+	return next_store_.CheckAnyRHSByLHS(stmt);
+}
+
+bool NextManager::CheckAnyPrevStmtFromStmt(StmtNum stmt) {
+	return next_store_.CheckAnyLHSByRHS(stmt);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> NextManager::GetAllNextStmts() {
 	return next_store_.GetAllRHS();
 }
