@@ -23,6 +23,16 @@ std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetPredecessorStmtF
     return follows_store_.GetLHSByRHS(stmt);
 }
 
+bool FollowsManager::CheckAnySuccessorStmtFromStmt(StmtNum stmt)
+{
+    return follows_store_.CheckAnyRHSByLHS(stmt);
+}
+
+bool FollowsManager::CheckAnyPredecessorStmtFromStmt(StmtNum stmt)
+{
+    return follows_store_.CheckAnyLHSByRHS(stmt);
+}
+
 std::shared_ptr<std::unordered_set<StmtNum>> FollowsManager::GetAllPredecessorStmts() {
     return follows_store_.GetAllLHS();
 }

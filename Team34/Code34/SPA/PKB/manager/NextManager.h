@@ -20,6 +20,8 @@ public:
 	bool IsEmpty();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtsFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetPrevStmtsFromStmt(StmtNum stmt);
+	bool CheckAnyNextStmtFromStmt(StmtNum stmt);
+	bool CheckAnyPrevStmtFromStmt(StmtNum stmt);
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmts();
 	std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts();
 	std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();

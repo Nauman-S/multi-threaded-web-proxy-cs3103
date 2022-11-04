@@ -47,6 +47,8 @@ public:
     virtual bool IsParentStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetChildrenFromStmt(StmtNum parent, RefType children_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetParentFromStmt(StmtNum child, RefType parent_type);
+    virtual bool CheckAnyChildFromStmt(StmtNum parent);
+    virtual bool CheckAnyParentFromStmt(StmtNum child);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllChildren(RefType children_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllParents(RefType parent_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllParentRelations();
@@ -62,6 +64,8 @@ public:
     virtual bool IsFollowsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetSuccessorStmtFromStmt(StmtNum stmt, RefType successor_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPredecessorStmtFromStmt(StmtNum stmt, RefType predecessor_type);
+    virtual bool CheckAnySuccessorStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyPredecessorStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllSuccessorStmts(RefType successor_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPredecessorStmts(RefType predecessor_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllFollowsRelations();
@@ -104,6 +108,8 @@ public:
     virtual bool IsCallsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetCalleeFromCaller(Procedure caller);
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetCallerFromCallee(Procedure callee);
+    virtual bool CheckAnyCalleeFromCaller(Procedure caller);
+    virtual bool CheckAnyCallerFromCallee(Procedure callee);
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallers();
     virtual std::shared_ptr<std::unordered_set<Procedure>> GetAllCallees();
     virtual std::shared_ptr<std::vector<std::pair<Procedure, Procedure>>> GetAllCallsRelations();
@@ -119,6 +125,8 @@ public:
     virtual bool IsNextStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetNextStmtsFromStmt(StmtNum stmt, RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetPrevStmtsFromStmt(StmtNum stmt, RefType prev_stmt_type);
+    virtual bool CheckAnyNextStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyPrevStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllNextStmts(RefType next_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllPrevStmts(RefType prev_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllNextRelations();
@@ -134,6 +142,8 @@ public:
     virtual bool IsAffectsStoreEmpty();
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetEffectStmtsFromStmt(StmtNum stmt, RefType effect_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetCauseStmtsFromStmt(StmtNum stmt, RefType cause_stmt_type);
+    virtual bool CheckAnyEffectStmtFromStmt(StmtNum stmt);
+    virtual bool CheckAnyCauseStmtFromStmt(StmtNum stmt);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllEffectStmts(RefType effect_stmt_type);
     virtual std::shared_ptr<std::unordered_set<StmtNum>> GetAllCauseStmts(RefType cause_stmt_type);
     virtual std::shared_ptr<std::vector<std::pair<StmtNum, StmtNum>>> GetAllAffectsRelations();
