@@ -577,9 +577,6 @@ bool DataRetriever::CheckPPRelExistenceByRhsProc(ProcProcRel& rel) {
     }
 
     return is_existent;
-    /*auto lhs_proc_set = GetLhsProcByRhsProc(rel);
-
-    return !(lhs_proc_set->empty());*/
 }
 
 bool DataRetriever::CheckPPRelExistenceByLhsProc(ProcProcRel& rel) {
@@ -591,10 +588,6 @@ bool DataRetriever::CheckPPRelExistenceByLhsProc(ProcProcRel& rel) {
     }
 
     return is_existent;
-    /*
-    auto rhs_proc_set = GetRhsProcByLhsProc(rel);
-
-    return !(rhs_proc_set->empty());*/
 }
 
 std::shared_ptr<std::unordered_set<std::string>>
@@ -718,27 +711,6 @@ bool DataRetriever::CheckSSRelExistenceByRhsStmt(StmtStmtRel& rel) {
     }
 
     return is_existent;
-    /*
-    shared_ptr<unordered_set<StmtNum>> stmt_set;
-    if (type == ClauseType::kParentRel) {
-        stmt_set = pkb_ptr_->GetParentFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kParentTRel) {
-        stmt_set = pkb_ptr_->GetAllParentsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kFollowsRel) {
-        stmt_set = pkb_ptr_->GetPredecessorStmtFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kFollowsTRel) {
-        stmt_set = pkb_ptr_->GetAllPredecessorStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kNextRel) {
-        stmt_set = pkb_ptr_->GetPrevStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kNextTRel) {
-        stmt_set = pkb_ptr_->GetAllPrevStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kAffectsRel) {
-        stmt_set = pkb_ptr_->GetCauseStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kAffectsTRel) {
-        stmt_set = pkb_ptr_->GetAllCauseStmtsFromStmt(rhs_stmt_num, RefType::kStmtRef);
-    }
-
-    return !(stmt_set->empty());*/
 }
 
 bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel) {
@@ -756,29 +728,6 @@ bool DataRetriever::CheckSSRelExistenceByLhsStmt(StmtStmtRel& rel) {
     }
 
     return is_existent;
-
-
-    /*
-    shared_ptr<unordered_set<StmtNum>> stmt_set;
-    if (type == ClauseType::kParentRel) {
-        stmt_set = pkb_ptr_->GetChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kParentTRel) {
-        stmt_set = pkb_ptr_->GetAllChildrenFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kFollowsRel) {
-        stmt_set = pkb_ptr_->GetSuccessorStmtFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kFollowsTRel) {
-        stmt_set = pkb_ptr_->GetAllSuccessorStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kNextRel) {
-        stmt_set = pkb_ptr_->GetNextStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kNextTRel) {
-        stmt_set = pkb_ptr_->GetAllNextStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kAffectsRel) {
-        stmt_set = pkb_ptr_->GetEffectStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    } else if (type == ClauseType::kAffectsTRel) {
-        stmt_set = pkb_ptr_->GetAllEffectStmtsFromStmt(lhs_stmt_num, RefType::kStmtRef);
-    }
-
-    return !(stmt_set->empty());*/
 }
 
 std::shared_ptr<unordered_set<string>> DataRetriever::GetRhsStmtByLhsStmt(
