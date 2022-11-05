@@ -13,20 +13,19 @@
 class DataRetriever;
 
 
-class Rel:
-	public Clause
-{
+class Rel :
+    public Clause {
 public:
-	virtual std::string LhsValue() = 0;
+    virtual std::string LhsValue() = 0;
 
-	virtual std::string RhsValue() = 0;
+    virtual std::string RhsValue() = 0;
 
-	virtual ClauseType GetRelType() = 0;
+    virtual ClauseType GetRelType() = 0;
 
-	virtual RefType LhsRefType() = 0;
+    virtual RefType LhsRefType() = 0;
 
-	virtual RefType RhsRefType() = 0;
+    virtual RefType RhsRefType() = 0;
 
-	virtual std::pair<ValType, ValType> ValTypes() = 0;
+    virtual std::pair<ValType, ValType> ValTypes() = 0;
 };
 

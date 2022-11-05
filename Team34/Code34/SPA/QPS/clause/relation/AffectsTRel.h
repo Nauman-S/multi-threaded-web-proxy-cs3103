@@ -3,12 +3,11 @@
 #include "../ClauseType.h"
 
 class AffectsTRel
-	:public StmtStmtRel
-{
+    :public StmtStmtRel {
 public:
-	using StmtStmtRel::StmtStmtRel;
+    using StmtStmtRel::StmtStmtRel;
 
-	ClauseType GetRelType() override { return ClauseType::kAffectsTRel; }
+    ClauseType GetRelType() override { return ClauseType::kAffectsTRel; }
 
-	Priority GetPriority(PriorityManager& pm) override;
+    Priority GetPriority(PriorityManager& pm) override;
 };

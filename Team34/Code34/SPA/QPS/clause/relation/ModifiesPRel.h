@@ -3,8 +3,7 @@
 #include "../ClauseType.h"
 
 class ModifiesPRel :
-    public ProcVarRel
-{
+    public ProcVarRel {
 public:
     using ProcVarRel::ProcVarRel;
 

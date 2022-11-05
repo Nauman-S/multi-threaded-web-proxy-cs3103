@@ -16,8 +16,7 @@
 class DataRetriever;  // forward declaration to avoid cyclic include of Visitor pattern
 
 class StmtVarRel :
-    public Rel
-{
+    public Rel {
 protected:
     std::shared_ptr<StmtRef> lhs_ref_;
     std::shared_ptr <VarRef> rhs_ref_;
@@ -45,6 +44,6 @@ public:
 
     virtual std::optional<int> LhsValueAsInt();
 
-    
+
 };
 

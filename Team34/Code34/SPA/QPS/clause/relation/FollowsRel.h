@@ -3,8 +3,7 @@
 #include "../ClauseType.h"
 
 class FollowsRel :
-    public StmtStmtRel
-{
+    public StmtStmtRel {
 public:
     using StmtStmtRel::StmtStmtRel;
 

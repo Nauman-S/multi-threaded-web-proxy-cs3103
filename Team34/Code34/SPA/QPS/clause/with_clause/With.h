@@ -17,7 +17,6 @@ class DataRetriever;
 
 class With : public Clause {
 protected:
-    // either one of the reference shuold be synonym
     std::shared_ptr<Ref> lhs_ref_ptr_;
     std::shared_ptr<Ref> rhs_ref_ptr_;
     AttrType lhs_attr_type_;

@@ -7,30 +7,32 @@
 #include "ResType.h"
 
 
-class ResWrapper
-{
+class ResWrapper {
 protected:
-	std::shared_ptr<SetRes> set_res_;
-	std::shared_ptr<TableRes> table_res_;
-	bool is_valid_;
-	ResType type_;
+    std::shared_ptr<SetRes> set_res_;
+    std::shared_ptr<TableRes> table_res_;
+    bool is_valid_;
+    ResType type_;
 
 public:
-	explicit ResWrapper(std::shared_ptr<SetRes> set)
-		: set_res_{ set }, table_res_{ nullptr }, is_valid_{ true }, type_{ ResType::kSet } {};
+    explicit ResWrapper(std::shared_ptr<SetRes> set)
+        : set_res_{ set }, table_res_{ nullptr }, is_valid_{ true }, type_{ ResType::kSet } {
+    };
 
-	explicit ResWrapper(std::shared_ptr<TableRes> table)
-		: set_res_{ nullptr }, table_res_{ table }, is_valid_{ true }, type_{ ResType::kTable } {};
+    explicit ResWrapper(std::shared_ptr<TableRes> table)
+        : set_res_{ nullptr }, table_res_{ table }, is_valid_{ true }, type_{ ResType::kTable } {
+    };
 
-	explicit ResWrapper(bool valid) 
-		: set_res_{ nullptr }, table_res_{ nullptr }, is_valid_{ valid }, type_{ ResType::kBool } {};
+    explicit ResWrapper(bool valid)
+        : set_res_{ nullptr }, table_res_{ nullptr }, is_valid_{ valid }, type_{ ResType::kBool } {
+    };
 
-	ResType GetResType() { return type_; }
+    ResType GetResType() { return type_; }
 
-	bool IsValid() { return is_valid_; }
+    bool IsValid() { return is_valid_; }
 
-	std::shared_ptr<SetRes> GetSet() { return set_res_; }
+    std::shared_ptr<SetRes> GetSet() { return set_res_; }
 
-	std::shared_ptr<TableRes> GetTable() { return table_res_; }
+    std::shared_ptr<TableRes> GetTable() { return table_res_; }
 };
 

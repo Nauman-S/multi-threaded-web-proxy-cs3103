@@ -3,8 +3,7 @@
 #include "../ClauseType.h"
 
 class ParentRel :
-    public StmtStmtRel
-{
+    public StmtStmtRel {
 public:
     using StmtStmtRel::StmtStmtRel;
 

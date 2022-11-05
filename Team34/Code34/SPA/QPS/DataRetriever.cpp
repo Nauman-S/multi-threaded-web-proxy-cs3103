@@ -71,9 +71,7 @@ std::shared_ptr<ResWrapper> DataRetriever::retrieve(StmtVarRel& rel) {
         shared_ptr<vector<pair<string, string>>> table = GetAllSVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0},
                                                  {rel.RhsValue(), 1} };
-        shared_ptr<TableRes> table_res =
-            std::make_shared<TableRes>(syn_to_col, table);
-
+        shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
         res = std::make_shared<ResWrapper>(table_res);
     } else if (lhs_type == ValType::kLineNum && rhs_type == ValType::kWildcard) { // Wildcard handling cases 
         bool ok = CheckSVRelExistenceByStmt(rel);
@@ -109,8 +107,7 @@ shared_ptr<ResWrapper> DataRetriever::retrieve(ProcVarRel& rel) {
         shared_ptr<vector<pair<string, string>>> table = GetAllPVRel(rel);
         unordered_map<string, int> syn_to_col = { {rel.LhsValue(), 0},
                                                  {rel.RhsValue(), 1} };
-        shared_ptr<TableRes> table_res =
-            std::make_shared<TableRes>(syn_to_col, table);
+        shared_ptr<TableRes> table_res = std::make_shared<TableRes>(syn_to_col, table);
         res = std::make_shared<ResWrapper>(table_res);
     } else if (lhs_type == ValType::kProcName && rhs_type == ValType::kWildcard) { // Wildcard handling cases 
         bool ok = CheckPVRelExistenceByProc(rel);
@@ -403,8 +400,6 @@ bool DataRetriever::CheckSVRel(StmtVarRel& rel) {
 }
 
 bool DataRetriever::CheckSVRelExistenceByStmt(StmtVarRel& rel) {
-    ClauseType type = rel.GetRelType();
-
     shared_ptr<unordered_set<string>> set = GetVarByStmt(rel);
 
     return !(set->empty());
@@ -420,6 +415,7 @@ shared_ptr<unordered_set<string>> DataRetriever::GetVarByStmt(StmtVarRel& rel) {
     } else if (type == ClauseType::kModifiesSRel) {
         res = pkb_ptr_->GetModifiesVarByStmtNum(stmt_num);
     }
+
     return res;
 }
 
@@ -484,8 +480,6 @@ bool DataRetriever::CheckPVRel(ProcVarRel& rel) {
 }
 
 bool DataRetriever::CheckPVRelExistenceByProc(ProcVarRel& rel) {
-    ClauseType type = rel.GetRelType();
-
     shared_ptr<unordered_set<Variable>> set = GetVarByProc(rel);
 
     return !(set->empty());
@@ -656,7 +650,7 @@ bool DataRetriever::CheckSSRel(StmtStmtRel& rel) {
 
     StmtNum lhs_stmt_num = rel.LhsValueAsInt().value_or(-1);
     StmtNum rhs_stmt_num = rel.RhsValueAsInt().value_or(-1);
-    bool res = false;
+    bool res{ false };
     if (type == ClauseType::kParentRel) {
         res = pkb_ptr_->CheckParent(lhs_stmt_num, rhs_stmt_num);
     } else if (type == ClauseType::kParentTRel) {
@@ -1077,7 +1071,7 @@ DataRetriever::GetWithClauseByRefTypeAndFilterVal(RefType syn_ref_type,
     string& filter_val) {
     shared_ptr<unordered_set<string>> str_set{ nullptr };
 
-    unordered_set<RefType>single_attr_type_ref_types{
+    unordered_set<RefType> single_attr_type_ref_types{
         RefType::kProcRef,  RefType::kVarRef, RefType::kConstRef,
         RefType::kStmtRef,  RefType::kIfRef,  RefType::kWhileRef,
         RefType::kAssignRef };
@@ -1149,7 +1143,9 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     return res_table;
 }
 
-std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSets(std::shared_ptr<std::unordered_set<std::string>> set1, std::shared_ptr<std::unordered_set<std::string>> set2) {
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSets(
+    std::shared_ptr<std::unordered_set<std::string>> set1,
+    std::shared_ptr<std::unordered_set<std::string>> set2) {
     if (set1->size() > set2->size()) {
         auto temp_ptr = set1;
         set1 = set2;
@@ -1166,7 +1162,9 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     return table;
 }
 
-std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(std::shared_ptr<std::unordered_set<std::string>> set1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(
+    std::shared_ptr<std::unordered_set<std::string>> set1,
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, join_value] : *table2) {
         if (set1->find(join_value) != set1->end()) {
@@ -1177,7 +1175,9 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     return joined_table;
 }
 
-std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::unordered_set<std::string>> set2) {
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseSetAndTable(
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1,
+    std::shared_ptr<std::unordered_set<std::string>> set2) {
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, join_value] : *table1) {
         if (set2->find(join_value) != set2->end()) {
@@ -1188,15 +1188,17 @@ std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever:
     return joined_table;
 }
 
-std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseTables(std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1, std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
-    unordered_multimap<string, string> key_mulmap;
+std::shared_ptr<std::vector<std::pair<std::string, std::string>>> DataRetriever::JoinWithClauseTables(
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table1,
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> table2) {
+    unordered_multimap<string, string> key_multimap;
     for (auto& [val, key] : *table1) {
-        key_mulmap.insert({ key,val });
+        key_multimap.insert({ key,val });
     }
 
     auto joined_table = make_shared<vector<pair<string, string>>>();
     for (auto& [default_value, key_value] : *table2) {
-        if (auto& entry_itrs = key_mulmap.equal_range(key_value); entry_itrs.first != entry_itrs.second) {
+        if (auto& entry_itrs = key_multimap.equal_range(key_value); entry_itrs.first != entry_itrs.second) {
             std::for_each(entry_itrs.first, entry_itrs.second,
                 [&](auto& entry) { joined_table->push_back(make_pair(entry.second, default_value)); });
         }

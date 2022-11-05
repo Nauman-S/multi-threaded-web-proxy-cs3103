@@ -17,7 +17,8 @@ protected:
     std::shared_ptr<std::vector<StrPair>> rows_ptr_;
 
 public:
-    TableRes(std::unordered_map<std::string, int> s2c, std::shared_ptr<std::vector<StrPair>> rows) : syn_to_col_(s2c), rows_ptr_(rows) {}
+    TableRes(std::unordered_map<std::string, int> s2c, std::shared_ptr<std::vector<StrPair>> rows) 
+        : syn_to_col_(s2c), rows_ptr_(rows) {}
 
     bool Contains(std::string key);
 
@@ -36,24 +37,8 @@ public:
     std::shared_ptr<const std::vector<StrPair>> GetRows();
 
     bool IsEmpty() { return rows_ptr_->empty(); }
-
-    //string GetValue(int index, string syn);
 };
 
-inline bool TableRes::Contains(std::string key)
-{
+inline bool TableRes::Contains(std::string key) {
     return syn_to_col_.find(key) != syn_to_col_.end();
 }
-
-
-
-
-//inline string TableRes::GetValue(int index, string syn)
-//{
-//    if (auto col = syn_to_col_.find(syn); col != syn_to_col_.end()) {
-//        return rows_[index].first();
-//    } else {
-//        return "";
-//    }
-//    
-//}

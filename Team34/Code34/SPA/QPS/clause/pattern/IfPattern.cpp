@@ -10,8 +10,7 @@ using std::shared_ptr;
 using std::make_shared;
 
 
-int IfPattern::CountSynonyms()
-{
+int IfPattern::CountSynonyms() {
     vector<shared_ptr<Ref>> args = { if_ref_, var_ref_ };
     return Clause::CountSynonyms(args);
 }
@@ -20,8 +19,7 @@ Priority IfPattern::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kIfPattern, CountSynonyms());
 }
 
-std::shared_ptr<std::vector<std::string>> IfPattern::GetSynonyms()
-{
+std::shared_ptr<std::vector<std::string>> IfPattern::GetSynonyms() {
     vector<shared_ptr<Ref>> args = { if_ref_, var_ref_ };
     return Clause::GetSynonyms(args);
 }

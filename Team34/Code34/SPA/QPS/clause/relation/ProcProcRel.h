@@ -13,11 +13,10 @@
 class DataRetriever;
 
 class ProcProcRel
-	: public Rel
-{
+    : public Rel {
 protected:
-	std::shared_ptr<ProcRef> lhs_ref_;
-	std::shared_ptr<ProcRef> rhs_ref_;
+    std::shared_ptr<ProcRef> lhs_ref_;
+    std::shared_ptr<ProcRef> rhs_ref_;
 
 public:
     ProcProcRel(std::shared_ptr<ProcRef> lhs, std::shared_ptr<ProcRef> rhs) : lhs_ref_(lhs), rhs_ref_(rhs) {}

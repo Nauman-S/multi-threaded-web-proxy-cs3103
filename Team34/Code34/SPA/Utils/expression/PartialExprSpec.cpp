@@ -15,7 +15,6 @@ bool PartialExprSpec::IsMatch(Expr& expr) {
 
     int pos = full_expr.find(post_expr_, 0);
     while (pos != string::npos && pos < fullstr_len) {
-
         if ((pos == 0 || full_expr[pos - 1] == PostfixConverter::DELIM) &&
             (pos + substr_len == fullstr_len || full_expr[pos + substr_len] == PostfixConverter::DELIM)) {
             is_sub_expr = true;
