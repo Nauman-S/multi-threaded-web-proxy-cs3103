@@ -13,13 +13,11 @@ using std::shared_ptr;
 using std::make_shared;
 
 
-std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever)
-{
-	return retriever.retrieve(*this);
+std::shared_ptr<ResWrapper> With::GetMatch(DataRetriever& retriever) {
+    return retriever.retrieve(*this);
 }
 
-int With::CountSynonyms()
-{
+int With::CountSynonyms() {
     vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
     return Clause::CountSynonyms(args);
 }
@@ -28,8 +26,7 @@ Priority With::GetPriority(PriorityManager& pm) {
     return pm.GetClausePriority(ClauseType::kWith, CountSynonyms());
 }
 
-std::shared_ptr<std::vector<std::string>> With::GetSynonyms()
-{
+std::shared_ptr<std::vector<std::string>> With::GetSynonyms() {
     vector<shared_ptr<Ref>> args = { lhs_ref_ptr_, rhs_ref_ptr_ };
     return Clause::GetSynonyms(args);
 }

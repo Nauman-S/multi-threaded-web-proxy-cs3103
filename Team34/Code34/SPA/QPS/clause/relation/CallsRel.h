@@ -3,12 +3,11 @@
 #include "../ClauseType.h"
 
 class CallsRel
-	:public ProcProcRel
-{
+    :public ProcProcRel {
 public:
-	using ProcProcRel::ProcProcRel;
+    using ProcProcRel::ProcProcRel;
 
-	ClauseType GetRelType() override { return ClauseType::kCallsRel; }
+    ClauseType GetRelType() override { return ClauseType::kCallsRel; }
 
-	Priority GetPriority(PriorityManager& pm) override;
+    Priority GetPriority(PriorityManager& pm) override;
 };

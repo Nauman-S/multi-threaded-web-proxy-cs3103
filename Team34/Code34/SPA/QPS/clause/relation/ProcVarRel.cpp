@@ -20,13 +20,11 @@ std::string ProcVarRel::RhsValue() {
     return rhs_ref_->GetName();
 }
 
-RefType ProcVarRel::LhsRefType()
-{
+RefType ProcVarRel::LhsRefType() {
     return lhs_ref_->GetRefType();
 }
 
-RefType ProcVarRel::RhsRefType()
-{
+RefType ProcVarRel::RhsRefType() {
     return rhs_ref_->GetRefType();
 }
 
@@ -38,14 +36,12 @@ std::shared_ptr<ResWrapper> ProcVarRel::GetMatch(DataRetriever& data_retriever) 
     return data_retriever.retrieve(*this);
 }
 
-int ProcVarRel::CountSynonyms()
-{
+int ProcVarRel::CountSynonyms() {
     vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::CountSynonyms(args);
 }
 
-std::shared_ptr<std::vector<std::string>> ProcVarRel::GetSynonyms()
-{
+std::shared_ptr<std::vector<std::string>> ProcVarRel::GetSynonyms() {
     vector<shared_ptr<Ref>> args = { lhs_ref_, rhs_ref_ };
     return Clause::GetSynonyms(args);
 }

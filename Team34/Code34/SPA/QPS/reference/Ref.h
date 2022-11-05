@@ -17,11 +17,11 @@ protected:
 
 public:
     Ref(ValType val_type, std::string val, AttrType attr_type)
-        : val_type_{ val_type }, val_{ val }, attr_type_{attr_type} {
+        : val_type_{ val_type }, val_{ val }, attr_type_{ attr_type } {
     };
 
     Ref(std::shared_ptr<Ref> ref, AttrType attr_type)
-        : val_type_{ ref->GetValType()}, val_{ ref->GetName() }, attr_type_{attr_type} {
+        : val_type_{ ref->GetValType() }, val_{ ref->GetName() }, attr_type_{ attr_type } {
     };
 
     virtual const std::string& GetName() const { return val_; }

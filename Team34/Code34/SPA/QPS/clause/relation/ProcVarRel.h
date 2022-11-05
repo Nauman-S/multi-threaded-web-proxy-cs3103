@@ -16,8 +16,7 @@ class DataRetriever;
 
 
 class ProcVarRel :
-    public Rel
-{
+    public Rel {
 protected:
     std::shared_ptr<ProcRef> lhs_ref_;
     std::shared_ptr<VarRef> rhs_ref_;

@@ -4,8 +4,7 @@
 #include "../ClauseType.h"
 
 class UsesPRel :
-    public ProcVarRel
-{
+    public ProcVarRel {
 public:
     using ProcVarRel::ProcVarRel;
 

@@ -3,8 +3,7 @@
 #include "../ClauseType.h"
 
 class ModifiesSRel :
-    public StmtVarRel
-{
+    public StmtVarRel {
 public:
     using StmtVarRel::StmtVarRel;
 
