@@ -55,8 +55,7 @@ void TestWrapper::parse(std::string filename) {
         std::shared_ptr<ProgramNode> root = parser.Parse();
         DesignExtractor extractor;
         extractor.PopulatePKB(root);
-    }
-    else {
+    } else {
         this->is_valid_source_ = false;
         cout << "\n\n***** Errors found in Source Code *****\n\n" << endl;
     }
