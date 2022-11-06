@@ -1,6 +1,5 @@
 #include "TableRes.h"
 
-#include <assert.h>
 #include <algorithm>
 
 #include "../../Utils/type/TypeDef.h"
@@ -44,7 +43,6 @@ shared_ptr<unordered_set<string>> TableRes::GetColumn(string syn_name) {
         return nullptr;
     }
     int col_index = iterator->second;
-    assert(col_index == 0 || col_index == 1);
     shared_ptr<unordered_set<string>> result_set = std::make_shared<unordered_set<string>>();
 
     if (col_index == 0) {

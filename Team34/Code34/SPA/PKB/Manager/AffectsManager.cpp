@@ -354,7 +354,6 @@ bool AffectsManager::IsAssignStatementUsingVariable(Variable var, StmtNum stmt) 
 
 Variable AffectsManager::GetModifiedVarInAssign(StmtNum assign) {
     std::shared_ptr<std::unordered_set<Variable>> vars = pkb.modifies_manager_.GetVarByStmtNum(assign);
-    assert(vars->size() == 1 && "Assign statements should modify exactly one variable");
     Variable modified_var = *(vars->begin());
     return modified_var;
 }
