@@ -15,7 +15,7 @@ using namespace std;
 namespace IntegrationTesting {
     TEST_CLASS(TestSourceValidator) {
 private:
-    string path = "../../Tests34/integration_tests/SP_PKB/";
+    string path = "../IntegrationTesting/test_source/SP_PKB/";
 
 public:
     TEST_METHOD(StressTest1) {

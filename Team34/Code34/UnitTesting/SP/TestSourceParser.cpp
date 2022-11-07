@@ -11,7 +11,7 @@ using namespace std;
 namespace UnitTesting {
     TEST_CLASS(TestSourceParser) {
 public:
-    string base_dir = "../../Tests34/unit_tests/parser";
+    string base_dir = "../UnitTesting/test_source/parser";
     TEST_METHOD(MultipleProc) {
         SourceParser parser = SourceParser();
         SourceLexer lexer = SourceLexer(base_dir + "/multiple_proc.txt");

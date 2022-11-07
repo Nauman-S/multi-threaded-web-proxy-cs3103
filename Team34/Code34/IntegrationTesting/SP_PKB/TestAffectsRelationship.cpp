@@ -19,7 +19,7 @@ using namespace std;
 namespace IntegrationTesting {
     TEST_CLASS(TestAffectsRelationship) {
 private:
-    inline static string base_dir = "../../Tests34/integration_tests/SP_PKB/";
+    inline static string base_dir = "../IntegrationTesting/test_source/SP_PKB/";
 
     shared_ptr<ReadPKBManager> read = ReadPKBManager::GetInstance();
     inline static shared_ptr<WritePKBManager> write = WritePKBManager::GetInstance();

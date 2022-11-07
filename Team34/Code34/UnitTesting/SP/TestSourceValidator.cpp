@@ -11,7 +11,7 @@ namespace UnitTesting
 	TEST_CLASS(TestSourceValidator)
 	{
 	public:
-		string base_dir = "../../Tests34/unit_tests/validator";
+		string base_dir = "../UnitTesting/test_source/validator";
 		TEST_METHOD(BasicStmt)
 		{
 			SourceValidator validator = SourceValidator();

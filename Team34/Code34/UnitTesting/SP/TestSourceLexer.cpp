@@ -10,7 +10,7 @@ using namespace std;
 namespace UnitTesting {
     TEST_CLASS(TestSourceLexer) {
 public:
-    string base_dir = "../../Tests34/unit_tests/lexer/";
+    string base_dir = "../UnitTesting/test_source/lexer/";
     TEST_METHOD(TestNoSpaceSource) {
         SourceLexer lexer = SourceLexer(base_dir + "no_space_source.txt");
         shared_ptr<vector<SourceToken>> actual = lexer.GetAllTokens();

@@ -25,7 +25,7 @@ using namespace std;
 namespace IntegrationTesting {
     TEST_CLASS(TestProgramNodeExtraction) {
 private:
-    string base_dir = "../../Tests34/integration_tests/SP_PKB/design_extractor/";
+    string base_dir = "../IntegrationTesting/test_source/SP_PKB/design_extractor/";
     shared_ptr<ProgramNode> common_root;
 
     shared_ptr<ReadPKBManager> read;
