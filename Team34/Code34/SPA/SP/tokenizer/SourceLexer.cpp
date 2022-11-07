@@ -6,7 +6,8 @@
 #include "..\..\Utils\error\InvalidTokenException.h"
 #include "SourceToken.h"
 
-using namespace std;
+using std::string;
+using std::vector;
 
 SourceLexer::SourceLexer(const string& source_filename) {
     this->file_stream_.open(source_filename);
