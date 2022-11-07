@@ -6,8 +6,7 @@
 #include "../error/InvalidTokenException.h"
 #include "Token.h"
 
-class Tokenizer
-{
+class Tokenizer {
 public:
     ~Tokenizer();
 
