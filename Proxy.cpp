@@ -1,14 +1,5 @@
 #include  "Proxy.hpp"
 
-#include <cstring>
-#include <iostream>
-#include <thread>
-
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <unistd.h>
-
-
 void Proxy::StartProxy() {
      //Initialize the socket
     int socket_fd;
@@ -21,7 +12,7 @@ void Proxy::StartProxy() {
     struct sockaddr_in socket_address;
     socket_address.sin_family = AF_INET; // Ensure server is binding to local IP address
     socket_address.sin_port = htons(port_number);
-    //memset(&(socket_address.sin_zero), 0, 8);
+    memset(&(socket_address.sin_zero), 0, 8);
 
 
     //Bind socket (socket_fd) to port, protocl and IP (socket_address)
@@ -49,10 +40,59 @@ void Proxy::StartProxy() {
 }
 
 void Proxy::HandleConnection(int client_socket_fd) {
+    //Read from client
     memset(buffer,0,1024);
     ssize_t bytes_read;
-    while ((bytes_read = read(client_socket_fd, buffer, 1024)) > 0) {
+    HttpRequest http_request;
+    if ((bytes_read = read(client_socket_fd, buffer, 1024)) > 0) {
         printf("%s",buffer);
+    } else {
+        close(client_socket_fd);
+        return;
     }
+
+    std::shared_ptr<HttpRequestDetails> request = http_request.parse(bytes_read, buffer);
+    if (request->is_valid) {
+        std::cout << "Valid Request" << std::endl;
+        std::cout << request->ip_address << std::endl;
+        std::cout << request->port_number << std::endl;
+    } else {
+        std::cout << "Invalid Request" << std::endl;
+        close(client_socket_fd);
+        return;
+    }
+
+    //Write to server
+    //CreateTCPConnectionToServer(request->port_number, request->ip_address)
+
+    //Read from server
+    //Write to client
+
     return;
+}
+
+ int CreateTCPConnectionToServer(uint16_t server_port_number, char * server_ip) {
+    //Initialize the socket
+    int server_socket_fd;
+    if ((server_socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 1 ) {
+        std::cout << "Unable to create TCP socket " << std::endl;
+        return -1;
+    }
+
+
+    struct sockaddr_in server_socket_address;
+    server_socket_address.sin_family = AF_INET;
+    server_socket_address.sin_port = htons(server_port_number);
+    memset(&(server_socket_address.sin_zero), 0, 8);
+
+    if (inet_pton(AF_INET, server_ip, &server_socket_address.sin_addr) <= 0) {
+        std::cout << "Unable to interpret server ip" << std::endl;
+        return -1;
+    }
+
+    if (connect(server_socket_fd,(struct sockaddr*)&server_socket_address,sizeof(server_socket_address)) == -1) {
+        std::cout << "Connection Failed " << std::endl;
+        return -1;
+    }
+    return server_socket_fd;
 }
