@@ -3,6 +3,8 @@
 
 #include <unistd.h>
 #include <string>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 class DnsResolver {
 public:

@@ -40,7 +40,22 @@ std::shared_ptr<HttpRequestDetails> HttpRequest::parse(ssize_t bytes_read, char 
     if ((output->ip_address = DnsResolver::Resolve(host_name)) == "") {
         return output;
     }
-    
+    if (*current_char == COLON) {
+        current_char++;
+        std::string port_number;
+        while (isdigit(*current_char)) {
+            port_number.push_back(*current_char);
+            current_char++;
+        }
+        try {
+            output->port_number = std::stoi(port_number);
+        } catch (std::exception const &e) {
+            return output;
+        }
+        
+    } else {
+        output->port_number = 80;
+    }
     output->is_valid = true;
     return output;
 }
