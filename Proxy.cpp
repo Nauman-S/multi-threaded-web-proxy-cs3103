@@ -70,44 +70,98 @@ void Proxy::HandleConnection(int client_socket_fd) {
         return;
     }
 
-    do {
-        //Write to server 
-        if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
+    if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
             std::cout << "Unable to forward http message to server" << std::endl;
-            break;
-        }
+            close(client_socket_fd);
+            close(server_socket_fd);
+            return;
+    }
+    
+    std::thread thread1{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd};
+    thread1.detach();
 
-        //Read from server
-        memset(buffer,0,BUFFER_SIZE);
-        buffer_bytes = 0;
+    std::thread thread2{&Proxy::HandleClientToServer,this,client_socket_fd, server_socket_fd};
+    thread2.detach();
 
-        if ((buffer_bytes = recv(server_socket_fd, buffer, BUFFER_SIZE, 0)) < 0) {
-            std::cout << "Error recieving response from server" << std::endl;
-            break;
-        } else {
-            std::cout << "Server Has Responded" << std::endl;
-        }
 
-        //Reply to client
-        if ((buffer_bytes = send(client_socket_fd, buffer, buffer_bytes, 0)) < 0) {
-            std::cout << "Unable to reply to client" << std::endl;
-            break;
-        } else {
-            std::cout << "Responded to client" << std::endl;
-        }
 
-        memset(buffer,0,BUFFER_SIZE);
-        buffer_bytes = 0;
+    // do {
+    //     //Write to server 
+    //     if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
+    //         std::cout << "Unable to forward http message to server" << std::endl;
+    //         break;
+    //     }
 
-    } while((buffer_bytes = recv(client_socket_fd, buffer, BUFFER_SIZE, 0)) > 0);
+    //     //Read from server
+    //     memset(buffer,0,BUFFER_SIZE);
+    //     buffer_bytes = 0;
+
+    //     if ((buffer_bytes = recv(server_socket_fd, buffer, BUFFER_SIZE, 0)) < 0) {
+    //         std::cout << "Error recieving response from server" << std::endl;
+    //         break;
+    //     } else {
+    //         std::cout << "Server Has Responded" << std::endl;
+    //     }
+
+    //     //Reply to client
+    //     if ((buffer_bytes = send(client_socket_fd, buffer, buffer_bytes, 0)) < 0) {
+    //         std::cout << "Unable to reply to client" << std::endl;
+    //         break;
+    //     } else {
+    //         std::cout << "Responded to client" << std::endl;
+    //     }
+
+    //     memset(buffer,0,BUFFER_SIZE);
+    //     buffer_bytes = 0;
+
+    // } while((buffer_bytes = recv(client_socket_fd, buffer, BUFFER_SIZE, 0)) > 0);
 
 
     
 
 
-    close(client_socket_fd);
-    close(server_socket_fd);
+    // close(client_socket_fd);
+    // close(server_socket_fd);
     return;
+}
+
+void Proxy::HandleClientToServer(int client_socket_fd,int server_socket_fd) {
+    char buffer_client_to_server[BUFFER_SIZE];
+    memset(buffer_client_to_server,0,BUFFER_SIZE);
+    ssize_t buffer_bytes;
+    while ((buffer_bytes = recv(client_socket_fd, buffer_client_to_server, BUFFER_SIZE, 0)) > 0) {
+        std::cout << "Client Has Responded" << std::endl;
+
+        //Reply to server
+        if ((buffer_bytes = send(server_socket_fd, buffer_client_to_server, buffer_bytes, 0)) < 0) {
+            std::cout << "Unable to reply to server" << std::endl;
+            break;
+        } else {
+            std::cout << "Responded to server" << std::endl;
+            memset(buffer_client_to_server,0,BUFFER_SIZE);
+            buffer_bytes = 0;
+        }
+    }
+}
+
+void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
+    char buffer_server_to_client[BUFFER_SIZE];
+    memset(buffer_server_to_client,0,BUFFER_SIZE);
+    ssize_t buffer_bytes;
+    std::cout << "Waiting for server to respond " << std::endl;
+    while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
+        std::cout << "Server Has Responded" << std::endl;
+
+        //Reply to client
+        if ((buffer_bytes = send(client_socket_fd, buffer_server_to_client, buffer_bytes, 0)) < 0) {
+            std::cout << "Unable to reply to client" << std::endl;
+            break;
+        } else {
+            std::cout << "Responded to client" << std::endl;
+            memset(buffer_server_to_client,0,BUFFER_SIZE);
+            buffer_bytes = 0;
+        }
+    }
 }
 
  int Proxy::CreateTCPConnectionToServer(uint16_t server_port_number,const char * server_ip) {
