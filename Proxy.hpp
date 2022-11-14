@@ -2,7 +2,7 @@
 #define PROXY_HPP
 
 #define BACKLOG_SIZE 1
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 262144
 
 #include <cstdint>
 #include <cstring>
@@ -34,7 +34,8 @@ public:
     }
 
     void StartProxy();
-    void HandleConnection(int);
+    void HandleConnection(int client_socket_fd);
+    int CreateTCPConnectionToServer(uint16_t server_port_number, const char * server_ip);
 };
 
 #endif

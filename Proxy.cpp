@@ -1,7 +1,7 @@
 #include  "Proxy.hpp"
 
 void Proxy::StartProxy() {
-     //Initialize the socket
+    //Initialize the socket
     int socket_fd;
     if ((socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 1 ) {
         std::cout << "Unable to create TCP socket " << std::endl;
@@ -10,7 +10,7 @@ void Proxy::StartProxy() {
 
     // Initialize sockaddr struct - here socket is given IP, protocol and port
     struct sockaddr_in socket_address;
-    socket_address.sin_family = AF_INET; // Ensure server is binding to local IP address
+    socket_address.sin_family = AF_INET;
     socket_address.sin_port = htons(port_number);
     memset(&(socket_address.sin_zero), 0, 8);
 
@@ -41,37 +41,76 @@ void Proxy::StartProxy() {
 
 void Proxy::HandleConnection(int client_socket_fd) {
     //Read from client
-    memset(buffer,0,1024);
-    ssize_t bytes_read;
+    memset(buffer,0,BUFFER_SIZE);
+    ssize_t buffer_bytes;
     HttpRequest http_request;
-    if ((bytes_read = read(client_socket_fd, buffer, 1024)) > 0) {
+
+    if ((buffer_bytes = recv(client_socket_fd, buffer, BUFFER_SIZE,0)) > 0) {
         printf("%s",buffer);
     } else {
         close(client_socket_fd);
         return;
     }
-
-    std::shared_ptr<HttpRequestDetails> request = http_request.parse(bytes_read, buffer);
+    std::shared_ptr<HttpRequestDetails> request = http_request.parse(buffer_bytes, buffer);
     if (request->is_valid) {
         std::cout << "Valid Request" << std::endl;
         std::cout << request->ip_address << std::endl;
         std::cout << request->port_number << std::endl;
-    } else {
+        } else {
         std::cout << "Invalid Request" << std::endl;
         close(client_socket_fd);
         return;
     }
 
-    //Write to server
-    //CreateTCPConnectionToServer(request->port_number, request->ip_address)
+    int server_socket_fd = CreateTCPConnectionToServer(request->port_number, request->ip_address.c_str());
+    if (server_socket_fd == -1) {
+        std::cout << "Unable to connect to server" << std::endl;
+        close(client_socket_fd);
+        close(server_socket_fd);
+        return;
+    }
 
-    //Read from server
-    //Write to client
+    do {
+        //Write to server 
+        if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
+            std::cout << "Unable to forward http message to server" << std::endl;
+            break;
+        }
 
+        //Read from server
+        memset(buffer,0,BUFFER_SIZE);
+        buffer_bytes = 0;
+
+        if ((buffer_bytes = recv(server_socket_fd, buffer, BUFFER_SIZE, 0)) < 0) {
+            std::cout << "Error recieving response from server" << std::endl;
+            break;
+        } else {
+            std::cout << "Server Has Responded" << std::endl;
+        }
+
+        //Reply to client
+        if ((buffer_bytes = send(client_socket_fd, buffer, buffer_bytes, 0)) < 0) {
+            std::cout << "Unable to reply to client" << std::endl;
+            break;
+        } else {
+            std::cout << "Responded to client" << std::endl;
+        }
+
+        memset(buffer,0,BUFFER_SIZE);
+        buffer_bytes = 0;
+
+    } while((buffer_bytes = recv(client_socket_fd, buffer, BUFFER_SIZE, 0)) > 0);
+
+
+    
+
+
+    close(client_socket_fd);
+    close(server_socket_fd);
     return;
 }
 
- int CreateTCPConnectionToServer(uint16_t server_port_number, char * server_ip) {
+ int Proxy::CreateTCPConnectionToServer(uint16_t server_port_number,const char * server_ip) {
     //Initialize the socket
     int server_socket_fd;
     if ((server_socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 1 ) {
