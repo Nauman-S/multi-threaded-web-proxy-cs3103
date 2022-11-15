@@ -44,6 +44,7 @@ public:
     int CreateTCPConnectionToServer(uint16_t server_port_number, const char * server_ip);
     void HandleClientToServer(int client_socket_fd,int server_socket_fd);
     void HandleServerToClient(int client_socket_fd,int server_socket_fd);
+    void HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd);
     void HandleAttackMode(int client_socket_fd);
 
 };

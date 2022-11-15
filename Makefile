@@ -5,7 +5,7 @@ CXXFLAGS := $(CXXFLAGS) -g -O3 -Wall -Wextra -pedantic -pthread -Werror -std=c++
 
 all: proxy
 
-SRCS = main.cpp Proxy.cpp HttpRequest.cpp TcpConnection.cpp
+SRCS = main.cpp Proxy.cpp HttpRequest.cpp TcpConnection.cpp ImageSubstitution.cpp
 
 proxy: $(SRCS:%=%.o)
 	$(LINK.cc) $^ $(LOADLIBES) $(LDLIBS) -o $@

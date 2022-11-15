@@ -83,9 +83,14 @@ void Proxy::HandleConnection(int client_socket_fd) {
             close(server_socket_fd);
             return;
     }
-    
-    std::thread thread1{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd};
-    thread1.detach();
+    if (this->substitution_mode) {
+        std::thread thread1{&Proxy::HandleServerToClientImageSubstitution,this,client_socket_fd, server_socket_fd};
+        thread1.detach(); 
+    } else {
+        std::thread thread1{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd};
+        thread1.detach(); 
+    }
+
 
     std::thread thread2{&Proxy::HandleClientToServer,this,client_socket_fd, server_socket_fd};
     thread2.detach();
@@ -100,14 +105,12 @@ void Proxy::HandleClientToServer(int client_socket_fd,int server_socket_fd) {
     memset(buffer_client_to_server,0,BUFFER_SIZE);
     ssize_t buffer_bytes;
     while ((buffer_bytes = recv(client_socket_fd, buffer_client_to_server, BUFFER_SIZE, 0)) > 0) {
-        std::cout << "Client Has Responded" << std::endl;
 
         //Reply to server
         if ((buffer_bytes = send(server_socket_fd, buffer_client_to_server, buffer_bytes, 0)) < 0) {
             std::cout << "Unable to reply to server" << std::endl;
             break;
         } else {
-            std::cout << "Responded to server" << std::endl;
             memset(buffer_client_to_server,0,BUFFER_SIZE);
             buffer_bytes = 0;
         }
@@ -122,6 +125,39 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
     while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
         std::cout << "Server Has Responded" << std::endl;
         std::cout << buffer_server_to_client << std::endl;
+
+        //Reply to client
+        if ((buffer_bytes = send(client_socket_fd, buffer_server_to_client, buffer_bytes, 0)) < 0) {
+            std::cout << "Unable to reply to client" << std::endl;
+            break;
+        } else {
+            std::cout << "Responded to client" << std::endl;
+            memset(buffer_server_to_client,0,BUFFER_SIZE);
+            buffer_bytes = 0;
+        }
+    }
+}
+
+void Proxy::HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd) {
+    std::cout << "Running Image Substitution Mode" << std::endl;
+    char buffer_server_to_client[BUFFER_SIZE];
+    memset(buffer_server_to_client,0,BUFFER_SIZE);
+    ssize_t buffer_bytes;
+    std::cout << "Waiting for server to respond " << std::endl;
+    while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
+        std::cout << "Server Has Responded" << std::endl;
+        std::cout << buffer_server_to_client << std::endl;
+
+        ImageSubstitution image_sub_utility;
+        //if the server is responding with an image
+        if (image_sub_utility.responseContainsImage(buffer_server_to_client)) {
+            //drop the servers response , return a new response with the new image
+            std::cout << "Server returning an image we need to substitute" << std::endl;
+            if (image_sub_utility.fetchImage()) {
+                std::cout << "Fetched Image to be substituted" << std::endl;
+            }
+        }
+        
 
         //Reply to client
         if ((buffer_bytes = send(client_socket_fd, buffer_server_to_client, buffer_bytes, 0)) < 0) {
