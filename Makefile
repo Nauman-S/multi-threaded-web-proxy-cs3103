@@ -1,7 +1,7 @@
-CC = clang
-CXX = clang++
-CFLAGS := $(CFLAGS) -g -O3 -Wall -Wextra -pedantic -std=c18 -pthread -Werror
-CXXFLAGS := $(CXXFLAGS) -g -O3 -Wall -Wextra -pedantic -std=c++20 -pthread -Werror
+CC = gcc #clang
+CXX = g++ #clang++
+CFLAGS := $(CFLAGS) -g -O3 -Wall -Wextra -pedantic -pthread -Werror -std=c18
+CXXFLAGS := $(CXXFLAGS) -g -O3 -Wall -Wextra -pedantic -pthread -Werror -std=c++14
 
 all: proxy
 

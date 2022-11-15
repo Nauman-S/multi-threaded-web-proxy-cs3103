@@ -83,10 +83,6 @@ void Proxy::HandleConnection(int client_socket_fd) {
     std::thread thread2{&Proxy::HandleClientToServer,this,client_socket_fd, server_socket_fd};
     thread2.detach();
 
-
-    
-
-
     // close(client_socket_fd);
     // close(server_socket_fd);
     return;

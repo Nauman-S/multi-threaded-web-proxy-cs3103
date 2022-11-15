@@ -8,7 +8,10 @@ std::shared_ptr<HttpRequestDetails> HttpRequest::parse(ssize_t bytes_read, char 
     
 
     //Validate Request Method
-    int index = std::distance(current_char,std::find(current_char, buffer + total_length, SPACE));
+    int index = 0;
+    while (*(current_char + index) != SPACE && (current_char+index)< (current_char +total_length)) {
+        index++;
+    }
 
     for (const std::string & method: methods) {
         if (strncmp(method.c_str(),current_char,static_cast<size_t>(index)) == 0) {
