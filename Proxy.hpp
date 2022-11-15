@@ -30,9 +30,13 @@ class Proxy {
 private:
     uint16_t port_number;
     char buffer[BUFFER_SIZE];
+    int attack_mode;
+    int substitution_mode;
 public:
-    Proxy(uint16_t port_number) {
+    Proxy(uint16_t port_number, int attack_mode, int substitution_mode) {
         this->port_number = port_number;
+        this->attack_mode = attack_mode;
+        this->substitution_mode = substitution_mode;
     }
 
     void StartProxy();
@@ -40,6 +44,7 @@ public:
     int CreateTCPConnectionToServer(uint16_t server_port_number, const char * server_ip);
     void HandleClientToServer(int client_socket_fd,int server_socket_fd);
     void HandleServerToClient(int client_socket_fd,int server_socket_fd);
+    void HandleAttackMode(int client_socket_fd);
 
 };
 

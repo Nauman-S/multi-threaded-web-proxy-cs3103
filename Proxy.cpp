@@ -50,6 +50,13 @@ void Proxy::HandleConnection(int client_socket_fd) {
         close(client_socket_fd);
         return;
     }
+
+    if (this->attack_mode) {
+        std::thread thread_attack_mode{&Proxy::HandleAttackMode,this,client_socket_fd};
+        thread_attack_mode.detach();
+        return;
+    }
+
     std::shared_ptr<HttpRequestDetails> request = http_request.parse(buffer_bytes, buffer);
     if (request->is_valid) {
         std::cout << "Valid Request" << std::endl;
@@ -114,6 +121,7 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
     std::cout << "Waiting for server to respond " << std::endl;
     while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
         std::cout << "Server Has Responded" << std::endl;
+        std::cout << buffer_server_to_client << std::endl;
 
         //Reply to client
         if ((buffer_bytes = send(client_socket_fd, buffer_server_to_client, buffer_bytes, 0)) < 0) {
@@ -125,4 +133,15 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
             buffer_bytes = 0;
         }
     }
+}
+
+void Proxy::HandleAttackMode(int client_socket_fd) {
+    std::string attack_string = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length:35\r\nConnection: close\r\n\r\n<html>You are being attacked</html>";
+
+    if (send(client_socket_fd, attack_string.c_str(), attack_string.length(), 0) < 0) {
+        std::cout << "Unable to reply to client" << std::endl;
+        return;
+    }
+    close(client_socket_fd);
+    return;
 }
