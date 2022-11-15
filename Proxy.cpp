@@ -40,7 +40,6 @@ void Proxy::StartProxy() {
 }
 
 void Proxy::HandleConnection(int client_socket_fd) {
-    //Read from client
     memset(buffer,0,BUFFER_SIZE);
     ssize_t buffer_bytes;
     HttpRequest http_request;
@@ -62,7 +61,8 @@ void Proxy::HandleConnection(int client_socket_fd) {
         return;
     }
 
-    int server_socket_fd = CreateTCPConnectionToServer(request->port_number, request->ip_address.c_str());
+    TcpConnection tcp_connection;
+    int server_socket_fd = tcp_connection.Create(request->port_number, request->ip_address.c_str());
     if (server_socket_fd == -1) {
         std::cout << "Unable to connect to server" << std::endl;
         close(client_socket_fd);
@@ -82,39 +82,6 @@ void Proxy::HandleConnection(int client_socket_fd) {
 
     std::thread thread2{&Proxy::HandleClientToServer,this,client_socket_fd, server_socket_fd};
     thread2.detach();
-
-
-
-    // do {
-    //     //Write to server 
-    //     if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
-    //         std::cout << "Unable to forward http message to server" << std::endl;
-    //         break;
-    //     }
-
-    //     //Read from server
-    //     memset(buffer,0,BUFFER_SIZE);
-    //     buffer_bytes = 0;
-
-    //     if ((buffer_bytes = recv(server_socket_fd, buffer, BUFFER_SIZE, 0)) < 0) {
-    //         std::cout << "Error recieving response from server" << std::endl;
-    //         break;
-    //     } else {
-    //         std::cout << "Server Has Responded" << std::endl;
-    //     }
-
-    //     //Reply to client
-    //     if ((buffer_bytes = send(client_socket_fd, buffer, buffer_bytes, 0)) < 0) {
-    //         std::cout << "Unable to reply to client" << std::endl;
-    //         break;
-    //     } else {
-    //         std::cout << "Responded to client" << std::endl;
-    //     }
-
-    //     memset(buffer,0,BUFFER_SIZE);
-    //     buffer_bytes = 0;
-
-    // } while((buffer_bytes = recv(client_socket_fd, buffer, BUFFER_SIZE, 0)) > 0);
 
 
     
@@ -162,30 +129,4 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
             buffer_bytes = 0;
         }
     }
-}
-
- int Proxy::CreateTCPConnectionToServer(uint16_t server_port_number,const char * server_ip) {
-    //Initialize the socket
-    int server_socket_fd;
-    if ((server_socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 1 ) {
-        std::cout << "Unable to create TCP socket " << std::endl;
-        return -1;
-    }
-
-
-    struct sockaddr_in server_socket_address;
-    server_socket_address.sin_family = AF_INET;
-    server_socket_address.sin_port = htons(server_port_number);
-    memset(&(server_socket_address.sin_zero), 0, 8);
-
-    if (inet_pton(AF_INET, server_ip, &server_socket_address.sin_addr) <= 0) {
-        std::cout << "Unable to interpret server ip" << std::endl;
-        return -1;
-    }
-
-    if (connect(server_socket_fd,(struct sockaddr*)&server_socket_address,sizeof(server_socket_address)) == -1) {
-        std::cout << "Connection Failed " << std::endl;
-        return -1;
-    }
-    return server_socket_fd;
 }

@@ -31,11 +31,11 @@ public:
 
 class HttpRequest {
 private:
-    //const char* CRLF = "\r\n";
     char SPACE = ' ';
     char COLON = ':';
     char FORWARD_SLASH = '/';
     std::string HTTP_START= "http://";
+    std::string END_OF_HTTP_HEADERS = "\r\n\r\n";
     std::vector<std::string> methods= {"GET", "HEAD","POST","PUT", "DELETE", "TRACE", "CONNECT"};
 public:
     std::shared_ptr<HttpRequestDetails> parse(ssize_t bytes_read, char * buffer);

@@ -20,6 +20,8 @@
 #include <string.h>
 
 #include "HttpRequest.hpp"
+#include "TcpConnection.hpp"
+#include "ImageSubstitution.hpp"
 
 
 
