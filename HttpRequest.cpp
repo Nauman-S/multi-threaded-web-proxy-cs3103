@@ -40,9 +40,8 @@ std::shared_ptr<HttpRequestDetails> HttpRequest::parse(ssize_t bytes_read, char 
 
     std::string host_name;
     host_name.assign(start_host_name, current_char - start_host_name);
-    if ((output->ip_address = DnsResolver::Resolve(host_name)) == "") {
-        return output;
-    }
+    output->host_name = host_name;
+    
     if (*current_char == COLON) {
         current_char++;
         std::string port_number;

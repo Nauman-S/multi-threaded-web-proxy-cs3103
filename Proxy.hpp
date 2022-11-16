@@ -19,9 +19,11 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <string.h>
+#include <unordered_map>
 
 #include "HttpRequest.hpp"
 #include "TcpConnection.hpp"
+#include "DnsResolver.hpp"
 #include "ImageSubstitution.hpp"
 
 
@@ -43,7 +45,7 @@ public:
     void StartProxy();
     void HandleConnection(int client_socket_fd);
     int CreateTCPConnectionToServer(uint16_t server_port_number, const char * server_ip);
-    void HandleClientToServer(int client_socket_fd,int server_socket_fd);
+    void HandleClientToServer(int client_socket_fd,int server_socket_fd, int server_port_number, std::string host_name);
     void HandleServerToClient(int client_socket_fd,int server_socket_fd);
     void HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd);
     void HandleAttackMode(int client_socket_fd);

@@ -20,12 +20,12 @@ class HttpRequestDetails {
 public:
     bool is_valid;
     uint16_t port_number;
-    std::string ip_address;
+    std::string host_name;
 
-    HttpRequestDetails(bool is_valid, uint16_t port_number, std::string ip_address) {
+    HttpRequestDetails(bool is_valid, uint16_t port_number, std::string host_name) {
         this->is_valid = is_valid;
         this->port_number = port_number;
-        this->ip_address = ip_address;
+        this->host_name = host_name;
     }
 };
 

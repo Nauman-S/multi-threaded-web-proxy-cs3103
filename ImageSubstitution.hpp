@@ -1,7 +1,7 @@
 #ifndef IMAGE_SUBSTITUTION_HPP
 #define IMAGE_SUBSTITUTION_HPP
 
-#define IMAGE_BUFFER_SIZE 262144
+#define IMAGE_BUFFER_SIZE 131072
 
 #include "HttpRequest.hpp"
 #include "TcpConnection.hpp"
