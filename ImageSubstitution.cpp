@@ -17,7 +17,7 @@
         }
 
 
-        ssize_t buffer_bytes, total_buffer_bytes;
+        ssize_t buffer_bytes;
         total_buffer_bytes = (buffer_bytes = 0);
         char * image_buffer_ptr = image_buffer;
         int content_length = 0;
@@ -64,10 +64,39 @@
         return false;
  }
 
- bool ImageSubstitution::responseContainsImage(char* response) {
-    std::string special_string= "\r\nContent-Type: image";
-    if( strstr(response,special_string.c_str())!= NULL ) {
-        return true;
+int ImageSubstitution::responseContainsImage(char* response) {
+    std::string content_type_header= "\r\nContent-Type: image";
+    std::string content_length_header = "\r\nContent-Length:";
+    if( strstr(response,content_type_header.c_str()) == NULL ) {
+        return -1;
     }
-    return false;
+    int content_length;
+    char * content_size;
+    if ((content_size = strstr(response,content_length_header.c_str())) != NULL) {
+        content_size += 18;
+        std::string s;
+        while (isdigit(*content_size )) {
+            s.push_back(*content_size);
+            content_size++;
+        }
+        try {
+            content_length = std::stoi(s);
+            std::cout << "Server resopnding with image of length" << std::endl;
+            std::cout << content_length << std::endl;
+        } catch (...) {
+            std::cout <<"Unable to parse Image length" << std::endl;
+            return -1;
+        }
+    } else {
+        return -1;
+    }
+
+    char * start_of_body;
+    if ((start_of_body = strstr(response,END_OF_HTTP_HEADERS.c_str())) != NULL) {
+        start_of_body += 4;
+        std::cout << "Total bytes to drop" << std::endl;
+        std::cout <<(start_of_body-response) + content_length << std::endl;
+        return (start_of_body-response) + content_length;
+    }
+    return -1;
  }

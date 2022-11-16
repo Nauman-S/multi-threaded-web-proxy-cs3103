@@ -34,6 +34,10 @@ void Proxy::StartProxy() {
             std::cout << "Unable to accept client connection" << std::endl;
             exit(EXIT_FAILURE);
         }
+        struct timeval tv;
+        tv.tv_sec = HTTP_REQUEST_TIMEOUT;
+        tv.tv_usec = 0;
+        setsockopt(new_socket_fd,SOL_SOCKET, SO_RCVTIMEO,(const char*)&tv, sizeof tv);
         std::thread thread{&Proxy::HandleConnection,this,new_socket_fd};
         thread.detach();
     }
@@ -94,9 +98,6 @@ void Proxy::HandleConnection(int client_socket_fd) {
 
     std::thread thread2{&Proxy::HandleClientToServer,this,client_socket_fd, server_socket_fd};
     thread2.detach();
-
-    // close(client_socket_fd);
-    // close(server_socket_fd);
     return;
 }
 
@@ -115,6 +116,9 @@ void Proxy::HandleClientToServer(int client_socket_fd,int server_socket_fd) {
             buffer_bytes = 0;
         }
     }
+    close(client_socket_fd);
+    close(server_socket_fd);
+    std::cout << "Client to server closed" << std::endl;
 }
 
 void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
@@ -136,6 +140,9 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
             buffer_bytes = 0;
         }
     }
+    close(client_socket_fd);
+    close(server_socket_fd);
+    std::cout << "Server to client closed" << std::endl;
 }
 
 void Proxy::HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd) {
@@ -149,12 +156,32 @@ void Proxy::HandleServerToClientImageSubstitution(int client_socket_fd,int serve
         std::cout << buffer_server_to_client << std::endl;
 
         ImageSubstitution image_sub_utility;
-        //if the server is responding with an image
-        if (image_sub_utility.responseContainsImage(buffer_server_to_client)) {
-            //drop the servers response , return a new response with the new image
+        
+        int response_size = image_sub_utility.responseContainsImage(buffer_server_to_client);
+        if (response_size != -1 ) {//if the server is responding with an image
+            //return a new response with the new image
             std::cout << "Server returning an image we need to substitute" << std::endl;
             if (image_sub_utility.fetchImage()) {
                 std::cout << "Fetched Image to be substituted" << std::endl;
+                if ((buffer_bytes = send(client_socket_fd, image_sub_utility.image_buffer, image_sub_utility.total_buffer_bytes, 0)) < 0) {
+                    std::cout << "Unable to forward subbed image to client" << std::endl;
+                    break;
+                } else {
+                    std::cout << "Forwarded subbed image to client" << std::endl;
+
+
+                    //Drop the http message associated with the image
+                    response_size -= buffer_bytes;
+                    while(response_size > 0) {
+                        std::cout << "Dropping useless bytes" << std::endl;
+                        memset(buffer_server_to_client,0,BUFFER_SIZE);
+                        buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0);
+                        response_size -= buffer_bytes;
+                    }
+                    std::cout << "Completely dropped all useless bytes" << std::endl;
+                    memset(buffer_server_to_client,0,BUFFER_SIZE);
+                    continue;
+                }
             }
         }
         

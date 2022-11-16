@@ -15,14 +15,16 @@ private:
     std::string CONTENT_LENGTH_HEADER = "Content-Length:";
     std::string END_OF_HTTP_HEADERS = "\r\n\r\n";
     uint16_t SERVER_PORT_NUMBER = 50000;
-    char image_buffer[IMAGE_BUFFER_SIZE];
     char * image_start;
     char * image_end;
 
 
 public:
+    char image_buffer[IMAGE_BUFFER_SIZE];
+    ssize_t total_buffer_bytes;
+
     bool fetchImage();
-    bool responseContainsImage(char* response);
+    int responseContainsImage(char* response);
 
 };
 #endif
