@@ -3,6 +3,7 @@
 
 #define BACKLOG_SIZE 1
 #define BUFFER_SIZE 262144
+#define HTTP_REQUEST_TIMEOUT 100
 
 #include <cstdint>
 #include <cstring>
