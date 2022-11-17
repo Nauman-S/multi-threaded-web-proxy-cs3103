@@ -35,11 +35,11 @@ void Proxy::StartProxy() {
             exit(EXIT_FAILURE);
         }
 
-        //Set the timeout value on sockets
-        struct timeval tv;
-        tv.tv_sec = HTTP_REQUEST_TIMEOUT;
-        tv.tv_usec = 0;
-        setsockopt(new_socket_fd,SOL_SOCKET, SO_RCVTIMEO,(const char*)&tv, sizeof tv);
+        //Set the timeout value on each connection socket
+        struct timeval time_value;
+        time_value.tv_sec = CONNECTION_TIMEOUT;
+        time_value.tv_usec = 0;
+        setsockopt(new_socket_fd,SOL_SOCKET, SO_RCVTIMEO,(const char*)&time_value, sizeof time_value);
 
         std::thread thread{&Proxy::HandleConnection,this,new_socket_fd};
         thread.detach();
@@ -75,12 +75,17 @@ void Proxy::HandleConnection(int client_socket_fd) {
 
     TcpConnection tcp_connection;
     int server_socket_fd = tcp_connection.Create(request->port_number, ip_address.c_str());
-    if (server_socket_fd == -1) {
+    if (server_socket_fd < 0) {
         std::cout << "Unable to connect to server" << std::endl;
         close(client_socket_fd);
         close(server_socket_fd);
         return;
     }
+
+    struct timeval time_value;
+    time_value.tv_sec = CONNECTION_TIMEOUT;
+    time_value.tv_usec = 0;
+    setsockopt(server_socket_fd,SOL_SOCKET, SO_RCVTIMEO,(const char*)&time_value, sizeof time_value);
 
     if ((buffer_bytes = send(server_socket_fd, buffer, buffer_bytes, 0)) < 0) {
             std::cout << "Unable to forward http message to server" << std::endl;
@@ -92,7 +97,7 @@ void Proxy::HandleConnection(int client_socket_fd) {
         std::thread thread_server_to_client{&Proxy::HandleServerToClientImageSubstitution,this,client_socket_fd, server_socket_fd};
         thread_server_to_client.detach(); 
     } else {
-        std::thread thread_server_to_client{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd};
+        std::thread thread_server_to_client{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd, request->host_name, request->port_number};
         thread_server_to_client.detach(); 
     }
 
@@ -109,8 +114,6 @@ void Proxy::HandleClientToServer(int client_socket_fd, int server_socket_fd,  in
     memset(buffer_client_to_server,0,BUFFER_SIZE);
     ssize_t buffer_bytes;
     while ((buffer_bytes = recv(client_socket_fd, buffer_client_to_server, BUFFER_SIZE, 0)) > 0) {
-
-        std::cout << buffer_client_to_server << std::endl;
         HttpRequest http_request;
         std::shared_ptr<HttpRequestDetails> request = http_request.parse(buffer_bytes, buffer_client_to_server);
 
@@ -119,20 +122,25 @@ void Proxy::HandleClientToServer(int client_socket_fd, int server_socket_fd,  in
             
             if (prev_connection_identifier.compare(connection_identifier) != 0) {
                 close(server_socket_fd);
-                std::cout << "Creating new server socket" << std::endl;
                 std::string ip_address = DnsResolver::Resolve(request->host_name);
-                TcpConnection tcp_connection;
-                server_socket_fd = tcp_connection.Create(request->port_number, ip_address.c_str());
-                if (server_socket_fd == -1) {
-                    std::cout << "Unable to establish connection with new endpoint" << std::endl;
+                if (ip_address == "") {
                     continue;
                 }
-                std::cout << "Creating new server to client" << std::endl;
+                TcpConnection tcp_connection;
+                server_socket_fd = tcp_connection.Create(request->port_number, ip_address.c_str());
+                if (server_socket_fd < 0) {
+                    continue;
+                }
+                struct timeval time_value;
+                time_value.tv_sec = CONNECTION_TIMEOUT;
+                time_value.tv_usec = 0;
+                setsockopt(server_socket_fd,SOL_SOCKET, SO_RCVTIMEO,(const char*)&time_value, sizeof time_value);
+                
                 if (this->substitution_mode) {
                     std::thread thread_server_to_client{&Proxy::HandleServerToClientImageSubstitution,this,client_socket_fd, server_socket_fd};
                     thread_server_to_client.detach(); 
                 } else {
-                    std::thread thread_server_to_client{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd};
+                    std::thread thread_server_to_client{&Proxy::HandleServerToClient,this,client_socket_fd, server_socket_fd, request->host_name, request->port_number};
                     thread_server_to_client.detach(); 
                 }
 
@@ -150,15 +158,19 @@ void Proxy::HandleClientToServer(int client_socket_fd, int server_socket_fd,  in
         }
     }
     close(client_socket_fd);
-    std::cout << "Client connection closed" << std::endl;
 }
 
-void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
+void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd, std::string host_name,int server_port_number) {
+    HttpResponse response;
     char buffer_server_to_client[BUFFER_SIZE];
     memset(buffer_server_to_client,0,BUFFER_SIZE);
+    int total_content_bytes = 0;
+    int content_bytes = 0;
     ssize_t buffer_bytes;
     while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
-
+        if ((content_bytes = response.GetContentSize(buffer_server_to_client)) != -1) {
+            total_content_bytes += content_bytes;
+        }
         //Reply to client
         if ((buffer_bytes = send(client_socket_fd, buffer_server_to_client, buffer_bytes, 0)) < 0) {
             std::cout << "Unable to reply to client" << std::endl;
@@ -168,42 +180,32 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd) {
             buffer_bytes = 0;
         }
     }
+    //Log telemetry
+    std::cout << "Logging telemetry" << std::endl;
+    std::cout << "http://www." << host_name << ":" << std::to_string(server_port_number) << ", " <<total_content_bytes << std::endl;
     close(server_socket_fd);
 }
 
 void Proxy::HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd) {
-    std::cout << "Running Image Substitution Mode" << std::endl;
     char buffer_server_to_client[BUFFER_SIZE];
     memset(buffer_server_to_client,0,BUFFER_SIZE);
     ssize_t buffer_bytes;
     while ((buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0)) > 0) {
-        std::cout << "Server Has Responded" << std::endl;
-        std::cout << buffer_server_to_client << std::endl;
-
         ImageSubstitution image_sub_utility;
         
         int response_size = image_sub_utility.responseContainsImage(buffer_server_to_client);
         if (response_size != -1 ) {//if the server is responding with an image
             //return a new response with the new image
-            std::cout << "Server returning an image we need to substitute" << std::endl;
             if (image_sub_utility.fetchImage()) {
-                std::cout << "Fetched Image to be substituted" << std::endl;
-                if ((buffer_bytes = send(client_socket_fd, image_sub_utility.image_buffer, image_sub_utility.total_buffer_bytes, 0)) < 0) {
-                    std::cout << "Unable to forward subbed image to client" << std::endl;
-                    break;
-                } else {
-                    std::cout << "Forwarded subbed image to client" << std::endl;
-
+                if ((buffer_bytes = send(client_socket_fd, image_sub_utility.image_buffer, image_sub_utility.total_buffer_bytes, 0)) > 0) {
 
                     //Drop the http message associated with the image
                     response_size -= buffer_bytes;
                     while(response_size > 0) {
-                        std::cout << "Dropping useless bytes" << std::endl;
                         memset(buffer_server_to_client,0,BUFFER_SIZE);
                         buffer_bytes = recv(server_socket_fd, buffer_server_to_client, BUFFER_SIZE, 0);
                         response_size -= buffer_bytes;
                     }
-                    std::cout << "Completely dropped all useless bytes" << std::endl;
                     memset(buffer_server_to_client,0,BUFFER_SIZE);
                     continue;
                 }
@@ -216,7 +218,6 @@ void Proxy::HandleServerToClientImageSubstitution(int client_socket_fd,int serve
             std::cout << "Unable to reply to client" << std::endl;
             break;
         } else {
-            std::cout << "Responded to client" << std::endl;
             memset(buffer_server_to_client,0,BUFFER_SIZE);
             buffer_bytes = 0;
         }

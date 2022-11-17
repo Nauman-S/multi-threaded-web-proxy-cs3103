@@ -81,8 +81,6 @@ int ImageSubstitution::responseContainsImage(char* response) {
         }
         try {
             content_length = std::stoi(s);
-            std::cout << "Server resopnding with image of length" << std::endl;
-            std::cout << content_length << std::endl;
         } catch (...) {
             std::cout <<"Unable to parse Image length" << std::endl;
             return -1;
@@ -94,8 +92,6 @@ int ImageSubstitution::responseContainsImage(char* response) {
     char * start_of_body;
     if ((start_of_body = strstr(response,END_OF_HTTP_HEADERS.c_str())) != NULL) {
         start_of_body += 4;
-        std::cout << "Total bytes to drop" << std::endl;
-        std::cout <<(start_of_body-response) + content_length << std::endl;
         return (start_of_body-response) + content_length;
     }
     return -1;

@@ -3,7 +3,7 @@
 
 #define BACKLOG_SIZE 1
 #define BUFFER_SIZE 262144
-#define HTTP_REQUEST_TIMEOUT 100
+#define CONNECTION_TIMEOUT 100
 
 #include <cstdint>
 #include <cstring>
@@ -22,9 +22,11 @@
 #include <unordered_map>
 
 #include "HttpRequest.hpp"
+#include "HttpResponse.hpp"
 #include "TcpConnection.hpp"
 #include "DnsResolver.hpp"
 #include "ImageSubstitution.hpp"
+
 
 
 
@@ -46,7 +48,7 @@ public:
     void HandleConnection(int client_socket_fd);
     int CreateTCPConnectionToServer(uint16_t server_port_number, const char * server_ip);
     void HandleClientToServer(int client_socket_fd,int server_socket_fd, int server_port_number, std::string host_name);
-    void HandleServerToClient(int client_socket_fd,int server_socket_fd);
+    void HandleServerToClient(int client_socket_fd,int server_socket_fd, std::string host_name, int server_port_number);
     void HandleServerToClientImageSubstitution(int client_socket_fd,int server_socket_fd);
     void HandleAttackMode(int client_socket_fd);
 
