@@ -1,11 +1,18 @@
 # Multi-threaded-web-proxy-cs3103
 A basic web proxy capable of accepting HTTP 1.0/1.1 requests and returning responses to a client
-## `Usage` 
+
+## `Usage`
+1). Use make to build
+
+2). Run the binary using command `./proxy <port> <substitution> <attack>`
+
+3). Use make clean to remove binary
+
+4). requires g++ GNU C++ compiler
+
+## `Specifications` 
 1). Install the following version of [firefox](https://www.mozilla.org/en-US/firefox/92.0/releasenotes/)
 
-2). Build project using clang compiler using command `make` to produce output binary proxy
-
-3). Run the binary using command `./proxy <port> <substitution> <attack>`
 
 #### `port` 
 The port on which the proxy runs
