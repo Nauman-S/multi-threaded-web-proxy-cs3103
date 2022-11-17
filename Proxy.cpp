@@ -121,7 +121,8 @@ void Proxy::HandleClientToServer(int client_socket_fd, int server_socket_fd,  in
             std::string connection_identifier = request->host_name + ":" + std::to_string(request->port_number);
             
             if (prev_connection_identifier.compare(connection_identifier) != 0) {
-                close(server_socket_fd);
+                // close(server_socket_fd);
+                shutdown(server_socket_fd, SHUT_RDWR);
                 std::string ip_address = DnsResolver::Resolve(request->host_name);
                 if (ip_address == "") {
                     continue;
@@ -181,7 +182,6 @@ void Proxy::HandleServerToClient(int client_socket_fd,int server_socket_fd, std:
         }
     }
     //Log telemetry
-    std::cout << "Logging telemetry" << std::endl;
     std::cout << "http://www." << host_name << ":" << std::to_string(server_port_number) << ", " <<total_content_bytes << std::endl;
     close(server_socket_fd);
 }
